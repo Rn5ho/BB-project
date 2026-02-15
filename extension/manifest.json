@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "BB Scout - NT Player Tracker",
+  "version": "1.0.0",
+  "description": "Auto-capture BuzzerBeater player skills for National Team scouting",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.buzzerbeater.com/*",
+    "https://buzzerbeater.com/*",
+    "http://www.buzzerbeater.com/*",
+    "http://buzzerbeater.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.buzzerbeater.com/player/*",
+        "*://buzzerbeater.com/player/*"
+      ],
+      "js": [
+        "content-scripts/common.js",
+        "content-scripts/player-parser.js"
+      ],
+      "css": [
+        "content-scripts/overlay.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://www.buzzerbeater.com/national/*",
+        "*://buzzerbeater.com/national/*",
+        "*://www.buzzerbeater.com/country/*/jnt/*",
+        "*://buzzerbeater.com/country/*/jnt/*"
+      ],
+      "js": [
+        "content-scripts/common.js",
+        "content-scripts/roster-parser.js"
+      ],
+      "css": [
+        "content-scripts/overlay.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://www.buzzerbeater.com/manage/transferlist*",
+        "*://buzzerbeater.com/manage/transferlist*"
+      ],
+      "js": [
+        "content-scripts/common.js",
+        "content-scripts/market-parser.js"
+      ],
+      "css": [
+        "content-scripts/overlay.css"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

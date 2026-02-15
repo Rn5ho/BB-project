@@ -1,0 +1,203 @@
+/* BB Scout - Overlay styles injected on BuzzerBeater player pages */
+
+#bb-scout-overlay {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 99999;
+  background: #1a1a2e;
+  color: #ffffff;
+  border: 2px solid #e94560;
+  border-radius: 12px;
+  padding: 16px;
+  width: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 13px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+#bb-scout-overlay.bb-scout-minimized {
+  width: auto;
+  padding: 8px 12px;
+}
+
+/* Floating mini button — shown when overlay is hidden */
+#bb-scout-mini-btn {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 99999;
+  width: 44px;
+  height: 44px;
+  background: #1a1a2e;
+  border: 2px solid #e94560;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #e94560;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+#bb-scout-mini-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(233, 69, 96, 0.3);
+  background: #2a2a4a;
+}
+
+#bb-scout-overlay .bb-scout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #333;
+}
+
+#bb-scout-overlay .bb-scout-logo {
+  font-weight: 700;
+  font-size: 15px;
+  color: #e94560;
+}
+
+#bb-scout-overlay .bb-scout-close {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+#bb-scout-overlay .bb-scout-close:hover {
+  color: #fff;
+}
+
+#bb-scout-overlay .bb-scout-player-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+#bb-scout-overlay .bb-scout-player-info {
+  color: #aaa;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+#bb-scout-overlay .bb-scout-skills-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 12px;
+  margin-bottom: 12px;
+  font-size: 11px;
+}
+
+#bb-scout-overlay .bb-scout-skill-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+#bb-scout-overlay .bb-scout-skill-name {
+  color: #aaa;
+}
+
+#bb-scout-overlay .bb-scout-skill-value {
+  font-weight: 600;
+}
+
+#bb-scout-overlay .bb-scout-status {
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+#bb-scout-overlay .bb-scout-status.success {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+#bb-scout-overlay .bb-scout-status.error {
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+#bb-scout-overlay .bb-scout-status.warning {
+  background: rgba(243, 156, 18, 0.2);
+  color: #f39c12;
+  border: 1px solid rgba(243, 156, 18, 0.3);
+}
+
+#bb-scout-overlay .bb-scout-status.info {
+  background: rgba(52, 152, 219, 0.2);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+#bb-scout-overlay .bb-scout-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 6px;
+}
+
+#bb-scout-overlay .bb-scout-btn-primary {
+  background: #e94560;
+  color: #fff;
+}
+
+#bb-scout-overlay .bb-scout-btn-primary:hover {
+  background: #d63851;
+  transform: translateY(-1px);
+}
+
+#bb-scout-overlay .bb-scout-btn-primary:disabled {
+  background: #555;
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#bb-scout-overlay .bb-scout-btn-secondary {
+  background: #2a2a4a;
+  color: #aaa;
+  font-size: 12px;
+  padding: 6px 12px;
+}
+
+#bb-scout-overlay .bb-scout-btn-secondary:hover {
+  background: #3a3a5a;
+  color: #fff;
+}
+
+#bb-scout-overlay .bb-scout-last-saved {
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* Parsing error detail */
+#bb-scout-overlay .bb-scout-parse-detail {
+  font-size: 11px;
+  color: #888;
+  margin-top: 6px;
+}

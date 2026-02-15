@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>BB Scout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 320px;
+      min-height: 200px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      color: #e94560;
+      margin-bottom: 4px;
+    }
+
+    .header p {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #2a2a4a;
+      color: #fff;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #e94560;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: #e94560;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #d63851;
+    }
+
+    .btn-secondary {
+      background: #2a2a4a;
+      color: #aaa;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: #3a3a5a;
+      color: #fff;
+    }
+
+    .status {
+      text-align: center;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .status.success {
+      background: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+    }
+
+    .status.error {
+      background: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
+    }
+
+    .logged-in-view {
+      display: none;
+    }
+
+    .logged-in-view.active {
+      display: block;
+    }
+
+    .login-view.hidden {
+      display: none;
+    }
+
+    .user-info {
+      background: #2a2a4a;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .user-info .email {
+      font-size: 13px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .user-info .meta {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .stat-card {
+      background: #2a2a4a;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card .number {
+      font-size: 20px;
+      font-weight: 700;
+      color: #e94560;
+    }
+
+    .stat-card .label {
+      font-size: 10px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .link {
+      display: block;
+      text-align: center;
+      color: #3498db;
+      text-decoration: none;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .link:hover {
+      color: #5dade2;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>BB Scout</h1>
+    <p>NT Player Tracker for BuzzerBeater</p>
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <!-- Login View -->
+  <div id="login-view" class="login-view">
+    <div class="section">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="your@email.com">
+    </div>
+    <div class="section">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Password">
+    </div>
+    <button class="btn btn-primary" id="login-btn">Log In</button>
+    <button class="btn btn-secondary" id="signup-btn">Create Account</button>
+  </div>
+
+  <!-- Logged In View -->
+  <div id="logged-in-view" class="logged-in-view">
+    <div class="user-info">
+      <div class="email" id="user-email"></div>
+      <div class="meta" id="user-meta">Connected to BB Scout database</div>
+    </div>
+    <div class="stats">
+      <div class="stat-card">
+        <div class="number" id="stat-local">0</div>
+        <div class="label">Saved Locally</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" id="stat-unsynced">0</div>
+        <div class="label">Pending Sync</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="sync-btn">Sync Pending Data</button>
+    <button class="btn btn-secondary" id="show-overlay-btn">Show Overlay on Page</button>
+    <button class="btn btn-secondary" id="clear-local-btn" style="color: #e74c3c;">Clear Local Data</button>
+    <a href="#" class="link" id="dashboard-link" target="_blank">Open Dashboard →</a>
+    <button class="btn btn-secondary" id="logout-btn">Log Out</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

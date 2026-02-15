@@ -1,0 +1,24 @@
+# Claude Code local config
+.claude/
+
+# Dependencies
+web/node_modules/
+
+# Next.js
+web/.next/
+web/out/
+
+# Environment files (contain secrets)
+web/.env.local
+web/.env*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel
+web/.vercel
+
+# TypeScript
+*.tsbuildinfo
+web/next-env.d.ts
