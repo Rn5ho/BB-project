@@ -7,6 +7,7 @@ A Chrome Extension + Web App tool for BuzzerBeater National Team managers. Auto-
 - **Web App:** Next.js 16 (React) + TypeScript + Tailwind CSS
 - **Database + Auth + API:** Supabase (PostgreSQL + Auth + auto-generated REST API)
 - **Chrome Extension:** Vanilla JavaScript, Manifest V3
+- **XML Parsing:** fast-xml-parser (for BB API XML responses)
 - **Hosting:** Vercel (web app) + Supabase Cloud (database)
 - **Repo:** GitHub `Rn5ho/BB-project` (private)
 
@@ -36,19 +37,31 @@ BB-project/
       layout.tsx             # Root layout
       globals.css            # Global styles (dark theme)
       login/page.tsx         # Auth page
-      players/page.tsx       # Player list with filters, sorting, bulk delete
+      players/page.tsx       # Player list with filters, sorting, bulk delete, My NT / Scouting toggle
       players/[id]/page.tsx  # Player detail + skill history + editable position
       compare/page.tsx       # Side-by-side player comparison
+      training/page.tsx      # Training simulator (manual + database player mode)
+      scout/page.tsx         # BB API scouting (fetch by player ID or team roster)
       manual-entry/page.tsx  # Manual skill data entry form
+      api/
+        scout/
+          player/route.ts    # API route: fetch player(s) via BB API, upsert to DB
+          roster/route.ts    # API route: fetch team roster via BB API, upsert to DB
     components/
-      Navbar.tsx             # Navigation bar
+      Navbar.tsx             # Navigation bar (Players, Compare, Training, Scout, Manual Entry)
       SkillBadge.tsx         # Skill display with color coding
       SkillDelta.tsx         # Skill change indicator (+N green, -N red)
     lib/
-      supabase.ts            # Supabase client config
+      supabase.ts            # Supabase client config (browser-side, anon key)
+      supabase-server.ts     # Supabase server client (service role key, bypasses RLS)
       constants.ts           # Skill levels, potentials, BB color maps, helper functions
       types.ts               # TypeScript interfaces
-    .env.local               # Supabase credentials (not committed)
+      bbapi.ts               # BuzzerBeater API client (login, fetch players/rosters, XML parsing)
+      training/
+        types.ts             # Training simulator type definitions
+        data.ts              # Training data tables (age/height/trainer multipliers, training matrix)
+        engine.ts            # Training calculation engine (weekly gains, multi-week projection)
+    .env.local               # Environment variables (not committed, 5 vars — see Configuration)
     .env.local.example       # Template for env vars
 ```
 
@@ -71,7 +84,12 @@ cd web && npm run lint
 ## Configuration
 1. Create a Supabase project at https://supabase.com
 2. Run `supabase/schema.sql` in the Supabase SQL Editor
-3. Copy `web/.env.local.example` to `web/.env.local` and fill in Supabase URL + anon key
+3. Copy `web/.env.local.example` to `web/.env.local` and fill in all 5 variables:
+   - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anon/public key
+   - `SUPABASE_SERVICE_ROLE_KEY` — Supabase service role key (used by API routes, bypasses RLS)
+   - `BB_API_USERNAME` — BuzzerBeater username (for BB API scouting)
+   - `BB_API_SECURITY_CODE` — BB API security code (get from BB Settings > BBAPI)
 4. Supabase credentials are hardcoded in 3 extension files (no build step):
    - `extension/content-scripts/common.js` — SUPABASE_URL, SUPABASE_ANON_KEY
    - `extension/popup/popup.js` — SUPABASE_URL, SUPABASE_ANON_KEY, DASHBOARD_URL
@@ -90,19 +108,32 @@ cd web && npm run lint
 - Dark theme throughout: `var(--accent)` = #e94560, `var(--card-bg)` = #1a1a2e, `var(--background)` = #0f0f23
 
 ## Data Flow
+
+### Extension Path (DOM parsing)
 ```
-BuzzerBeater Page (player or roster)
-  → Extension content script parses DOM (player-parser.js or roster-parser.js)
+BuzzerBeater Page (player, roster, or market search)
+  → Extension content script parses DOM (player-parser.js, roster-parser.js, or market-parser.js)
   → Saves locally to chrome.storage.local (key: bb_scout_player_${bbPlayerId})
   → Upserts player to Supabase /rest/v1/players (on_conflict=bb_player_id)
-  → Inserts skill snapshot to Supabase /rest/v1/skill_snapshots
+  → Inserts/updates skill snapshot to Supabase /rest/v1/skill_snapshots (deduped per day)
   → Web dashboard displays data with history, colors, and comparisons
+```
+
+### BB API Path (server-side)
+```
+Web dashboard /scout page
+  → User enters player IDs or team ID
+  → POST to /api/scout/player or /api/scout/roster
+  → API route logs into BB API (cookie auth), fetches XML, parses with fast-xml-parser
+  → Maps BB API fields to DB schema (bbapi.ts → mapBbApiPlayerToDb)
+  → Upserts player + inserts/updates snapshot via Supabase service role client (bypasses RLS)
+  → Returns results to client for display
 ```
 
 ## Extension Architecture
 
 ### Content Scripts
-Both parsers share `common.js` (loaded first via manifest) which provides:
+All three parsers (player, roster, market) share `common.js` (loaded first via manifest) which provides:
 - `SKILL_LEVELS` / `SKILL_LEVELS_REVERSE` — number↔text mapping (1-20)
 - `POTENTIAL_LEVELS` / `POTENTIAL_LEVELS_REVERSE` — number↔text mapping (0-11)
 - `SKILLS` array — 12 skills with `name`, `dbKey`, `parseKey` properties
@@ -137,12 +168,25 @@ Runs on `/national/*` and `/country/*/jnt/*` pages. Batch-parses all players on 
 
 **Batch save**: saves all locally first, then upserts each to Supabase with progress tracking. Shows `firstError` in overlay if any fail.
 
+### Market Parser (`market-parser.js`)
+Runs on `/manage/transferlist*` pages. Batch-parses all players from transfer market search results.
+
+**Page detection**: Checks for "Player Market Search" or "Transfer List" text, plus "Showing results" or "Starting Price" to confirm results are present.
+
+**Player detection**: Same strategy as roster-parser — finds all `(6+ digit ID)` patterns, validates by checking for 3+ skill keywords in the next 800 characters.
+
+**Nationality parsing from flag images**: BB shows flag `<img>` elements inside `.boxheader` containers. The element ID contains `nationalFlag` (e.g., `cphContent_rptListedPlayers_nationalFlag_0`). The country name is in the `title` attribute (NOT `alt`). First flag = real nationality, second (`utopiaFlag`) = Utopia (fictional, ignored). Selector: `playerLink.closest('.boxheader').querySelector('img[id*="nationalFlag"]').title`.
+
+**Batch save**: Same pattern as roster-parser — save all locally first, then upsert each to Supabase with progress tracking. Includes snapshot dedup (same player + same day = PATCH existing). Uses `nationality: p.nationality` (from flags) instead of hardcoded "Slovenia".
+
+**Copy to clipboard**: Tab-separated format with header: Name, ID, Nat, Age, Pos, DMI, Pot, Salary, SP, then all 12 skills.
+
 ### Overlay Minimize/Restore
-Both parsers support minimize/restore:
+All three parsers support minimize/restore:
 - **Close button (×)**: hides overlay (`display: none`), shows floating "BB" mini button (bottom-right corner)
 - **Mini button click**: re-shows overlay, or re-runs `init()` if overlay was lost
 - **Popup "Show Overlay on Page" button**: sends `chrome.tabs.sendMessage({action: 'showOverlay'})` to content script
-- Both parsers have `chrome.runtime.onMessage` listener for `showOverlay` action
+- All three parsers have `chrome.runtime.onMessage` listener for `showOverlay` action
 
 ### Popup (`popup.html` + `popup.js`)
 **Buttons available when logged in:**
@@ -158,15 +202,17 @@ Both parsers support minimize/restore:
 Uses `*://` prefix (matches both HTTP and HTTPS) because BB may serve over either:
 - Player pages: `*://www.buzzerbeater.com/player/*`, `*://buzzerbeater.com/player/*`
 - Roster pages: `*://www.buzzerbeater.com/national/*`, `*://buzzerbeater.com/national/*`, `*://www.buzzerbeater.com/country/*/jnt/*`, `*://buzzerbeater.com/country/*/jnt/*`
+- Market pages: `*://www.buzzerbeater.com/manage/transferlist*`, `*://buzzerbeater.com/manage/transferlist*`
 
 ## Web Dashboard Features
 
 ### Player List (`/players`)
-**Columns**: Checkbox, Name (with BB link ↗), Age, Position, Potential (colored), DMI, TSP, OSP (outside skill points), ISP (inside skill points), Tags, Updated
+**View modes**: "My NT" (Slovenia only) / "Scouting" (all other nationalities) toggle at the top. Default: My NT.
+**Columns**: Checkbox, Name (with BB link ↗), Nationality (scouting mode only), Age, Position, Potential (colored), DMI, TSP, OSP (outside skill points), ISP (inside skill points), Tags, Updated
 **OSP** = jump_shot + jump_range + outside_def + handling + driving + passing
 **ISP** = inside_shot + inside_def + rebounding + shot_blocking
-**Sorting**: all columns sortable, toggle asc/desc
-**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown
+**Sorting**: all columns sortable (including nationality), toggle asc/desc
+**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown, nationality dropdown (scouting mode only)
 **Bulk delete**: with RLS failure detection — if 0 rows deleted, shows SQL to add DELETE policy
 
 ### Player Detail (`/players/[id]`)
@@ -174,6 +220,69 @@ Uses `*://` prefix (matches both HTTP and HTTPS) because BB may serve over eithe
 - **Current skills** in 2-column grid with colored text and background
 - **Skill history table** with deltas (+N green, -N red) comparing snapshots
 - **BB link**: "View on BuzzerBeater ↗" → `https://www.buzzerbeater.com/player/${bb_player_id}/overview.aspx`
+
+### Training Simulator (`/training`)
+Calculates projected weekly skill gains based on community-researched training formulas.
+
+**Two input modes**:
+- **From Database**: select a player from the DB, auto-loads latest snapshot (skills, age, height, potential)
+- **Enter Manually**: input age, height (cm), potential, and all 12 skill levels by hand
+
+**URL param**: `?player=ID` pre-selects a database player (linked from player detail page).
+
+**Training configuration**:
+- Training type (10 types: Pressure, Shot Blocking, Inside Defense, Rebounding, Inside Scoring, One on One, Outside Shooting, Jump Shot, Ball Handling, Passing)
+- Training position (varies per training type — auto-filtered dropdown)
+- Trainer level (1-7, shows name + multiplier)
+- Minutes per week (0-96)
+- Youth trainer level (1-7, shown only for ages 18-19, estimated 2.5%/level boost)
+
+**Advanced settings** (collapsible):
+- Gym level (0-3, adds cross-training slots)
+- Potential cap model (off/on, experimental) with resistance setting (low/medium/high) — per-skill sigmoid slowdown as skills approach potential ceiling
+
+**Results display**:
+- Multiplier summary (age, trainer, youth trainer, minutes factor)
+- Per-skill row: current badge → projected badge, decimal gain, "LVL UP" indicator
+- Salary info (best position + estimated salary, shown when potential model is on)
+- Collapsible detailed breakdown table: base, elastic, cross-training, total per skill
+- Total SP gain summary
+
+**Engine architecture** (`web/lib/training/`):
+- `types.ts` — all type definitions (TrainingType, TrainingPosition, SkillState, PlayerParams, WeeklyTrainingResult, etc.)
+- `data.ts` — lookup tables (age multipliers, height multipliers, trainer multipliers, youth trainer multipliers, training point matrix with 88 rows, elastic drag coefficients, potential skill caps, salary formula data)
+- `engine.ts` — pure TypeScript calculation functions: `calculateWeeklyGains()`, `projectTrainingPath()`, `initializeSkillState()`, `calculatePlayerSalary()`. No React dependencies for testability.
+- Key constant: `TRAINING_POINT_DIVISOR = 1000` (may need calibration against real training data)
+
+### Scout (`/scout`)
+Fetches player skills directly from the BuzzerBeater XML API (server-side), bypassing the need for the Chrome extension.
+
+**Two fetch modes**:
+- **Fetch by Player ID**: enter up to 20 BB player IDs (comma/newline separated, or paste BB URLs). IDs extracted via regex.
+- **Fetch Team Roster**: enter a BB team ID to fetch all players on that roster.
+
+**Limitations**: BB API `roster.aspx` only returns full skills for: your own club, your own NT roster, and market-listed players. Other rosters return basic info only.
+
+**Results table**: Name (linked to player detail + BB), Status (New/Updated badge), Age, Height, Position, Potential (colored), Salary, TSP, OSP, ISP, then 10 individual skills with BB color coding.
+
+**Recent scans**: stored in `localStorage` (key: `bb_scout_recent`), shows type, count, timestamp. Max 20 entries. Clearable.
+
+**API routes** (`web/app/api/scout/`):
+- `player/route.ts` — POST `{ playerIds: number[] }`. Logs into BB API, fetches each player, upserts to DB. Includes snapshot dedup (same player + same day = update).
+- `roster/route.ts` — POST `{ teamId: number }`. Same pattern but fetches entire roster.
+- Both use `bbApiLogin()` / `bbApiLogout()` for session management and return `{ results, errors }`.
+
+**BB API client** (`web/lib/bbapi.ts`):
+- Auth: cookie-based (`GET login.aspx` → Set-Cookie → use cookie on subsequent requests)
+- Base URL: `https://bbapi.buzzerbeater.com`
+- XML parsing via `fast-xml-parser` with `@_` attribute prefix
+- `mapBbApiPlayerToDb()` maps API response to `players` + `skill_snapshots` table schema
+- Also supports: `fetchCountries()`, `fetchLeagues()`, `fetchStandings()` (not yet used in UI)
+
+**Server Supabase client** (`web/lib/supabase-server.ts`):
+- Uses `SUPABASE_SERVICE_ROLE_KEY` to bypass RLS (API routes insert snapshots without a `captured_by` user)
+- Lazy singleton pattern: `getSupabaseServer()` creates client on first call
+- Only used in API routes, never in client-side code
 
 ## BuzzerBeater Color Scheme
 Exact hex codes extracted from BB's HTML source. Gradient: Black → Dark Blue → Purple → Red → Orange → Gold → Green/Teal.
@@ -228,8 +337,15 @@ Colors are stored in:
 ### Key RLS Policies
 - All tables: authenticated users can SELECT
 - `players`: authenticated users can INSERT, UPDATE, and DELETE (DELETE policy was added manually — must run SQL in Supabase if missing)
-- `skill_snapshots`: INSERT restricted to `captured_by = auth.uid()`
+- `skill_snapshots`: INSERT restricted to `captured_by = auth.uid()`. UPDATE restricted to `captured_by = auth.uid()` (for snapshot dedup).
 - `player_notes`/`player_tags`: users manage their own records
+
+### Important: source CHECK constraint
+The `skill_snapshots.source` column has a CHECK constraint. The schema ships with `CHECK (source IN ('extension', 'manual'))`. The BB API scout routes insert snapshots with `source = 'api'`. Run this SQL if the constraint hasn't been updated:
+```sql
+ALTER TABLE skill_snapshots DROP CONSTRAINT skill_snapshots_source_check;
+ALTER TABLE skill_snapshots ADD CONSTRAINT skill_snapshots_source_check CHECK (source IN ('extension', 'manual', 'api'));
+```
 
 ### Important: DELETE Policy
 If bulk delete silently fails (returns success but 0 rows), the DELETE RLS policy is missing. Run:
@@ -249,11 +365,15 @@ Extension uses PostgREST upsert: `POST /rest/v1/players?on_conflict=bb_player_id
 6. **BB serves HTTP sometimes** — manifest uses `*://` patterns to match both HTTP and HTTPS.
 
 ## Pending / Future Work
-- **Training simulator / path optimizer** — The most valuable planned feature. Given a player's current skills, age, height, potential, and a target build, calculate the optimal weekly training path. See "BuzzerBeater Training Mechanics" section below for all known formulas and data. Ultimate goal: user sets a desired final build → tool outputs week-by-week training plan.
+- **Training path optimizer** — The engine supports multi-week projection (`projectTrainingPath()`) but the UI only exposes single-week calculation. Ultimate goal: user sets a desired final build → tool outputs week-by-week training plan with optimal type/position selection.
 - **Training history parser** — BB has training history pages showing per-week skill changes. Could be parsed to enrich player data and validate training simulator accuracy.
+- **Calibrate TRAINING_POINT_DIVISOR** — Currently set to 1000, may need tuning against real training data. Youth trainer multipliers are estimates (2.5%/level).
+- ~~**Training simulator**~~ — DONE. Weekly gain calculator with manual + database mode, all multipliers, elastic drag, cross-training, potential cap model. Files: `web/lib/training/` + `web/app/training/page.tsx`.
+- ~~**BB API scouting**~~ — DONE. Server-side fetch via BB XML API. Fetch by player ID (up to 20) or team roster. Files: `web/lib/bbapi.ts`, `web/lib/supabase-server.ts`, `web/app/api/scout/`, `web/app/scout/page.tsx`.
+- ~~**Market parser**~~ — DONE. Extension content script for transfer market search results. Nationality from flag images, batch save, clipboard export. File: `extension/content-scripts/market-parser.js`.
 - ~~**Duplicate snapshot detection**~~ — DONE. Same player + same day = update existing snapshot. Implemented in all 3 extension parsers + API scout routes.
 - ~~**Vercel deployment**~~ — DONE. Deployed via GitHub (`Rn5ho/BB-project`) → Vercel. Root directory set to `web/`. Env vars configured in Vercel dashboard.
-- **Multi-country support** — currently hardcoded to 'Slovenia'. Schema supports nationality field.
+- ~~**Multi-country support**~~ — DONE (partial). Players page has My NT (Slovenia) / Scouting (all others) toggle with nationality filter. Market parser extracts nationality from flag images.
 
 ## BuzzerBeater Training Mechanics
 All data below sourced from BB community research and forum posts. This is the foundation for the training simulator feature.
@@ -394,3 +514,21 @@ The optimal training path depends on:
 | 2026-02-07 | `*://` URL patterns in manifest | BB may serve over HTTP or HTTPS; wildcard protocol handles both |
 | 2026-02-07 | Name regex uses literal space `[ ]` | `\s+` between name words matched across lines/tabs, pulling in nav text. Literal space prevents this |
 | 2026-02-07 | Token auto-refresh in content scripts | Both parsers check 60-second expiry buffer and refresh via `/auth/v1/token?grant_type=refresh_token` before saving |
+| 2026-02-07 | Training engine as pure TypeScript | Engine in `web/lib/training/engine.ts` has zero React dependencies — enables future testing and CLI usage without browser |
+| 2026-02-09 | Cross-training deterministic model | ~10% average redistribution weighted to lower skills, rather than random pops, for reproducible results |
+| 2026-02-09 | Potential model off by default | Sigmoid per-skill slowdown is experimental; users must opt in via Advanced Settings |
+| 2026-02-12 | BB API scouting via server-side routes | Server routes with service role key bypass RLS, allowing snapshot inserts without user auth context |
+| 2026-02-12 | Cookie-based BB API auth | BB API uses `GET login.aspx` → `Set-Cookie`; each API route does login → fetch → logout per request |
+| 2026-02-12 | Nationality from flag DOM elements | Market parser reads `nationalFlag` img `title` attribute — text is unreliable due to Utopia dual-flag pattern |
+| 2026-02-12 | My NT / Scouting view split | Players page splits into Slovenia (NT) vs. all other nationalities (Scouting) instead of mixing everything |
+| 2026-02-12 | fast-xml-parser for BB API | Zero-dependency XML→JSON conversion with attribute support (`@_` prefix convention) |
+
+## Deployment
+- **GitHub repo**: `Rn5ho/BB-project` (private)
+- **Web app hosting**: Vercel, auto-deploys from `main` branch
+  - Root directory: `web/`
+  - Framework: Next.js (auto-detected)
+  - Environment variables: configured in Vercel dashboard (all 5 from `.env.local`)
+  - Production URL: `https://bb-project-eta.vercel.app`
+- **Database**: Supabase Cloud at `https://zhywajswbpdmhpeqyczc.supabase.co`
+- **Chrome extension**: loaded manually via `chrome://extensions` > Developer Mode > Load Unpacked > select `extension/` folder
