@@ -3,7 +3,7 @@
 // Configuration - UPDATE THESE with your Supabase project values
 const SUPABASE_URL = 'https://zhywajswbpdmhpeqyczc.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_IHc1rsVvj_jhP5dozauCcw_ITYxRerW';
-const DASHBOARD_URL = 'http://localhost:3000'; // Update after Vercel deploy
+const DASHBOARD_URL = 'https://bb-project-eta.vercel.app';
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Check existing auth state

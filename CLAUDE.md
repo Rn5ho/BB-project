@@ -78,7 +78,7 @@ cd web && npm run lint
    - `extension/background/service-worker.js` — SUPABASE_URL, SUPABASE_ANON_KEY
 
 **Current Supabase instance:** `https://zhywajswbpdmhpeqyczc.supabase.co`
-**Dashboard URL (popup.js):** Update to Vercel URL after deploy (currently `http://localhost:3000`)
+**Dashboard URL (popup.js):** `https://bb-project-eta.vercel.app`
 
 ## Coding Conventions
 - Use TypeScript for all web app code
