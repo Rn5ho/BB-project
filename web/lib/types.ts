@@ -5,6 +5,7 @@ export interface Player {
   nationality: string | null;
   height: string | null;
   position: string | null;
+  is_nt_player: boolean;
   created_at: string;
   updated_at: string;
 }

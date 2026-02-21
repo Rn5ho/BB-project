@@ -43,6 +43,7 @@ CREATE TABLE public.players (
   nationality TEXT DEFAULT 'Slovenia',
   height TEXT,
   position TEXT,
+  is_nt_player BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -61,7 +62,7 @@ CREATE TABLE public.skill_snapshots (
   player_id INTEGER NOT NULL REFERENCES players(id) ON DELETE CASCADE,
   captured_by UUID REFERENCES auth.users(id),
   captured_at TIMESTAMPTZ DEFAULT NOW(),
-  source TEXT DEFAULT 'extension' CHECK (source IN ('extension', 'manual')),
+  source TEXT DEFAULT 'extension' CHECK (source IN ('extension', 'manual', 'api')),
   bb_season INTEGER,
 
   -- Player metadata at time of capture

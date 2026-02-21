@@ -54,6 +54,22 @@
   // ROSTER PAGE PARSING
   // ========================================
 
+  // Parse the nationality from the page header (e.g. "Ukraina U21 National Team")
+  function parsePageNationality() {
+    const bodyText = document.body.innerText || '';
+    // Match patterns like "Ukraina U21 National Team" or "Slovenija U21 National Team - National Team Roster"
+    const ntMatch = bodyText.match(/([A-ZÀ-Ža-zà-ž][A-ZÀ-Ža-zà-ž\s]+?)\s+U-?\d+\s+National\s+Team/i);
+    if (ntMatch) {
+      return ntMatch[1].trim();
+    }
+    // Fallback: try "National Team" without U-21
+    const ntMatch2 = bodyText.match(/([A-ZÀ-Ža-zà-ž][A-ZÀ-Ža-zà-ž\s]+?)\s+National\s+Team/i);
+    if (ntMatch2) {
+      return ntMatch2[1].trim();
+    }
+    return null;
+  }
+
   function parseRosterPage() {
     const players = [];
     const bodyText = document.body.innerText || '';
@@ -62,12 +78,18 @@
     // Log first 500 chars to help debug
     console.log('[BB Scout Roster] First 500 chars:', bodyText.substring(0, 500));
 
+    // Parse nationality from page header once
+    const pageNationality = parsePageNationality();
+    console.log('[BB Scout Roster] Detected nationality:', pageNationality);
+
     // Strategy: Find all "(PLAYER_ID)" patterns (6+ digit IDs)
-    // Validate each by checking if skill keywords appear in the next ~800 chars
+    // Validate by checking for skill keywords OR DMI-related keywords in the next ~800 chars
     // Position is parsed best-effort but NOT required
     const idRegex = /\((\d{6,})\)/g;
     const SKILL_KEYWORDS = ['Jump Shot', 'Jump Range', 'Handling', 'Driving', 'Passing',
       'Inside Shot', 'Rebounding', 'Shot Blocking', 'Stamina', 'Free Throw', 'DMI:'];
+    // Keywords for DMI-only players (opponents whose skills are hidden)
+    const DMI_KEYWORDS = ['DMI:', 'Age:', 'Potential:', 'Game Shape:', 'Weekly salary'];
 
     let match;
     const playerHeaders = [];
@@ -76,12 +98,23 @@
       const idIndex = match.index;
       const afterId = bodyText.substring(match.index + match[0].length, match.index + match[0].length + 800);
 
-      // Validate: this ID belongs to a player if skill keywords appear nearby
+      // Primary: check for skill keywords (full player data)
       const keywordHits = SKILL_KEYWORDS.filter(kw => afterId.includes(kw));
-      if (keywordHits.length < 3) {
-        // Not enough skill keywords — probably not a player block (e.g. DMI number, salary, etc.)
-        console.log(`[BB Scout Roster] Skipping ID ${bbPlayerId} — only ${keywordHits.length} skill keywords found nearby`);
+      const hasFullSkills = keywordHits.length >= 3;
+
+      // Secondary: check for DMI-related keywords (DMI-only player, no skills visible)
+      const dmiKeywordHits = DMI_KEYWORDS.filter(kw => afterId.includes(kw));
+      const hasDmiData = dmiKeywordHits.length >= 3;
+
+      if (!hasFullSkills && !hasDmiData) {
+        // Not a player block at all
+        console.log(`[BB Scout Roster] Skipping ID ${bbPlayerId} — only ${keywordHits.length} skill keywords, ${dmiKeywordHits.length} DMI keywords`);
         continue;
+      }
+
+      const isDmiOnly = !hasFullSkills && hasDmiData;
+      if (isDmiOnly) {
+        console.log(`[BB Scout Roster] DMI-only player detected: ${bbPlayerId} [${dmiKeywordHits.length} DMI keywords]`);
       }
 
       // Best-effort position parse (NOT required)
@@ -116,13 +149,15 @@
         name = `Player ${bbPlayerId}`;
       }
 
-      console.log(`[BB Scout Roster] Found: ${name} (${bbPlayerId}) ${position || 'no pos'} [${keywordHits.length} keywords]`);
+      console.log(`[BB Scout Roster] Found: ${name} (${bbPlayerId}) ${position || 'no pos'} [${keywordHits.length} skill kw, ${dmiKeywordHits.length} dmi kw]${isDmiOnly ? ' DMI-ONLY' : ''}`);
 
       playerHeaders.push({
         name,
         bbPlayerId,
         position,
-        index: idIndex
+        index: idIndex,
+        isDmiOnly,
+        nationality: pageNationality
       });
     }
 
@@ -160,6 +195,9 @@
       bbPlayerId: header.bbPlayerId,
       name: header.name,
       position: header.position,
+      nationality: header.nationality,
+      isDmiOnly: header.isDmiOnly || false,
+      isNtPlayer: true, // All players from roster pages are NT players
       age: null,
       height: null,
       salary: null,
@@ -268,7 +306,8 @@
     data._parseInfo = {
       skillsParsed: skillCount,
       totalSkills: SKILLS.length,
-      complete: skillCount === SKILLS.length
+      complete: skillCount === SKILLS.length,
+      isDmiOnly: data.isDmiOnly
     };
 
     return data;
@@ -293,10 +332,12 @@
     const existing = document.getElementById('bb-scout-overlay');
     if (existing) existing.remove();
 
-    const totalSkills = players.reduce((sum, p) => sum + p._parseInfo.skillsParsed, 0);
-    const maxSkills = players.length * SKILLS.length;
-    const allComplete = players.every(p => p._parseInfo.complete);
-    const statusClass = allComplete ? 'success' : 'warning';
+    const fullPlayers = players.filter(p => !p._parseInfo.isDmiOnly);
+    const dmiOnlyPlayers = players.filter(p => p._parseInfo.isDmiOnly);
+    const totalSkills = fullPlayers.reduce((sum, p) => sum + p._parseInfo.skillsParsed, 0);
+    const maxSkills = fullPlayers.length * SKILLS.length;
+    const allComplete = fullPlayers.every(p => p._parseInfo.complete);
+    const statusClass = allComplete && dmiOnlyPlayers.length === 0 ? 'success' : 'warning';
 
     const overlay = document.createElement('div');
     overlay.id = 'bb-scout-overlay';
@@ -306,19 +347,24 @@
         <span class="bb-scout-logo">BB Scout</span>
         <button class="bb-scout-close" id="bb-scout-close" title="Close">&times;</button>
       </div>
-      <div class="bb-scout-player-name">Roster: ${players.length} players found</div>
+      <div class="bb-scout-player-name">Roster: ${players.length} players found${dmiOnlyPlayers.length > 0 ? ` (${dmiOnlyPlayers.length} DMI-only)` : ''}</div>
       <div class="bb-scout-status ${statusClass}">
-        ${allComplete ? '&#10003;' : '&#9888;'} ${totalSkills}/${maxSkills} total skills parsed
+        ${fullPlayers.length > 0 ? `${totalSkills}/${maxSkills} skills parsed` : ''}
+        ${dmiOnlyPlayers.length > 0 ? `${fullPlayers.length > 0 ? ' | ' : ''}${dmiOnlyPlayers.length} players tracked by DMI` : ''}
       </div>
       <div class="bb-scout-skills-preview" style="max-height: 200px; overflow-y: auto; display: block;">
         ${players.map((p, i) => {
-          const icon = p._parseInfo.complete ? '&#10003;' : '&#9888;';
-          const color = p._parseInfo.complete ? '#2ecc71' : '#f39c12';
+          const isDmi = p._parseInfo.isDmiOnly;
+          const icon = isDmi ? '&#9679;' : (p._parseInfo.complete ? '&#10003;' : '&#9888;');
+          const color = isDmi ? '#3b82f6' : (p._parseInfo.complete ? '#2ecc71' : '#f39c12');
+          const info = isDmi
+            ? `${p.age || '?'} | ${p.position || '?'} | DMI: ${p.dmi || '?'}`
+            : `${p.age || '?'} | ${p.position || '?'} | ${p._parseInfo.skillsParsed}/${p._parseInfo.totalSkills}`;
           return `
             <div style="display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px solid #333;">
               <span style="color: ${color}">${icon}</span>
               <span style="flex: 1; margin-left: 6px;">${escapeHtml(p.name)}</span>
-              <span style="color: #888; font-size: 11px;">${p.age || '?'} | ${p.position || '?'} | ${p._parseInfo.skillsParsed}/${p._parseInfo.totalSkills}</span>
+              <span style="color: #888; font-size: 11px;">${info}</span>
             </div>
           `;
         }).join('')}
@@ -463,9 +509,10 @@
           body: JSON.stringify({
             bb_player_id: p.bbPlayerId,
             name: p.name,
-            nationality: 'Slovenia',
+            nationality: p.nationality || 'Unknown',
             height: p.height,
-            position: p.position
+            position: p.position,
+            is_nt_player: p.isNtPlayer || false
           })
         }, authData);
 
@@ -568,10 +615,10 @@
         return val ? `${val}` : '-';
       }).join('\t');
 
-      return `${p.name}\t${p.bbPlayerId}\t${p.age || ''}\t${p.position || ''}\t${p.dmi || ''}\t${p.potential || ''}\t${p.salary || ''}\t${p.skillPoints || ''}\t${skillLine}`;
+      return `${p.name}\t${p.bbPlayerId}\t${p.nationality || ''}\t${p.age || ''}\t${p.position || ''}\t${p.dmi || ''}\t${p.gameShape || ''}\t${p.potential || ''}\t${p.salary || ''}\t${p.skillPoints || ''}\t${skillLine}`;
     });
 
-    const header = `Name\tID\tAge\tPos\tDMI\tPot\tSalary\tSP\t${SKILLS.map(s => s.name).join('\t')}`;
+    const header = `Name\tID\tNat\tAge\tPos\tDMI\tShape\tPot\tSalary\tSP\t${SKILLS.map(s => s.name).join('\t')}`;
     const csv = [header, ...lines].join('\n');
 
     navigator.clipboard.writeText(csv).then(() => {
