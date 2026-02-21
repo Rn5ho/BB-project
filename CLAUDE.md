@@ -37,7 +37,8 @@ BB-project/
       layout.tsx             # Root layout
       globals.css            # Global styles (dark theme)
       login/page.tsx         # Auth page
-      players/page.tsx       # Player list with filters, sorting, bulk delete, My NT / Scouting toggle
+      slovenia/page.tsx      # Slovenia U-21 roster + prospects (sub-tabs)
+      opponents/page.tsx     # Opponent tracking by country (DMI-focused, country pills)
       players/[id]/page.tsx  # Player detail + skill history + editable position
       compare/page.tsx       # Side-by-side player comparison
       training/page.tsx      # Training simulator (manual + database player mode)
@@ -48,14 +49,14 @@ BB-project/
           player/route.ts    # API route: fetch player(s) via BB API, upsert to DB
           roster/route.ts    # API route: fetch team roster via BB API, upsert to DB
     components/
-      Navbar.tsx             # Navigation bar (Players, Compare, Training, Scout, Manual Entry)
+      Navbar.tsx             # Navigation bar (Slovenia, Opponents, Compare, Training, Scout, Manual Entry)
       SkillBadge.tsx         # Skill display with color coding
       SkillDelta.tsx         # Skill change indicator (+N green, -N red)
     lib/
       supabase.ts            # Supabase client config (browser-side, anon key)
       supabase-server.ts     # Supabase server client (service role key, bypasses RLS)
       constants.ts           # Skill levels, potentials, BB color maps, helper functions
-      types.ts               # TypeScript interfaces
+      types.ts               # TypeScript interfaces (Player has is_nt_player field)
       bbapi.ts               # BuzzerBeater API client (login, fetch players/rosters, XML parsing)
       training/
         types.ts             # Training simulator type definitions
@@ -160,13 +161,20 @@ Runs on `/player/*` pages. Parses single player profiles.
 **Auth token refresh**: checks 60-second expiry buffer before saving, calls `/auth/v1/token?grant_type=refresh_token`.
 
 ### Roster Parser (`roster-parser.js`)
-Runs on `/national/*` and `/country/*/jnt/*` pages. Batch-parses all players on roster page.
+Runs on `/national/*` and `/country/*/jnt/*` pages. Batch-parses all players on roster page. Works for **both own NT and opponent NT rosters**.
 
-**Player detection**: Finds all `(6+ digit ID)` patterns in page text, validates each by checking for 3+ skill keywords in the next 800 characters. Position is NOT required (parsed best-effort only).
+**Two player types detected**:
+1. **Full skills players** — Has 3+ skill keywords (Jump Shot, Handling, DMI, etc.) in the next 800 chars after the player ID
+2. **DMI-only players** — Has 3+ DMI metadata keywords (DMI, Age, Potential, Game Shape, Weekly salary) but skills are hidden (typical for opponent rosters)
 
-**Skill keywords for validation**: Jump Shot, Jump Range, Handling, Driving, Passing, Inside Shot, Rebounding, Shot Blocking, Stamina, Free Throw, DMI
+**Skill keywords for full validation**: Jump Shot, Jump Range, Handling, Driving, Passing, Inside Shot, Rebounding, Shot Blocking, Stamina, Free Throw, DMI
+**DMI keywords for metadata-only validation**: DMI:, Age:, Potential:, Game Shape:, Weekly salary
 
-**Batch save**: saves all locally first, then upserts each to Supabase with progress tracking. Shows `firstError` in overlay if any fail.
+**Nationality auto-detection**: Parses from page header text (e.g., "Ukraina U21 National Team") via regex, instead of hardcoding "Slovenia". Falls back to null if header doesn't match expected patterns.
+
+**`is_nt_player` flag**: All players parsed from roster pages are automatically marked `isNtPlayer: true`, which maps to `is_nt_player` in the `players` table. This is how the Slovenia U-21 Roster sub-tab and Opponents U-21 filter work.
+
+**Batch save**: saves all locally first, then upserts each to Supabase with progress tracking. Player upsert includes `is_nt_player: true`. Shows `firstError` in overlay if any fail.
 
 ### Market Parser (`market-parser.js`)
 Runs on `/manage/transferlist*` pages. Batch-parses all players from transfer market search results.
@@ -206,14 +214,33 @@ Uses `*://` prefix (matches both HTTP and HTTPS) because BB may serve over eithe
 
 ## Web Dashboard Features
 
-### Player List (`/players`)
-**View modes**: "My NT" (Slovenia only) / "Scouting" (all other nationalities) toggle at the top. Default: My NT.
-**Columns**: Checkbox, Name (with BB link ↗), Nationality (scouting mode only), Age, Position, Potential (colored), DMI, TSP, OSP (outside skill points), ISP (inside skill points), Tags, Updated
+### Slovenia (`/slovenia`)
+Dedicated page for managing Slovenia U-21 national team players. Queries only Slovenian players (`nationality = 'Slovenia'` or NULL).
+
+**Sub-tabs**:
+- **U-21 Roster** — Players with `is_nt_player = true` (auto-set when scanned from NT roster page)
+- **Prospects** — Slovenian players with `is_nt_player = false` (found on market, manually added, or individually scouted)
+
+**Columns**: Checkbox, Name (with BB link ↗), Age, Position, Potential (colored), DMI, TSP, OSP, ISP, Tags, Updated
 **OSP** = jump_shot + jump_range + outside_def + handling + driving + passing
 **ISP** = inside_shot + inside_def + rebounding + shot_blocking
-**Sorting**: all columns sortable (including nationality), toggle asc/desc
-**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown, nationality dropdown (scouting mode only)
+**Sorting**: all columns sortable, toggle asc/desc
+**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown
 **Bulk delete**: with RLS failure detection — if 0 rows deleted, shows SQL to add DELETE policy
+**Empty states**: contextual messages explaining how to populate each sub-tab
+
+### Opponents (`/opponents`)
+Tracks and scouts opposing national teams' players. Queries only non-Slovenian players (`nationality != 'Slovenia'`, not null).
+
+**Country pills**: Dynamic filter buttons generated from available nationalities (All / France / Ukraine / etc.). Shown inline next to the heading.
+**"U-21 only" toggle**: Filters to `is_nt_player = true` to see only confirmed opposing NT roster players.
+
+**Columns**: Checkbox, Name (with nationality tag + NT badge if applicable), Age, Position, Potential (colored), **DMI** (bold, default sort DESC), **Game Shape** (colored skill level), **Salary** (formatted), TSP, **Data** (badge), Updated
+**Data badge**: "Full skills" (green) if any skill values present, "DMI only" (blue) if only metadata was captured (opponent roster where skills are hidden)
+
+**Sorting**: all columns sortable including DMI (default), game shape, salary
+**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown, U-21 only toggle, country pills
+**Bulk delete**: same pattern as Slovenia page
 
 ### Player Detail (`/players/[id]`)
 - **Editable position dropdown** (PG/SG/SF/PF/C or blank) — saves immediately to Supabase
@@ -334,6 +361,14 @@ Colors are stored in:
 ## Database Schema (Supabase)
 **Tables**: `profiles`, `players`, `skill_snapshots`, `player_notes`, `player_tags`
 
+### `players` Table Key Columns
+- `bb_player_id` — BuzzerBeater player ID (unique constraint, used for upsert)
+- `name` — Player name
+- `nationality` — Country name (e.g., "Slovenia", "Ukraina"). NULL for legacy data. Used to split Slovenia vs Opponents views.
+- `height` — Height string (e.g., "196 cm")
+- `position` — Editable position (PG/SG/SF/PF/C or NULL)
+- `is_nt_player` — Boolean (default FALSE). Auto-set to TRUE when player is scanned from an NT roster page. Used for U-21 Roster sub-tab (Slovenia) and U-21 filter (Opponents).
+
 ### Key RLS Policies
 - All tables: authenticated users can SELECT
 - `players`: authenticated users can INSERT, UPDATE, and DELETE (DELETE policy was added manually — must run SQL in Supabase if missing)
@@ -373,7 +408,7 @@ Extension uses PostgREST upsert: `POST /rest/v1/players?on_conflict=bb_player_id
 - ~~**Market parser**~~ — DONE. Extension content script for transfer market search results. Nationality from flag images, batch save, clipboard export. File: `extension/content-scripts/market-parser.js`.
 - ~~**Duplicate snapshot detection**~~ — DONE. Same player + same day = update existing snapshot. Implemented in all 3 extension parsers + API scout routes.
 - ~~**Vercel deployment**~~ — DONE. Deployed via GitHub (`Rn5ho/BB-project`) → Vercel. Root directory set to `web/`. Env vars configured in Vercel dashboard.
-- ~~**Multi-country support**~~ — DONE (partial). Players page has My NT (Slovenia) / Scouting (all others) toggle with nationality filter. Market parser extracts nationality from flag images.
+- ~~**Multi-country support**~~ — DONE. Dedicated `/slovenia` page (U-21 Roster + Prospects sub-tabs) and `/opponents` page (country pill filters, DMI-focused, U-21 toggle). Roster parser auto-detects nationality from page headers and sets `is_nt_player` flag. Market parser extracts nationality from flag images. Opponents tracked with full skills or DMI-only metadata.
 
 ## BuzzerBeater Training Mechanics
 All data below sourced from BB community research and forum posts. This is the foundation for the training simulator feature.
@@ -520,8 +555,11 @@ The optimal training path depends on:
 | 2026-02-12 | BB API scouting via server-side routes | Server routes with service role key bypass RLS, allowing snapshot inserts without user auth context |
 | 2026-02-12 | Cookie-based BB API auth | BB API uses `GET login.aspx` → `Set-Cookie`; each API route does login → fetch → logout per request |
 | 2026-02-12 | Nationality from flag DOM elements | Market parser reads `nationalFlag` img `title` attribute — text is unreliable due to Utopia dual-flag pattern |
-| 2026-02-12 | My NT / Scouting view split | Players page splits into Slovenia (NT) vs. all other nationalities (Scouting) instead of mixing everything |
 | 2026-02-12 | fast-xml-parser for BB API | Zero-dependency XML→JSON conversion with attribute support (`@_` prefix convention) |
+| 2026-02-21 | Slovenia + Opponents nav restructure | Replaced single `/players` page (My NT/Scouting toggle) with dedicated `/slovenia` (U-21 Roster + Prospects sub-tabs) and `/opponents` (country pills, DMI-focused, U-21 filter) pages |
+| 2026-02-21 | `is_nt_player` auto-detection | Roster parser sets `is_nt_player = true` for all players scanned from NT roster pages, enabling automatic U-21 roster vs. prospect distinction |
+| 2026-02-21 | DMI-only opponent tracking | Roster parser detects opponent players whose skills are hidden, captures DMI/age/potential/game shape/salary metadata only. Opponents page shows "Full skills" vs "DMI only" badge |
+| 2026-02-21 | Nationality from roster page header | Roster parser extracts country from page header text (e.g., "Ukraina U21 National Team") instead of hardcoding "Slovenia" |
 
 ## Deployment
 - **GitHub repo**: `Rn5ho/BB-project` (private)
