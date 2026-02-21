@@ -65,11 +65,21 @@ export default function Home() {
         <p className="text-gray-400 mb-8">Welcome back, {user.email}</p>
         <div className="space-y-3">
           <Link
-            href="/players"
+            href="/slovenia"
             className="block px-8 py-3 rounded-lg font-semibold text-white transition-colors"
             style={{ background: "var(--accent)" }}
           >
-            View Players
+            Slovenia
+          </Link>
+          <Link
+            href="/opponents"
+            className="block px-8 py-3 rounded-lg font-semibold transition-colors"
+            style={{
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
+            }}
+          >
+            Opponents
           </Link>
           <Link
             href="/compare"
@@ -90,6 +100,16 @@ export default function Home() {
             }}
           >
             Training Simulator
+          </Link>
+          <Link
+            href="/scout"
+            className="block px-8 py-3 rounded-lg font-semibold transition-colors"
+            style={{
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
+            }}
+          >
+            Scout
           </Link>
           <Link
             href="/manual-entry"
