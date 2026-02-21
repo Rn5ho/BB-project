@@ -11,6 +11,7 @@ import {
   getSkillColor,
   getPotentialColor,
 } from "@/lib/constants";
+
 import type { Player, SkillSnapshot, PlayerNote, PlayerTag } from "@/lib/types";
 import type { SkillDbKey } from "@/lib/constants";
 import Navbar from "@/components/Navbar";
@@ -133,6 +134,12 @@ export default function PlayerDetailPage() {
   const latestSnapshot = snapshots[0] || null;
   const previousSnapshot = snapshots[1] || null;
 
+  // Check if this player has any skill data at all
+  const SKILL_KEYS = ['jump_shot', 'jump_range', 'outside_def', 'handling', 'driving', 'passing', 'inside_shot', 'inside_def', 'rebounding', 'shot_blocking', 'stamina', 'free_throw'];
+  const hasAnySkills = latestSnapshot
+    ? SKILL_KEYS.some(k => latestSnapshot[k as keyof SkillSnapshot] != null)
+    : false;
+
   if (loading) {
     return (
       <div className="min-h-screen">
@@ -161,10 +168,10 @@ export default function PlayerDetailPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
         {/* Back link */}
         <Link
-          href="/players"
+          href={player.nationality === "Slovenia" || !player.nationality ? "/slovenia" : "/opponents"}
           className="text-sm text-gray-400 hover:text-white transition-colors mb-4 inline-block"
         >
-          &larr; Back to Players
+          &larr; {player.nationality === "Slovenia" || !player.nationality ? "Back to Slovenia" : "Back to Opponents"}
         </Link>
 
         {/* Player Header */}
@@ -234,12 +241,22 @@ export default function PlayerDetailPage() {
                       {POTENTIAL_LEVELS[latestSnapshot.potential || 0]}
                     </span>
                   </div>
+                  {latestSnapshot.game_shape != null && (
+                    <div className="text-sm text-gray-400">
+                      Game Shape:{" "}
+                      <span style={{ color: getSkillColor(latestSnapshot.game_shape) }}>
+                        {latestSnapshot.game_shape} ({SKILL_LEVELS[latestSnapshot.game_shape] || "?"})
+                      </span>
+                    </div>
+                  )}
                   <div className="text-sm text-gray-400">
                     Salary: ${latestSnapshot.salary?.toLocaleString() || "?"}
                   </div>
-                  <div className="text-sm text-gray-400">
-                    TSP: {latestSnapshot.skill_points || "?"}
-                  </div>
+                  {latestSnapshot.skill_points != null && (
+                    <div className="text-sm text-gray-400">
+                      TSP: {latestSnapshot.skill_points}
+                    </div>
+                  )}
                   <Link
                     href={`/training?player=${player.id}`}
                     className="inline-block mt-2 px-3 py-1 rounded text-xs font-medium text-white transition-colors"
@@ -294,7 +311,7 @@ export default function PlayerDetailPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Current Skills */}
+          {/* Current Skills or DMI-only Summary */}
           <div
             className="lg:col-span-2 rounded-lg p-6"
             style={{
@@ -302,40 +319,99 @@ export default function PlayerDetailPage() {
               border: "1px solid var(--card-border)",
             }}
           >
-            <h2 className="text-lg font-semibold mb-4">Current Skills</h2>
-            {latestSnapshot ? (
-              <div className="grid grid-cols-2 gap-3">
-                {SKILLS.map((skill) => {
-                  const value = latestSnapshot[skill.dbKey as keyof SkillSnapshot] as number | null;
-                  const prevValue = previousSnapshot
-                    ? (previousSnapshot[skill.dbKey as keyof SkillSnapshot] as number | null)
-                    : null;
-                  return (
-                    <div
-                      key={skill.dbKey}
-                      className="flex items-center justify-between py-1.5 px-3 rounded"
-                      style={{
-                        background: `${getSkillColor(value)}10`,
-                      }}
-                    >
-                      <span className="text-sm text-gray-300">
-                        {skill.name}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <SkillBadge value={value} />
-                        {previousSnapshot && (
-                          <SkillDelta
-                            oldValue={prevValue}
-                            newValue={value}
-                          />
-                        )}
-                      </div>
+            {hasAnySkills ? (
+              <>
+                <h2 className="text-lg font-semibold mb-4">Current Skills</h2>
+                {latestSnapshot && (
+                  <div className="grid grid-cols-2 gap-3">
+                    {SKILLS.map((skill) => {
+                      const value = latestSnapshot[skill.dbKey as keyof SkillSnapshot] as number | null;
+                      const prevValue = previousSnapshot
+                        ? (previousSnapshot[skill.dbKey as keyof SkillSnapshot] as number | null)
+                        : null;
+                      return (
+                        <div
+                          key={skill.dbKey}
+                          className="flex items-center justify-between py-1.5 px-3 rounded"
+                          style={{
+                            background: `${getSkillColor(value)}10`,
+                          }}
+                        >
+                          <span className="text-sm text-gray-300">
+                            {skill.name}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <SkillBadge value={value} />
+                            {previousSnapshot && (
+                              <SkillDelta
+                                oldValue={prevValue}
+                                newValue={value}
+                              />
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </>
+            ) : latestSnapshot ? (
+              <>
+                <h2 className="text-lg font-semibold mb-4">Player Overview</h2>
+                <p className="text-sm text-gray-400 mb-4">
+                  Individual skills are not visible for this player. Tracking DMI and game shape over time.
+                </p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg" style={{ background: "var(--background)" }}>
+                    <div className="text-xs text-gray-400 mb-1">DMI</div>
+                    <div className="text-2xl font-bold font-mono">
+                      {latestSnapshot.dmi?.toLocaleString() ?? "-"}
                     </div>
-                  );
-                })}
-              </div>
+                    {previousSnapshot?.dmi != null && latestSnapshot.dmi != null && (
+                      <div className={`text-sm mt-1 ${latestSnapshot.dmi > previousSnapshot.dmi ? "text-emerald-400" : latestSnapshot.dmi < previousSnapshot.dmi ? "text-red-400" : "text-gray-500"}`}>
+                        {latestSnapshot.dmi > previousSnapshot.dmi ? "+" : ""}
+                        {(latestSnapshot.dmi - previousSnapshot.dmi).toLocaleString()} from last scan
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4 rounded-lg" style={{ background: "var(--background)" }}>
+                    <div className="text-xs text-gray-400 mb-1">Game Shape</div>
+                    <div className="text-2xl font-bold" style={{ color: getSkillColor(latestSnapshot.game_shape) }}>
+                      {latestSnapshot.game_shape ?? "-"}
+                      {latestSnapshot.game_shape != null && (
+                        <span className="text-sm ml-2 text-gray-400">
+                          ({SKILL_LEVELS[latestSnapshot.game_shape] || "?"})
+                        </span>
+                      )}
+                    </div>
+                    {latestSnapshot.game_shape != null && latestSnapshot.game_shape < 9 && (
+                      <div className="text-xs text-gray-500 mt-1">
+                        Not at peak shape (9 = proficient = 100%)
+                      </div>
+                    )}
+                    {latestSnapshot.game_shape != null && latestSnapshot.game_shape >= 9 && (
+                      <div className="text-xs text-emerald-400 mt-1">
+                        At peak game shape
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4 rounded-lg" style={{ background: "var(--background)" }}>
+                    <div className="text-xs text-gray-400 mb-1">Height</div>
+                    <div className="text-lg font-mono">{player.height || "-"}</div>
+                  </div>
+                  <div className="p-4 rounded-lg" style={{ background: "var(--background)" }}>
+                    <div className="text-xs text-gray-400 mb-1">Salary</div>
+                    <div className="text-lg font-mono">
+                      {latestSnapshot.salary != null ? `$${latestSnapshot.salary.toLocaleString()}` : "-"}
+                    </div>
+                  </div>
+                </div>
+              </>
             ) : (
-              <p className="text-gray-400">No skill data captured yet.</p>
+              <>
+                <h2 className="text-lg font-semibold mb-4">Player Overview</h2>
+                <p className="text-gray-400">No data captured yet.</p>
+              </>
             )}
 
             {latestSnapshot && (
@@ -415,7 +491,9 @@ export default function PlayerDetailPage() {
               border: "1px solid var(--card-border)",
             }}
           >
-            <h2 className="text-lg font-semibold mb-4">Skill History</h2>
+            <h2 className="text-lg font-semibold mb-4">
+              {hasAnySkills ? "Skill History" : "DMI History"}
+            </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -426,30 +504,38 @@ export default function PlayerDetailPage() {
                     <th className="px-2 py-1 text-left text-xs text-gray-400">
                       Age
                     </th>
-                    {SKILLS.map((skill) => (
-                      <th
-                        key={skill.dbKey}
-                        className="px-2 py-1 text-center text-xs text-gray-400"
-                        title={skill.name}
-                      >
-                        {skill.name
-                          .replace("Outside Def.", "OD")
-                          .replace("Inside Def.", "ID")
-                          .replace("Jump Shot", "JS")
-                          .replace("Jump Range", "JR")
-                          .replace("Inside Shot", "IS")
-                          .replace("Shot Blocking", "SB")
-                          .replace("Free Throw", "FT")
-                          .replace("Rebounding", "Reb")
-                          .replace("Handling", "Han")
-                          .replace("Driving", "Dri")
-                          .replace("Passing", "Pas")
-                          .replace("Stamina", "Sta")}
+                    {hasAnySkills ? (
+                      <>
+                        {SKILLS.map((skill) => (
+                          <th
+                            key={skill.dbKey}
+                            className="px-2 py-1 text-center text-xs text-gray-400"
+                            title={skill.name}
+                          >
+                            {skill.name
+                              .replace("Outside Def.", "OD")
+                              .replace("Inside Def.", "ID")
+                              .replace("Jump Shot", "JS")
+                              .replace("Jump Range", "JR")
+                              .replace("Inside Shot", "IS")
+                              .replace("Shot Blocking", "SB")
+                              .replace("Free Throw", "FT")
+                              .replace("Rebounding", "Reb")
+                              .replace("Handling", "Han")
+                              .replace("Driving", "Dri")
+                              .replace("Passing", "Pas")
+                              .replace("Stamina", "Sta")}
+                          </th>
+                        ))}
+                        <th className="px-2 py-1 text-center text-xs text-gray-400">
+                          SP
+                        </th>
+                      </>
+                    ) : (
+                      <th className="px-2 py-1 text-center text-xs text-gray-400">
+                        Shape
                       </th>
-                    ))}
-                    <th className="px-2 py-1 text-center text-xs text-gray-400">
-                      SP
-                    </th>
+                    )}
                     <th className="px-2 py-1 text-center text-xs text-gray-400">
                       DMI
                     </th>
@@ -458,6 +544,7 @@ export default function PlayerDetailPage() {
                 <tbody>
                   {snapshots.map((snap, idx) => {
                     const prevSnap = snapshots[idx + 1] || null;
+                    const dmiDiff = snap.dmi != null && prevSnap?.dmi != null ? snap.dmi - prevSnap.dmi : 0;
                     return (
                       <tr
                         key={snap.id}
@@ -473,40 +560,63 @@ export default function PlayerDetailPage() {
                           {new Date(snap.captured_at).toLocaleDateString()}
                         </td>
                         <td className="px-2 py-1 text-xs">{snap.age}</td>
-                        {SKILLS.map((skill) => {
-                          const val = snap[skill.dbKey as keyof SkillSnapshot] as number | null;
-                          const prevVal = prevSnap
-                            ? (prevSnap[skill.dbKey as keyof SkillSnapshot] as number | null)
-                            : null;
-                          const diff =
-                            val !== null && prevVal !== null
-                              ? val - prevVal
-                              : 0;
-                          return (
-                            <td
-                              key={skill.dbKey}
-                              className="px-2 py-1 text-center text-xs font-mono"
-                              style={{ color: getSkillColor(val) }}
-                            >
-                              {val ?? "-"}
-                              {diff > 0 && (
-                                <span className="text-emerald-400 ml-0.5">
-                                  +{diff}
-                                </span>
-                              )}
-                              {diff < 0 && (
-                                <span className="text-red-400 ml-0.5">
-                                  {diff}
-                                </span>
-                              )}
+                        {hasAnySkills ? (
+                          <>
+                            {SKILLS.map((skill) => {
+                              const val = snap[skill.dbKey as keyof SkillSnapshot] as number | null;
+                              const prevVal = prevSnap
+                                ? (prevSnap[skill.dbKey as keyof SkillSnapshot] as number | null)
+                                : null;
+                              const diff =
+                                val !== null && prevVal !== null
+                                  ? val - prevVal
+                                  : 0;
+                              return (
+                                <td
+                                  key={skill.dbKey}
+                                  className="px-2 py-1 text-center text-xs font-mono"
+                                  style={{ color: getSkillColor(val) }}
+                                >
+                                  {val ?? "-"}
+                                  {diff > 0 && (
+                                    <span className="text-emerald-400 ml-0.5">
+                                      +{diff}
+                                    </span>
+                                  )}
+                                  {diff < 0 && (
+                                    <span className="text-red-400 ml-0.5">
+                                      {diff}
+                                    </span>
+                                  )}
+                                </td>
+                              );
+                            })}
+                            <td className="px-2 py-1 text-center text-xs font-mono">
+                              {snap.skill_points ?? "-"}
                             </td>
-                          );
-                        })}
+                          </>
+                        ) : (
+                          <td className="px-2 py-1 text-center text-xs" style={{ color: getSkillColor(snap.game_shape) }}>
+                            {snap.game_shape ?? "-"}
+                            {snap.game_shape != null && (
+                              <span className="text-gray-500 ml-1">
+                                ({SKILL_LEVELS[snap.game_shape] || "?"})
+                              </span>
+                            )}
+                          </td>
+                        )}
                         <td className="px-2 py-1 text-center text-xs font-mono">
-                          {snap.skill_points ?? "-"}
-                        </td>
-                        <td className="px-2 py-1 text-center text-xs font-mono">
-                          {snap.dmi ?? "-"}
+                          {snap.dmi != null ? snap.dmi.toLocaleString() : "-"}
+                          {dmiDiff > 0 && (
+                            <span className="text-emerald-400 ml-0.5">
+                              +{dmiDiff.toLocaleString()}
+                            </span>
+                          )}
+                          {dmiDiff < 0 && (
+                            <span className="text-red-400 ml-0.5">
+                              {dmiDiff.toLocaleString()}
+                            </span>
+                          )}
                         </td>
                       </tr>
                     );

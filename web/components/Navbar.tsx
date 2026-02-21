@@ -6,7 +6,8 @@ import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 
 const navItems = [
-  { href: "/players", label: "Players" },
+  { href: "/slovenia", label: "Slovenia" },
+  { href: "/opponents", label: "Opponents" },
   { href: "/compare", label: "Compare" },
   { href: "/training", label: "Training" },
   { href: "/scout", label: "Scout" },
