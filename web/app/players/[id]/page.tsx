@@ -539,6 +539,9 @@ export default function PlayerDetailPage() {
                     <th className="px-2 py-1 text-center text-xs text-gray-400">
                       DMI
                     </th>
+                    <th className="px-2 py-1 text-center text-xs text-gray-400">
+                      Shape
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -618,6 +621,22 @@ export default function PlayerDetailPage() {
                             </span>
                           )}
                         </td>
+                        {(() => {
+                          const gs = snap.game_shape;
+                          const prevGs = prevSnap?.game_shape;
+                          const gsDiff = gs != null && prevGs != null ? gs - prevGs : 0;
+                          return (
+                            <td className="px-2 py-1 text-center text-xs" style={{ color: getSkillColor(gs) }}>
+                              {gs ?? "-"}
+                              {gsDiff > 0 && (
+                                <span className="text-emerald-400 ml-0.5">+{gsDiff}</span>
+                              )}
+                              {gsDiff < 0 && (
+                                <span className="text-red-400 ml-0.5">{gsDiff}</span>
+                              )}
+                            </td>
+                          );
+                        })()}
                       </tr>
                     );
                   })}

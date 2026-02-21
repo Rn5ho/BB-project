@@ -15,6 +15,7 @@ type SortField =
   | "position"
   | "potential"
   | "dmi"
+  | "game_shape"
   | "skill_points"
   | "osp"
   | "isp"
@@ -174,6 +175,10 @@ export default function SloveniaPage() {
         case "dmi":
           aVal = a.snapshot?.dmi || 0;
           bVal = b.snapshot?.dmi || 0;
+          break;
+        case "game_shape":
+          aVal = a.snapshot?.game_shape || 0;
+          bVal = b.snapshot?.game_shape || 0;
           break;
         case "skill_points":
           aVal = a.snapshot?.skill_points || 0;
@@ -482,6 +487,7 @@ export default function SloveniaPage() {
                     <SortHeader field="position">Pos</SortHeader>
                     <SortHeader field="potential">Potential</SortHeader>
                     <SortHeader field="dmi">DMI</SortHeader>
+                    <SortHeader field="game_shape">Shape</SortHeader>
                     <SortHeader field="skill_points">TSP</SortHeader>
                     <SortHeader field="osp">OSP</SortHeader>
                     <SortHeader field="isp">ISP</SortHeader>
@@ -555,6 +561,13 @@ export default function SloveniaPage() {
                       </td>
                       <td className="px-3 py-2 text-sm font-mono">
                         {row.snapshot?.dmi ?? "-"}
+                      </td>
+                      <td className="px-3 py-2 text-sm">
+                        {row.snapshot?.game_shape != null ? (
+                          <span style={{ color: getSkillColor(row.snapshot.game_shape) }}>
+                            {row.snapshot.game_shape}
+                          </span>
+                        ) : "-"}
                       </td>
                       <td className="px-3 py-2 text-sm font-mono">
                         {row.snapshot?.skill_points ?? "-"}

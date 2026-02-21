@@ -221,7 +221,7 @@ Dedicated page for managing Slovenia U-21 national team players. Queries only Sl
 - **U-21 Roster** — Players with `is_nt_player = true` (auto-set when scanned from NT roster page)
 - **Prospects** — Slovenian players with `is_nt_player = false` (found on market, manually added, or individually scouted)
 
-**Columns**: Checkbox, Name (with BB link ↗), Age, Position, Potential (colored), DMI, TSP, OSP, ISP, Tags, Updated
+**Columns**: Checkbox, Name (with BB link ↗), Age, Position, Potential (colored), DMI, Game Shape (colored), TSP, OSP, ISP, Tags, Updated
 **OSP** = jump_shot + jump_range + outside_def + handling + driving + passing
 **ISP** = inside_shot + inside_def + rebounding + shot_blocking
 **Sorting**: all columns sortable, toggle asc/desc
@@ -245,7 +245,7 @@ Tracks and scouts opposing national teams' players. Queries only non-Slovenian p
 ### Player Detail (`/players/[id]`)
 - **Editable position dropdown** (PG/SG/SF/PF/C or blank) — saves immediately to Supabase
 - **Current skills** in 2-column grid with colored text and background
-- **Skill history table** with deltas (+N green, -N red) comparing snapshots
+- **Skill history table** with deltas (+N green, -N red) comparing snapshots. Includes DMI + Game Shape columns (with deltas) for all players.
 - **BB link**: "View on BuzzerBeater ↗" → `https://www.buzzerbeater.com/player/${bb_player_id}/overview.aspx`
 
 ### Training Simulator (`/training`)
