@@ -55,6 +55,12 @@ export interface BbApiTeamStanding {
   teamName: string;
 }
 
+export interface BbApiSeason {
+  id: number;
+  start: string; // date string e.g. "2025-01-15"
+  finish: string; // date string e.g. "2025-05-15"
+}
+
 // BB API uses text labels for potential, we need to map to our 0-11 integers
 const POTENTIAL_TEXT_TO_NUMBER: Record<string, number> = {
   'announcer': 0,
@@ -266,6 +272,34 @@ export function parseLeaguesXml(xml: string): BbApiLeague[] {
   }));
 }
 
+export function parseSeasonsXml(xml: string): BbApiSeason[] {
+  const parsed = xmlParser.parse(xml);
+  let seasons = parsed?.bbapi?.seasons?.season;
+  if (!seasons) return [];
+  if (!Array.isArray(seasons)) seasons = [seasons];
+
+  return seasons.map((s: Record<string, unknown>) => ({
+    id: (s['@_id'] as number) || Number(s.id) || 0,
+    start: String(s.start || ''),
+    finish: String(s.finish || ''),
+  }));
+}
+
+export function getCurrentSeason(seasons: BbApiSeason[]): BbApiSeason | null {
+  const now = new Date();
+  // Find the season whose date range contains today
+  for (const s of seasons) {
+    if (s.start && s.finish) {
+      const start = new Date(s.start);
+      const finish = new Date(s.finish);
+      if (now >= start && now <= finish) return s;
+    }
+  }
+  // Fallback: return the season with the highest ID (most recent)
+  if (seasons.length === 0) return null;
+  return seasons.reduce((max, s) => (s.id > max.id ? s : max), seasons[0]);
+}
+
 export function parseStandingsXml(xml: string): BbApiTeamStanding[] {
   const parsed = xmlParser.parse(xml);
   let teams = parsed?.bbapi?.standings?.team;
@@ -305,9 +339,14 @@ export async function fetchStandings(leagueId: number, cookie: string): Promise<
   return parseStandingsXml(xml);
 }
 
+export async function fetchSeasons(cookie: string): Promise<BbApiSeason[]> {
+  const xml = await bbApiFetch('seasons.aspx', {}, cookie);
+  return parseSeasonsXml(xml);
+}
+
 // --- DB Mapping ---
 
-export function mapBbApiPlayerToDb(apiPlayer: BbApiPlayer) {
+export function mapBbApiPlayerToDb(apiPlayer: BbApiPlayer, bbSeason?: number) {
   const playerData = {
     bb_player_id: apiPlayer.id,
     name: `${apiPlayer.firstName} ${apiPlayer.lastName}`.trim(),
@@ -327,6 +366,7 @@ export function mapBbApiPlayerToDb(apiPlayer: BbApiPlayer) {
   const snapshotData = {
     source: 'api' as const,
     captured_by: null,
+    bb_season: bbSeason ?? null,
     age: apiPlayer.age || null,
     salary: apiPlayer.salary || null,
     experience: apiPlayer.experience || null,

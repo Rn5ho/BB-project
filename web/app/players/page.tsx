@@ -46,9 +46,19 @@ interface PlayerRow {
   tags: string[];
 }
 
+// Compute a player's current age based on season delta
+function computeCurrentAge(snapshot: SkillSnapshot | null, currentSeason: number | null): number | null {
+  if (!snapshot?.age) return null;
+  if (currentSeason && snapshot.bb_season && currentSeason > snapshot.bb_season) {
+    return snapshot.age + (currentSeason - snapshot.bb_season);
+  }
+  return snapshot.age;
+}
+
 export default function PlayersPage() {
   const [players, setPlayers] = useState<PlayerRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentSeason, setCurrentSeason] = useState<number | null>(null);
   const [viewMode, setViewMode] = useState<ViewMode>("nt");
   const [sortField, setSortField] = useState<SortField>("name");
   const [sortAsc, setSortAsc] = useState(true);
@@ -61,8 +71,36 @@ export default function PlayersPage() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    loadCurrentSeason();
     loadPlayers();
   }, []);
+
+  async function loadCurrentSeason() {
+    // Check localStorage cache (valid for 24 hours)
+    const cached = localStorage.getItem("bb_current_season");
+    if (cached) {
+      try {
+        const { season, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+          setCurrentSeason(season);
+          return;
+        }
+      } catch { /* stale or corrupt cache, refetch */ }
+    }
+    try {
+      const res = await fetch("/api/scout/seasons");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.currentSeason) {
+          setCurrentSeason(data.currentSeason);
+          localStorage.setItem("bb_current_season", JSON.stringify({
+            season: data.currentSeason,
+            timestamp: Date.now(),
+          }));
+        }
+      }
+    } catch { /* non-fatal — ages will show raw snapshot values */ }
+  }
 
   async function loadPlayers() {
     setLoading(true);
@@ -145,9 +183,10 @@ export default function PlayersPage() {
     }
 
     if (filterAge.length > 0) {
-      result = result.filter(
-        (r) => r.snapshot?.age != null && filterAge.includes(r.snapshot.age)
-      );
+      result = result.filter((r) => {
+        const age = computeCurrentAge(r.snapshot, currentSeason);
+        return age != null && filterAge.includes(age);
+      });
     }
 
     if (filterPosition) {
@@ -176,8 +215,8 @@ export default function PlayersPage() {
           bVal = b.player.nationality || "";
           break;
         case "age":
-          aVal = a.snapshot?.age || 0;
-          bVal = b.snapshot?.age || 0;
+          aVal = computeCurrentAge(a.snapshot, currentSeason) || 0;
+          bVal = computeCurrentAge(b.snapshot, currentSeason) || 0;
           break;
         case "position":
           aVal = a.player.position || "";
@@ -219,7 +258,7 @@ export default function PlayersPage() {
     });
 
     return result;
-  }, [players, viewMode, searchQuery, filterAge, filterPosition, filterPotential, filterNationality, sortField, sortAsc]);
+  }, [players, currentSeason, viewMode, searchQuery, filterAge, filterPosition, filterPotential, filterNationality, sortField, sortAsc]);
 
   function toggleSort(field: SortField) {
     if (sortField === field) {
@@ -585,7 +624,7 @@ export default function PlayersPage() {
                         </td>
                       )}
                       <td className="px-3 py-2 text-sm">
-                        {row.snapshot?.age ?? "-"}
+                        {computeCurrentAge(row.snapshot, currentSeason) ?? "-"}
                       </td>
                       <td className="px-3 py-2 text-sm">
                         {row.player.position || "-"}

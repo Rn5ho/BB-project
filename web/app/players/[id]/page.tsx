@@ -19,6 +19,14 @@ import SkillBadge from "@/components/SkillBadge";
 import SkillDelta from "@/components/SkillDelta";
 import Link from "next/link";
 
+function computeCurrentAge(snapshot: SkillSnapshot | null, currentSeason: number | null): number | null {
+  if (!snapshot?.age) return null;
+  if (currentSeason && snapshot.bb_season && currentSeason > snapshot.bb_season) {
+    return snapshot.age + (currentSeason - snapshot.bb_season);
+  }
+  return snapshot.age;
+}
+
 export default function PlayerDetailPage() {
   const params = useParams();
   const playerId = Number(params.id);
@@ -28,12 +36,40 @@ export default function PlayerDetailPage() {
   const [notes, setNotes] = useState<PlayerNote[]>([]);
   const [tags, setTags] = useState<PlayerTag[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentSeason, setCurrentSeason] = useState<number | null>(null);
   const [newNote, setNewNote] = useState("");
   const [newTag, setNewTag] = useState("");
 
   useEffect(() => {
+    loadCurrentSeason();
     if (playerId) loadPlayerData();
   }, [playerId]);
+
+  async function loadCurrentSeason() {
+    const cached = localStorage.getItem("bb_current_season");
+    if (cached) {
+      try {
+        const { season, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+          setCurrentSeason(season);
+          return;
+        }
+      } catch { /* refetch */ }
+    }
+    try {
+      const res = await fetch("/api/scout/seasons");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.currentSeason) {
+          setCurrentSeason(data.currentSeason);
+          localStorage.setItem("bb_current_season", JSON.stringify({
+            season: data.currentSeason,
+            timestamp: Date.now(),
+          }));
+        }
+      }
+    } catch { /* non-fatal */ }
+  }
 
   async function loadPlayerData() {
     setLoading(true);
@@ -197,7 +233,9 @@ export default function PlayerDetailPage() {
                     View on BuzzerBeater ↗
                   </a>
                 </span>
-                {latestSnapshot?.age && <span>Age: {latestSnapshot.age}</span>}
+                {latestSnapshot?.age && (
+                  <span>Age: {computeCurrentAge(latestSnapshot, currentSeason) ?? latestSnapshot.age}</span>
+                )}
                 {player.height && <span>Height: {player.height}</span>}
                 <span className="flex items-center gap-1">
                   Position:{" "}

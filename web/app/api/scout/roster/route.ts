@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { bbApiLogin, bbApiLogout, fetchRoster, mapBbApiPlayerToDb } from '@/lib/bbapi';
+import { bbApiLogin, bbApiLogout, fetchRoster, fetchSeasons, getCurrentSeason, mapBbApiPlayerToDb } from '@/lib/bbapi';
 import { getSupabaseServer } from '@/lib/supabase-server';
 
 export async function POST(request: NextRequest) {
@@ -27,11 +27,20 @@ export async function POST(request: NextRequest) {
 
   try {
     cookie = await bbApiLogin(username, securityCode);
+
+    // Fetch current season for snapshot tagging
+    let currentSeasonId: number | undefined;
+    try {
+      const seasons = await fetchSeasons(cookie);
+      const current = getCurrentSeason(seasons);
+      if (current) currentSeasonId = current.id;
+    } catch { /* non-fatal — snapshots just won't have bb_season */ }
+
     const rosterPlayers = await fetchRoster(teamId, cookie);
 
     for (const apiPlayer of rosterPlayers) {
       try {
-        const { playerData, snapshotData } = mapBbApiPlayerToDb(apiPlayer);
+        const { playerData, snapshotData } = mapBbApiPlayerToDb(apiPlayer, currentSeasonId);
 
         // Check if player already exists
         const { data: existing } = await supabase
