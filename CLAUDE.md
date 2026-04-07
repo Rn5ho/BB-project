@@ -48,6 +48,7 @@ BB-project/
         scout/
           player/route.ts    # API route: fetch player(s) via BB API, upsert to DB
           roster/route.ts    # API route: fetch team roster via BB API, upsert to DB
+          seasons/route.ts   # API route: fetch BB seasons, identify current season
     components/
       Navbar.tsx             # Navigation bar (Slovenia, Opponents, Compare, Training, Scout, Manual Entry)
       SkillBadge.tsx         # Skill display with color coding
@@ -57,7 +58,7 @@ BB-project/
       supabase-server.ts     # Supabase server client (service role key, bypasses RLS)
       constants.ts           # Skill levels, potentials, BB color maps, helper functions
       types.ts               # TypeScript interfaces (Player has is_nt_player field)
-      bbapi.ts               # BuzzerBeater API client (login, fetch players/rosters, XML parsing)
+      bbapi.ts               # BuzzerBeater API client (login, fetch players/rosters/seasons, XML parsing)
       training/
         types.ts             # Training simulator type definitions
         data.ts              # Training data tables (age/height/trainer multipliers, training matrix)
@@ -221,11 +222,28 @@ Dedicated page for managing Slovenia U-21 national team players. Queries only Sl
 - **U-21 Roster** — Players with `is_nt_player = true` (auto-set when scanned from NT roster page)
 - **Prospects** — Slovenian players with `is_nt_player = false` (found on market, manually added, or individually scouted)
 
-**Columns**: Checkbox, Name (with BB link ↗), Age, Position, Potential (colored), DMI, TSP, OSP, ISP, Tags, Updated
+**Columns**: Checkbox, Name (with BB link ↗), Age (season-aware computed), Height (cm), Type (OUT/MID/IN), Position, Potential (number + color), Salary (formatted as Xk), DMI, TSP (power curve color-coded), OSP, ISP, +/- (TSP delta), Tags, Scouted (staleness indicator)
 **OSP** = jump_shot + jump_range + outside_def + handling + driving + passing
 **ISP** = inside_shot + inside_def + rebounding + shot_blocking
-**Sorting**: all columns sortable, toggle asc/desc
-**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown
+
+**Player type auto-classification**: Based on height — Outside (≤198cm, blue), Mid (199-205cm, purple), Inside (≥206cm, red). Matches evaluation criteria where inside players need higher potential (8+) vs outside (6+).
+
+**Power curve benchmarks**: TSP is color-coded against expected range per age:
+- Age 18: low=40, mid=50, high=60
+- Age 19: low=55, mid=70, high=85
+- Age 20: low=75, mid=90, high=110
+- Age 21: low=90, mid=110, high=130
+Red = below low, green = above high. Hover TSP to see benchmark range.
+
+**TSP delta (+/-)**: Shows change from previous snapshot. Green for gains, red for losses.
+
+**Staleness indicator**: "Scouted" column shows "this season", "1 season ago", "2w ago" etc. instead of raw dates. Uses `bb_season` when available, falls back to date-based calculation.
+
+**Season-aware age**: Current age computed as `snapshot_age + (current_season - snapshot_season)`. Current season fetched from BB API via `/api/scout/seasons` and cached 24h in localStorage.
+
+**Sorting**: all columns sortable including height, salary, type, TSP delta. Toggle asc/desc.
+**Filters**: name search, age checkboxes (18-21), position dropdown, potential dropdown, type dropdown (Outside/Mid/Inside). "More filters" reveals: min TSP, min salary.
+**Export**: button copies filtered list to clipboard as tab-separated data (all columns + all 12 skills). Paste into Excel.
 **Bulk delete**: with RLS failure detection — if 0 rows deleted, shows SQL to add DELETE policy
 **Empty states**: contextual messages explaining how to populate each sub-tab
 
@@ -295,15 +313,17 @@ Fetches player skills directly from the BuzzerBeater XML API (server-side), bypa
 **Recent scans**: stored in `localStorage` (key: `bb_scout_recent`), shows type, count, timestamp. Max 20 entries. Clearable.
 
 **API routes** (`web/app/api/scout/`):
-- `player/route.ts` — POST `{ playerIds: number[] }`. Logs into BB API, fetches each player, upserts to DB. Includes snapshot dedup (same player + same day = update).
-- `roster/route.ts` — POST `{ teamId: number }`. Same pattern but fetches entire roster.
-- Both use `bbApiLogin()` / `bbApiLogout()` for session management and return `{ results, errors }`.
+- `player/route.ts` — POST `{ playerIds: number[] }`. Logs into BB API, fetches each player, upserts to DB. Includes snapshot dedup (same player + same day = update). Tags snapshots with `bb_season`.
+- `roster/route.ts` — POST `{ teamId: number }`. Same pattern but fetches entire roster. Tags snapshots with `bb_season`.
+- `seasons/route.ts` — GET. Fetches all BB seasons via `seasons.aspx`, returns `{ currentSeason, seasons[] }`. Used by client for age computation.
+- Player and roster routes use `bbApiLogin()` / `bbApiLogout()` for session management and return `{ results, errors }`.
 
 **BB API client** (`web/lib/bbapi.ts`):
 - Auth: cookie-based (`GET login.aspx` → Set-Cookie → use cookie on subsequent requests)
 - Base URL: `https://bbapi.buzzerbeater.com`
 - XML parsing via `fast-xml-parser` with `@_` attribute prefix
-- `mapBbApiPlayerToDb()` maps API response to `players` + `skill_snapshots` table schema
+- `mapBbApiPlayerToDb(apiPlayer, bbSeason?)` maps API response to `players` + `skill_snapshots` table schema. Optional `bbSeason` param tags snapshots with season number.
+- `fetchSeasons()` / `parseSeasonsXml()` / `getCurrentSeason()` — fetch BB seasons, determine current season from date range
 - Also supports: `fetchCountries()`, `fetchLeagues()`, `fetchStandings()` (not yet used in UI)
 
 **Server Supabase client** (`web/lib/supabase-server.ts`):
@@ -409,6 +429,10 @@ Extension uses PostgREST upsert: `POST /rest/v1/players?on_conflict=bb_player_id
 - ~~**Duplicate snapshot detection**~~ — DONE. Same player + same day = update existing snapshot. Implemented in all 3 extension parsers + API scout routes.
 - ~~**Vercel deployment**~~ — DONE. Deployed via GitHub (`Rn5ho/BB-project`) → Vercel. Root directory set to `web/`. Env vars configured in Vercel dashboard.
 - ~~**Multi-country support**~~ — DONE. Dedicated `/slovenia` page (U-21 Roster + Prospects sub-tabs) and `/opponents` page (country pill filters, DMI-focused, U-21 toggle). Roster parser auto-detects nationality from page headers and sets `is_nt_player` flag. Market parser extracts nationality from flag images. Opponents tracked with full skills or DMI-only metadata.
+- ~~**Season-aware age**~~ — DONE. BB API `seasons.aspx` fetched via `/api/scout/seasons` route. Snapshots tagged with `bb_season`. Age computed as `snapshot_age + (current_season - snapshot_season)`. Cached 24h in localStorage.
+- ~~**Player type classification**~~ — DONE. Auto-classified by height: Outside (≤198cm), Mid (199-205cm), Inside (≥206cm). Filterable, sortable, color-coded (blue/purple/red).
+- ~~**Enhanced filters & columns**~~ — DONE. Slovenia page has: height, salary, type, TSP delta, power curve color-coding, staleness indicator, export to clipboard, advanced filters (min TSP, min salary).
+- ~~**Power curve benchmarks**~~ — DONE. TSP color-coded red (below expected) / green (above expected) per age group. Hover for benchmark range.
 
 ## BuzzerBeater Training Mechanics
 All data below sourced from BB community research and forum posts. This is the foundation for the training simulator feature.
@@ -560,6 +584,9 @@ The optimal training path depends on:
 | 2026-02-21 | `is_nt_player` auto-detection | Roster parser sets `is_nt_player = true` for all players scanned from NT roster pages, enabling automatic U-21 roster vs. prospect distinction |
 | 2026-02-21 | DMI-only opponent tracking | Roster parser detects opponent players whose skills are hidden, captures DMI/age/potential/game shape/salary metadata only. Opponents page shows "Full skills" vs "DMI only" badge |
 | 2026-02-21 | Nationality from roster page header | Roster parser extracts country from page header text (e.g., "Ukraina U21 National Team") instead of hardcoding "Slovenia" |
+| 2026-04-07 | Season-aware computed age | Uses BB API `seasons.aspx` to determine current season, computes `snapshot_age + season_delta` instead of showing stale snapshot ages. Cached 24h in localStorage. |
+| 2026-04-07 | Player type auto-classification | Height-based: Outside ≤198cm, Mid 199-205cm, Inside ≥206cm. Matches NT manager's evaluation criteria (inside needs pot 8+, outside pot 6+). |
+| 2026-04-07 | TSP power curve benchmarks | Community-derived expected TSP ranges per age (18: 40-60, 19: 55-85, 20: 75-110, 21: 90-130). Color-coded in table. May need calibration. |
 
 ## Deployment
 - **GitHub repo**: `Rn5ho/BB-project` (private)
