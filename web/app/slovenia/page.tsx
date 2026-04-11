@@ -22,9 +22,36 @@ type SortField =
   | "osp"
   | "isp"
   | "tsp_delta"
-  | "updated";
+  | "updated"
+  | "jump_shot"
+  | "jump_range"
+  | "outside_def"
+  | "handling"
+  | "driving"
+  | "passing"
+  | "inside_shot"
+  | "inside_def"
+  | "rebounding"
+  | "shot_blocking"
+  | "stamina"
+  | "free_throw";
 
 type PlayerType = "outside" | "inside" | "mid";
+
+const SKILL_ABBREV: Record<string, string> = {
+  jump_shot: "JS",
+  jump_range: "JR",
+  outside_def: "OD",
+  handling: "Han",
+  driving: "Dri",
+  passing: "Pas",
+  inside_shot: "IS",
+  inside_def: "ID",
+  rebounding: "Reb",
+  shot_blocking: "SB",
+  stamina: "Sta",
+  free_throw: "FT",
+};
 
 const OUTSIDE_KEYS: (keyof SkillSnapshot)[] = ['jump_shot', 'jump_range', 'outside_def', 'handling', 'driving', 'passing'];
 const INSIDE_KEYS: (keyof SkillSnapshot)[] = ['inside_shot', 'inside_def', 'rebounding', 'shot_blocking'];
@@ -118,6 +145,7 @@ export default function SloveniaPage() {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [deleting, setDeleting] = useState(false);
   const [togglingRoster, setTogglingRoster] = useState<Set<number>>(new Set());
+  const [showSkills, setShowSkills] = useState(false);
 
   useEffect(() => {
     loadCurrentSeason();
@@ -331,6 +359,15 @@ export default function SloveniaPage() {
           aVal = a.snapshot?.captured_at || "";
           bVal = b.snapshot?.captured_at || "";
           break;
+        default: {
+          // Individual skill sort (jump_shot, handling, etc.)
+          const skillKey = sortField as keyof SkillSnapshot;
+          const aSkill = a.snapshot?.[skillKey];
+          const bSkill = b.snapshot?.[skillKey];
+          aVal = typeof aSkill === "number" ? aSkill : 0;
+          bVal = typeof bSkill === "number" ? bSkill : 0;
+          break;
+        }
       }
 
       if (typeof aVal === "string") {
@@ -565,6 +602,17 @@ export default function SloveniaPage() {
           </div>
           <div className="flex items-center gap-3">
             <button
+              onClick={() => setShowSkills(!showSkills)}
+              className={`px-3 py-1.5 rounded text-xs font-medium transition-colors ${showSkills ? "text-white" : "text-gray-300 hover:text-white"}`}
+              style={{
+                background: showSkills ? "var(--accent)" : "var(--card-bg)",
+                border: "1px solid var(--card-border)",
+              }}
+              title="Toggle individual skill columns"
+            >
+              Skills
+            </button>
+            <button
               onClick={exportToCsv}
               className="px-3 py-1.5 rounded text-xs font-medium text-gray-300 hover:text-white transition-colors"
               style={{ background: "var(--card-bg)", border: "1px solid var(--card-border)" }}
@@ -775,6 +823,11 @@ export default function SloveniaPage() {
                       Tags
                     </th>
                     <SortHeader field="updated" title="Last scouted">Scouted</SortHeader>
+                    {showSkills && SKILLS.map((skill) => (
+                      <SortHeader key={skill.dbKey} field={skill.dbKey as SortField} title={skill.name}>
+                        {SKILL_ABBREV[skill.dbKey] || skill.name}
+                      </SortHeader>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -928,6 +981,19 @@ export default function SloveniaPage() {
                             ? formatStaleness(row.snapshot.captured_at, currentSeason, row.snapshot.bb_season)
                             : "-"}
                         </td>
+                        {showSkills && SKILLS.map((skill) => {
+                          const val = row.snapshot?.[skill.dbKey as keyof SkillSnapshot];
+                          const numVal = typeof val === "number" ? val : null;
+                          return (
+                            <td key={skill.dbKey} className="px-1.5 py-2 text-xs font-mono text-center" title={numVal != null ? `${skill.name}: ${SKILL_LEVELS[numVal] || numVal}` : undefined}>
+                              {numVal != null ? (
+                                <span style={{ color: getSkillColor(numVal) }}>{numVal}</span>
+                              ) : (
+                                <span className="text-gray-600">-</span>
+                              )}
+                            </td>
+                          );
+                        })}
                       </tr>
                     );
                   })}
