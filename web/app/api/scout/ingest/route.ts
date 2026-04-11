@@ -136,9 +136,14 @@ export async function POST(request: NextRequest) {
       if (playerError) throw playerError;
 
       // Calculate skill_points from skills if not provided
+      // BB's "Skill Points" (TSP) only counts 10 skills — excludes stamina and free_throw
+      const TSP_KEYS = ['jump_shot', 'jump_range', 'outside_def', 'handling', 'driving', 'passing', 'inside_shot', 'inside_def', 'rebounding', 'shot_blocking'];
       let skillPoints = p.skillPoints ?? null;
       if (!skillPoints && p.skills) {
-        const sum = Object.values(p.skills).filter((v): v is number => typeof v === 'number').reduce((a, b) => a + b, 0);
+        const sum = TSP_KEYS
+          .map(k => p.skills![k])
+          .filter((v): v is number => typeof v === 'number')
+          .reduce((a, b) => a + b, 0);
         if (sum > 0) skillPoints = sum;
       }
 
