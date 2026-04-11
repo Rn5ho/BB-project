@@ -142,7 +142,9 @@ All three parsers (player, roster, market) share `common.js` (loaded first via m
 - `SKILL_COLORS` — exact hex codes from BuzzerBeater's HTML for each skill level
 - `getSkillColor(level)` — returns hex color for a skill level
 - `parseSkillText(text)` / `parsePotentialText(text)` — text→number converters
-- `SUPABASE_URL` / `SUPABASE_ANON_KEY` — API credentials
+- `normalizeNationality(name)` — maps BB local-language names to English (e.g., "Slovenija" → "Slovenia") via `NATIONALITY_MAP`
+- `getCurrentBbSeason()` — fetches current season from dashboard API (`/api/scout/seasons`), cached 24h in `chrome.storage.local`
+- `DASHBOARD_URL` / `SUPABASE_URL` / `SUPABASE_ANON_KEY` — API endpoints and credentials
 
 ### Player Parser (`player-parser.js`)
 Runs on `/player/*` pages. Parses single player profiles.
@@ -154,6 +156,8 @@ Runs on `/player/*` pages. Parses single player profiles.
 4. Brute force: for each missing skill, scans all text for skill name + nearby skill level word
 
 **Name parsing** uses `[ ]` literal space (not `\s`) to avoid matching across lines/tabs. Limited to 2-4 word names. Fallback: if >4 words, takes last 2 words.
+
+**Nationality parsing**: Matches "Nationality: CountryName" from page text, normalized via `normalizeNationality()`. Falls back to `null`.
 
 **Position parsing** is best-effort from page text (not reliable — BB auto-classifies).
 
@@ -171,9 +175,9 @@ Runs on `/national/*` and `/country/*/jnt/*` pages. Batch-parses all players on 
 **Skill keywords for full validation**: Jump Shot, Jump Range, Handling, Driving, Passing, Inside Shot, Rebounding, Shot Blocking, Stamina, Free Throw, DMI
 **DMI keywords for metadata-only validation**: DMI:, Age:, Potential:, Game Shape:, Weekly salary
 
-**Nationality auto-detection**: Parses from page header text (e.g., "Ukraina U21 National Team") via regex, instead of hardcoding "Slovenia". Falls back to null if header doesn't match expected patterns.
+**Nationality auto-detection**: Parses from page heading elements first, then falls back to body text regex matching "X U21 National Team". Normalized to English via `normalizeNationality()` from `common.js` (e.g., "Slovenija" → "Slovenia"). Falls back to null if no match.
 
-**`is_nt_player` flag**: All players parsed from roster pages are automatically marked `isNtPlayer: true`, which maps to `is_nt_player` in the `players` table. This is how the Slovenia U-21 Roster sub-tab and Opponents U-21 filter work.
+**`is_nt_player` flag**: For Slovenian players (`nationality === 'Slovenia'`), `isNtPlayer` is set to `false` — the user manually promotes players to the roster via the ★ toggle on the dashboard. For opponent nationalities, `isNtPlayer` is auto-set to `true` (genuine intel about their squad composition).
 
 **Batch save**: saves all locally first, then upserts each to Supabase with progress tracking. Player upsert includes `is_nt_player: true`. Shows `firstError` in overlay if any fail.
 
@@ -423,16 +427,21 @@ Extension uses PostgREST upsert: `POST /rest/v1/players?on_conflict=bb_player_id
 - **Training path optimizer** — The engine supports multi-week projection (`projectTrainingPath()`) but the UI only exposes single-week calculation. Ultimate goal: user sets a desired final build → tool outputs week-by-week training plan with optimal type/position selection.
 - **Training history parser** — BB has training history pages showing per-week skill changes. Could be parsed to enrich player data and validate training simulator accuracy.
 - **Calibrate TRAINING_POINT_DIVISOR** — Currently set to 1000, may need tuning against real training data. Youth trainer multipliers are estimates (2.5%/level).
+- **Opponents page per-country dropdowns** — Add dedicated sections per opponent country. DMI-only tracking for opponent NT players whose skills are hidden. Useful for tracking week-to-week DMI changes.
 - ~~**Training simulator**~~ — DONE. Weekly gain calculator with manual + database mode, all multipliers, elastic drag, cross-training, potential cap model. Files: `web/lib/training/` + `web/app/training/page.tsx`.
 - ~~**BB API scouting**~~ — DONE. Server-side fetch via BB XML API. Fetch by player ID (up to 20) or team roster. Files: `web/lib/bbapi.ts`, `web/lib/supabase-server.ts`, `web/app/api/scout/`, `web/app/scout/page.tsx`.
 - ~~**Market parser**~~ — DONE. Extension content script for transfer market search results. Nationality from flag images, batch save, clipboard export. File: `extension/content-scripts/market-parser.js`.
 - ~~**Duplicate snapshot detection**~~ — DONE. Same player + same day = update existing snapshot. Implemented in all 3 extension parsers + API scout routes.
 - ~~**Vercel deployment**~~ — DONE. Deployed via GitHub (`Rn5ho/BB-project`) → Vercel. Root directory set to `web/`. Env vars configured in Vercel dashboard.
 - ~~**Multi-country support**~~ — DONE. Dedicated `/slovenia` page (U-21 Roster + Prospects sub-tabs) and `/opponents` page (country pill filters, DMI-focused, U-21 toggle). Roster parser auto-detects nationality from page headers and sets `is_nt_player` flag. Market parser extracts nationality from flag images. Opponents tracked with full skills or DMI-only metadata.
-- ~~**Season-aware age**~~ — DONE. BB API `seasons.aspx` fetched via `/api/scout/seasons` route. Snapshots tagged with `bb_season`. Age computed as `snapshot_age + (current_season - snapshot_season)`. Cached 24h in localStorage.
-- ~~**Player type classification**~~ — DONE. Auto-classified by height: Outside (≤198cm), Mid (199-205cm), Inside (≥206cm). Filterable, sortable, color-coded (blue/purple/red).
+- ~~**Season-aware age**~~ — DONE. BB API `seasons.aspx` fetched via `/api/scout/seasons` route. Snapshots tagged with `bb_season` (both API routes and extension). Age computed as `snapshot_age + (current_season - snapshot_season)`. Cached 24h in localStorage (web) and chrome.storage (extension).
+- ~~**Player type classification**~~ — DONE. Auto-classified by height: Outside (≤198cm), Mid (199-205cm), Inside (≥206cm). Filterable, sortable, color-coded (blue/purple/red). Height parsed from "X'Y\" / NNN cm" format (extracts cm value).
 - ~~**Enhanced filters & columns**~~ — DONE. Slovenia page has: height, salary, type, TSP delta, power curve color-coding, staleness indicator, export to clipboard, advanced filters (min TSP, min salary).
 - ~~**Power curve benchmarks**~~ — DONE. TSP color-coded red (below expected) / green (above expected) per age group. Hover for benchmark range.
+- ~~**Nationality normalization**~~ — DONE. `normalizeNationality()` in `common.js` maps BB local-language names (Slovenija, Ukraina, etc.) to English. Used by all 3 parsers. Fixes nationality mismatch between BB pages and web app queries.
+- ~~**Manual roster curation**~~ — DONE. Slovenia page: `is_nt_player` is now manually toggled via ★ star column (not auto-set from roster scans for Slovenian players). Roster parser still auto-flags opponent players. Default tab is Prospects.
+- ~~**Skill columns toggle**~~ — DONE. "Skills" button on Slovenia page toggles 12 individual skill columns (JS, JR, OD, Han, Dri, Pas, IS, ID, Reb, SB, Sta, FT) with BB color coding, sortable. TSP moves to end of row when skills visible.
+- ~~**Cowork scouting flow**~~ — DONE. `COWORK_SCOUTING.md` documents the automated recruit/drop workflow for Claude cowork sessions.
 
 ## BuzzerBeater Training Mechanics
 All data below sourced from BB community research and forum posts. This is the foundation for the training simulator feature.
