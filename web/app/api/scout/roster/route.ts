@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
       } catch (err) {
         errors.push({
           bbPlayerId: apiPlayer.id,
-          error: err instanceof Error ? err.message : 'Unknown error',
+          error: err instanceof Error ? err.message : (err && typeof err === 'object' && 'message' in err) ? String((err as { message: unknown }).message) : JSON.stringify(err),
         });
       }
     }

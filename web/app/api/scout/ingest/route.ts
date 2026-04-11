@@ -192,10 +192,15 @@ export async function POST(request: NextRequest) {
         name: p.name,
         status: isNew ? 'created' : 'updated',
       });
-    } catch (err) {
+    } catch (err: unknown) {
+      const message = err instanceof Error
+        ? err.message
+        : (err && typeof err === 'object' && 'message' in err)
+          ? String((err as { message: unknown }).message)
+          : JSON.stringify(err);
       errors.push({
         bbPlayerId: p.bbPlayerId,
-        error: err instanceof Error ? err.message : 'Unknown error',
+        error: message,
       });
     }
   }
