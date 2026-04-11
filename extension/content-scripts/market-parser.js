@@ -183,8 +183,8 @@
         name = `Player ${bbPlayerId}`;
       }
 
-      // Parse nationality from flag images
-      const nationality = parseNationalityForPlayer(bbPlayerId);
+      // Parse nationality from flag images, normalize to English
+      const nationality = normalizeNationality(parseNationalityForPlayer(bbPlayerId));
 
       console.log(`[BB Scout Market] Found: ${name} (${bbPlayerId}) ${position || 'no pos'} [${nationality || '?'}] [${keywordHits.length} keywords]`);
 

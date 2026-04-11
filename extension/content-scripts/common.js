@@ -113,6 +113,34 @@ function parsePotentialText(text) {
   return POTENTIAL_LEVELS_REVERSE[cleaned] || null;
 }
 
+// BuzzerBeater uses local-language country names; normalize to English for the web app
+const NATIONALITY_MAP = {
+  'slovenija': 'Slovenia',
+  'hrvatska': 'Croatia',
+  'srbija': 'Serbia',
+  'česko': 'Czechia',
+  'deutschland': 'Germany',
+  'france': 'France',
+  'españa': 'Spain',
+  'italia': 'Italy',
+  'polska': 'Poland',
+  'ukraina': 'Ukraine',
+  'rossija': 'Russia',
+  'magyarország': 'Hungary',
+  'österreich': 'Austria',
+  'türkiye': 'Turkey',
+  'ellada': 'Greece',
+  'lietuva': 'Lithuania',
+  'latvija': 'Latvia',
+  'eesti': 'Estonia',
+};
+
+function normalizeNationality(name) {
+  if (!name) return null;
+  const lower = name.trim().toLowerCase();
+  return NATIONALITY_MAP[lower] || name.trim();
+}
+
 // Supabase configuration - UPDATE THESE with your project values
 const SUPABASE_URL = 'https://zhywajswbpdmhpeqyczc.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_IHc1rsVvj_jhP5dozauCcw_ITYxRerW';

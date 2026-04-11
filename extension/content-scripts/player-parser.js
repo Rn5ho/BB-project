@@ -50,6 +50,7 @@
     const data = {
       bbPlayerId: parsePlayerId(fullText),
       name: null,
+      nationality: null,
       age: null,
       height: null,
       position: null,
@@ -63,6 +64,12 @@
       ownerTeamId: null,
       skills: {}
     };
+
+    // Nationality: BB player pages show "Nationality: CountryName" or a flag link
+    const natMatch = fullText.match(/\bNationality:\s*([A-ZÀ-Ža-zà-ž][A-Za-zÀ-Ža-zà-ž\s-]{1,30})/);
+    if (natMatch) {
+      data.nationality = normalizeNationality(natMatch[1]);
+    }
 
     // Parse name from the header "Tibor Likar (54516150)"
     data.name = parsePlayerName(fullText, data.bbPlayerId);
@@ -790,7 +797,7 @@
         body: JSON.stringify({
           bb_player_id: playerData.bbPlayerId,
           name: playerData.name,
-          nationality: 'Slovenia',
+          nationality: playerData.nationality || null,
           height: playerData.height,
           position: playerData.position
         })

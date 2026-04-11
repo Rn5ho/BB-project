@@ -56,14 +56,23 @@
 
   // Parse the nationality from the page header (e.g. "Ukraina U21 National Team")
   function parsePageNationality() {
+    // Try page heading elements first (most reliable — avoids sidebar/nav text)
+    const headings = document.querySelectorAll('h1, h2, h3, .boxheader, #cphContent_lblTeamName, [class*="header"]');
+    for (const el of headings) {
+      const text = el.textContent || '';
+      const hMatch = text.match(/^([A-ZÀ-Ža-zà-ž][A-Za-zÀ-Ža-zà-ž\s-]{1,30}?)\s+U-?\d+\s+National\s+Team/i);
+      if (hMatch) return hMatch[1].trim();
+    }
+
+    // Fallback: search body text but require "U-21" or "U21" to anchor the match
     const bodyText = document.body.innerText || '';
-    // Match patterns like "Ukraina U21 National Team" or "Slovenija U21 National Team - National Team Roster"
-    const ntMatch = bodyText.match(/([A-ZÀ-Ža-zà-ž][A-ZÀ-Ža-zà-ž\s]+?)\s+U-?\d+\s+National\s+Team/i);
+    const ntMatch = bodyText.match(/([A-ZÀ-Ža-zà-ž][A-Za-zÀ-Ža-zà-ž\s-]{1,30}?)\s+U-?\d+\s+National\s+Team/i);
     if (ntMatch) {
       return ntMatch[1].trim();
     }
-    // Fallback: try "National Team" without U-21
-    const ntMatch2 = bodyText.match(/([A-ZÀ-Ža-zà-ž][A-ZÀ-Ža-zà-ž\s]+?)\s+National\s+Team/i);
+
+    // Last resort: match "X National Team" but limit the country name to max 3 words (no spaces run)
+    const ntMatch2 = bodyText.match(/\b([A-ZÀ-Ž][a-zà-ž]+(?:\s[A-ZÀ-Ža-zà-ž]+){0,2})\s+National\s+Team/);
     if (ntMatch2) {
       return ntMatch2[1].trim();
     }
@@ -78,8 +87,8 @@
     // Log first 500 chars to help debug
     console.log('[BB Scout Roster] First 500 chars:', bodyText.substring(0, 500));
 
-    // Parse nationality from page header once
-    const pageNationality = parsePageNationality();
+    // Parse nationality from page header once, normalize to English
+    const pageNationality = normalizeNationality(parsePageNationality());
     console.log('[BB Scout Roster] Detected nationality:', pageNationality);
 
     // Strategy: Find all "(PLAYER_ID)" patterns (6+ digit IDs)
@@ -197,7 +206,9 @@
       position: header.position,
       nationality: header.nationality,
       isDmiOnly: header.isDmiOnly || false,
-      isNtPlayer: true, // All players from roster pages are NT players
+      // For Slovenia (user's own NT), don't auto-flag — scouting uses roster cycling
+      // For opponent NTs, auto-flag is genuine intel about their squad
+      isNtPlayer: header.nationality !== 'Slovenia',
       age: null,
       height: null,
       salary: null,

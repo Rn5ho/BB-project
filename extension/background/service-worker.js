@@ -115,7 +115,7 @@ async function syncPlayerToSupabase(playerData, auth) {
     body: JSON.stringify({
       bb_player_id: playerData.bbPlayerId,
       name: playerData.name,
-      nationality: 'Slovenia',
+      nationality: playerData.nationality || null,
       height: playerData.height,
       position: playerData.position
     })

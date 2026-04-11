@@ -104,7 +104,7 @@ export default function SloveniaPage() {
   const [players, setPlayers] = useState<PlayerRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSeason, setCurrentSeason] = useState<number | null>(null);
-  const [subTab, setSubTab] = useState<SubTab>("roster");
+  const [subTab, setSubTab] = useState<SubTab>("prospects");
   const [sortField, setSortField] = useState<SortField>("name");
   const [sortAsc, setSortAsc] = useState(true);
   const [filterAge, setFilterAge] = useState<number[]>([]);
@@ -117,6 +117,7 @@ export default function SloveniaPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [deleting, setDeleting] = useState(false);
+  const [togglingRoster, setTogglingRoster] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     loadCurrentSeason();
@@ -410,6 +411,34 @@ export default function SloveniaPage() {
     }
 
     setDeleting(false);
+  }
+
+  async function toggleRoster(playerId: number, currentValue: boolean) {
+    setTogglingRoster((prev) => new Set(prev).add(playerId));
+    try {
+      const { error } = await supabase
+        .from("players")
+        .update({ is_nt_player: !currentValue })
+        .eq("id", playerId);
+      if (error) {
+        alert(`Toggle failed: ${error.message}`);
+      } else {
+        setPlayers((prev) =>
+          prev.map((r) =>
+            r.player.id === playerId
+              ? { ...r, player: { ...r.player, is_nt_player: !currentValue } }
+              : r
+          )
+        );
+      }
+    } catch (err) {
+      alert(`Toggle error: ${err}`);
+    }
+    setTogglingRoster((prev) => {
+      const next = new Set(prev);
+      next.delete(playerId);
+      return next;
+    });
   }
 
   const exportToCsv = useCallback(() => {
@@ -706,8 +735,8 @@ export default function SloveniaPage() {
         ) : filteredPlayers.length === 0 ? (
           <div className="text-center py-12 text-gray-400">
             {subTab === "roster"
-              ? "No U-21 roster players yet. Scan a Slovenia NT roster page with the extension to auto-detect them."
-              : "No prospects tracked yet. Players scanned from the market or manually added as Slovenian (not on NT roster) will appear here."}
+              ? "No U-21 roster players yet. Star (★) players from the Prospects tab to add them to your final roster."
+              : "No prospects tracked yet. Scan your Slovenia NT roster page with the extension to capture player skills."}
           </div>
         ) : (
           <div
@@ -726,6 +755,9 @@ export default function SloveniaPage() {
                         className="rounded"
                         title="Select all"
                       />
+                    </th>
+                    <th className="px-1 py-2 w-8 text-center text-xs font-medium text-gray-400 uppercase tracking-wider" title="Toggle U-21 Roster">
+                      ★
                     </th>
                     <SortHeader field="name">Name</SortHeader>
                     <SortHeader field="age">Age</SortHeader>
@@ -775,6 +807,21 @@ export default function SloveniaPage() {
                             onChange={() => toggleSelect(row.player.id)}
                             className="rounded"
                           />
+                        </td>
+                        <td className="px-1 py-2 text-center">
+                          <button
+                            onClick={() => toggleRoster(row.player.id, row.player.is_nt_player)}
+                            disabled={togglingRoster.has(row.player.id)}
+                            className="text-lg leading-none transition-colors hover:scale-110"
+                            title={row.player.is_nt_player ? "Remove from U-21 Roster" : "Add to U-21 Roster"}
+                            style={{
+                              color: row.player.is_nt_player ? "#f59e0b" : "#4b5563",
+                              opacity: togglingRoster.has(row.player.id) ? 0.5 : 1,
+                              cursor: togglingRoster.has(row.player.id) ? "wait" : "pointer",
+                            }}
+                          >
+                            {row.player.is_nt_player ? "★" : "☆"}
+                          </button>
                         </td>
                         <td className="px-2 py-2">
                           <Link

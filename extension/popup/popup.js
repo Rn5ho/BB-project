@@ -207,7 +207,7 @@ async function syncPlayer(playerData, authData) {
   const playerPayload = {
     bb_player_id: playerData.bbPlayerId,
     name: playerData.name,
-    nationality: 'Slovenia',
+    nationality: playerData.nationality || null,
     height: playerData.height,
     position: playerData.position
   };
