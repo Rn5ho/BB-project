@@ -822,7 +822,7 @@ export default function SloveniaPage() {
                     <SortHeader field="potential">Pot</SortHeader>
                     <SortHeader field="salary">Salary</SortHeader>
                     <SortHeader field="dmi">DMI</SortHeader>
-                    <SortHeader field="skill_points" title="Total Skill Points">TSP</SortHeader>
+                    {!showSkills && <SortHeader field="skill_points" title="Total Skill Points">TSP</SortHeader>}
                     <SortHeader field="osp" title="Outside Skill Points">OSP</SortHeader>
                     <SortHeader field="isp" title="Inside Skill Points">ISP</SortHeader>
                     <SortHeader field="tsp_delta" title="TSP change since previous snapshot">+/-</SortHeader>
@@ -830,11 +830,14 @@ export default function SloveniaPage() {
                       Tags
                     </th>
                     <SortHeader field="updated" title="Last scouted">Scouted</SortHeader>
-                    {showSkills && SKILLS.map((skill) => (
-                      <SortHeader key={skill.dbKey} field={skill.dbKey as SortField} title={skill.name}>
-                        {SKILL_ABBREV[skill.dbKey] || skill.name}
-                      </SortHeader>
-                    ))}
+                    {showSkills && (<>
+                      {SKILLS.map((skill) => (
+                        <SortHeader key={skill.dbKey} field={skill.dbKey as SortField} title={skill.name}>
+                          {SKILL_ABBREV[skill.dbKey] || skill.name}
+                        </SortHeader>
+                      ))}
+                      <SortHeader field="skill_points" title="Total Skill Points">TSP</SortHeader>
+                    </>)}
                   </tr>
                 </thead>
                 <tbody>
@@ -941,20 +944,22 @@ export default function SloveniaPage() {
                             ? (row.snapshot.dmi / 1000).toFixed(0) + "k"
                             : "-"}
                         </td>
-                        <td
-                          className="px-2 py-2 text-sm font-mono"
-                          title={benchmark ? `Low: ${benchmark.low} | Mid: ${benchmark.mid} | High: ${benchmark.high}` : undefined}
-                        >
-                          <span
-                            style={{
-                              color: tspStatus === "behind" ? "#ef4444"
-                                : tspStatus === "ahead" ? "#22c55e"
-                                : undefined,
-                            }}
+                        {!showSkills && (
+                          <td
+                            className="px-2 py-2 text-sm font-mono"
+                            title={benchmark ? `Low: ${benchmark.low} | Mid: ${benchmark.mid} | High: ${benchmark.high}` : undefined}
                           >
-                            {tsp ?? "-"}
-                          </span>
-                        </td>
+                            <span
+                              style={{
+                                color: tspStatus === "behind" ? "#ef4444"
+                                  : tspStatus === "ahead" ? "#22c55e"
+                                  : undefined,
+                              }}
+                            >
+                              {tsp ?? "-"}
+                            </span>
+                          </td>
+                        )}
                         <td className="px-2 py-2 text-sm font-mono">
                           {calcSkillSum(row.snapshot, OUTSIDE_KEYS) ?? "-"}
                         </td>
@@ -988,19 +993,35 @@ export default function SloveniaPage() {
                             ? formatStaleness(row.snapshot.captured_at, currentSeason, row.snapshot.bb_season)
                             : "-"}
                         </td>
-                        {showSkills && SKILLS.map((skill) => {
-                          const val = row.snapshot?.[skill.dbKey as keyof SkillSnapshot];
-                          const numVal = typeof val === "number" ? val : null;
-                          return (
-                            <td key={skill.dbKey} className="px-1.5 py-2 text-xs font-mono text-center" title={numVal != null ? `${skill.name}: ${SKILL_LEVELS[numVal] || numVal}` : undefined}>
-                              {numVal != null ? (
-                                <span style={{ color: getSkillColor(numVal) }}>{numVal}</span>
-                              ) : (
-                                <span className="text-gray-600">-</span>
-                              )}
-                            </td>
-                          );
-                        })}
+                        {showSkills && (<>
+                          {SKILLS.map((skill) => {
+                            const val = row.snapshot?.[skill.dbKey as keyof SkillSnapshot];
+                            const numVal = typeof val === "number" ? val : null;
+                            return (
+                              <td key={skill.dbKey} className="px-1.5 py-2 text-xs font-mono text-center" title={numVal != null ? `${skill.name}: ${SKILL_LEVELS[numVal] || numVal}` : undefined}>
+                                {numVal != null ? (
+                                  <span style={{ color: getSkillColor(numVal) }}>{numVal}</span>
+                                ) : (
+                                  <span className="text-gray-600">-</span>
+                                )}
+                              </td>
+                            );
+                          })}
+                          <td
+                            className="px-2 py-2 text-sm font-mono"
+                            title={benchmark ? `Low: ${benchmark.low} | Mid: ${benchmark.mid} | High: ${benchmark.high}` : undefined}
+                          >
+                            <span
+                              style={{
+                                color: tspStatus === "behind" ? "#ef4444"
+                                  : tspStatus === "ahead" ? "#22c55e"
+                                  : undefined,
+                              }}
+                            >
+                              {tsp ?? "-"}
+                            </span>
+                          </td>
+                        </>)}
                       </tr>
                     );
                   })}
