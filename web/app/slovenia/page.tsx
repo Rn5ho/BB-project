@@ -72,8 +72,15 @@ function calcSkillSum(snapshot: SkillSnapshot | null, keys: (keyof SkillSnapshot
 
 function parseHeight(height: string | null): number | null {
   if (!height) return null;
-  const match = height.match(/(\d+)/);
-  return match ? parseInt(match[1], 10) : null;
+  // Look for "NNN cm" first (e.g. "6'8\" / 205 cm" → 205)
+  const cmMatch = height.match(/(\d{3})\s*cm/);
+  if (cmMatch) return parseInt(cmMatch[1], 10);
+  // Fallback: any 3-digit number (likely cm)
+  const threeDigit = height.match(/(\d{3})/);
+  if (threeDigit) return parseInt(threeDigit[1], 10);
+  // Last resort: first number
+  const any = height.match(/(\d+)/);
+  return any ? parseInt(any[1], 10) : null;
 }
 
 function classifyPlayer(heightCm: number | null): PlayerType {
