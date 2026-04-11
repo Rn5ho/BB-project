@@ -519,6 +519,9 @@
       }
     }
 
+    // Fetch current season once for all snapshots
+    const bbSeason = await getCurrentBbSeason();
+
     let saved = 0;
     let failed = 0;
     let firstError = '';
@@ -552,6 +555,7 @@
           player_id: playerRecord.id,
           captured_by: authData.user_id,
           source: 'extension',
+          bb_season: bbSeason,
           age: p.age,
           salary: p.salary,
           experience: p.experience,

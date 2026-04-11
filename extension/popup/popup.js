@@ -5,6 +5,27 @@ const SUPABASE_URL = 'https://zhywajswbpdmhpeqyczc.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_IHc1rsVvj_jhP5dozauCcw_ITYxRerW';
 const DASHBOARD_URL = 'https://bb-project-eta.vercel.app';
 
+async function getCurrentBbSeason() {
+  try {
+    const cached = await chrome.storage.local.get('bb_current_season');
+    if (cached.bb_current_season) {
+      const { season, timestamp } = cached.bb_current_season;
+      if (Date.now() - timestamp < 24 * 60 * 60 * 1000) return season;
+    }
+    const res = await fetch(`${DASHBOARD_URL}/api/scout/seasons`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.currentSeason) {
+        await chrome.storage.local.set({
+          bb_current_season: { season: data.currentSeason, timestamp: Date.now() }
+        });
+        return data.currentSeason;
+      }
+    }
+  } catch (err) { console.warn('[BB Scout] Could not fetch season:', err); }
+  return null;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   // Check existing auth state
   const authData = await getAuth();
@@ -227,10 +248,12 @@ async function syncPlayer(playerData, authData) {
   const playerRecord = (await playerRes.json())[0];
 
   // Insert snapshot
+  const bbSeason = await getCurrentBbSeason();
   const snapshotPayload = {
     player_id: playerRecord.id,
     captured_by: authData.user_id,
     source: 'extension',
+    bb_season: bbSeason,
     age: playerData.age,
     salary: playerData.salary,
     experience: playerData.experience,

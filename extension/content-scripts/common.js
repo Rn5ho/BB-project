@@ -141,6 +141,33 @@ function normalizeNationality(name) {
   return NATIONALITY_MAP[lower] || name.trim();
 }
 
-// Supabase configuration - UPDATE THESE with your project values
+// Dashboard + Supabase configuration
+const DASHBOARD_URL = 'https://bb-project-eta.vercel.app';
 const SUPABASE_URL = 'https://zhywajswbpdmhpeqyczc.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_IHc1rsVvj_jhP5dozauCcw_ITYxRerW';
+
+// Fetch current BB season (cached in chrome.storage for 24h)
+async function getCurrentBbSeason() {
+  try {
+    const cached = await chrome.storage.local.get('bb_current_season');
+    if (cached.bb_current_season) {
+      const { season, timestamp } = cached.bb_current_season;
+      if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+        return season;
+      }
+    }
+    const res = await fetch(`${DASHBOARD_URL}/api/scout/seasons`);
+    if (res.ok) {
+      const data = await res.json();
+      if (data.currentSeason) {
+        await chrome.storage.local.set({
+          bb_current_season: { season: data.currentSeason, timestamp: Date.now() }
+        });
+        return data.currentSeason;
+      }
+    }
+  } catch (err) {
+    console.warn('[BB Scout] Could not fetch current season:', err);
+  }
+  return null;
+}

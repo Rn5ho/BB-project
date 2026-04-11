@@ -806,11 +806,15 @@
       if (!playerRes.ok) throw new Error(`Player upsert failed: ${playerRes.status}`);
       const playerRecord = (await playerRes.json())[0];
 
+      // Fetch current season for snapshot tagging
+      const bbSeason = await getCurrentBbSeason();
+
       // Snapshot dedup: check if a snapshot already exists for this player today
       const snapshotPayload = {
         player_id: playerRecord.id,
         captured_by: authData.user_id,
         source: 'extension',
+        bb_season: bbSeason,
         age: playerData.age,
         salary: playerData.salary,
         experience: playerData.experience,
