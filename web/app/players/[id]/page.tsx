@@ -521,7 +521,7 @@ export default function PlayerDetailPage() {
         </div>
 
         {/* Snapshot History */}
-        {snapshots.length > 1 && (
+        {snapshots.length >= 1 && (
           <div
             className="rounded-lg p-6 mt-6"
             style={{
