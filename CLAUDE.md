@@ -49,6 +49,7 @@ BB-project/
           player/route.ts    # API route: fetch player(s) via BB API, upsert to DB
           roster/route.ts    # API route: fetch team roster via BB API, upsert to DB
           seasons/route.ts   # API route: fetch BB seasons, identify current season
+          ingest/route.ts    # API route: accept pre-scraped player data, upsert to DB (no BB API needed)
     components/
       Navbar.tsx             # Navigation bar (Slovenia, Opponents, Compare, Training, Scout, Manual Entry)
       SkillBadge.tsx         # Skill display with color coding
@@ -319,6 +320,7 @@ Fetches player skills directly from the BuzzerBeater XML API (server-side), bypa
 **API routes** (`web/app/api/scout/`):
 - `player/route.ts` — POST `{ playerIds: number[] }`. Logs into BB API, fetches each player, upserts to DB. Includes snapshot dedup (same player + same day = update). Tags snapshots with `bb_season`.
 - `roster/route.ts` — POST `{ teamId: number }`. Same pattern but fetches entire roster. Tags snapshots with `bb_season`.
+- `ingest/route.ts` — POST `{ players: PlayerInput[] }`. Accepts pre-scraped player data (no BB API call needed). Used by browser automation / cowork sessions that read skills from the DOM. Max 50 players per request. Auto-calculates `skill_points` from skills if not provided. Same dedup pattern. Tags with `bb_season`.
 - `seasons/route.ts` — GET. Fetches all BB seasons via `seasons.aspx`, returns `{ currentSeason, seasons[] }`. Used by client for age computation.
 - Player and roster routes use `bbApiLogin()` / `bbApiLogout()` for session management and return `{ results, errors }`.
 

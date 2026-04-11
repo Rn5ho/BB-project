@@ -48,13 +48,65 @@ After recruiting all 18, report to the user:
 - Any failures and why
 - "Ready for you to capture skills"
 
-### Step 3: User Captures Skills (user does this)
-Tell the user: **"All 18 players are on the roster. Open the NT roster page in your Chrome browser and run the extension to capture their skills."**
+### Step 3: Capture Skills (you do this — fully automated)
+Once all 18 are recruited, navigate to the NT roster page where all player skills are visible:
+- URL: `https://www.buzzerbeater.com/country/66/jnt/players.aspx` (Slovenia U-21)
 
-Wait for the user to confirm they're done.
+**Read the DOM** to extract each player's data:
+- Name, BB Player ID (from links/text)
+- Age, Height, Position, Salary, Potential, DMI, Game Shape, Experience
+- All 12 skills: Jump Shot, Jump Range, Outside Def., Handling, Driving, Passing, Inside Shot, Inside Def., Rebounding, Shot Blocking, Stamina, Free Throw
+- Skill values are numbers 1-20 (may appear as text like "strong (8)" — extract the number)
+
+**POST the scraped data** to the ingest endpoint:
+
+```
+POST https://bb-project-eta.vercel.app/api/scout/ingest
+Content-Type: application/json
+
+{
+  "players": [
+    {
+      "bbPlayerId": 54516150,
+      "name": "Aleksander Godec",
+      "nationality": "Slovenia",
+      "height": "6'8\" / 205 cm",
+      "position": "PG",
+      "age": 20,
+      "salary": 12500,
+      "potential": 7,
+      "dmi": 45500,
+      "gameShape": 8,
+      "experience": 3,
+      "skills": {
+        "jump_shot": 8,
+        "jump_range": 6,
+        "outside_def": 7,
+        "handling": 9,
+        "driving": 8,
+        "passing": 7,
+        "inside_shot": 5,
+        "inside_def": 4,
+        "rebounding": 3,
+        "shot_blocking": 2,
+        "stamina": 6,
+        "free_throw": 5
+      }
+    }
+  ]
+}
+```
+
+- Maximum **50 players per request**
+- `bbPlayerId` and `name` are required, everything else is optional
+- `skillPoints` is auto-calculated from skills if not provided
+- Deduplicates: same player + same day = updates existing snapshot
+- Response: `{ "results": [...], "errors": [...] }`
+
+After successful POST, report how many players were saved.
 
 ### Step 4: Drop All Players (you do this)
-Once the user confirms skills are captured, remove all 18 players from the roster:
+Once skills are captured via the API, remove all 18 players from the roster:
 1. Navigate to the NT roster management page (ask the user for the URL if you don't know it — it's typically something like `https://www.buzzerbeater.com/national/XXX/roster.aspx`)
 2. For each player, find and click the **"Drop"** / **"Release"** / **"Remove"** button
 3. Wait for confirmation before proceeding to next
@@ -92,7 +144,9 @@ Proceed with next batch?
 ## Key URLs
 - Player profile: `https://www.buzzerbeater.com/player/{ID}/overview.aspx`
 - Login: `https://www.buzzerbeater.com/default.aspx`
-- NT roster page: ask user for exact URL (varies by country/team)
+- Slovenia U-21 roster: `https://www.buzzerbeater.com/country/66/jnt/players.aspx`
+- Ingest API: `POST https://bb-project-eta.vercel.app/api/scout/ingest`
+- Dashboard: `https://bb-project-eta.vercel.app/slovenia`
 
 ## Important Rules
 - **Never** recruit more than 18 players at once (roster limit)
