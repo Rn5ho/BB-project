@@ -564,7 +564,7 @@ export default function WorldPage() {
                     {visibleColumns.potential && <SortHeader field="potential">Potential</SortHeader>}
                     {visibleColumns.dmi_gs && <SortHeader field="dmi">DMI @ GS</SortHeader>}
                     {visibleColumns.salary && <SortHeader field="salary">Salary</SortHeader>}
-                    {visibleColumns.skill_points && <SortHeader field="skill_points">TSP</SortHeader>}
+                    {(visibleColumns.skill_points || showSkills) && <SortHeader field="skill_points">TSP</SortHeader>}
                     {visibleColumns.height && <SortHeader field="height">Height</SortHeader>}
                     {visibleColumns.data && (
                       <th className="px-3 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -671,7 +671,7 @@ export default function WorldPage() {
                               {row.snapshot?.salary != null ? `$${row.snapshot.salary.toLocaleString()}` : "-"}
                             </td>
                           )}
-                          {visibleColumns.skill_points && (
+                          {(visibleColumns.skill_points || showSkills) && (
                             <td className="px-3 py-2 text-sm font-mono">{row.snapshot?.skill_points ?? "-"}</td>
                           )}
                           {visibleColumns.height && (
