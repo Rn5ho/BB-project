@@ -143,3 +143,27 @@ CREATE INDEX idx_players_bb_id ON players(bb_player_id);
 CREATE INDEX idx_player_tags_player ON player_tags(player_id);
 CREATE INDEX idx_player_tags_user_tag ON player_tags(user_id, tag);
 CREATE INDEX idx_player_notes_player ON player_notes(player_id);
+
+-- Settings: cross-device user preferences (key-value, JSONB)
+create table if not exists settings (
+  key text primary key,
+  value jsonb not null,
+  updated_at timestamptz not null default now()
+);
+alter table settings enable row level security;
+create policy "Authenticated read settings"
+  on settings for select
+  to authenticated
+  using (true);
+create policy "Authenticated insert settings"
+  on settings for insert
+  to authenticated
+  with check (true);
+create policy "Authenticated update settings"
+  on settings for update
+  to authenticated
+  using (true);
+create policy "Authenticated delete settings"
+  on settings for delete
+  to authenticated
+  using (true);
