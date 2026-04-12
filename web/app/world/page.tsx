@@ -24,7 +24,9 @@ type SortField =
   | "salary"
   | "skill_points"
   | "height"
-  | "updated";
+  | "updated"
+  | "jump_shot" | "jump_range" | "outside_def" | "handling" | "driving" | "passing"
+  | "inside_shot" | "inside_def" | "rebounding" | "shot_blocking" | "stamina" | "free_throw";
 
 interface PlayerRow {
   player: Player;
@@ -251,6 +253,16 @@ export default function WorldPage() {
       if (sortField === "dmi") {
         const av = a.snapshot?.dmi;
         const bv = b.snapshot?.dmi;
+        if (av == null && bv == null) return 0;
+        if (av == null) return 1;
+        if (bv == null) return -1;
+        return sortAsc ? av - bv : bv - av;
+      }
+
+      if ((SKILL_KEYS as readonly string[]).includes(sortField)) {
+        const key = sortField as typeof SKILL_KEYS[number];
+        const av = a.snapshot ? (a.snapshot[key] as number | null) : null;
+        const bv = b.snapshot ? (b.snapshot[key] as number | null) : null;
         if (av == null && bv == null) return 0;
         if (av == null) return 1;
         if (bv == null) return -1;
@@ -561,13 +573,9 @@ export default function WorldPage() {
                     )}
                     {visibleColumns.updated && <SortHeader field="updated">Updated</SortHeader>}
                     {showSkills && SKILL_COLUMNS.map((s) => (
-                      <th
-                        key={s.key}
-                        className="px-2 py-2 text-center text-xs font-medium text-gray-400 uppercase tracking-wider"
-                        title={s.key.replace("_", " ")}
-                      >
+                      <SortHeader key={s.key} field={s.key}>
                         {s.label}
-                      </th>
+                      </SortHeader>
                     ))}
                   </tr>
                 </thead>
