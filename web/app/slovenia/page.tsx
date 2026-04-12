@@ -6,6 +6,8 @@ import { SKILLS, SKILL_LEVELS, POTENTIAL_LEVELS, getSkillColor, getPotentialColo
 import type { Player, SkillSnapshot, PlayerTag } from "@/lib/types";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
+import { computeCurrentAge, formatStaleness } from "@/lib/season";
+import { useCurrentSeason } from "@/lib/useCurrentSeason";
 
 type SubTab = "roster" | "prospects";
 
@@ -90,13 +92,6 @@ function classifyPlayer(heightCm: number | null): PlayerType {
   return "mid";
 }
 
-function computeCurrentAge(snapshot: SkillSnapshot | null, currentSeason: number | null): number | null {
-  if (!snapshot?.age) return null;
-  if (currentSeason && snapshot.bb_season && currentSeason > snapshot.bb_season) {
-    return snapshot.age + (currentSeason - snapshot.bb_season);
-  }
-  return snapshot.age;
-}
 
 const TSP_BENCHMARKS: Record<number, { low: number; mid: number; high: number }> = {
   18: { low: 40, mid: 50, high: 60 },
@@ -110,20 +105,6 @@ function getTspBenchmark(age: number | null): { low: number; mid: number; high: 
   return TSP_BENCHMARKS[age] || null;
 }
 
-function formatStaleness(capturedAt: string, currentSeason: number | null, snapshotSeason: number | null): string {
-  if (currentSeason && snapshotSeason) {
-    const delta = currentSeason - snapshotSeason;
-    if (delta === 0) return "this season";
-    if (delta === 1) return "1 season ago";
-    return `${delta} seasons ago`;
-  }
-  const days = Math.floor((Date.now() - new Date(capturedAt).getTime()) / (1000 * 60 * 60 * 24));
-  if (days === 0) return "today";
-  if (days === 1) return "yesterday";
-  if (days < 7) return `${days}d ago`;
-  if (days < 30) return `${Math.floor(days / 7)}w ago`;
-  return `${Math.floor(days / 30)}mo ago`;
-}
 
 interface PlayerRow {
   player: Player;
@@ -135,9 +116,9 @@ interface PlayerRow {
 }
 
 export default function SloveniaPage() {
+  const { currentSeason } = useCurrentSeason();
   const [players, setPlayers] = useState<PlayerRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentSeason, setCurrentSeason] = useState<number | null>(null);
   const [subTab, setSubTab] = useState<SubTab>("prospects");
   const [sortField, setSortField] = useState<SortField>("name");
   const [sortAsc, setSortAsc] = useState(true);
@@ -155,35 +136,8 @@ export default function SloveniaPage() {
   const [showSkills, setShowSkills] = useState(false);
 
   useEffect(() => {
-    loadCurrentSeason();
     loadPlayers();
   }, []);
-
-  async function loadCurrentSeason() {
-    const cached = localStorage.getItem("bb_current_season");
-    if (cached) {
-      try {
-        const { season, timestamp } = JSON.parse(cached);
-        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
-          setCurrentSeason(season);
-          return;
-        }
-      } catch { /* refetch */ }
-    }
-    try {
-      const res = await fetch("/api/scout/seasons");
-      if (res.ok) {
-        const data = await res.json();
-        if (data.currentSeason) {
-          setCurrentSeason(data.currentSeason);
-          localStorage.setItem("bb_current_season", JSON.stringify({
-            season: data.currentSeason,
-            timestamp: Date.now(),
-          }));
-        }
-      }
-    } catch { /* non-fatal */ }
-  }
 
   async function loadPlayers() {
     setLoading(true);
