@@ -3,6 +3,9 @@
 ## Overview
 A Chrome Extension + Web App tool for BuzzerBeater National Team managers. Auto-captures player skills from the game's web UI and stores them in an online database for tracking, comparing, and scouting players across seasons. Built for Slovenia U-21 management.
 
+## Game Reference
+Full BuzzerBeater game manual is checked in at `BBmanual.txt` (project root). Read it when designing features that touch game mechanics — skills, training, game shape, DMI, U-21 eligibility, draft, seasons, NT rules, etc. The Training Mechanics section below is a distilled extract; the manual is the authoritative source.
+
 ## Tech Stack
 - **Web App:** Next.js 16 (React) + TypeScript + Tailwind CSS
 - **Database + Auth + API:** Supabase (PostgreSQL + Auth + auto-generated REST API)
@@ -38,7 +41,7 @@ BB-project/
       globals.css            # Global styles (dark theme)
       login/page.tsx         # Auth page
       slovenia/page.tsx      # Slovenia U-21 roster + prospects (sub-tabs)
-      opponents/page.tsx     # Opponent tracking by country (DMI-focused, country pills)
+      world/page.tsx         # World scouting view (multi-country multi-select, DMI + skills when available, Europe/Season Opponents presets, expandable skill rows, Skills column toggle)
       players/[id]/page.tsx  # Player detail + skill history + editable position
       compare/page.tsx       # Side-by-side player comparison
       training/page.tsx      # Training simulator (manual + database player mode)
@@ -51,7 +54,7 @@ BB-project/
           seasons/route.ts   # API route: fetch BB seasons, identify current season
           ingest/route.ts    # API route: accept pre-scraped player data, upsert to DB (no BB API needed)
     components/
-      Navbar.tsx             # Navigation bar (Slovenia, Opponents, Compare, Training, Scout, Manual Entry)
+      Navbar.tsx             # Navigation bar (Slovenia, World, Compare, Training, Scout, Manual Entry)
       SkillBadge.tsx         # Skill display with color coding
       SkillDelta.tsx         # Skill change indicator (+N green, -N red)
     lib/
@@ -252,7 +255,7 @@ Red = below low, green = above high. Hover TSP to see benchmark range.
 **Bulk delete**: with RLS failure detection — if 0 rows deleted, shows SQL to add DELETE policy
 **Empty states**: contextual messages explaining how to populate each sub-tab
 
-### Opponents (`/opponents`)
+### World (`/world`) — replaces legacy `/opponents`, which now 308-redirects here
 Tracks and scouts opposing national teams' players. Queries only non-Slovenian players (`nationality != 'Slovenia'`, not null).
 
 **Country pills**: Dynamic filter buttons generated from available nationalities (All / France / Ukraine / etc.). Shown inline next to the heading.
@@ -390,10 +393,10 @@ Colors are stored in:
 ### `players` Table Key Columns
 - `bb_player_id` — BuzzerBeater player ID (unique constraint, used for upsert)
 - `name` — Player name
-- `nationality` — Country name (e.g., "Slovenia", "Ukraina"). NULL for legacy data. Used to split Slovenia vs Opponents views.
+- `nationality` — Country name (e.g., "Slovenia", "Ukraina"). NULL for legacy data. Used to split Slovenia vs World views.
 - `height` — Height string (e.g., "196 cm")
 - `position` — Editable position (PG/SG/SF/PF/C or NULL)
-- `is_nt_player` — Boolean (default FALSE). Auto-set to TRUE when player is scanned from an NT roster page. Used for U-21 Roster sub-tab (Slovenia) and U-21 filter (Opponents).
+- `is_nt_player` — Boolean (default FALSE). Auto-set to TRUE when player is scanned from an NT roster page. Used for U-21 Roster sub-tab (Slovenia). NOTE: flag is sticky — never auto-unset. World page uses age-based U-21 filter instead. A season-scoped rework is planned.
 
 ### Key RLS Policies
 - All tables: authenticated users can SELECT

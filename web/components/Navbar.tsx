@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 const navItems = [
   { href: "/slovenia", label: "Slovenia" },
-  { href: "/opponents", label: "Opponents" },
+  { href: "/world", label: "World" },
   { href: "/compare", label: "Compare" },
   { href: "/training", label: "Training" },
   { href: "/scout", label: "Scout" },
