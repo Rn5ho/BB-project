@@ -37,6 +37,21 @@ const SKILL_KEYS = [
   "inside_shot","inside_def","rebounding","shot_blocking","stamina","free_throw",
 ] as const;
 
+const SKILL_COLUMNS: { key: typeof SKILL_KEYS[number]; label: string }[] = [
+  { key: "jump_shot", label: "JS" },
+  { key: "jump_range", label: "JR" },
+  { key: "outside_def", label: "OD" },
+  { key: "handling", label: "HA" },
+  { key: "driving", label: "DR" },
+  { key: "passing", label: "PA" },
+  { key: "inside_shot", label: "IS" },
+  { key: "inside_def", label: "ID" },
+  { key: "rebounding", label: "RB" },
+  { key: "shot_blocking", label: "SB" },
+  { key: "stamina", label: "ST" },
+  { key: "free_throw", label: "FT" },
+];
+
 const COLUMN_DEFS: ColumnDef[] = [
   { key: "age", label: "Age", defaultVisible: true },
   { key: "position", label: "Position", defaultVisible: true },
@@ -50,6 +65,7 @@ const COLUMN_DEFS: ColumnDef[] = [
 ];
 
 const COLUMN_STORAGE_KEY = "bb_world_columns_v1";
+const SHOW_SKILLS_STORAGE_KEY = "bb_world_show_skills_v1";
 const SETTINGS_KEY_SEASON_OPPONENTS = "season_opponents";
 
 function defaultVisible(): Record<string, boolean> {
@@ -84,12 +100,17 @@ export default function WorldPage() {
   const [deleting, setDeleting] = useState(false);
 
   const [visibleColumns, setVisibleColumns] = useState<Record<string, boolean>>(defaultVisible);
+  const [showSkills, setShowSkills] = useState(false);
 
-  // --- Load column visibility from localStorage ---
+  // --- Load column visibility + skills toggle from localStorage ---
   useEffect(() => {
     try {
       const raw = localStorage.getItem(COLUMN_STORAGE_KEY);
       if (raw) setVisibleColumns({ ...defaultVisible(), ...JSON.parse(raw) });
+    } catch {}
+    try {
+      const raw = localStorage.getItem(SHOW_SKILLS_STORAGE_KEY);
+      if (raw === "1") setShowSkills(true);
     } catch {}
   }, []);
   useEffect(() => {
@@ -97,6 +118,11 @@ export default function WorldPage() {
       localStorage.setItem(COLUMN_STORAGE_KEY, JSON.stringify(visibleColumns));
     } catch {}
   }, [visibleColumns]);
+  useEffect(() => {
+    try {
+      localStorage.setItem(SHOW_SKILLS_STORAGE_KEY, showSkills ? "1" : "0");
+    } catch {}
+  }, [showSkills]);
 
   // --- Load starred countries from Supabase settings ---
   useEffect(() => {
@@ -342,7 +368,22 @@ export default function WorldPage() {
             <h1 className="text-2xl font-bold">World</h1>
             <p className="text-xs text-gray-500 mt-1">{filtered.length} player{filtered.length !== 1 && "s"}</p>
           </div>
-          <ColumnVisibilityMenu columns={COLUMN_DEFS} visible={visibleColumns} onChange={setVisibleColumns} />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowSkills((v) => !v)}
+              className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                showSkills ? "text-white" : "text-gray-300 hover:text-white"
+              }`}
+              style={{
+                background: showSkills ? "var(--accent)" : "var(--card-bg)",
+                border: "1px solid var(--card-border)",
+              }}
+              title="Toggle individual skill columns"
+            >
+              Skills
+            </button>
+            <ColumnVisibilityMenu columns={COLUMN_DEFS} visible={visibleColumns} onChange={setVisibleColumns} />
+          </div>
         </div>
 
         <div className="mb-3">
@@ -519,6 +560,15 @@ export default function WorldPage() {
                       </th>
                     )}
                     {visibleColumns.updated && <SortHeader field="updated">Updated</SortHeader>}
+                    {showSkills && SKILL_COLUMNS.map((s) => (
+                      <th
+                        key={s.key}
+                        className="px-2 py-2 text-center text-xs font-medium text-gray-400 uppercase tracking-wider"
+                        title={s.key.replace("_", " ")}
+                      >
+                        {s.label}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -629,6 +679,18 @@ export default function WorldPage() {
                               {row.snapshot ? new Date(row.snapshot.captured_at).toLocaleDateString() : "-"}
                             </td>
                           )}
+                          {showSkills && SKILL_COLUMNS.map((s) => {
+                            const v = row.snapshot ? (row.snapshot[s.key] as number | null) : null;
+                            return (
+                              <td key={s.key} className="px-2 py-2 text-center text-sm font-mono">
+                                {v == null ? (
+                                  <span className="text-gray-600">-</span>
+                                ) : (
+                                  <span style={{ color: getSkillColor(v) }}>{v}</span>
+                                )}
+                              </td>
+                            );
+                          })}
                         </tr>
                         {expanded && row.hasSk && row.snapshot && (
                           <tr>
