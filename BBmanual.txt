@@ -1,0 +1,1113 @@
+Rules
+Rules of Conduct for BuzzerBeater Users
+
+We encourage all of our users to have fun with the site in any way they desire.
+
+However, in the interests of keeping the game fun and fair for all users, there are a few very important rules to which all users must adhere.
+
+
+
+Multiple Teams
+Other than having an official second team in Utopia, it is against BuzzerBeater rules to own or operate more than one team or account for any circumstances. We have sophisticated tools for detecting this, and when you are caught, all of your accounts will be permanently banned without warning. You are not allowed to sign up for a second team while you already have access to a team.
+
+
+
+Money Transfers
+It is against BuzzerBeater rules to bid above market rates on a player. Our cheater tools may detect this as an attempt to transfer money between two accounts, and BOTH the buying and selling teams may be banned. It is also against the rules to bid above-market values in order to facilitate a "trade." In addition to our having tools for detecting overbids and collaborating groups, we strongly encourage our users to report any Transfer List overbids they notice.
+
+Furthermore, if someone overbids on a player you have posted on the Transfer List, it is YOUR responsibility to report this overbid to the GMs. You can do this by clicking on the "Report Cheaters" link (in the menu) and filing a report on the transfer in question. If the transfer price was determined to be unreasonable, the GMs are authorized to fine your team by an appropriate amount – we very rarely revoke account bans, so it is still in your best interests to report the trade.
+
+In most cases involving transfers between friends, relatives, colleagues, or other people who know each other well, the GMs will likely decide to take strict action against all teams involved. If you buy or sell a player from or to one of the aforementioned groups, you should expect the GMs to review the case in detail and don't be surprised if your team and the teams of the others involved are fined or even banned. Excessive and unfair transfers between teams are always going to be problematic and will typically lead to the teams involved being banned.
+
+
+
+Babysitting
+All users are responsible for keeping the password to their team private. The only person that should know your password is you, and you should not know any other user's password. It is not acceptable behavior to login to the accounts of others or have them log into your account. Doing so will likely result in a ban from the game for all teams involved.
+
+
+
+Spam
+We do not allow the spamming of other users, either through BB-Mail, Forum posts, In-game chat or Press Blogs.
+
+Examples of spam include (but are not limited to):
+
+
+Asking for National Team votes via BB-mail or in the forums (except for in the designated forum thread). If you do this, you will be disqualified from the election and you will receive a fine
+
+Asking for a scrimmage
+
+Notifying people of players you have for sale
+
+Advertising another product or service on BuzzerBeater
+
+If you spam other users, the GMs may issue a warning, or may temporarily remove your ability to send BB-Mail or post in the Forums. If you continue to spam users during this period or after the functionality is returned to you, your accounts will be permanently banned without warning.
+
+
+
+Hacking the Site
+Any attempt to hack the BuzzerBeater website, game modules, or infrastructure is clearly a bannable offense.
+
+Be aware that there are certain programs floating around that are claiming that they can hack BB and give you an in-game advantage. This is not the case. These programs are designed to hack into your computer and steal your personal information. Do not be fooled by them.
+
+
+
+Data Mining
+The use of web-based data mining tools, “crawler bots,” or any other software designed to use our bandwidth intensively is strictly forbidden, and your account will be banned. If you really want access to large amounts of data, ask one of the BBs, and we’ll do what we can to provide it to you.
+
+
+
+Account Bans
+Account bans made by the GMs or BBs are permanent. Typically, we invite users to reapply for a new account after 30 days, at which point we will examine the situation again, and may or may not accept your application for a new account.
+
+In the unfortunate situation that your account is banned, you may appeal the decision by sending an e-mail to appeals@buzzerbeater.com. All of these appeals are read, and each situation will be carefully reviewed again by the BB Staff. If your account is unlocked (this is VERY rare), you will receive an email letting you know; if you do not hear from us, it is because your appeal was denied.
+
+Overview Page
+
+"I can not do the finger wave to the guy after I block a shot, I have to do it to the crowd. I did it to the crowd, but the referee said there was a bench in front of the crowd."
+
+The Overview page is your team's home page. It contains links to many of the important pages with information about your team, or about the team whose Overview page you're looking at. These pages include:
+
+
+Games: A quick list of all games the team has played, by season
+
+Standings: The standings page containing information about the team's league
+
+Team Stats: Expanded statistics for the team this season and past seasons.
+
+Roster: A link to the team's roster page.
+
+Arena: The team's arena page, containing recent attendance and capacity.
+
+Team History: A quick list of team placements by season.
+
+Transfers: A list of all players the team has bought or sold recently.
+
+Send Message: Send a message to that team's owner.
+
+In addition, if you are a supporter, you can think of the team page as an opportunity to give your team some extra personality though press releases, team pictures, and colorful banter. We'll give you as much freedom with this page as we can, so go ahead and make it your own. Try to be nice, though; if you upset someone physically larger than you, we're not going to step in to defend you. In fact, we're going to try to avoid that situation entirely by keeping a close watch for any offensive content. It will make the developers' jobs a lot easier (and not run you the risk of having your account disabled) if you keep your language clean and your shots above the belt.
+
+As you become an experienced general manager, your team may win some trophies or flags. These badges of honor showcase the various accomplishments of your team.
+
+
+Trophies: Your team wins a trophy when it wins the league championship, national tournament (or finishes as a runner-up in either competition), BuzzerBeater's Best, or when one of your players wins the league MVP award.
+
+Flags: Each team has the opportunity to schedule scrimmage matches against international teams from other leagues. Whenever you play a team from another country, their flag will show up on your team page, and vice versa. Try to collect them all!
+
+By clicking on the name of a rival team anywhere on the site, you'll link to their team page. The quick links on the right will provide you with some information about the team, such as a list of upcoming matches, their current tournament standing, the teams roster, and so forth. You can also send them a private message by clicking on "Send Message."
+
+Supporters can also host their team's own private blog on their team overview page. You can make posts, receive and reply to comments, and make sure to tell everybody who comes by why your team is best!
+
+News
+
+"We're modern day gladiators. I don't recall anybody ever interviewing losing gladiators."
+
+The News page notifies users of any changes to the BuzzerBeater game and site. The most recent changes are at the top of the page, and are listed in bold. You're redirected to this page as soon as you log in, and we advise you to pay attention to any new updates and decide how they might affect your team and coaching style.
+
+There are also Headlines on the News page, with transactions for each team in your league listing such events as transfers, arena expansions, and National Team appointments.
+
+Occasionally there will be a color-coded temporary Message of the Day posted informing users of issues such as server problems or other important temporary conditions.
+
+The Forums
+
+"That was my fault. I should have read it before it came out."
+
+The Forums are a community message board, where you can talk to your fellow managers about anything from BuzzerBeater to your favorite movie.
+
+The Forums are broken up into different folders. A national folder, a help folder, and a global discussion folder in your language are initially placed in your favorites. The first page of the forums shows a "sneak-peek" of recent messages in all of your favorite folders. When you click on a folder, you will be given the option to add or remove that folder so that your favorites contain all of the folders you want to regularly read.
+
+The global folders are for all users who speak the language (i.e. BB Global (Español) is for Spanish speakers) while the folders denoted by the name of a country are for users who hail from that part of the world. There are also folders specific to discussion of each individual league. Finally, the Help link on your sidebar will also take you to a help forum where you can ask questions or help new players (we really appreciate how many BuzzerBeater players help each other, and it's a wonderful thing that our community does!)
+
+OK, so now for the tough part. The conferences are moderated by our GMs and moderators. When posting in a public conference, you are expected to remain polite and refrain from either personal attacks or political discussions. Further, you are expected to keep your posts on-topic; there are Non-BB folders available for discussion that does not relate to BuzzerBeater, for example. Any messages deemed spam are also prohibited. In most forums, there are additional forum rules posted in a sticky thread. Posts not in the language(s) of the forum will also be removed so that everybody can read all discussions. If there is no folder available for the discussion you want to have in the language you want to have, please tell one of the GMs and we can create a new folder for you.
+
+Users who do not behave properly in forums may be banned from the conferences for some period of time, banned permanently, fined, and/or in extreme circumstances, even banned from BuzzerBeater entirely. The forums are an important part of the community, and we are committed to keeping the forums friendly and welcoming to all of our users.
+
+
+
+Forum Rules
+Buzzerbeater is a game for all ages across the world. Managers should always consider that in their actions and at all times show respect towards other players in the community. Communication in all global forums is English-only, except when otherwise noted. National forums use their local language(s), or English. Additionally, excessive use of CAPITAL letters and "chatspeak" are typically not tolerated.
+
+The following types of posts are not permitted in any forum and chat areas of Buzzerbeater:
+
+- Spam (i.e. multiple posting of the same message).
+
+- Racist or personal attacks; attacks on a specific nation or religion.
+
+- Excessive use of swearing or profane language.
+
+- Cheating accusations. Please use our Cheating Report system.
+
+- Advertising goods or services you wish to buy/sell/trade in real life.
+
+- Asking for help with illegal software (piracy) or CD-keys to such games/software.
+
+- Promoting criminal activities or use of illegal goods or substances, i.e. drugs.
+
+- Bumping (i.e. replying needlessly to a thread in order to promote yourself or the thread content).
+
+- Discussing staff decisions (BBs/GMs/Mods). Please e-mail appeals@buzzerbeater.com with your complaint.
+
+- Begging for Supporter.
+
+- Referral links.
+
+- Links to pornographic content or content that is not suitable for children.
+
+- Useless or irritating posts. This includes single syllable answers, trolling(*) and spamming.
+
+In addition, the following is not permitted in public forum areas of Buzzerbeater:
+
+- Player advertising in non-designated threads.
+
+- Valuation requests.
+
+- Scrimmage advertising.
+
+- Private League advertising outside of the dedicated Private League Ad Thread.
+
+- Political and religious discussions.
+
+Those may be permitted in private federation forums by discretion of those forums' moderators.
+
+(*)trolling
+
+Games
+
+"We can't win at home and we can't win on the road. My problem as general manager is I can't think of another place to play."
+
+Clicking on the Schedule link in the Team Overview page lists all of the matches from the current season involving your team, listing those that have already been played as well as those scheduled for the future. Using the drop-down menu at the top-right corner, you can view a list of matches from previous seasons.
+
+Each team plays two league matches per week, during the regular season, on Saturdays and Tuesdays. Each team will also play either a scrimmage or a cup game on Thursdays. Additionally, three of the games during the season will also be classified as televised games. These games have a higher impact on your fan base than normal games. Win big or lose a nail-biter on the road on TV and everybody wants your star player's jersey. Lose big and be prepared to look at even more empty seats.
+
+There are several vital game features that are accessible from this page:
+
+
+By clicking on the Match Replay link for a completed game, you will be taken to the match viewer, where you can watch a replay of every shot, rebound, foul, timeout, and point from the match, complete with running commentary and updated stats for all of the players. Even better, if you check the Schedule while one of your matches is currently live, you will see a View Live! link, that will take you to the match viewer, displaying the live game!
+
+By clicking Set Lineup for an upcoming match, you'll be able to set your active roster (the 12 players who will be eligible to play in the game), determine you starting lineup as well as your backups and reserve players, and decide which offensive and defensive tactics you will use for the match. If you don't set your tactics, your team will use the default settings, which may not be the best choices for your team. Choosing your tactics to optimize your team's performance requires careful thought; much of this ability comes from trying out varying strategies and different player combinations, analyzing the resulting box scores, and talking with more experienced users. You must submit your tactics by 15 minutes before the game, because after that, the coach will be down in the locker room giving his pre-game pep talk.
+
+By clicking on the score of a previously played game, you can view the complete box score and summarized team ratings for the match.
+
+Standings
+
+"I don't want to shoot my mouth in my foot, but those are games we can win."
+
+The Standings is the go-to page for your current division. Here, you can see the relative rankings of each team in the division. We advise you to check the standings page after every game to keep track of your opponents. Teams that are still in the National Tournament will have a small trophy icon next to their name.
+
+When the 22 league games are concluded, the four top-ranked teams in each conference will make it to the playoff round. The playoff schedule is displayed on the standings page; if the regular season has not finished yet, the playoff schedule is predicted according to the current standings. As the season progresses, certain players will perform magnificently on the court. The standings page keeps a list of the league leaders in average points-per-game, rebounds-per-game, and assists-per-game. Clicking on any player will take you to that player's historical box score statistics, broken down by game and by season totals.
+
+Ties in the standings are broken first by number of forfeits (indicated by a * next to the number of losses a team has), followed by point differential, then points scored.
+
+At the end of a season, a most valuable player (MVP) will be selected from all of the players in the division. The results and summary of this selection process will be accessible for all previous seasons. The overall league leaders and the MVP will have a note in their history page about their final position in the MVP voting. Also to the owner team of the MVP will be given a trophy on the team's page. Using the drop-down menu near the top of the page, you can view the final standings for the current division from previous seasons.
+
+
+Playoffs, and Promotion and Demotion of Teams
+"I've won at every level, except college and pro."
+
+The four top-ranked teams in each conference will make it into the playoffs. There is a one-game elimination match between the 1st- and 4th-ranked teams and between the 2nd- and 3rd-ranked teams in each conference, followed by an elimination match between the two winners. When these champions are decided, the winners from each conference face off in a best-of-three showdown. The winner of the division finals is crowned champion of the division, and is promoted to a higher level of divisions. In divisions VI and lower, both playoff finalists will promote to the higher level of divisions. One extra promotion spot will be awarded to the team with the best regular season record (conference ranking being the most important criteria). And finally, to keep our community fresh and lively, the next best teams in your division will promote to fill in any Bot-controlled team spots in higher leagues. The league that a team will promote or demote to is random within the division that they are slated to go to.
+
+Because the league finals tie-breaker match revenue goes to charity, both the league champion and runner up receive a fixed amount award after the finals. The amounts are determined for each division level specifically. The runner up is awarded exactly half the specified amount. They are as follows:
+
+
+DIV I: $ 400 000
+
+DIV II: $ 250 000
+
+DIV III: $ 150 000
+
+DIV IV: $ 100 000
+
+DIV V: $ 80 000
+
+DIV VI and beyond: $ 60 000
+
+To help the newly promoted teams compete in the higher leagues, promoting teams will now receive a one-time bonus. Both promoting league champions and teams that promoted from a bot cleanup or otherwise will get the extra cash and both will get the same boost to their season ticket holders and arena income. The bonus for promoting to a higher league is as follows:
+
+
+Promotion into DIV I: $ 1 500 000
+
+Promotion into DIV II: $ 750 000
+
+Promotion into DIV III: $ 450 000
+
+Promotion into DIV IV: $ 300 000
+
+Promotion into DIV V: $ 225 000
+
+Promotion into any lower division: $ 225 000
+
+The end of a season isn't all fun and glory, however. Five teams from each division will be demoted to a lower level of divisions. The 8th seed in each conference is automatically demoted, and the 5th-ranked team from each conference competes with the 7th-ranked team from the other conference in a best-of-three relegation series. 6th teams from both conferences will face each other (home court advantage going to the better record team).
+
+For the single-match eliminations in the playoffs, the team with the higher standing is given the home-court advantage. When there is a best-of-three series, the team with the better win-loss record has the home-court for the first match and for the tie-breaker (if a third game is necessary), and the lower-ranked team has the home-court for the second match.
+
+In the Play-Down, however, the 5th seeded will always receive the first and the eventual tie-breaker game home court advantage against the 7th seeded of the other conference, regardless of their win-loss record.
+
+The revenue from ticket sales to playoff and relegation games is split in half between the home team and the visitors.
+
+Tactics
+
+"I'm like the Pythagorean Theorem. Not too many people know the answer to my game."
+
+Whether an outside shot goes in is a combination of the individual and team outside scoring rating, as well as the opposing individual and team outside defense. If a great player is the only option on a bad team, he will draw more coverage, and therefore his shooting percentage will go down; similarly a bad player on the same team will only tend to shoot outside shots when he is wide open. The same applies to other shot types.
+
+
+Tactical Options
+
+Offense
+Offenses generally have an inside/outside/neutral focus and a faster/slower/normal pace compared to the base offense. They are not all equally faster/slower, as they're approximations of real offenses. A slower pace will often result in higher-quality shots, but occasionally will result in bad shots at the end of the shot clock. Fewer possessions in the game also means that scores will be lower, which means that bad teams can stay closer to good ones. An inside or outside focus means that teams will try to get more inside/outside shots, but the players will still take the best shots they can, and if the opposing inside defense is making it impossible to score near the basket, they won't attempt many inside shots no matter what you do.
+
+
+Base Offense: normal focus/normal pace all others are based off this.
+
+Push the Ball: normal focus, increased pace.
+
+Patient: normal focus, somewhat decreased pace.
+
+Look Inside: inside focus, slightly increased pace.
+
+Low Post: inside focus, somewhat decreased pace.
+
+Motion: outside/mid range jump shot focus, normal pace.
+
+Run and Gun: outside focus, increased pace.
+
+Princeton: outside/inside focus (fewer 2 point jump shots, regarded as outside by GDP), decreased pace.
+
+Isolation offenses: The team will try to find their best offensive player and clear out an area for him to create his own shot. There are two types of isolation offenses (both are considered as having a balanced focus by the GDP):
+
+Inside Isolation: Your team finds their best inside scorer. Normal Pace.
+
+Outside Isolation: Your team finds their best outside scorer. Normal Pace.
+
+
+Defense
+
+Normal (Man-to-man): normal, all others are based off this.
+
+2-3 Zone: Increased inside defense and rebounding at the expense of a lot of perimeter defense. Somewhat slow pace.
+
+3-2 Zone: Increased perimeter defense at the expense of interior defense. Slow pace.
+
+1-3-1 Zone: Dramatically increased perimeter defense at the expense of interior defense and rebounding.
+
+Full Court Press: Significant increase in created turnovers at the expense of stamina, defense, and rebounding. Very high pace.
+
+Box-and-One defenses: Four players play in a zone defense protecting the basket while the fifth player plays a man-to-man defense guarding the best offensive player on the other team. This prevents him from scoring as much. There are two types of box-and-one defenses:
+
+Inside Box-and-One: The fifth defender focuses on the opponent's best inside scorer. Normal pace.
+
+Outside Box-and-One: The fifth defender focuses on the opponent's best outside scorer. Normal pace.
+
+
+Game-Day Preparation
+You can instruct your coach to help your players prepare with some last-minute drills against a specific offense by your opponent. You’ll gain a sizeable edge over your opponent if you can predict their offensive strategy correctly in each of two dimensions: focus (which can be inside, outside or balanced) and/or pace (which can be fast, slow or normal). On the other hand, if your prediction is incorrect, your players will be unprepared and won’t perform as well.
+
+There is a bigger penalty for completely misreading your opponent (for example, by predicting an inside offense when they chose an outside offense) than there is if you predicted something closer (for example, by predicting an inside offense when your opponent chose a balanced one). The prediction system is entirely optional – you can choose not to select any last-minute focus, and your team will not be surprised by or prepared against any specific strategy by your opponent.
+
+
+Depth Chart
+You can submit your starter, a backup, and a reserve at each position using the depth chart. Your starter will typically play as many minutes as he can (as long as he is not tired and does not have foul trouble), and when a backup would be more effective, the coach will make a switch. Reserves are lower on the depth chart than backups. It's recommended to assign at least 3 starters to your lineup, otherwise, the coach might completely change the lineup
+
+
+Substitution Pattern
+The coach will sometimes use his own judgment to decide what the proper balance is between starters, backups, reserves, and even players on the bench who are not in the depth chart at all. You can set the balance between how much coaches use their own judgment or defer to yours with the substitutions box. You can use mostly your judgment (Follow Depth Chart), entirely the coach's judgment (Let Coach Decide), a mix between the two (Coach Picks from Depth Chart), or you can use your depth chart until the 4th quarter, then tell the coach to try and win the game however he thinks is best (Depth Chart until 4th).
+
+In setting your tactics for a game, you might want to consider a few different factors. For example, instead of having your best players start in every game, you might want to optimize your lineup on a given game day for training purposes.
+
+Your in-game coach will try his hardest to win; in order to optimize your training minutes, you can use the Follow Depth Chart tactic to overrule some of the coach's substitution decisions. Many managers find that using this option gives them better control of their training minutes each week.
+
+Training minutes can now be controlled even further by disabling garbage time substitutions (Private League matches only - for now!), which trigger when your team has such a tremendous lead, the coach deems it safe to bench and rest your starters, calling upon them only if the large lead is in jeopardy.
+
+Strong managers are able to balance a solid training regimen with an aggressive team on the court. For more information about effective training strategies, please review the rules section on training.
+
+
+Enthusiasm
+You can decide how hard you want your team to try on any given day (except in a scrimmage, where your team is just going to try as hard as they normally do because the coach is watching). Your team has a baseline level of enthusiasm that they bring to the game, and the more enthusiastic your team is, the harder they will be able to play. You can also tell your team to try harder in an important game (Crunch Time), although they'll need some time to recover over the next week or two. Alternatively, you can Take it Easy in a game so that your team will be able to play harder in the future. In addition, your team's enthusiasm tends back towards the default value of 5 over time. The further away enthusiasm is from 5, the more quickly it will tend back towards 5. Enthusiasm will always reach 5 during the offseason.
+
+For particularly important games, including league playoff games, relegation games, and the late rounds of the national tournament, your players will be too excited to "take it easy". In these games, the only options available are Playoff Normal, in which your team receives the enthusiasm effects of a regular Take It Easy but the effort level of a regular Normal, and Playoff Crunch Time, in which your team receives the enthusiasm effects of a regular Normal but the effort level of a regular Crunch Time.
+
+The final two rounds of the tournament will have playoff enthusiasm for countries with less than four divisions. For countries with four or five divisions, the final three rounds will have playoff enthusiasm, and for countries with six divisions, the final four rounds will have playoff enthusiasm.
+
+
+Forfeits
+A team that does not dress at least three players will receive a 50-0 forfeit loss. Furthermore, a team that incurs a forfeit will not receive training minutes for that game
+
+As for training minutes for the winning team, the minutes will be distributed in this way:
+
+Starters: will receive 36 minutes.
+Backups(Subs): will receive 10 minutes.
+Reserves: will receive 2 minutes.
+
+Note: Players can be defined in multiple positions. For example, player A can be defined as the backup SF and also the backup PF, which will result in a total of 20 minutes.
+Scrimmages
+
+"I've been dunked on by (Vitaly) Potapenko and now (Zan) Tabak. The good part is that they don't make posters of those guys."
+
+In addition to regular season matches, you have the option of challenging a friend (or foe) to a friendly scrimmage once each week, on Thursday. Don't worry, the scrimmages don't affect your division standing, they're just a fun way to get in an extra game. The primary purpose of a scrimmage is to give your team an extra day of training and experience, so try to schedule them every week, if possible. To show appreciation to the fans, BuzzerBeater teams allow all fans free admission to all scrimmage games.
+
+At the beginning of the season, many teams will be automatically entered in a cup tournament (as many teams as will fit into a perfect direct elimination tree, that is, the highest power of two that is less than the number of teams in your league). Preference is given to those teams in higher divisions. If a level of divisions is split so that only some of the teams can be entered, teams will be ordered according to the previous seasons results. Teams that have been recently demoted to the bottom level are given the lowest preference. The cup matches are treated like scrimmages, so, while your team is still in contention for the league cup, you wont be able to challenge any other teams.
+
+The Scrimmages page shows a list of the teams you have challenged this week, as well as those who have challenged you. As soon as you accept a challenge, or another user accepts one of yours, the rest will be removed from the list, and the scrimmage will be added to your Schedule page. Don't forget to set your tactics - scrimmages are a great chance to try out some new strategies and lineups!
+
+Scrimmages take place on Thursdays, at the normal game time of the home team. You can challenge someone to a scrimmage from his or her team page. Simply select whether you wish to be the home team or the away team from the drop-down menu, and click "Challenge!" You cannot challenge users to scrimmages between 12:00 Wednesday and 22:00 Friday server time, because the players just won't show up at the last minute. During the playoffs, teams who do not have a scheduled game on Saturday will have a scrimmage automatically assigned to them on Saturday in addition to any scrimmage or cup game they arrange for Thursday. While there is a Cup game available on Tuesday during all-star week, there is no scrimmage date, and teams still in the Cup have the possibility of an extra game that week.
+
+National Tournaments
+
+"It was our biggest victory until the next one."
+
+In order to promote inter-league play, each country hosts a National Tournament (occasionally called the “Cup”) where you can see how your players measure up against the other teams in your country.
+
+The National Tournament has a direct elimination structure, in which you keep playing until you lose a game, and are then eliminated from the Tournament. Because of this structure, some teams in the lower divisions may not be invited to the Tournament in a given season. Tournament games take place on Thursdays at your usual game time, and your next opponent and the site of the game is randomly selected from the remaining teams every week. (During the All-Star week, there are two Tournament games, one on Tuesday and one on Thursday.) You are free to choose your effort level for each Tournament game – however, be aware that it uses the same enthusiasm rating that affects how well your team will play in league games, so be careful with Crunch Times!
+
+Once you are eliminated from the Tournament, you will be able to schedule Scrimmages during the Thursday game time. Scrimmages are a great way to compete against your friends, your rivals, or a team from a distant country.
+
+Both the Tournament and the Scrimmages are important to your team, because they provide your players with extra training minutes and experience each week. While neither will bring in arena revenue from fans, your country offers cash prizes for each Tournament game you win, based on the number of teams remaining. Sadly, your country won’t give you any extra cash if your tournament starts with a smaller group.
+
+The prize scale for winning a round is as follows:
+
+
+Final Game: $ 300 000
+
+Semi-Final: $ 135 000
+
+Quarter-Final: $ 100 000
+
+16-team round: $ 80 000
+
+32-team round: $ 70 000
+
+64-team round: $ 60 000
+
+All lower rounds: $ 50 000
+
+The final two rounds of the tournament will be at a neutral site for countries with less than four divisions. For countries with four or more divisions, the final three rounds will be at a neutral site, and for countries with six divisioins, the final four rounds will be at a neutral site.
+
+Roster
+
+"The secret is to have eight great players and four others who will cheer like crazy."
+
+On the Roster page, you'll find a very detailed description of your players and their skills. You might find it useful to sort your players using the Sort By: drop-down menu near the top of the page.
+
+When you link to a different team's roster from their home page, you'll see only each players weekly salary, age, height, and best position. If you want more information, you'll have to analyze the player box score history, which can be reached by clicking on the name of the player. If you click on your own player, you'll have access to some additional features; you can set his jersey number (if you are a supporter), put him on the transfer market, or fire him.
+
+Ratings
+
+"I'll always be Number 1 to myself."
+
+Player ratings use the following list of adjectives, in order from worst to best:
+
+atrocious
+pitiful
+awful
+inept
+mediocre
+average
+respectable
+strong
+proficient
+prominent
+prolific
+sensational
+tremendous
+wondrous
+marvelous
+prodigious
+stupendous
+phenomenal
+colossal
+legendary
+
+Player Ratings
+"We have a great bunch of outside shooters. Unfortunately, all our games are played indoors."
+
+The following is a list of the categories that players are rated in:
+
+
+Jump Shot: A better shooter will make more shots at all distances.
+
+Jump Range: A player with a higher jump range will find that the effectiveness of his jump shot decreases less with distance.
+
+Outside Defense: A player with better perimeter defense will be more effective at defending against outside shots and pressuring ball handlers.
+
+Handling: Allows the player to avoid losing the ball to the opposing defense while dribbling. Important against a pressing defense or, in general, against good perimeter defense. Teams with good handling will have more success at creating quality shot opportunities.
+
+Driving: Allows the player to create his own shot without a good pass from a teammate. Better driving creates shots more often and creates better shots on average.
+
+Passing: Helps to create good shots (and get assists). Bad passing can also lead to turnovers.
+
+Inside Shot: A better inside shooter will make more two-point baskets.
+
+Inside Defense: A player with better inside defense is better at preventing inside scoring by the opposition.
+
+Rebounding: A good rebounder will retrieve the ball more often after a missed shot. Notice that height is already considered when a player's rebounding skill is displayed. A player who is 7'2" but has a low rebounding skill simply is very bad at positioning and will not get very many rebounds. He'll learn more quickly though...
+
+Shot Blocking: Will help to block shots. Not very useful for perimeter players.
+
+Stamina: A player with high stamina will tire more slowly, and can be effective for longer periods on the court.
+
+Free Throw: Will help to make free throws. Interior players tend to be fouled more frequently, but this is a useful skill for everybody.
+
+
+Game Shape: Players will not always play equally well from week to week. The better they look in practice in a given week, the better they are likely to play in a game.
+
+DMI: The overall player index, DMI, gives a very rough indication of how good your player is. This is a good way to check that your player is getting training, but is otherwise a lot less meaningful than it first appears. Be warned!
+
+Best Position: As with the DMI, this is a very rough guideline, and some would even say a meaningless one. You should play your players at the positions that make the most sense to the team, regardless of whether it is his listed position.
+
+Potential: While all players can improve their skills with training, not all have the ability to become superstars. Potential acts as a soft cap on player skill. When the player's skills reach the maximum their potential will allow, their training will slow down considerably, but will not become zero. All players active before season 5 have a potential rating of "allstar*". Potential is described using the following terms, in order from worst to best:
+0 - announcer
+1 - bench warmer
+2 - role player
+3 - 6th man
+4 - starter
+5 - star
+6 - allstar
+7 - perennial allstar
+8 - superstar
+9 - MVP
+10 - hall of famer
+11 - all-time great
+
+
+Match Ratings
+Each player that has played more than five minutes in a given match receives a rating, with 1 being the lowest. This rating is based on a combination of your player's stats and his overall contribution to the team effort. Note that this has nothing to do with the player's overall skill; if your worst player overall is the best on the court, he'll have the highest rating!
+
+Your team also receives several ratings per match. These team ratings are used in the calculation of what happens each possession. Here is a synopsis:
+
+
+Outside Scoring, Defense: Both guards weighted heavily, small forward medium, power forward slightly.
+
+Inside Scoring, Defense: Center weighted heavily, power forward somewhat heavily, small forward medium.
+
+Rebounding: Center and power forward weighted heavily, small forward somewhat heavily, both guards medium.
+
+Offensive Flow (how well the offense produces assists, avoids turnovers): point guard weighted very heavily, shooting guard weighted medium, small forward weighted medium.
+
+Your team also receives Matchup Ratings for each match, starting in Season 3. For more information on Matchup Ratings, go to the Game Engine section of the rules.
+
+
+Enthusiasm Ratings
+The following is a list of the enthusiasm ratings that teams can have:
+
+exhausted
+worn out
+weary
+reserved
+ready
+encouraged
+focused
+eager
+motivated
+determined
+inspired
+zealous
+fanatical
+obsessed
+unstoppable
+
+Staff Skill Levels
+Each team has a staff Doctor, Trainer, and PR Manager that help them become successful. There are seven different staff skill levels (in addition to two possible "specialties" for each staff type). The different skill levels are color coded to reflect the diminishing returns of higher levels, though the colors should not be taken as an accurate quantitative measure of how effective they will be. The seven levels are as follows:
+
+minimal
+basic
+competent
+advanced
+superior
+exceptional
+world-renowned
+You get a "minimal" skill staff member only if you fire your current staff member.
+
+Staff
+
+"I never got a California driver's license. If I ever got stopped, I was going to tell the cop, "I'm the Clippers coach. I'm not going to be here that long.""
+
+In addition to the basketball players themselves, the team benefits from hiring different staff members to help out with various tasks, some being essential, others can best be described as secondary. A small fraction of the essential staff members also have a specialty, which enables them to help your team in an additional way. The level of the staff member does not impact the effectiveness of the specialty.
+
+Essential staff
+
+Doctors help reduce the severity of player injuries. Once a player is injured, a Doctor will also help him heal more quickly, but the effect is much smaller than the initial reduction in severity. Doctors can have the following specialties:
+
+
+Taping Injuries: There is a small chance that a player's minor injury can be taped up immediately, and he will be able to return to the game at the start of the next quarter.
+
+Massage: Players who play too many minutes in a given week will not experience as severe a drop in game shape.
+
+Trainers assist the coach in making the most of the team training hours, both in-game and during the week. Trainers can have the following specialties:
+
+
+Career Extension: Older players will not experience skill drops as frequently.
+
+Fitness: The magnitude of the Stamina drops experienced by your players is decreased.
+
+Public Relations Managers help market the team to the fans, encouraging more people to show up to games and be willing to pay more for tickets. Public Relation Managers can have the following specialties:
+
+
+Crowd Involvement: Your team will experience a slightly stronger Home-Court Advantage for your home games.
+
+National Appeal: When your team is on the road, your opponents will have a slightly decreased Home-Court Advantage.
+
+Secondary staff
+
+Youth Trainer will focus only 18 and 19 year old players, giving them extra training on top of what they learn from the main trainer. He'll give them that all important training boost that just might make them eligible for a NT call-up (eventually!). But to really feel the change, only top level youth trainers should be hired, and those will cost you a lot though.
+
+Sports Psychologist will help with the the players' state of mind. Sometimes, no matter the minutes, some of your most important players just can't hit their best form in the worst of times, like the playoffs, etc... This is where this guy comes in handy - he'll make sure they have their heads straight and will help keep their form up, even if the minutes are suboptimal.
+
+Nutritionist keeps tabs on what the players eat, obviously. And let's face it, stamina drops are a drag. Having to spend valuable training weeks on keeping the stamina up is even worse! This is where proper nutrition helps - having someone plan the meals can really slow down the stamina drop rate, and high level nutritionists can even stop the decay completely! The best ones can even give it a boost!
+
+You can employ only one staff member of each type at a time. The quality of your staff member is indicated by his Skill Level, which ranges from "minimal" to "world-renowned". A Doctor with minimal skill might tell your player with a broken leg to take two aspirin, while a level world-renowned PR Manager can rouse up enthusiasm in a graveyard, and convince the inhabitants that all the cool zombies have luxury box seats to the 0-22 Loserville Rejecteds. All teams start out with a minimal skill staff member of each type.
+
+At any time, you can hire a new assistant from the staff market. Careful, though -- all of the other managers are looking too, and you might have to compete by bidding a higher signing bonus to get the assistant you want. When you hire a new staff member, your current one is replaced, and you will need to pay your old assistant one week's salary in severance. You can also fire your staff member (paying one week's salary in severance) and you will be assigned a minimal skill assistant of that type. Since good help is hard to find, your staff will charge a pretty penny for their services. Every week, each staff member will demand a small increase in salary, so it's in your best interest to keep an eye open for fresh staff.
+
+There are some differences to the secondary staff from the essential ones: they don't really need to be hired at all. Also, you can get rid of them any time and since they won't be replaced by anyone, that can save your team some money. They still require a severance package, so make sure to take that into consideration when hiring.
+
+The Arena
+
+"Fans never fall asleep at our games, because they're afraid they might get hit by a pass."
+
+Here you'll find information about your team's home arena. We've tried to make the arena system as customizable as possible, so you're free to build additional seats into your arena and to change the selling price of each seat type to match the demand of your fans, or to rename your arena (at a slight cost). All of these modifications can be made from the Arena page.
+
+As you might expect, the different seat types have different associated ticket prices; bleachers are for the multitudes who want to get in the door, be loud, and pay more at the concession stand than the gate, and luxury boxes are for the rich, sports-nut fans you might try mugging later in the parking lot, because, hey, profit is profit (note: mugging fans is not a supporter feature).
+
+The happier your fans are, the more of each type of ticket they will buy, and fans will buy the most expensive tickets they can afford. To maximize your ticket revenue, you should play around with the prices of the tickets, as well as the number of available seats of each type. For example, if you're consistently selling out all of your bleachers, you might try expanding your arena to include more bleachers, raising the price of the bleacher tickets, or lower the price of your lower-tier seats.
+
+If you feel that your team has attracted a large enough following of so-called witty sports critics, rabid fans, and random celebrities that your old arena is just not cutting it in terms of size, then you can choose to expand your arena. Here you can pay to add more bleachers, lower-tier seats, courtside seats, and luxury boxes to your arena. Note that these changes to your arena's capacity are not immediate: the more construction you wish to do, the longer it'll take for it to complete and for these changes to effect. Also you cannot start building more seats until the last set is finished. You'll also find that building higher end seats take longer to build than cheaper ones but that they sell more consistently. Finally, beware relying too much on construction estimates. Estimates are not exactly how many days it will take to construct your stadium, and on average, construction estimates tend to be rather optimistic. If you really, desperately need your arena expansion ready in 10 days, you should probably not trust a 10 day estimate from the construction crew.
+
+You may use the Arena page to set your prices at any time, but for them to be applied to the next match, they need to be updated at least 15 minutes before the match starts. The league office will not allow you to let the fans in too cheaply, as it's bad for the other teams in the league, or raise prices too high, as it hurts fan interest. You may have bleacher prices between $5 and $20, lower tier seating from $18 to $70, courtside seating from $50 to $200, and luxury boxes must be priced between $400 and $1600. You will find that the people who want the most expensive seats will pay their money win or lose (but care a lot about ticket prices), while the less expensive seats are mostly filled by rabid fans who will show up when the team is winning but won't pay to see a losing team.
+
+As many local laws prohibit teams from overbuilding arenas to attract an overflow of fans in smaller sections of arenas, teams are prohibited from building more than 500 courtside seats or 50 luxury boxes in their arenas.
+
+The Arena Designer
+
+The arenas can be further customized via the Arena Designer. While the arena surroundings only serve as an aesthetics pleaser and give an opportunity to managers to play with and show off their environmental arrangement skills, the arena designs themselves serve a higher purpose: more costly design will attract larger crowds serving as a local attraction and sightseeing spot, even when there are no matches arranged. The crowds will visit the team merchandise store and generate additional revenue. However, the time required to pay off the initial investment might be considered quite long, especially with the pricier designs. Note that there are no reimbursements for changing an existing arena design, even if it is a downgrade. Building a new arena requires total demolition of the old one.
+
+Team Infrastructure
+
+Serving as part of the Arena Designer, Team Infrastructure is a collection of five buildings that provide various options for team improvement. Each of the buildings is available in three levels, but having even the lowest level of any of them should be considered luxury, therefore they are not intended for fresh teams, and even seasoned managers might need to carefully consider investing in them. This is not only due to some pretty steep initial building costs, but also due to high weekly maintenance costs that they carry with them.
+
+Here are the five team infrastructure buildings and their effects:
+
+1. Gym - training is hard, but a well equipped gym will motivate players to spend extra time training, giving a wider range of skills a slight boost. The effect is very similar to the already existing cross training, in essence, the gym is giving your team more cross training "slots". Higher gym levels provide more personal trainers and additional equipment, giving the team even more cross training "slots".
+
+2. Training Court - spending valuable training time on free throws is always a hard bargain, most teams opting to do in the offseason, when normal training minutes are harder to achieve anyway. The training court will enable players to work on their free throws during the season, additional to normal training. The effect is not nearly as large as dedicating a full week of training to free throws, but at least those weeks will not be necessary as often as they are now.
+
+3. Health&Recovery Center - the good doctor needs all the help he can get! Additional staff, special diagnostics and therapy equipment, etc... The effect of the Health& Recovery center is quite straightforward: the higher the level, the quicker the healing.
+
+4. TV&Radio Station - there's no better way to build up the hype for the upcoming match than through the media! Having TV and radio shows promoting the team achievements, past and present, will result in fans buying more merchandise, tolerate losses more easily and celebrate wins longer. But keep in mind, there are limits to how high the fan spirit can rise. Additionally, season ticket sales will also have a nice boost, especially with higher levels.
+
+5. Merchandise Store - having a luxurious store in a prominent spot will boost merchandise sales. Similarly like investing in a nice arena design, the store will take a long time to return the initial investment but after that it will generate pure profit.
+
+Building and maintenance costs are the same for each building. The first level costs $500 000 to build, following up with $300 000 for level two and $200 000 for level three. Additionally, each level carries a weekly cost of $5000 for maintenance. These levels can be downgraded and half of the invested funds will be reimbursed.
+
+Fan Survey
+
+"A tough day at the office is even tougher when your office contains spectator seating"
+
+When BuzzerBeater fans don't like the way you are running your team, they are less likely to buy merchandise and attend your games. Even worse, some of them will change loyalties and support competing teams! Conversely, fans will reward a well-run team with their attention, and their money. A skilled PR-Manager may be able to help fans focus more on your team's achievements, and less on its shortcomings.
+
+Three times per week, your team's PR-manager conducts a survey of fans. As the survey is based on a small sample of fans, beware that the results may not be complete accurate. The survey consists of 9 standard questions, and the responses are tallied into a single rating, ranging from 0 to 5 basketballs.
+
+Questions 1 and 2 ask about the team's performance during the previous season, and the current season. Whether your team went winless or won the championship the previous year, fans tend to gradually forget about it, and turn their attention to the current season.
+
+Question 3 is about the current season's National Tournament. Beware that fans of top division teams tend to take early exits from the cup very badly.
+
+Questions 4-6 ask about the team's performance in recent games. BuzzerBeater fans are notoriously fickle, and their opinion of your team can swing dramatically on the outcome of a single game. In addition to the most recent game league game, fans also form deep impressions based on your last televised game, and your last game against your hated conference rival. Each season, fans reserve the right to change their mind about which team they view as their rival.
+
+Questions 7 and 8 pertain directly to the general manager's actions. Some fans prefer you to win with homegrown talent, take a very long time to warm up to new acquisitions, and react very negatively when you place their favorite players on the transfer list. Other fans will criticize you for maintaining a stagnant roster and under-utilizing the transfer list. When considering the response to these two questions, it may be useful to remember the old adage, "you can't please all the people all of the time."
+
+The final question is the most important, as it asks the fans whether they are generally happy with the team, its performance, its players, and its general manager.
+
+Fans will not tolerate long losing streaks, especially if a team has the funds to prevent them. They will boycott teams that don’t have at least one victory in each third of the season, effectively reducing the amount of sold tickets of upcoming home games! This means that tickets might be reduced by as much as 30%, depending on current team funds. More specifically, the percentages based on the funds are as follows:
+
+
+Under $500k = 0%
+
+$500k - 750k = 3%
+
+$750k - 1M = 6%
+
+$1M - 1,5M = 9%
+
+$1,5M - 2,25M = 12%
+
+$2,25M - 3M = 15%
+
+3M - 4M = 18%
+
+4M - 5M = 21%
+
+5M - 7M = 24%
+
+7M - 10M = 27%
+
+over 10M = 30%
+
+The effect of the boycott will be reduced by 3% after each home match, as the fans cool down. Should there be another boycott while the existing one still lasts, the effects will be added together (maxing out at 30%).
+
+The effect of the boycott is determined after each third of the season, based on the funds available at that moment. New teams need not worry about this during their first two seasons, while their fan base is still forming.
+
+The Economy
+
+"I told you I needed to feed my family. They offered me 3 years at $21 million...you're going to see these kids in one of those Sally Struthers commercials soon."
+
+The Economy page is the headquarters for your finances. It provides a breakdown of your expenses and revenues over the past seven days, including player salaries, staff salaries, attendance revenue (divided by seat type), merchandise revenue, and scouting costs.
+
+There are several ways in which you can make use of this information. Primarily, it's a good reference for how your player and staff salaries compare to your total revenue, so you can determine whether you're spending beyond your budget. The attendance per seat-type can help you restructure and expand your arena to maximize your revenue. At the top of the page, two values are listed for your team's funds. Current Balance is the total amount of money you have in your bank, and Available Balance is the available amount you have to spend. The two are different when you are the current high bidder on a player on the transfer list; though the money has not been paid out to buy the player, the bank wont let you spend so much that you would drop below $0 if you win the auction.
+
+At the top of the page, you will find your weekly revenue from merchandising and interest, as well as your temporary income.
+
+Merchandising income comes from your fans buying team apparel. Jersey sales are affected by a combination of factors. One factor is whether you have a winning team. Nobody likes to wear the jersey when you're losing, do they? Other factors include how many domestic players you have on your team, and also how many were drafted by your own team, as fans like supporting local players more than imported talent. This is weighted by the overall skill of the local players, so stocking your team with local bench warmers won't do you much good. Similarly, fans from around the country are particularly enthusiastic supporters of members of their national teams, and even more so when their national team is a successful one. So, if in a given week your player played in a national team game, fans from around the country will buy their jersey, typically in a quantity proportional to their salary. National team jersey sales will vary depending on the strength of the national team, but players playing in their domestic league tend to sell considerably more national team merchandise. Finally, fans from around the league tend to notice the league leaders, particularly in important categories such as points, rebounds, and assists but to some extent in all categories. If your team has players among the league leaders, you will see a bump in jersey sales from fans of other teams in your league, with an additional bump for the most eye-popping numbers in your country or in all of BuzzerBeater.
+
+As part of the agreement giving you shared television revenue, you also agree to pay a minimum total salary, shown on the Economy page. If your players earn less than this total, this minimum salary will be deducted anyway. The salary floor depends upon your league's television revenue:
+
+
+Division I: 245% of TV money
+
+Division II: 190% of TV money
+
+Division III: 130% of TV money
+
+Division IV: 100% of TV money
+
+Division V,VI: 70% of TV money
+
+The salary floor does not apply to new teams for their first 24 weeks.
+
+Players are only paid in weeks when you have a competitive league game. This means that a team not in the playoffs might not pay salaries during the last two weeks of the season, while some teams will skip one week of salaries. Because the week runs from Sunday to Saturday, all teams begin paying salary again during the offseason week ending with the season opener.
+
+If you go into debt, you will be charged a 5% penalty each week until you are positive again at the time of a economic update. If your account is below -$500,000 at the time of a weekly economic update, you are given two weeks to bring your account back above -$500,000. Failure to reach that mark will result in all of your players being put on the transfer list automatically with a starting price of $0. If, after your players are sold, you are still not above -$500,000, you will be fired as the manager at the next economic update. Debt and bankruptcy are the first items calculated in the economic update each week. "Available cash after bids" does not count as money for the purposes of computing bankruptcy or the 5% interest penalty on a negative balance. Players must sell prior to the weekly economic update for these credits to pull you out of bankruptcy.
+
+Temporary income lists everything else that happened this week. This is where income/expenses from player transfers will go, fees for changing staff, and so forth. While you have bids out on players but the sales are not complete, you can get a preview of your temporary income on the Bids page. New teams will also receive $50,000 per week for their first four weeks in order to help with their initial expenses.
+
+A hoarding tax is implemented in order to discourage passive team managers. All teams in possession of over twenty-five million dollars will receive a weekly 10% tax to every dollar above the 25M mark.
+
+Overextension tax is applied to all teams that spend much more than they earn, which is calculated based on an average income for each season. The training exemption is the difference between the current overall salaries and the combined overall salaries of all players when they were acquired. Overextension Tax is not applied on the first and last economy update after the start of the season for all teams and for the first 4 weeks for new teams.
+
+Training
+
+"We're talking about practice man. We're talking about practice. We're talking about practice. We're not talking about the game. We're talking about practice."
+
+
+Training Minutes
+How many weekly minutes each age group need for full training?
+
+18-19 years old: 45 weekly minutes.
+
+20-26 years old: 48 weekly minutes.
+
+27+ years old: 40 weekly minutes.
+
+Note: One minute buffer is placed for all age groups, which means 44 minutes is also sufficient for 18-19 age group.
+In addition to playing games, attending scrimmages, and spending their hard-earned salaries, your players must also find time out of their busy schedules for practice.
+
+Again, we've tried to leave the tactics as open-ended as possible, so you can have a strong hand in specifying how your players will grow.
+
+From the first drop-down menu, you can select from one of many training areas. While many choices correspond directly to specific player attributes (such as Inside Defense and Rebounding), some will improve several complementary traits (like Outside Shooting and Handling).
+
+From the second drop-down menu, you can choose which player positions to train. Players will only get better with a combination of out-of-game training and in-game experience, so you can have the coach choose to train one or two key players per week, who will then show a rapid improvement, or to train three or more positions with reduced effectiveness. Players should ideally get 48 minutes per week, or one full game, in order to get the maximum benefit from their training. If they play more than 48 minutes, this is not a problem. If players play under 48 minutes, they will still improve, but less quickly than they would if they got more playing time.
+
+The first training area on the list is Team Training, and this works a little different from the rest. When this is selected, the second menu lists three choices for training areas: Game Shape, Free Throws, and Stamina. For these attributes, it is easy for the coach to train all of the players on your team (he can have them shoot free throws for an hour or run laps around the building), and they dont depend too much on in-game practice. Therefore, selecting one of these options will train your entire roster, whether or not they play in any games that week.
+
+For the other training types, players will improve more quickly not only with additional playing time, but also a more skilled player will improve more quickly. For example, a great inside defender and rebounder will find it easier to improve his shot blocking than a poor inside defender and poor rebounder would. This encourages you to develop players with a combination of skills, but there are many combinations of skills which work well together -- you can develop players who will be a good fit for your team's needs.
+
+Additionally, each player (active as of the start of season 5) has a potential which will determine the best that player can possibly become. Potential acts as a "soft" cap on ratings, meaning that a player who has trained to his full potential may still improve, but will improve much more slowly than a player who has not yet reached his potential.
+
+Something to keep in mind: as in the real world, younger players will improve more quickly than older ones, and taller players will train faster in some areas while shorter players improve faster in others. You'll have to take advantage of this information to optimize your training routine.
+
+Another important thing to keep in mind is cross training.This method emphasize each skill as part of becoming a more complete basketball player, and make reference to every skill. Thus, improvement in driving is related not just to related skills (like handling), but also more weakly to unrelated skills (like shot blocking). For the average player in the game, this will result in approximately 10% slower training in their primary skill than before, and additional training in other skills approximately corresponding to that 10% loss. A particularly well-rounded player will continue to receive cross-training but will see a much lower reduction in primary skill training, while a particularly one-dimensional player will see a larger loss. Although players will always receive a set amount of cross-training, it is difficult to predict which unrelated skills will improve on a weekly basis.
+
+Players who do not play much each week tend to lose focus and their Game Shape will be sloppy. Players who play too much in a week will get tired and their Game Shape will also be low-quality. These changes are gradual, and will build up over a few weeks' time. If you have three games in a week, you should consider rotating your players unless all three games are really important, because it will hurt your players ability to play the next few weeks. However, Game Shape is an indication of how sharp the player looked in practice and therefore how well he will be expected to play in a game; it is not an indicator of how effective his training sessions were.
+
+With some experience, you'll find that one good strategy is to develop more players than you can use each week, and to sell the extras on the transfer market. For example, instead of training two people on your team in different areas each week on a five-week cycle, you might try, for example, training all of your guards full-time, selling the ones you wont use to weaker teams, and using the cash you make to buy strong players for each of the other positions.
+
+One quick note for new players: in your first week of playing BuzzerBeater, you'll notice that after your first training update, your players will receive training, but their Game Shape will not be altered. This is to ensure that players do not get a severe Game Shape penalty if they were created less than a week before their first training update.
+
+Game Shape and injuries are reset each offseason, as players reset up and prepare for the new season. Players can be injured during offseason scrimmages, but Game Shape will not be updated during offseason training, meaning that it is a particularly poor week to train Game Shape.
+
+The Draft
+
+"What you like about this kid coming straight out of high school is the upside. Tremendous upside."
+
+So you're successfully tanking your way through the season and want your hard earned first dibs on the new young talent looking to earn a spot in the league? Well, on the Draft and Scouting page you can look at the new crop of talent and find that diamond in the rough that will carry your team out of mediocrity, bring fans to your stadium...or warm your bench.
+
+So, how does the draft work? Throughout the season, you will be able to purchase scouting points that can subsequently be spent to reveal information about potential draft picks. Unused scouting points will carry over and can be used in a future season. The information you have available about each player depends on how many times he has been scouted. It works as follows:
+
+Unscouted: Your scouts have provided a very rough estimate of the player's skills and potential based on the word on the streets. Expect this evaluation to be fairly inaccurate.
+
+Scouted once: Your scouts have seen this player play one game, and have provided the player's boxscore for that game. They are now able to give a more accurate assessment of his current skills. Scouting a player uses 1 scouting point.
+
+Interviewed: Your scouts have invited this player to a workout at your team's facilities. Along with all of the information you have learned from the initial scouting, you now have a very good understanding of this player's current skills (grade rating) and potential abilities. You also discover how tall the player is and whether he is 18 or 19 years old. Interviewing a player uses an additional 2 scouting points.
+
+In addition, there will two options available following the All-Star break for 10 scouting points each:
+
+Scouting Combine: Every player in the upcoming draft class will show up to be measured. You can send a scout to the combine to learn the ages and heights of all 48 players in the upcoming draft class.
+
+Group Demonstration: In order to help get their names out there, all of the players your scout estimated to be 1-ball or 2-ball prospects have offered to arrange a demonstration of their skills. This option is equivalent to scouting each of these players once, though it will not provide any additional information for players you have already scouted.
+
+Set the order that you would like to draft these players by dragging players around in the list. When you are satisfied with your draft ordering, click Submit Ranking below to submit this list. You must click on the button for the list to be used when the draft is conducted during the next offseason. Clicking the button to scout or interview a player will also submit the current ordering of the draftees.
+
+Teams with the worst records will have the highest draft picks, so scouting is most important for teams that are at the bottom of the league. But, watch out for forfeits because each one means dropping a place in the pick order.
+
+To see the results of your team's most recent draft, go to the Draft Summary page.
+
+Bookmarks
+
+"Rebound by one of the big guys… Divac, I think… Hands off to one of the little guards… The big guy with the beard passes off to the little lefty… Boy, I’m having trouble with these names."
+
+If you are a supporter, you may have noticed a bookmark symbol near any roster entry, team page, player box score, or match box score. Clicking on it will add that player, team, or match to your list of bookmarked pages. From the Bookmarks menu, you can quickly link to important or useful pages. Users can bookmark up to 100 different pages. To remove a bookmark from your list, click on the X next to its link.
+
+Transfer List
+
+"It would be good to have him, but we're not going to miss him. We'll find the two or three points from somewhere else."
+
+The key to making a good team? Have good players. You cant train them all by yourself, so you'll need to pick up quite a few on the transfer list. Search for players with specific skills within a desired range. You can give up to four restrictions on the search (Supporters choose up to 8), specifying the minimum and maximum allowed level for each skill. Click search to see the subset of the listed players matching your criteria. If you dont enter any restrictions, the entire list will be returned.
+
+The transfer list works as a simple, first-price auction. That is, whatever value you enter as your bid, thats what you'll pay if you win the auction. Be mindful of your available funds when bidding; once you bid on a player, those funds are deducted from your available balance for as long as you are the high bidder, even though you might not end up winning the auction. The bank doesnt want you defaulting on your bid, so you can't use that money for other purposes. But don't worry - if someone else outbids you, you'll get your money back immediately.
+
+When selling a player, some of the purchase price is used to pay agent fees and other taxes on the sale. The fees and taxes for a sale are determined by two factors: the amount of time that the player has been on your team, and the total number of sales your team has made in the previous 14 weeks. The fees are lowest when you have owned the player for a long time, and when you have made few sales in the preceeding weeks. Each of your players will have the currently-applicable fee shown on their individual player page. You cannot offer a player for sale until he has been on your team for at least 4 days.
+
+We know that transmission delays can happen for a few seconds at the very end of an auction. Therefore, whenever a user places a bid on a player, the time remaining in an auction is extended so that three minutes must pass with no new bids before the auction is over.
+
+Now, we weren't born yesterday. We know that some people are going to try to transfer money from friends by purchasing atrocious players from them at exorbitant prices. We have some algorithms that check purchase prices for any suspect behavior, and users who keep other players honest. If you see someone you think is trying to transfer funds in this way, please report them to one of the administrators. It makes the game more fun for everyone when the playing field is level.
+
+Please note that once a player has been confirmed to be listed, he cannot be removed from the transfer list. Also, once a bid for a player has been confirmed, it cannot be retracted.
+
+Players with a salary of at least $2500 that are manually fired are put on the transfer list. Players released by teams that have been abandoned (gone bot) are put on the transfer list if they meet the following conditions: TSP of at least 60, or be 18 year old and either have a salary above $2500 or TSP of at least 50. Both the fired players and the abandoned players have a starting price of ten times their salary, with the maximum possible listing price for all players being $500,000. If a player can't find a team interested in them at that price, they will begrudgingly accept retirement. Any players that are not deemed as top talent in their age group will just retire right away.
+
+
+Transfer Price Estimate
+On each of your own player pages, and on the pages of every player on the transfer list, you will find a section called Transfer Price Estimate. This estimate is based upon the transfers of similar players during the preceeding weeks, and should give you a rough idea of how much money a given player will sell for. Because no two BuzzerBeater players are alike, and because the transfer market is always changing, the accuracy of the estimates will vary greatly. Even when it works well, remember that the estimate is merely a measure of the current transfer market, and not an indication of a player's value on the court.
+
+Player Acquisition Restrictions
+Player acquisition is restricted based on team world ranking. This means that highly skilled (and paid) players will refuse to move to low ranked teams and will not even accept bids from such teams. Players are sometimes very picky about where they will transfer to (even though they aren't overly strict about that).
+The salary limit is calculated as a function of the team rank versus the players salary and it's shown on the transfer list page.
+The restriction has a very important anti-cheating and anti-farming role, making the game playing field more level for everyone.
+
+
+Server downtime
+Server downtime is almost never planned. In cases when it is planned, the transfers are delayed. In other cases it is impossible do so because we don't know when they will happen. Unplanned means that they are unpredictable.
+When placing a player on the TL, we advise the lowest acceptable value is put as a starting price. This will insure that the player is never sold for less. Since crashes are unpredictable and virtually unpreventable (although we work very hard on avoiding them), setting a lower value is considered risky. In these cases, the seller is accepting a small possibility of a server crash with hopes of getting buyers into a bid war and selling the player for much more than the lowest acceptable value. Therefore, the responsibility lies with the seller.
+It is important to note that sales finished during server downtime are never retroactively undone.
+
+BB-Mail
+
+"Do what you need to do. But just be forewarned that if you're going to (deleted) with me, I'll (deleted) right back."
+
+What would a community be if the users couldn't communicate easily with one another? BB-Mail is an mini e-mail center for chatting with other BB users.
+
+The menu on the right of the BB-Mail page will help you navigate within the message center:
+
+
+Create New Message: Enter another user's alias in the "To" field, type in any subject header, and you can send messages. Messages are limited to 1000 characters for non-Supporters, while Supporters are limited to 3000 characters. To free up some text space when replying to a message, you might want to delete the old text.
+
+View NEW Messages: Click here to see a list of unread messages. From this list (and any other list of messages), click on the message subject to view the message, or click on the senders name to create a reply message. Messages from yourself or your assistant coach are internal BB messages from your team's staff to you.
+
+View READ Messages: Once you have read a message, you can find it in this folder.
+
+View ALL Messages: Click here to see all read and unread messages, ordered by the date they were received.
+
+View SENT Messages: Your Sent folder contains a copy of all of the messages you've sent recently. You can check whether they have been read by the recipient.
+
+No BB staff (BBs, GMs, LAs, or MODs) will ever ask you for any of your login information, including your login name, password, or access key. Please report any attempts to do so via the Report Cheaters page.
+
+The Game Engine
+
+"Any time Detroit scores more than a hundred points and holds the other team below a hundred points, they almost always win."
+
+In order to better help you structure your team, we thought it would be a good idea to tell you the general framework under which the game engine works.
+
+The truth is that what you see in the box score, or the match report, is only a fraction of what is going on inside the game engine. This is true in the same way that listening to a play by play of a basketball game isn’t going to show you some of the dynamics of the game you would see if you were there in person.
+
+The central part of the game engine is how the half court offense/defense works. The general idea is that a team gets a series of opportunities to score. What kind, and what the quality of those opportunities are is a function of the offense they are running, the matchups between the offensive players and their defenders. A player must decide whether the opportunity presented is good enough to take a shot… this of course changes as a function of amongst other things… the shot clock, the players experience, the score of the game, the history of the quality of shots the team has seen recently, the offense the team is running, and whether that rookie shooting guard of yours thinks he knows better than the coach does how good he is at making jump shots.
+
+The offensive schemes that we give you can be broken down into combinations of two aspects, pace and focus. Pace is either faster, slower or normal, and focus is either inside, outside or normal. A faster pace means that the team will lower its standards for which shot to take and take less time to get it up the court…resulting in more possessions in the game. Slower pace means just the opposite. Having an inside focus both increases the overall quality of the looks you get near the basket and decreases the quality of looks you get away from the hoop. It also skews the distribution of looks that you get towards inside looks. Outside focus does exactly the same, but for longer range shots. In general the marginal gain you get is outweighed by the loss, so it only makes sense to focus one way or the other if you really feel you have an advantage in that area.
+
+Obviously the success of your team depends on other aspects of the game as well, such as the ability of your players to create opportunities for each other. The better offensive flow you have, the more high quality assisted shots you will get. Also, being able to rebound effectively will limit your opponents opportunities to score, and increase yours. Reducing turnovers and forcing turnovers is also important. The better handling you have, the better outside defense, and the more efficient you are at scoring (because the longer you take to score the more opportunities there are to turn it over) the better you will do in this department. Putting on a full court press will increase the number of turnovers you force, but will also give opponents with good ball handling skills easy looks at the hoop.
+
+During the course of the game, your coach will make adjustments as a result of how the game is going. If you are making a lot of inside shots, he will tell you to take more inside shots. If the opponent is making a lot of inside shots, he will tell your defenders to double-team in the post more often. However, any time that the coach makes a change away from the tactics you started out with, it will be a less effective than if you had simply chosen to double-team the post all along (i.e., you will find that it is easier for your coach to tell the defenders to focus even harder than they already are on inside defense if you are already playing a 2-3 zone). The closer your submitted tactics are to the optimal choice, the better, especially because the coach is only able to make limited adjustments once the game has started.
+
+While the adjustments and counter-adjustments are very complex, and the details alone take up over 10,000 lines of code (really!), we have tried to give you a little bit of a taste of this via the Matchup rating for each team.
+
+
+Player Exhaustion
+The short roster tendencies have been addressed from a variety of aspects, the latest being the implementation of the player exhaustion in all matches except for scrimmages, starting on the first league game of season 58, July 30th, 2022. While this change won't affect most managers at all or very slightly, we believe it will prevent using short rosters as effectively as they were at the top level of all competitions.
+
+Overview of player exhaustion:
+
+- it only affects players who are 27 years old or above.
+
+- it can happen only after a player has already played most of the match without much rest (hasn't been subbed enough).
+
+- it does not affect injuries nor does generate them.
+
+- An exhausted player can continue playing (although the GE usually finds it better for them to sit).
+
+- An exhausted player has their energy severely reduced so they perform at a much lower level than usual.
+
+- An exhausted player can come back into the game, although they most likely will be suffering from some energy loss.
+
+- Anytime in the 4th quarter if the player has not been subbed out enough* during the course of the game, any action he makes may cause him to become exhausted.
+
+* There is a specific ratio of rest a player needs to be safe from exhaustion. For example, Subbing for 30 seconds in the first 3 quarters is not enough.
+
+The matchup rating represents the number of points that players at a given position would have scored, on average, if they were to take 100 shots. A higher number is indicative of better scoring opportunities at that position over the course of the game, and of course you should try to take full advantage of your strength when selecting your tactics. Since tactics can be very complicated, you should ask your fellow players in the Forums what they have learned, because they can tell you a lot more from their own experience than we can in a brief description of the engine. Good luck!
+
+The All-Star Game
+
+"I knew I was dog meat. Luckily, I'm the high-priced dog meat that everybody wants. I'm the good-quality dog meat. I'm the Alpo of the NBA."
+
+~Shaquille O'Neal
+
+
+Overview:
+During week 7 of the regular season, the top players in each league will compete in a series of All-Star competitions. The top shooters will have a three-point competition; there will be a dunk competition implemented in the future; and these festivities will conclude with a full All-Star game between the two conferences. You can link to the All-Star homepage from your league’s Standings page.
+
+The top players are chosen by the fans based on in-game performance during the season. On the Saturday leading up to the All-Star week, the votes are revealed to the managers (see the “Voting Results” link), as well as the roster for the All-Star game (“All Star Game Rosters”). The Three-point contest starts an hour before the game (“Three Point Shooting Contest”), and the game (“All Star Game: Live Match Report”) takes place at the usual time of day for games. After the game, you can check out the boxscore like any other match (“All Star Game: Box Score”).
+
+
+
+Schedule of Events:
+
+Saturday: League game at regular time; All-Star players selected
+
+Sunday:
+
+Monday: National Team games
+
+Tuesday: National Tournament
+
+Wednesday: All-Star Game and Contests
+
+Thursday: Scrimmage/Second National Tournament
+
+Friday: Private League games (Supporters only)
+
+
+
+The Three-Point Competition:
+You can watch this “live” from the Three Point Shooting Contest page. Six top shooters will each get 25 shots, in groups of 5. Every fifth shot (depicted by a blue ball) is worth 2 points, while the other shots (orange balls) are worth 1 point. A gray ball means that the shot was missed. The two best players advance to the final round, where another 25 shots are taken with the same rules. In the case of a tie, the winner is the player with the most three point shots made during the regular season to date.
+
+
+
+The All Star Game:
+This game is all about fame and glory. Did you player make the top 10 in your conference? Can he get along with his chief rival from that other team enough to work together? One lucky team will be chosen to host the All-Star game at their arena. However, we have made it so that no team benefits from the all-star game at all; injuries won’t be carried over to the league games, minutes played don’t count towards training or game shape, and there is no arena revenue from the game.
+
+
+
+The Extra Tournament Game:
+In order to be able to have as many teams as possible participate in the national tournament, there are two tournament games this week. However, there is only one scrimmage, so be sure to adjust your training schedule to account for a two-game week if you are not in the National Tournament at the start of the week!
+
+BuzzerBeater's Best
+
+"I've won at every level, except college and pro"
+
+Each season, the very best teams in the world battle for supremacy in an international tournament known as BuzzerBeater's Best, or B3. Only the most successful teams from the previous season are invited to take part. Two teams are invited from each country, the champion of the National Tournament, and the winner of the country's division I league. If a single team wins both contests, they are the sole invitee from their country. In addition, the champions of all previous B3 tournaments are invited to participate in perpetuity.* To reach 128 teams, the remaining spots will be filled by the top ranked teams who were runner-ups in their country's National Tournament, their country's division I league championship, or the previous season's B3 and BBM Tier 1 tournaments.
+
+The BuzzerBeater's Best tournament begins with a qualifier stage. In the qualifier rounds each team will play seven neutral site games. Once this stage has completed the top 64 teams qualify for a seeded, single-elimination tournament that will be played at neutral sites. Players must join their teams prior to the 64-Team Round in order to be eligible to play in any bracket game.
+
+B3 games are played each Wednesday, at a set enthusiasm of 12. While players do gain experience from games, they can not suffer more than an in-game injury. Playing minutes do not affect their training and game shape. Participating teams do not receive money from ticket sales for B3 games. Rather, the winner of each game is awarded a fixed cash prize. The prize scale for winning a round is as follows:
+
+
+Final Game: $ 500 000
+
+Semi-Final: $ 250 000
+
+Quarter-Final: $ 200 000
+
+16-Team round: $ 150 000
+
+32-Team round: $ 100 000
+
+64-Team round: $ 75 000
+
+Round-Robin Win: $ 50 000
+
+* NOTE: Previous B3 Champions must have a world rank of less than 500 at the beginning of the season to qualify.
+BuzzerBeater Madness
+
+"It used to last only during March, but now... it's all season long!"
+
+Each season, all teams not already participating in the BuzzerBeater's Best tournament across the world compete in a collection of international tournaments known as BuzzerBeater Madness, a supplemental to the B3 tournament. Divided into separate tournament divisions based on their world rankings, teams compete for both fame, fortune and, in case of the top tier winner, a spot in the next season's B3 tournament!
+
+The BuzzerBeater Madness tournaments start with a qualifier stage play during which each team plays seven neutral site games, pairings decided on the Swiss system, similar to chess tournaments. After that, the top 64 teams qualify for a seeded knockout stage that's played in neutral arenas. Just like B3, players must join their teams prior to the knockout phase in order to be eligible.
+
+The games are played each Wednesday, with the players enthusiasm, considering the honor involved, always high. They also gain experience from games, but suffer no long lasting injuries after matches. Playing minutes do not affect their training and game shape, but participating teams are awarded a fixed cash prizes after each win, as follows:
+
+
+Final Game: $ 200 000
+
+Semi-Final: $ 150 000
+
+Quarter-Final: $ 100 000
+
+16-Team round: $ 70 000
+
+32-Team round: $ 50 000
+
+64-Team round: $ 35 000
+
+Qualifier Stage Win: $ 25 000
+
+National Teams
+
+"All I know about Angola is Angola's in trouble."
+
+
+Elections
+Elections are held in order to decide who will become the manager of a national team. Elections last for one week. Users may register for only one election, but they may register in any country, including those not their own. The winner of the election is decided by the votes of other BuzzerBeater users. Users can only vote for managers of their own national team.
+
+National team elections have two distinct phases. In the first phase, which lasts for four days, interested candidates can register for consideration for the managerial position. During this time, these candidates will start to receive votes from the country's users. After the fourth day, the election pool is reduced to the top five candidates, plus ties, including only those with at least 5% of the total number of votes. No new registrations are allowed in the second phase of the election if there had been at least 10 votes cast up to that moment. The election ends after three more days, with the candidate with the highest number of votes winning the managership. In the case of a tie, the candidate who has been playing BuzzerBeater for longer is declared to be the winner
+
+Votes can be changed or canceled at any time. If the candidate that a user has voted for is culled from the election pool after the first phase, the user's vote is canceled, and he or she is welcome to vote for one of the remaining candidates.
+
+Information and debate about the candidates for an election are found in the relevant country's national forum. Threads related to the election are strictly moderated by BuzzerBeater Game Masters, who determine detailed rules for each election and its corresponding forum threads.
+
+BuzzerBeater administrators (BBs) are not allowed to run in elections. Game Masters (GMs) are, although they are not allowed to moderate forum threads pertaining to the election in which they are registered.
+
+The winner of a National Team Manager election is elected for a two season term, with the relevant competitions outlined in the next section.
+
+
+Competitions
+The national team competitions take place over the course of two seasons. During the first season, teams will compete in a continental championship tournament that also serves as the qualifying tournament for the World Championships. During the second season, the best teams will compete in the World Championships
+
+Continental qualifying takes place for the National Teams in odd-numbered seasons, and the World Championships take place in even-numbered seasons. Conversely, qualifying for the U21 teams takes place in even-numbered seasons, and the U21 World Championships take place in odd-numbered seasons.
+
+Past performance will be used to seed teams based upon the World Rankings. National team competitions take place during the game time of the host country. One country will host each continental championship, determined during the season of the World Championships, and a fifth country will host the Second Chance Qualifiers and World Championships.
+
+
+Africa Schedule: There are 8 teams in BuzzerBeater Africa. The 8 teams will compete in a single round robin starting on Monday of Week 2 and completing on Monday of Week 8. The top six teams will then compete in another single round-robin, with results of games against other qualified teams carrying forward. The top 4 teams advance to semifinals during Week 14 and finals the Friday of Week 14. The two finalists qualify for the World Championships. Every other team will play the consolation tournament.
+
+Americas Schedule: There are 21 teams in BuzzerBeater Americas. The 21 teams are drawn into three first-round groups of six teams and play a round robin from Week 2 to Week 8. The top four teams from each group are placed into one of two 2nd round groups, with results not carrying forward. The 2nd round is played from Week 9 until Week 13. The top two teams in each group advance to semifinals during Weeks 13&14, semifinals on Friday and Finals on Monday. The two finalists qualify for the World Championships. The remaining semifinalists as well as the 3rd placed teams in each 2nd round group qualify for the Second Chance Qualifiers
+
+Asia Schedule: There are 21 teams in BuzzerBeater Asia. The 21 teams are drawn into three first-round groups of six teams and play a round robin from Week 2 to Week 8. The top four teams from each group are placed into one of two 2nd round groups, with results not carrying forward. The 2nd round is played from Week 9 until Week 13. The top two teams in each group advance to semifinals during Weeks 13&14, semifinals on Friday and Finals on Monday. The two finalists qualify for the World Championships. The remaining semifinalists as well as the 3rd placed teams in each 2nd round group qualify for the Second Chance Qualifiers.
+
+Europe Schedule: There are 48 teams in BuzzerBeater Europe. The 48 teams are drawn into six groups containing eight teams each. Each group will play a round robin from Week 2 to Week 8. The top two teams will advance into two second-round groups of six, with no teams from the same 1st Round group drawn into the same 2nd round group. Results will not carry forward from the 1st Round to the 2nd Round. These groups play a round robin from Week 9 to Week 13. The top two teams in each group advance to semifinals during Weeks 13&14, semifinals on Friday and Finals on Monday. The four Semi-Finalists qualify for the World Championships. The teams finishing third and fourth in the second round group qualify for the Second Chance Qualifiers.
+
+Second Chance Qualifiers: Four teams from each confederation (besides Africa confederation) qualify for the Second Chance Qualifiers, with qualification to the Second Chance Qualifiers outlined in the continental setup. Only one game will be played on monday of week 14 (in the same time that the continental finals are played) and 6 matches will be played on neutral court and neutral enthusiasm, on this draw format:
+1) #3 EUR vs #3 ASIA
+
+2) #3 EUR vs #3 AME
+
+3) semi-finalist ASIA vs #4 EUR
+
+4) sem-finalist ASIA vs #3 AME
+
+5) semi-finalist AME vs #4 EUR
+
+6) semi-finalist AME vs #3 ASIA
+
+
+World Championships: 16 teams qualify for the World Championships, and are drawn into two first-round groups of eight. Each group plays a single round robin from Week 2 until Week 8. The top four teams advance to the final group, with the three results against other top-four teams from the first-round groups carrying forward. The 2nd Round is played from Week 9 until Week 12 The last four teams are put together, keep their result against the 3 other teams, and play 4 additionnal games to fight for the #9 through #16 ranks of the World Championship. The top four teams advance to semifinals during Week 13, with the 4th-placed team playing the 1st-placed team and the 3rd-placed team playing the 2nd-placed team. The finals are played Week 14. The winning team will be the World Champions of BuzzerBeater for the next two seasons!
+
+Consolation Tournament National teams that do not qualify for the World Championships will enter the Consolation Tournament. The Consolation Tournament will consist of two phases, the round-robin phase and the knockout phase. In the round-robin phase, each team will play 8 games. The top 32 teams after 8 games will be seeded into a single-elimination knockout tournament. The team that advances the furthest from each confederation will host the next continental competition (See HCA Restrictions). In the event of multiple teams from the same confederation being knocked out in the same round, and being the final teams from that confederation alive, the highest seeded team will host the next continental competition. If no teams from a confederation reach the knockout phase, the team with the highest standing in the round-robin phase will host the next continental competition.
+
+Home Court Advantage Restrictions In our eyes, the HCA was never meant for the strongest nations, clearing their way to an easy trophy(the 1st place usually). Sometimes, in a funny way, a team would win the consolation, win the local championship that comes after that, and completely fail in the next local championship, leading to another consolation win and another HCA and another title in their local championship.
+
+- A NT&U21 team who won a trophy(1-4 places) in the past 6 seasons will not enjoy another HCA, even if they won the consolation tournament.
+
+
+Standings
+The standings page for a given national team displays the current status of the tournament in which the national team is taking part. Round robin pools and playoff matches are displayed in reverse chronological order. The standings page displays round robin pools and playoff matches for every team in the competition.
+
+
+Rosters
+National team rosters are comprised of players of the team's nationality. A national team roster cannot contain more than eighteen players at once. National team managers can recruit or dismiss players from a national team at their leisure, so long as these players are currently active (i.e. not retired). National teams cannot recruit players from teams that do not have active managers (i.e. bots). If a player that is on a National Team is owned by a team that becomes inactive, the player will, by request, be released to the Transfer List. Any requests to release a player that is on a National Team will not be honored until the team that owns the player officially becomes inactive. A National Team player cannot be fired directly, instead he can only be sold.
+
+NT&U21 players, owned by an inactive(6 weeks) supporter manager, will be released and will be put to sale on a starting price of 1$.
+
+National team managers can see the player ratings of any player on their national team, but cannot otherwise see player ratings they would not otherwise have access to.
+
+If a player is on his national team, an icon appears on his player page, and his league team's roster, indicating him as such.
+
+Having your player on a national team will not affect his player ratings or weekly minutes in any way. He will garner experience, but cannot suffer an injury that will carry on after the game.
+
+
+National Team Enthusiasm
+Dismissing a player from a National Team causes a drop in the national team's enthusiasm; the more frequent the dismissals, the greater effect they have on enthusiasm. Adding players does not impact enthusiasm. Enthusiasm for National Teams rises (if below 5) or drops (if above 5) at a slower rate than they do for club teams.
+
+At the start of all competitions, there will be a national team enthusiasm reset that will occur between 18:00 server time on the Saturday before the competitions and their start.
+
+
+Manager Popularity
+Dissatisfied with your national team manager's performance? Express your opinion by casting your vote on whether you approve or disapprove of the way he or she has been handling the team, using the Manager Popularity box on the team's overview page. For the benefit of the National Team and the community as a whole, if more than 10% of the users per country will vote negatively and reduce the popularity of the national team manager under 25%, a replacement procedure is automatically starting (with next-in-line election candidate being used as a substitute) . For countries with less than 100 users a minimum number of 10 votes needed to kick off the procedure. The procedure will not take place only in cases when there are no available candidates for replacement.
+
+
+Rankings
+The world championships aren't the only way that national teams can compete for status. For every national team game that gets played, some number of ranking points get distributed between the participants. Even scrimmages are worth something, but the bigger the game, the more points get handed out. All ranking points that national teams receive, they keep for 28 weeks (i.e., two seasons). Points expire on a rolling basis.
+
+The winning team gets a bigger share of the ranking points for a game, but it doesn't get all of them. Precisely how many points are received depends upon the relative strength of the two teams. If the teams are evenly matched, then the winning team will receive 75% of the points, and the losing team the other 25%. An underdog who scores an upset will get nearly 100%, but a strongly favored team that takes home a predictable victory will receive only a bare majority.
+
+Although it's usually safe to assume that the team with more ranking points will be the one that we deem stronger, the two are not identical. We track teams' strength in a separate internal variable that we don't publish (so don't ask!). The algorithm we use is called Glicko-2 and is similar to the systems used by Baseball Prospectus and by the US Chess Federation. If you're interested in the gory details, click here, but the math might be scary. Don't complain that we didn't warn you.
+
+Utopia League
+
+"I don't know what I'm going to do tomorrow. I just know for sure I'm going to keep playing basketball."
+
+The "Utopia" league is a country within BuzzerBeater specifically created to house “second teams”, which are managed by existing users from all around the world. We wanted to give people a chance to participate in an engaging league if they feel they are not being challenged enough in their own league. Other users that feel that they can prove their managerial prowess by having another team and building it from the ground up also may find this feature interesting.
+
+The Utopia league indeed provides a very competitive environment, as it's filled with proactive managers with experience and ambition which purchased the Second Team Option for the privilege. The “Utopia” league will be the same as any other country, except for some specifics mentioned below. This means it will have its own flag and players.
+
+Here are some of the most important specifics of the new feature:
+
+
+Organization
+All teams start in Division IV. The leagues are be filled in order, making sure each one is filled with human teams before going to the next one. A special promotion procedure is in effect for the first 3 seasons; enough teams will be promoted from each league to make sure the next division up is completely filled with human teams. Human teams remaining in a lower division will be consolidated and moved laterally to make sure that as many leagues as possible are filled with 16 human-controlled teams. After three seasons, once the best teams promote to Division I, the country’s promotion and demotion will happen as in a normal country, though we will still keeping the lateral consolidation rule. New teams will join the lowest division occupied by human teams.
+
+
+Payment
+The feature is available to both Supporters and non-Supporters for $10 per year. The decision to charge for entry into this league was not a simple one, and it was done to serve two primary purposes. First, the biggest goal of the Utopian league is to create a highly-competitive country in which every manager has a strong incentive to remain very active. We believe that adding a payment structure will guarantee that only those players who are serious about their second team will join and ensure the entire country is as healthy and competitive as the higher divisions in the largest countries in BuzzerBeater. The country is be somewhat exclusive, but in order to continue showing our appreciation to our current Supporters, if a Supporter signs up for the Utopia league, both the regular and the Utopia league teams will have the Supporter features. In truth, the second reason pertains to generating revenue. More so than many other features, the creation and management of the Utopian league require considerable developer and community resources. This is a commitment that we’re happy to make in exchange for a larger advertising and feature development budget.
+
+
+National Team
+The Utopia league does not, at the moment, have its own National Team, as the country is composed of managerial talent from all over the world.
+
+
+B3 Participation
+The top league champion will participate in the BuzzerBeater Best competition after the first three seasons, once a Utopia Division I winner has been crowned. Winners of the Utopia national cup tournament will participate in B3 from the start. If a manager has both their regular team and their Utopian team qualify for the B3, they will have to choose which team participates in the B3.
+
+
+Transfer Market and Draft
+The Utopia league has its own players drafted each season. These players will be able to be sold and bought by all teams in BuzzerBeater without restrictions. Likewise, the “Utopia” teams will be free to buy and sell players from all other teams (except their original teams, including players previously owned by them, and vice versa).
+
+
+Visibility and the Forums
+Original teams have their second teams clearly visible on their team overview page and forum posts. Posts by either team are marked as if made by the original team.
+
+
+Scrimmages
+Utopian teams can engage in scrimmages as normal. However, managers are allowed to arrange only one scrimmage per season between their original and Utopian teams.
+
+
+Cheating
+If a manager is banned from the game for violating BuzzerBeater’s rules of conduct, BOTH the original and the Utopian team will be locked, regardless of which team violated the rules.
+
+
+New Manager Checklist and Bonus
+Utopia teams are considered already experienced and do not receive the new manager bonus, nor do they participate in the new-manager checklist.
+
+
+Game Times
+Each Utopian team has its own game start time, based on the game start time from the country it originated in or the time its manager chooses when creating the Utopian team. This means that teams play their home matches at their usual (or preferred) times, but need to be careful to remember that the timing of their away matches are less predictable. We believe the proactive managers of Utopia league won’t have any problems handling this.
+
+
+Promotion and Demotion
+The Utopian league promotion system functions as if on steroids for the first three seasons for the highest human filled division (lower divisions promotion will function normally). Rather than the customary one team per league promoting (league champion), each Utopian league will promote a minimum of two (conference champions) and an average of three or even four teams in order to fill up the higher, bot filled division for the following season. Along with the conference champions, the rest of the promoting teams will be determined using the usual bot promotion ranking system (ordered by conference rank, wins, forfeits, point difference and finally points made). This trend will continue until the first three divisions are completely filled with human-controlled teams. At that point, the promotion system will revert to the usual promotion/demotion system used in other parts of BuzzerBeater with one difference - instead of just 8th place, both 7th and 8th placed teams are demoted, which means that 5th and 6th place teams battle it out and the loser is demoted too (who is replaced using bot promotion rules).
+
+Weekly Schedule
+
+"This is my schedule: I wake up in the morning, decide where to play golf and drink beer all day."
+
+Important events in the upcoming week for Slovenija include:
+
+
+Event Type	Start Time
+daily update	4/13/2026 12:30:00 AM
+financial update	4/13/2026 1:30:00 AM
+daily update	4/14/2026 12:30:00 AM
+league game	4/14/2026 5:30:00 PM
+daily update	4/15/2026 12:30:00 AM
+daily update	4/16/2026 12:30:00 AM
+cup game / friendly	4/16/2026 5:30:00 PM
+daily update	4/17/2026 12:30:00 AM
+Training Update	4/17/2026 10:45:00 AM
+daily update	4/18/2026 12:30:00 AM
+league game	4/18/2026 5:30:00 PM
+daily update	4/19/2026 12:30:00 AM
