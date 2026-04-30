@@ -122,7 +122,8 @@ export default function SloveniaPage() {
   const [subTab, setSubTab] = useState<SubTab>("prospects");
   const [sortField, setSortField] = useState<SortField>("name");
   const [sortAsc, setSortAsc] = useState(true);
-  const [filterAge, setFilterAge] = useState<number[]>([]);
+  const [filterAgeMin, setFilterAgeMin] = useState<number>(20);
+  const [filterAgeMax, setFilterAgeMax] = useState<number>(21);
   const [filterPosition, setFilterPosition] = useState<string>("");
   const [filterPotential, setFilterPotential] = useState<number>(0);
   const [filterType, setFilterType] = useState<string>("");
@@ -225,12 +226,10 @@ export default function SloveniaPage() {
       result = result.filter((r) => r.player.name.toLowerCase().includes(q));
     }
 
-    if (filterAge.length > 0) {
-      result = result.filter((r) => {
-        const age = computeCurrentAge(r.snapshot, currentSeason);
-        return age != null && filterAge.includes(age);
-      });
-    }
+    result = result.filter((r) => {
+      const age = computeCurrentAge(r.snapshot, currentSeason);
+      return age != null && age >= filterAgeMin && age <= filterAgeMax;
+    });
 
     if (filterPosition) {
       result = result.filter((r) => r.player.position === filterPosition);
@@ -341,7 +340,7 @@ export default function SloveniaPage() {
     });
 
     return result;
-  }, [players, currentSeason, subTab, searchQuery, filterAge, filterPosition, filterPotential, filterType, filterMinTsp, filterMinSalary, sortField, sortAsc]);
+  }, [players, currentSeason, subTab, searchQuery, filterAgeMin, filterAgeMax, filterPosition, filterPotential, filterType, filterMinTsp, filterMinSalary, sortField, sortAsc]);
 
   function toggleSort(field: SortField) {
     if (sortField === field) {
@@ -350,12 +349,6 @@ export default function SloveniaPage() {
       setSortField(field);
       setSortAsc(field === "name");
     }
-  }
-
-  function toggleAgeFilter(age: number) {
-    setFilterAge((prev) =>
-      prev.includes(age) ? prev.filter((a) => a !== age) : [...prev, age]
-    );
   }
 
   function toggleSelect(playerId: number) {
@@ -481,11 +474,12 @@ export default function SloveniaPage() {
     });
   }, [filteredPlayers, currentSeason]);
 
-  const hasActiveFilters = searchQuery || filterAge.length > 0 || filterPosition || filterPotential > 0 || filterType || filterMinTsp || filterMinSalary;
+  const hasActiveFilters = searchQuery || filterAgeMin !== 20 || filterAgeMax !== 21 || filterPosition || filterPotential > 0 || filterType || filterMinTsp || filterMinSalary;
 
   const clearAllFilters = () => {
     setSearchQuery("");
-    setFilterAge([]);
+    setFilterAgeMin(20);
+    setFilterAgeMax(21);
     setFilterPosition("");
     setFilterPotential(0);
     setFilterType("");
@@ -608,24 +602,27 @@ export default function SloveniaPage() {
               }}
             />
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <span className="text-xs text-gray-400">Age:</span>
-              {[18, 19, 20, 21].map((age) => (
-                <button
-                  key={age}
-                  onClick={() => toggleAgeFilter(age)}
-                  className={`px-2 py-0.5 rounded text-xs font-medium transition-colors ${
-                    filterAge.includes(age) ? "text-white" : "text-gray-400"
-                  }`}
-                  style={
-                    filterAge.includes(age)
-                      ? { background: "var(--accent)" }
-                      : { background: "var(--background)" }
-                  }
-                >
-                  {age}
-                </button>
-              ))}
+              <input
+                type="number"
+                min={0}
+                max={99}
+                value={filterAgeMin}
+                onChange={(e) => setFilterAgeMin(Number(e.target.value) || 0)}
+                className="w-12 px-1.5 py-0.5 rounded text-xs text-white text-center focus:outline-none"
+                style={{ background: "var(--background)", border: "1px solid var(--card-border)" }}
+              />
+              <span className="text-xs text-gray-400">–</span>
+              <input
+                type="number"
+                min={0}
+                max={99}
+                value={filterAgeMax}
+                onChange={(e) => setFilterAgeMax(Number(e.target.value) || 0)}
+                className="w-12 px-1.5 py-0.5 rounded text-xs text-white text-center focus:outline-none"
+                style={{ background: "var(--background)", border: "1px solid var(--card-border)" }}
+              />
             </div>
 
             <select

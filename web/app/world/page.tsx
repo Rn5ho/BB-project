@@ -86,7 +86,8 @@ export default function WorldPage() {
   // Filters
   const [filterCountries, setFilterCountries] = useState<string[]>([]);
   const [starredCountries, setStarredCountries] = useState<string[]>([]);
-  const [filterAge, setFilterAge] = useState<number[]>([]);
+  const [filterAgeMin, setFilterAgeMin] = useState<number>(20);
+  const [filterAgeMax, setFilterAgeMax] = useState<number>(21);
   const [filterPosition, setFilterPosition] = useState<string>("");
   const [filterPotential, setFilterPotential] = useState<number>(0);
   const [filterU21, setFilterU21] = useState(false);
@@ -230,12 +231,10 @@ export default function WorldPage() {
         return a != null && a >= 18 && a <= 21;
       });
     }
-    if (filterAge.length > 0) {
-      result = result.filter((r) => {
-        const a = computeCurrentAge(r.snapshot, currentSeason);
-        return a != null && filterAge.includes(a);
-      });
-    }
+    result = result.filter((r) => {
+      const a = computeCurrentAge(r.snapshot, currentSeason);
+      return a != null && a >= filterAgeMin && a <= filterAgeMax;
+    });
     if (filterPosition) {
       result = result.filter((r) => r.player.position === filterPosition);
     }
@@ -293,16 +292,13 @@ export default function WorldPage() {
 
     return sorted;
   }, [
-    rows, filterCountries, filterIncludeSlovenia, searchQuery, filterU21, filterAge,
+    rows, filterCountries, filterIncludeSlovenia, searchQuery, filterU21, filterAgeMin, filterAgeMax,
     filterPosition, filterPotential, filterHasFullSkills, sortField, sortAsc, currentSeason,
   ]);
 
   function toggleSort(field: SortField) {
     if (sortField === field) setSortAsc(!sortAsc);
     else { setSortField(field); setSortAsc(field === "name"); }
-  }
-  function toggleAge(age: number) {
-    setFilterAge((p) => (p.includes(age) ? p.filter((a) => a !== age) : [...p, age]));
   }
   function toggleSelect(id: number) {
     setSelectedIds((prev) => {
@@ -325,7 +321,8 @@ export default function WorldPage() {
 
   function clearAllFilters() {
     setFilterCountries([]);
-    setFilterAge([]);
+    setFilterAgeMin(20);
+    setFilterAgeMax(21);
     setFilterPosition("");
     setFilterPotential(0);
     setFilterU21(false);
@@ -367,7 +364,7 @@ export default function WorldPage() {
   );
 
   const anyFilterActive =
-    filterCountries.length > 0 || filterAge.length > 0 || filterPosition !== "" ||
+    filterCountries.length > 0 || filterAgeMin !== 20 || filterAgeMax !== 21 || filterPosition !== "" ||
     filterPotential > 0 || filterU21 || filterIncludeSlovenia || filterHasFullSkills ||
     searchQuery.trim() !== "";
 
@@ -430,20 +427,27 @@ export default function WorldPage() {
             style={{ background: "var(--background)", border: "1px solid var(--card-border)" }}
           />
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span className="text-xs text-gray-400">Age:</span>
-            {[18, 19, 20, 21].map((age) => (
-              <button
-                key={age}
-                onClick={() => toggleAge(age)}
-                className={`px-2 py-0.5 rounded text-xs font-medium transition-colors ${
-                  filterAge.includes(age) ? "text-white" : "text-gray-400"
-                }`}
-                style={filterAge.includes(age) ? { background: "var(--accent)" } : { background: "var(--background)" }}
-              >
-                {age}
-              </button>
-            ))}
+            <input
+              type="number"
+              min={0}
+              max={99}
+              value={filterAgeMin}
+              onChange={(e) => setFilterAgeMin(Number(e.target.value) || 0)}
+              className="w-12 px-1.5 py-0.5 rounded text-xs text-white text-center focus:outline-none"
+              style={{ background: "var(--background)", border: "1px solid var(--card-border)" }}
+            />
+            <span className="text-xs text-gray-400">–</span>
+            <input
+              type="number"
+              min={0}
+              max={99}
+              value={filterAgeMax}
+              onChange={(e) => setFilterAgeMax(Number(e.target.value) || 0)}
+              className="w-12 px-1.5 py-0.5 rounded text-xs text-white text-center focus:outline-none"
+              style={{ background: "var(--background)", border: "1px solid var(--card-border)" }}
+            />
           </div>
 
           <select
