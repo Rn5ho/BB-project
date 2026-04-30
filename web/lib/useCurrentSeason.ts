@@ -43,6 +43,13 @@ export function useCurrentSeason(): {
 
   const refresh = useCallback(() => {
     try { localStorage.removeItem(CACHE_KEY); } catch { /* ignore */ }
+    // Full reload so that every consumer of useCurrentSeason (page hook + navbar hook)
+    // re-reads the now-empty cache and refetches; otherwise computed ages on the page
+    // stay frozen at the navbar's old value.
+    if (typeof window !== "undefined") {
+      window.location.reload();
+      return;
+    }
     setReloadKey((k) => k + 1);
   }, []);
 
