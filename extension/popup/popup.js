@@ -9,15 +9,25 @@ async function getCurrentBbSeason() {
   try {
     const cached = await chrome.storage.local.get('bb_current_season');
     if (cached.bb_current_season) {
-      const { season, timestamp } = cached.bb_current_season;
-      if (Date.now() - timestamp < 24 * 60 * 60 * 1000) return season;
+      const { season, finish, timestamp } = cached.bb_current_season;
+      const within24h = Date.now() - timestamp < 24 * 60 * 60 * 1000;
+      let pastFinish = false;
+      if (finish) {
+        const ms = new Date(finish).getTime();
+        if (Number.isFinite(ms) && Date.now() > ms) pastFinish = true;
+      }
+      if (season && within24h && !pastFinish) return season;
     }
     const res = await fetch(`${DASHBOARD_URL}/api/scout/seasons`);
     if (res.ok) {
       const data = await res.json();
       if (data.currentSeason) {
         await chrome.storage.local.set({
-          bb_current_season: { season: data.currentSeason, timestamp: Date.now() }
+          bb_current_season: {
+            season: data.currentSeason,
+            finish: data.currentFinish || null,
+            timestamp: Date.now()
+          }
         });
         return data.currentSeason;
       }
