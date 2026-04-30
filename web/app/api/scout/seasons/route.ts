@@ -17,6 +17,7 @@ export async function GET() {
 
     return NextResponse.json({
       currentSeason: current ? current.id : null,
+      currentFinish: current ? current.finish : null,
       seasons: seasons.map(s => ({ id: s.id, start: s.start, finish: s.finish })),
     });
   } catch (err) {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
+import { useCurrentSeason } from "@/lib/useCurrentSeason";
 
 const navItems = [
   { href: "/slovenia", label: "Slovenia" },
@@ -17,6 +18,7 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { currentSeason, loading: seasonLoading, refresh: refreshSeason } = useCurrentSeason();
 
   return (
     <nav
@@ -59,15 +61,30 @@ export default function Navbar() {
             })}
           </div>
         </div>
-        <button
-          onClick={async () => {
-            await supabase.auth.signOut();
-            router.push("/login");
-          }}
-          className="text-sm text-gray-400 hover:text-white transition-colors"
-        >
-          Sign Out
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={refreshSeason}
+            title="Click to refresh current BB season (clears 24h cache)"
+            className="text-xs px-2 py-1 rounded-md border text-gray-300 hover:text-white transition-colors"
+            style={{ borderColor: "var(--card-border)" }}
+          >
+            {seasonLoading
+              ? "S…"
+              : currentSeason
+              ? `S${currentSeason} ↻`
+              : "S? ↻"}
+          </button>
+          <button
+            onClick={async () => {
+              await supabase.auth.signOut();
+              router.push("/login");
+            }}
+            className="text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
     </nav>
   );

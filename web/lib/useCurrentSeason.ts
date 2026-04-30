@@ -1,49 +1,86 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const CACHE_KEY = "bb_current_season";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 
-export function useCurrentSeason(): { currentSeason: number | null; loading: boolean } {
+type CachedSeason = { season: number; finish: string | null; timestamp: number };
+
+function readCache(): CachedSeason | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (typeof parsed?.season !== "number") return null;
+    return {
+      season: parsed.season,
+      finish: typeof parsed.finish === "string" ? parsed.finish : null,
+      timestamp: typeof parsed.timestamp === "number" ? parsed.timestamp : 0,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function isCacheFresh(cached: CachedSeason): boolean {
+  if (Date.now() - cached.timestamp >= CACHE_TTL_MS) return false;
+  if (cached.finish) {
+    const finishMs = new Date(cached.finish).getTime();
+    if (Number.isFinite(finishMs) && Date.now() > finishMs) return false;
+  }
+  return true;
+}
+
+export function useCurrentSeason(): {
+  currentSeason: number | null;
+  loading: boolean;
+  refresh: () => void;
+} {
   const [currentSeason, setCurrentSeason] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reloadKey, setReloadKey] = useState(0);
+
+  const refresh = useCallback(() => {
+    try { localStorage.removeItem(CACHE_KEY); } catch { /* ignore */ }
+    setReloadKey((k) => k + 1);
+  }, []);
 
   useEffect(() => {
-    const cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      try {
-        const { season, timestamp } = JSON.parse(cached);
-        if (Date.now() - timestamp < CACHE_TTL_MS) {
-          setCurrentSeason(season);
-          setLoading(false);
-          return;
-        }
-      } catch {
-        // fall through to fetch
-      }
+    const cached = readCache();
+    if (cached && isCacheFresh(cached)) {
+      setCurrentSeason(cached.season);
+      setLoading(false);
+      return;
     }
 
+    setLoading(true);
+    let cancelled = false;
     (async () => {
       try {
         const res = await fetch("/api/scout/seasons");
         if (res.ok) {
           const data = await res.json();
-          if (data.currentSeason) {
+          if (data.currentSeason && !cancelled) {
             setCurrentSeason(data.currentSeason);
             localStorage.setItem(
               CACHE_KEY,
-              JSON.stringify({ season: data.currentSeason, timestamp: Date.now() })
+              JSON.stringify({
+                season: data.currentSeason,
+                finish: data.currentFinish ?? null,
+                timestamp: Date.now(),
+              })
             );
           }
         }
       } catch {
         // non-fatal: currentSeason stays null, ages display as captured
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     })();
-  }, []);
+    return () => { cancelled = true; };
+  }, [reloadKey]);
 
-  return { currentSeason, loading };
+  return { currentSeason, loading, refresh };
 }
