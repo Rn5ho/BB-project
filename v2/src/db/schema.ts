@@ -102,7 +102,7 @@ export const tags = pgTable('tags', {
 
 export const censusRuns = pgTable('census_runs', {
   id: serial('id').primaryKey(),
-  status: text('status', { enum: ['running', 'finished', 'aborted', 'failed'] }).notNull(),
+  status: text('status', { enum: ['requested', 'running', 'finished', 'aborted', 'failed'] }).notNull(),
   startedAt: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
   finishedAt: timestamp('finished_at', { withTimezone: true }),
   totals: jsonb('totals'),

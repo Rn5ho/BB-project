@@ -31,7 +31,7 @@ const PAUSE = 1500;
 
 type Log = (msg: string) => void;
 
-export async function runCensus(opts: CensusOpts, log: Log = console.log): Promise<{ runId: number; captured: number; failed: number }> {
+export async function runCensus(opts: CensusOpts, log: Log = console.log, existingRunId?: number): Promise<{ runId: number; captured: number; failed: number }> {
   // HARD SAFETY GATE. A real census dismisses many players from the NT roster, which drains
   // NT enthusiasm — running it mid-season is destructive. It must NEVER be automated and must
   // NEVER run without a deliberate human confirmation. Anything but a preview requires --confirm.
@@ -100,8 +100,19 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
       for (const it of lingering) { await safeDismiss(nt, it.playerId, log); await mark(runId, it.playerId, 'failed', 'crash-recovered: dismissed without capturing skills'); await sleep(); }
     } else {
       if (opts.clearRoster) originalRoster = rosterAtStart.map((c) => c.bbPlayerId);
-      const [r] = await db.insert(censusRuns).values({ status: 'running', totals: { filters, candidateCount: candidates.length, ...(originalRoster.length ? { originalRoster } : {}) } }).returning({ id: censusRuns.id });
-      runId = r.id;
+      const runTotals = { filters, candidateCount: candidates.length, ...(originalRoster.length ? { originalRoster } : {}) };
+      if (existingRunId) {
+        // Queued mode: the worker already claimed a census_runs row (status flipped to 'running');
+        // reuse it and merge our totals into whatever the enqueue stored (e.g. the run opts).
+        runId = existingRunId;
+        const [row] = await db.select().from(censusRuns).where(eq(censusRuns.id, runId));
+        if (!row) throw new Error(`existingRunId ${existingRunId} not found in census_runs`);
+        const prevTotals = (row.totals ?? {}) as Record<string, unknown>;
+        await db.update(censusRuns).set({ totals: { ...prevTotals, ...runTotals } }).where(eq(censusRuns.id, runId));
+      } else {
+        const [r] = await db.insert(censusRuns).values({ status: 'running', totals: runTotals }).returning({ id: censusRuns.id });
+        runId = r.id;
+      }
       await db.insert(censusItems).values(candidates.map((c) => ({ runId, playerId: c.bbPlayerId, status: 'pending' as const })));
     }
     log(`Census run #${runId} — resume with: npm run census -- --resume ${runId} --confirm`);
