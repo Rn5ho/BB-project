@@ -21,6 +21,13 @@ Safety model: (1) protected pre-existing roster — fetched at start, never dism
 
 Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.aspx`. DB tables: `census_runs` (status: running|finished|aborted|failed; totals jsonb) and `census_items` (status: pending|recruited|captured|failed|skipped). Settings page shows last 10 census runs + newest run's per-item status breakdown (read-only — runs are started locally). Resume with: `npm run census -- --resume <runId>`.
 
+**Phase 4.5 (Hetzner census worker) shipped 2026-07-11** — Census no longer runs locally; now automated on a Hetzner VPS at `65.21.178.90` (Ubuntu, root user, apps in `/home/btcedge/`). Dashboard `/census` page enqueues a `census_runs` row with `status='requested'`, and a systemd service `bb-census` polls Neon every 30s, atomically claims requests, runs the census via Playwright headless chromium, and writes progress back to Neon. No inbound ports on Hetzner; all communication is outbound to Neon only. Do NOT disturb the user's separate `weather.service` or Tailscale also running on the box.
+- **Update workflow**: SSH to `root@65.21.178.90`, then `cd /home/btcedge/bb-scout && git pull && cd v2 && sudo -u btcedge npm install && systemctl restart bb-census`. Use `npm install` NOT `npm ci` (Linux esbuild lockfile quirk). Repair browser: `./node_modules/.bin/playwright install chromium` (local playwright, not `npx`).
+- **Logs & status**: `journalctl -u bb-census -f` (live logs), `systemctl status bb-census` (service state).
+- **Daily cron moved to Hetzner**: `/home/btcedge/bb-scout/bb-daily-cron.sh` in btcedge's crontab (06:00 UTC) curls the Vercel `/api/cron/daily` endpoint with CRON_SECRET read from the env file. Vercel cron removed from `vercel.json` — Hetzner is now the single reliable scheduler.
+- **Testing**: To enqueue without UI, insert directly: `insert into census_runs (status, totals) values ('requested', '{"opts":{"all":true,"minPotential":9,"max":1,"confirmed":true}}');`
+- **Fallback**: Desktop `v2/census.bat` launcher still works for running census from the user's PC.
+
 **Phase 5 (Player detail page) shipped 2026-07-10** — New `/players/[id]` route shows comprehensive player skill progression and history. Core components:
 
 **Skill Progression Chart**: 12-line SVG chart (one per skill, X-axis = snapshot dates, Y-axis = skill level 1-20) with legend toggle. Hand-rolled dependency-free charts (`src/components/charts/TimeSeriesChart.tsx` + `src/lib/chart-scale.ts` + `src/lib/series.ts`).
@@ -35,7 +42,7 @@ Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.as
 
 **Known limitation**: per-snapshot `bestPosition` not stored yet — position timeline displays one segment (future enhancement).
 
-All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 5 detail).
+All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 4.5 worker, 5 detail).
 
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
