@@ -12,9 +12,10 @@ interface FilterBarProps {
   total: number;
   showSkills: boolean;
   onToggleSkills: () => void;
+  archetypeNames?: string[];
 }
 
-export default function FilterBar({ filter, onChange, onReset, shown, total, showSkills, onToggleSkills }: FilterBarProps) {
+export default function FilterBar({ filter, onChange, onReset, shown, total, showSkills, onToggleSkills, archetypeNames }: FilterBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   // Local string state for age inputs so clearing doesn't snap to 0
   const [ageMinStr, setAgeMinStr] = useState<string>(String(filter.ageMin));
@@ -136,6 +137,20 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
           />
           Full skills only
         </label>
+
+        {/* Archetype filter — only shown when archetypeNames provided */}
+        {archetypeNames && archetypeNames.length > 0 && (
+          <select
+            value={filter.archetype}
+            onChange={(e) => set('archetype', e.target.value)}
+            className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white focus:outline-none focus:border-amber-500"
+          >
+            <option value="">All archetypes</option>
+            {archetypeNames.map((name) => (
+              <option key={name} value={name}>{name}</option>
+            ))}
+          </select>
+        )}
 
         {/* Skills toggle */}
         <button

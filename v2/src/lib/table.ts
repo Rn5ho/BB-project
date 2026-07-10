@@ -42,6 +42,7 @@ export interface FilterState {
   potMin: number;
   potMax: number;
   fullSkillsOnly: boolean;
+  archetype: string; // '' = All; filtering happens in PlayerTable where match results are available, not here
   // "More" panel
   minTsp: string;   // empty string = inactive
   minDmi: string;
@@ -68,6 +69,7 @@ export const DEFAULT_FILTER: FilterState = {
   potMin: 0,
   potMax: 11,
   fullSkillsOnly: false,
+  archetype: '',
   minTsp: '',
   minDmi: '',
   minSalary: '',
@@ -87,6 +89,7 @@ export function isFilterDefault(f: FilterState): boolean {
     f.potMin === DEFAULT_FILTER.potMin &&
     f.potMax === DEFAULT_FILTER.potMax &&
     f.fullSkillsOnly === DEFAULT_FILTER.fullSkillsOnly &&
+    f.archetype === DEFAULT_FILTER.archetype &&
     f.minTsp === DEFAULT_FILTER.minTsp &&
     f.minDmi === DEFAULT_FILTER.minDmi &&
     f.minSalary === DEFAULT_FILTER.minSalary &&
@@ -95,6 +98,10 @@ export function isFilterDefault(f: FilterState): boolean {
     f.minGameShape === DEFAULT_FILTER.minGameShape
   );
 }
+
+// NOTE: archetype filtering is intentionally NOT in filterRows. It requires
+// archetypeMatches (computed per-player in the page/component), which are not
+// available here. Apply it in PlayerTable after calling filterRows.
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 

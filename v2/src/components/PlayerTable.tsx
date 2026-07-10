@@ -18,6 +18,7 @@ import {
 } from '@/lib/table';
 import SkillCell from './SkillCell';
 import FilterBar from './FilterBar';
+import ArchetypeBadge from './ArchetypeBadge';
 
 const STORAGE_KEY: Record<Variant, string> = {
   slovenia: 'bbscout:table:slovenia',
@@ -62,11 +63,15 @@ export default function PlayerTable({
   showCountry,
   defaultShowSkills = false,
   variant,
+  archetypeMatches,
+  archetypeNames,
 }: {
   rows: PlayerListRow[];
   showCountry?: boolean;
   defaultShowSkills?: boolean;
   variant: Variant;
+  archetypeMatches?: Record<number, string[]>;
+  archetypeNames?: string[];
 }) {
   const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
   const [sort, setSort] = useState<SortState>(DEFAULT_SORT[variant]);
@@ -116,7 +121,11 @@ export default function PlayerTable({
   }
 
   const filtered = filterRows(rows, filter);
-  const sorted = sortRows(filtered, sort);
+  // Archetype filter: applied here because archetypeMatches is only available in this component
+  const archetypeFiltered = filter.archetype && archetypeMatches
+    ? filtered.filter((p) => (archetypeMatches[p.bbPlayerId] ?? []).includes(filter.archetype))
+    : filtered;
+  const sorted = sortRows(archetypeFiltered, sort);
 
   return (
     <div>
@@ -124,10 +133,11 @@ export default function PlayerTable({
         filter={filter}
         onChange={setFilter}
         onReset={handleReset}
-        shown={filtered.length}
+        shown={archetypeFiltered.length}
         total={rows.length}
         showSkills={showSkills}
         onToggleSkills={() => setShowSkills((v) => !v)}
+        archetypeNames={archetypeNames}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
@@ -154,6 +164,7 @@ export default function PlayerTable({
                   title={s.name}
                 />
               ))}
+              {archetypeMatches && <th className="pr-3 whitespace-nowrap">Archetype</th>}
               {showCountry && <th className="pr-3 whitespace-nowrap">Market</th>}
               <th>Data</th>
             </tr>
@@ -201,6 +212,11 @@ export default function PlayerTable({
                       <SkillCell value={p.skills?.[s.dbKey] ?? null} />
                     </td>
                   ))}
+                {archetypeMatches && (
+                  <td className="pr-3">
+                    <ArchetypeBadge names={archetypeMatches[p.bbPlayerId] ?? []} />
+                  </td>
+                )}
                 {showCountry && <td className="pr-3"><MarketChip row={p} /></td>}
                 <td>
                   {p.hasFullSkills ? (
@@ -214,7 +230,7 @@ export default function PlayerTable({
             {sorted.length === 0 && (
               <tr>
                 <td
-                  colSpan={10 + (showCountry ? 2 : 0) + (showSkills ? SKILLS.length : 0)}
+                  colSpan={10 + (showCountry ? 2 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
                   className="py-8 text-center text-neutral-500"
                 >
                   No players match the current filters.

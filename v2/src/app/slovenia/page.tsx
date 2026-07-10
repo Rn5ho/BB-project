@@ -1,4 +1,6 @@
 import { listPlayers } from '@/queries/players';
+import { getEffectiveArchetypes } from '@/queries/archetypes';
+import { matchingArchetypes } from '@/lib/archetypes/evaluate';
 import PlayerTable from '@/components/PlayerTable';
 
 export const dynamic = 'force-dynamic';
@@ -11,9 +13,16 @@ function coverage(rows: Awaited<ReturnType<typeof listPlayers>>, minPot: number)
 }
 
 export default async function SloveniaPage() {
-  const rows = await listPlayers('slovenia');
+  const [rows, archetypes] = await Promise.all([listPlayers('slovenia'), getEffectiveArchetypes()]);
   const cov = coverage(rows, 7);
   const covAll = coverage(rows, 0);
+
+  const archetypeMatches: Record<number, string[]> = {};
+  for (const r of rows) {
+    archetypeMatches[r.bbPlayerId] = matchingArchetypes(r, archetypes).map((a) => a.name);
+  }
+  const archetypeNames = archetypes.map((a) => a.name);
+
   return (
     <main className="p-6">
       <h1 className="text-lg font-semibold mb-1">Slovenia — U21 candidates</h1>
@@ -26,7 +35,7 @@ export default async function SloveniaPage() {
         <span className="text-neutral-400">{covAll.done}/{covAll.total} of all 18–21 ({covAll.pct}%)</span>
         {cov.total - cov.done > 0 && <span className="text-neutral-400"> · {cov.total - cov.done} relevant still to scout</span>}
       </p>
-      <PlayerTable rows={rows} variant="slovenia" defaultShowSkills />
+      <PlayerTable rows={rows} variant="slovenia" defaultShowSkills archetypeMatches={archetypeMatches} archetypeNames={archetypeNames} />
     </main>
   );
 }
