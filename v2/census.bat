@@ -11,8 +11,10 @@ echo ============================================
 echo.
 echo   Scouts Slovenian U-21 candidates by calling
 echo   them up to the NT roster, reading their skills,
-echo   and dismissing them. Your rostered players are
-echo   never touched.
+echo   and dismissing them.
+echo.
+echo   OFF-SEASON ONLY: dismissing players drains NT
+echo   enthusiasm, which is costly during the season.
 echo.
 echo   1.  Preview  (dry run - shows the plan, NO changes)
 echo   2.  Run full census
@@ -25,7 +27,7 @@ echo.
 set /p choice="   Choose 1-7: "
 
 if "%choice%"=="1" ( set ARGS=-- --dry-run& goto run )
-if "%choice%"=="2" ( set ARGS=& goto confirm )
+if "%choice%"=="2" ( set ARGS=--& goto confirm )
 if "%choice%"=="3" ( goto limited )
 if "%choice%"=="4" ( goto filtered )
 if "%choice%"=="5" ( goto resume )
@@ -64,12 +66,23 @@ goto confirm
 
 :confirm
 echo.
-echo   This will call up and dismiss players on your REAL
-echo   BuzzerBeater U-21 roster. Keep your BB roster page
-echo   open to watch the first batch if you like.
+echo   ------------------------------------------------------------
+echo    IMPORTANT - reads and MODIFIES your REAL U-21 roster.
+echo    Each dismissal drains NT enthusiasm; heavy dismissals during
+echo    the season can leave you unable to play. RUN OFF-SEASON ONLY.
+echo    Keep your BB roster page open to watch if you like.
+echo   ------------------------------------------------------------
 echo.
-set /p ok="   Type Y to proceed: "
-if /i not "%ok%"=="Y" goto menu
+set /p clr="   Auto-clear your own roster for full speed then restore it? (y/N): "
+if /i "%clr%"=="Y" set ARGS=%ARGS% --clear-roster
+echo.
+echo   Final check: type  OFFSEASON  (all caps) to confirm it is safe
+echo   to run right now. Anything else cancels.
+echo.
+set /p ok="   Confirm: "
+if /i not "%ok%"=="OFFSEASON" ( echo.& echo   Not confirmed - returning to menu.& timeout /t 2 ^>nul & goto menu )
+if "%ARGS%"=="" set ARGS=--
+set ARGS=%ARGS% --confirm
 
 :run
 echo.

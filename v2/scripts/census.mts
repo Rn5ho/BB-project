@@ -9,6 +9,8 @@ const { runCensus } = await import('../src/server/census/run');
 const opts = {
   all: has('--all'),
   dryRun: has('--dry-run'),
+  confirmed: has('--confirm'),
+  clearRoster: has('--clear-roster'),
   max: val('--max') ? Number(val('--max')) : undefined,
   resumeRunId: val('--resume') ? Number(val('--resume')) : undefined,
   pauseMs: val('--pause') ? Number(val('--pause')) : undefined,
