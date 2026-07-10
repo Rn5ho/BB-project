@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { getPlayerDetail } from '@/queries/player-detail';
 import { getPotentialColor, POTENTIAL_LEVELS } from '@/lib/constants';
 import { skillSeries, dmiSeries, salarySeries, positionTimeline, currentProfile } from '@/lib/series';
+import { getEffectiveArchetypes } from '@/queries/archetypes';
 import SkillProgression from '@/components/player/SkillProgression';
 import SnapshotHistory from '@/components/player/SnapshotHistory';
 import PositionTimeline from '@/components/player/PositionTimeline';
@@ -9,6 +10,7 @@ import MetricChart from '@/components/player/MetricChart';
 import NotesSection from '@/components/player/NotesSection';
 import TagsSection from '@/components/player/TagsSection';
 import ProfileCard from '@/components/player/ProfileCard';
+import ArchetypeMatches from '@/components/player/ArchetypeMatches';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +19,17 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const detail = await getPlayerDetail(Number(id));
   if (!detail) notFound();
   const { player, snaps, notes, tags } = detail;
+
+  const archetypes = await getEffectiveArchetypes();
+  const profile = currentProfile(snaps);
+  const evalPlayer = {
+    ageNow: player.ageNow,
+    skills: profile.skills,
+    potential: profile.potential ?? player.potential,
+    heightCm: player.heightCm,
+    tsp: profile.tsp,
+    bestPosition: player.bestPosition,
+  };
 
   const skills = skillSeries(snaps);
   const skillsForChart = Object.fromEntries(Object.entries(skills).map(([k, pts]) => [k, pts.map((p) => ({ x: p.x.getTime(), y: p.y }))]));
@@ -41,7 +54,12 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
       <TagsSection playerId={player.bbPlayerId} tags={tags} />
 
       <section className="mt-6">
-        <ProfileCard profile={currentProfile(snaps)} heightCm={player.heightCm} bestPosition={player.bestPosition} />
+        <ProfileCard profile={profile} heightCm={player.heightCm} bestPosition={player.bestPosition} />
+      </section>
+
+      <section className="mt-6">
+        <h2 className="font-medium mb-2">Archetypes</h2>
+        <ArchetypeMatches player={evalPlayer} archetypes={archetypes} />
       </section>
 
       <section className="mt-6">
