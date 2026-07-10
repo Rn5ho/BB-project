@@ -1,5 +1,5 @@
-import { db, trackedCountries, syncLog } from '@/db';
-import { desc } from 'drizzle-orm';
+import { db, trackedCountries, syncLog, censusRuns, censusItems } from '@/db';
+import { desc, eq } from 'drizzle-orm';
 import { getCountriesCatalog } from '@/server/sync/countries';
 import CountryPicker from '@/components/settings/CountryPicker';
 import TrackedCountryList from '@/components/settings/TrackedCountryList';
@@ -9,11 +9,22 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 export default async function SettingsPage() {
-  const [tracked, log, catalog] = await Promise.all([
+  const [tracked, log, catalog, runs] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
     getCountriesCatalog().catch(() => []),
+    db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(10),
   ]);
+
+  // For the newest run, fetch item counts by status
+  const newestRun = runs[0] ?? null;
+  let newestItemCounts: Record<string, number> = {};
+  if (newestRun) {
+    const items = await db.select({ status: censusItems.status }).from(censusItems).where(eq(censusItems.runId, newestRun.id));
+    for (const item of items) {
+      newestItemCounts[item.status] = (newestItemCounts[item.status] ?? 0) + 1;
+    }
+  }
   const trackedIds = new Set(tracked.map((t) => t.countryId));
   const available = catalog.filter((c) => !trackedIds.has(c.id) && c.id !== 66);
   return (
@@ -32,6 +43,48 @@ export default async function SettingsPage() {
       <section className="mb-8">
         <h2 className="font-medium mb-3">Manual sync</h2>
         <SyncButtons />
+      </section>
+
+      <section className="mb-8">
+        <h2 className="font-medium mb-1">Census runs</h2>
+        <p className="text-xs text-neutral-500 mb-3">
+          Runs are started locally with <code className="bg-neutral-800 px-1 rounded">npm run census</code> — see project docs.
+        </p>
+        <table className="w-full text-sm">
+          <thead className="text-left text-neutral-400 border-b border-neutral-800">
+            <tr>
+              <th className="py-1 pr-3">Run ID</th>
+              <th className="pr-3">Started</th>
+              <th className="pr-3">Status</th>
+              <th>Totals</th>
+            </tr>
+          </thead>
+          <tbody>
+            {runs.map((r) => (
+              <tr key={r.id} className="border-b border-neutral-900">
+                <td className="py-1 pr-3">#{r.id}</td>
+                <td className="pr-3 text-neutral-400">{r.startedAt.toISOString().replace('T', ' ').slice(0, 16)}</td>
+                <td className="pr-3">
+                  {r.status === 'finished' ? <span className="text-green-400">finished</span>
+                    : r.status === 'running' ? <span className="text-yellow-400">running</span>
+                    : r.status === 'aborted' ? <span className="text-orange-400">aborted</span>
+                    : <span className="text-red-400">{r.status}</span>}
+                </td>
+                <td className="text-neutral-400 text-xs">
+                  {r.totals ? JSON.stringify(r.totals) : '—'}
+                  {r.id === newestRun?.id && Object.keys(newestItemCounts).length > 0 && (
+                    <span className="ml-2 text-neutral-500">
+                      ({Object.entries(newestItemCounts).map(([s, n]) => `${s}: ${n}`).join(', ')})
+                    </span>
+                  )}
+                </td>
+              </tr>
+            ))}
+            {runs.length === 0 && (
+              <tr><td colSpan={4} className="py-2 text-neutral-500">No census runs yet.</td></tr>
+            )}
+          </tbody>
+        </table>
       </section>
 
       <section>
