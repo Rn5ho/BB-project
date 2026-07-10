@@ -7,6 +7,8 @@ A Chrome Extension + Web App tool for BuzzerBeater National Team managers. Auto-
 
 BB Scout is being rebuilt as v2. Design spec: `docs/superpowers/specs/2026-07-10-bb-scout-v2-design.md`. Phase 1 plan: `docs/superpowers/plans/2026-07-10-v2-phase1-foundation.md`.
 
+**Phase 2 (Layer 1 automation) shipped 2026-07-10** — Daily Vercel cron `/api/cron/daily` (CRON_SECRET-protected, excluded from auth proxy). Jobs: seasons sync daily; players sync Mondays or on `?force=players`. Sync jobs in `v2/src/server/{bb,sync}/`. Settings page tracks countries, sync log, manual sync. Pages scope by `country_id` (66 = Slovenia) not nationality text. Slovenia page shows full ~820-player 18–21 universe (weekly refresh). Snapshot dedup: one 'api' snapshot per player per UTC day (delete+bulk-reinsert on same-day re-sync).
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 
@@ -14,7 +16,7 @@ v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Po
 Single-user: `APP_PASSWORD` env var + JWT cookie. Route guard in `src/proxy.ts` (Next 16 proxy convention — all pages/API routes pass through it).
 
 ### Environment
-`v2/.env.local` (template: `v2/.env.local.example`). `DATABASE_URL` points to Neon.
+`v2/.env.local` (template: `v2/.env.local.example`). `DATABASE_URL` points to Neon. `CRON_SECRET` required for Vercel + `.env.local`.
 
 ### Scripts (run from `v2/`)
 - `npm run migrate:data` — one-off Supabase → Neon migration (idempotent: wipes Neon tables then reloads)
@@ -27,11 +29,10 @@ Single-user: `APP_PASSWORD` env var + JWT cookie. Route guard in `src/proxy.ts` 
 - Player discovery backbone: BB Players JSON API (`api.buzzerbeater.com/BBAPI/api/Players`) — unauthenticated, returns rich player data. The XML API **cannot** read NT rosters.
 
 ### Known minor issues (fix in Phase 2)
-- Empty `seasons` table will 500 the pages (`getCurrentSeasonId` throws on no rows).
 - `PlayerTable` potential tooltip shows `'undefined'` if a player's potential value ever exceeds 11.
 
 ### Phase 1 status
-Implementation complete. Pending: Vercel project setup (second Vercel project, root directory `v2/`).
+Implementation complete. Vercel project deployed (second Vercel project, root directory `v2/`).
 
 ---
 
