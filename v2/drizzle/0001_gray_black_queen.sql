@@ -1,0 +1,1 @@
+ALTER TABLE "seasons" ALTER COLUMN "finish" DROP NOT NULL;

@@ -24,12 +24,12 @@ export function currentAge(snapshotAge: number | null, snapshotSeason: number | 
   return snapshotAge + (currentSeason - snapshotSeason);
 }
 
-export interface SeasonRow { id: number; start: Date; finish: Date }
+export interface SeasonRow { id: number; start: Date; finish: Date | null }
 
 /** Season containing `now`, else the highest-id season (between-season gap). */
 export function pickCurrentSeason(seasons: SeasonRow[], now: Date): number {
   if (seasons.length === 0) throw new Error('No seasons provided');
-  const active = seasons.find((s) => now >= s.start && now <= s.finish);
+  const active = seasons.find((s) => now >= s.start && (s.finish === null || now <= s.finish));
   if (active) return active.id;
   return Math.max(...seasons.map((s) => s.id));
 }

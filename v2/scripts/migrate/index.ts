@@ -57,11 +57,14 @@ async function main() {
   console.log(`  Current season:      ${currentSeason}`);
 
   // ── 3. Transform players ───────────────────────────────────────────────────
-  const transformedPlayers = v1Players.map(transformPlayer);
+  // Exclude the v1 dummy test player
+  console.log('Excluding dummy test player 99999999');
+  const filtered = v1Players.filter(p => p.bb_player_id !== 99999999);
+  const transformedPlayers = filtered.map(transformPlayer);
 
   // Build v1 internal id → bb_player_id map
   const v1IdToBbId = new Map<number, number>();
-  for (const p of v1Players) {
+  for (const p of filtered) {
     v1IdToBbId.set(p.id, p.bb_player_id);
   }
 

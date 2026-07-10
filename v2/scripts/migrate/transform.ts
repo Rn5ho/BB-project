@@ -71,7 +71,7 @@ export function transformSnapshot(s: V1Snapshot, v1IdToBbId: Map<number, number>
     handling: s.handling, driving: s.driving, passing: s.passing,
     insideShot: s.inside_shot, insideDef: s.inside_def, rebounding: s.rebounding,
     shotBlocking: s.shot_blocking, stamina: s.stamina, freeThrow: s.free_throw,
-    tsp: s.skill_points ?? tsp(skills),
+    tsp: (() => { const t = s.skill_points ?? tsp(skills); return t !== null && t >= 12 && t <= 240 ? t : null; })(),
     ownerTeamId: s.owner_team_id,
     ownerTeamName: s.owner_team_name,
   };

@@ -30,14 +30,23 @@ describe('currentAge', () => {
 
 describe('pickCurrentSeason', () => {
   const seasons = [
-    { id: 69, start: new Date('2026-01-10'), finish: new Date('2026-04-10') },
-    { id: 70, start: new Date('2026-04-11'), finish: new Date('2026-07-30') },
+    { id: 69, start: new Date('2026-01-10'), finish: new Date('2026-04-10') as Date | null },
+    { id: 70, start: new Date('2026-04-11'), finish: new Date('2026-07-30') as Date | null },
   ];
   it('picks the season containing now', () => {
     expect(pickCurrentSeason(seasons, new Date('2026-07-10'))).toBe(70);
   });
   it('falls back to highest id when between seasons', () => {
-    expect(pickCurrentSeason(seasons, new Date('2026-08-15'))).toBe(70);
+    // use a date before 2026-08-01 so it doesn't overlap the open-ended season fixture below
+    expect(pickCurrentSeason(seasons, new Date('2026-07-31'))).toBe(70);
   });
   it('throws on empty seasons list', () => { expect(() => pickCurrentSeason([], new Date())).toThrow(); });
+
+  it('handles in-progress season with null finish', () => {
+    const withOpen = [
+      ...seasons,
+      { id: 71, start: new Date('2026-08-01'), finish: null as Date | null },
+    ];
+    expect(pickCurrentSeason(withOpen, new Date('2026-08-15'))).toBe(71);
+  });
 });

@@ -52,4 +52,8 @@ describe('transformSnapshot', () => {
   });
   it('drops snapshots whose player is unknown', () =>
     expect(transformSnapshot({ ...base, player_id: 777 }, idMap)).toBeNull());
+  it('stored skill_points out of valid range (10) → tsp null', () =>
+    expect(transformSnapshot({ ...base, skill_points: 10 }, idMap)!.tsp).toBeNull());
+  it('stored skill_points in valid range (97) → 97', () =>
+    expect(transformSnapshot({ ...base, skill_points: 97 }, idMap)!.tsp).toBe(97));
 });

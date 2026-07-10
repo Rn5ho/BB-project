@@ -8,6 +8,13 @@
       "when": 1783680682702,
       "tag": "0000_complete_kronos",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783682716763,
+      "tag": "0001_gray_black_queen",
+      "breakpoints": true
     }
   ]
 }

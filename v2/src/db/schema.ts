@@ -83,7 +83,7 @@ export const trackedCountries = pgTable('tracked_countries', {
 export const seasons = pgTable('seasons', {
   id: integer('id').primaryKey(),
   start: timestamp('start', { withTimezone: true }).notNull(),
-  finish: timestamp('finish', { withTimezone: true }).notNull(),
+  finish: timestamp('finish', { withTimezone: true }),
 });
 
 export const notes = pgTable('notes', {
