@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "migrate:data": "tsx scripts/migrate/index.ts"
+    "migrate:data": "tsx scripts/migrate/index.ts",
+    "backfill:players": "tsx scripts/migrate/backfill-players.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
