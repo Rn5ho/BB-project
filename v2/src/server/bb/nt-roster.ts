@@ -31,6 +31,9 @@ export async function recruitPlayer(session: BbWebSession, playerId: number): Pr
   if (!/btnNTDismiss2|currently on your national team roster/i.test(result)) {
     throw new Error(`recruit ${playerId}: no confirmation of roster membership in response`);
   }
+  if (/btnNTRecruit2/i.test(result)) {
+    throw new Error(`recruit ${playerId}: recruit button still present — likely already rostered by another process`);
+  }
 }
 
 /** Dismiss a player from the U-21 NT roster. Throws if not confirmed removed. */
