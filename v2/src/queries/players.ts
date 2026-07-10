@@ -35,8 +35,10 @@ export async function getCurrentSeasonId(): Promise<number> {
 export type PlayerScope = 'slovenia' | 'world';
 
 export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> {
-  const slovene = sql`(p.country_id = 66 or p.nationality = 'Slovenia')`;
-  const notSlovene = sql`(p.country_id is distinct from 66 and p.nationality is distinct from 'Slovenia')`;
+  // Slovenia can appear as country_id 66, v1's 'Slovenia', or BB's local name 'Slovenija'
+  // (market-discovered players with an unmatched flag keep country_id null + 'Slovenija').
+  const slovene = sql`(p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))`;
+  const notSlovene = sql`(p.country_id is distinct from 66 and (p.nationality is null or p.nationality not in ('Slovenia', 'Slovenija')))`;
   const where = scope === 'slovenia' ? sql`where ${slovene}` : sql`where ${notSlovene}`;
 
   const result = await db.execute(sql`

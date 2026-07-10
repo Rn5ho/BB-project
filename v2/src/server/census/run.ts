@@ -46,7 +46,7 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
 
   // 1. build candidate rows from DB (season-aware age + this-season freshness + stalest date)
   const rows = await loadCandidateRows(season);
-  const candidates = selectCandidates(rows, {
+  const filters = {
     all: opts.all,
     max: opts.max,
     minAge: opts.minAge,
@@ -57,7 +57,8 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
     maxSalary: opts.maxSalary,
     minHeight: opts.minHeight,
     maxHeight: opts.maxHeight,
-  });
+  };
+  const candidates = selectCandidates(rows, filters);
   log(`Season ${season}: ${candidates.length} candidates selected (of ${rows.length} Slovenian 18-21).`);
 
   // 2. launch browser, login + protected roster
@@ -92,7 +93,7 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
       for (const it of lingering) { await safeDismiss(nt, it.playerId, log); await mark(runId, it.playerId, 'failed', 'crash-recovered: dismissed without capturing skills'); await sleep(); }
     } else {
       if (opts.clearRoster) originalRoster = rosterAtStart.map((c) => c.bbPlayerId);
-      const [r] = await db.insert(censusRuns).values({ status: 'running', totals: originalRoster.length ? { originalRoster } : null }).returning({ id: censusRuns.id });
+      const [r] = await db.insert(censusRuns).values({ status: 'running', totals: { filters, candidateCount: candidates.length, ...(originalRoster.length ? { originalRoster } : {}) } }).returning({ id: censusRuns.id });
       runId = r.id;
       await db.insert(censusItems).values(candidates.map((c) => ({ runId, playerId: c.bbPlayerId, status: 'pending' as const })));
     }
@@ -188,7 +189,7 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
       }
     }
 
-    await db.update(censusRuns).set({ status: 'finished', finishedAt: new Date(), totals: { captured, failed, ...(originalRoster.length ? { originalRoster } : {}) } }).where(eq(censusRuns.id, runId));
+    await db.update(censusRuns).set({ status: 'finished', finishedAt: new Date(), totals: { captured, failed, filters, ...(originalRoster.length ? { originalRoster } : {}) } }).where(eq(censusRuns.id, runId));
     log(`Census #${runId} finished: ${captured} captured, ${failed} failed.`);
     return { runId, captured, failed };
   } finally {
@@ -247,7 +248,7 @@ async function loadCandidateRows(season: number): Promise<CandidateRow[]> {
     left join latest l on l.player_id = p.bb_player_id
     left join fresh f on f.player_id = p.bb_player_id
     left join oldest o on o.player_id = p.bb_player_id
-    where p.country_id = 66 or p.nationality = 'Slovenia'
+    where p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija')
   `);
   return (result.rows as Record<string, unknown>[]).map((r) => {
     const snapAge = r.snap_age as number | null;
