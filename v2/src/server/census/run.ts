@@ -6,7 +6,21 @@ import { selectCandidates, freeSlots, type CandidateRow } from './candidates';
 import { utcDayKey } from '@/server/sync/players';
 import { sql, and, eq, gte, inArray } from 'drizzle-orm';
 
-export interface CensusOpts { all?: boolean; max?: number; dryRun?: boolean; resumeRunId?: number; pauseMs?: number }
+export interface CensusOpts {
+  all?: boolean;
+  max?: number;
+  dryRun?: boolean;
+  resumeRunId?: number;
+  pauseMs?: number;
+  minAge?: number;
+  maxAge?: number;
+  minPotential?: number;
+  maxPotential?: number;
+  minSalary?: number;
+  maxSalary?: number;
+  minHeight?: number;
+  maxHeight?: number;
+}
 const PAUSE = 1500;
 
 type Log = (msg: string) => void;
@@ -18,7 +32,18 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
 
   // 1. build candidate rows from DB (season-aware age + this-season freshness + stalest date)
   const rows = await loadCandidateRows(season);
-  const candidates = selectCandidates(rows, { all: opts.all, max: opts.max });
+  const candidates = selectCandidates(rows, {
+    all: opts.all,
+    max: opts.max,
+    minAge: opts.minAge,
+    maxAge: opts.maxAge,
+    minPotential: opts.minPotential,
+    maxPotential: opts.maxPotential,
+    minSalary: opts.minSalary,
+    maxSalary: opts.maxSalary,
+    minHeight: opts.minHeight,
+    maxHeight: opts.maxHeight,
+  });
   log(`Season ${season}: ${candidates.length} candidates selected (of ${rows.length} Slovenian 18-21).`);
 
   // 2. launch browser, login + protected roster
@@ -139,9 +164,10 @@ async function saveCensusSnapshots(cards: ParsedCard[], season: number): Promise
 
 async function loadCandidateRows(season: number): Promise<CandidateRow[]> {
   // Slovenian players + season-aware age from latest snapshot + fresh-full-this-season flag + oldest capture
+  // Also pulls potential, salary from the latest snapshot, and height_cm from the players table.
   const result = await db.execute(sql`
     with latest as (
-      select distinct on (player_id) player_id, age, season from snapshots order by player_id, captured_at desc
+      select distinct on (player_id) player_id, age, season, potential, salary from snapshots order by player_id, captured_at desc
     ),
     fresh as (
       select distinct player_id from snapshots
@@ -151,7 +177,8 @@ async function loadCandidateRows(season: number): Promise<CandidateRow[]> {
       select player_id, min(captured_at) as oldest_capture from snapshots where jump_shot is not null group by player_id
     )
     select p.bb_player_id, l.age as snap_age, l.season as snap_season,
-           (f.player_id is not null) as fresh_full, o.oldest_capture
+           (f.player_id is not null) as fresh_full, o.oldest_capture,
+           l.potential, l.salary, p.height_cm
     from players p
     left join latest l on l.player_id = p.bb_player_id
     left join fresh f on f.player_id = p.bb_player_id
@@ -167,6 +194,9 @@ async function loadCandidateRows(season: number): Promise<CandidateRow[]> {
       ageNow,
       hasFreshFullThisSeason: r.fresh_full === true || r.fresh_full === 't' || r.fresh_full === 'true',
       oldestCapture: r.oldest_capture ? new Date(r.oldest_capture as string) : null,
+      potential: r.potential != null ? Number(r.potential) : null,
+      salary: r.salary != null ? Number(r.salary) : null,
+      heightCm: r.height_cm != null ? Number(r.height_cm) : null,
     };
   });
 }

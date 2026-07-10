@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { selectCandidates, freeSlots, type CandidateRow } from './candidates';
 
 const rows: CandidateRow[] = [
-  { bbPlayerId: 1, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: new Date('2026-01-01') },
-  { bbPlayerId: 2, ageNow: 22, hasFreshFullThisSeason: false, oldestCapture: null },        // too old
-  { bbPlayerId: 3, ageNow: 18, hasFreshFullThisSeason: true, oldestCapture: new Date('2026-07-01') }, // already fresh
-  { bbPlayerId: 4, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: new Date('2025-01-01') },
-  { bbPlayerId: 5, ageNow: null, hasFreshFullThisSeason: false, oldestCapture: null },       // unknown age excluded
+  { bbPlayerId: 1, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: new Date('2026-01-01'), potential: null, salary: null, heightCm: null },
+  { bbPlayerId: 2, ageNow: 22, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: null, heightCm: null },        // too old
+  { bbPlayerId: 3, ageNow: 18, hasFreshFullThisSeason: true, oldestCapture: new Date('2026-07-01'), potential: null, salary: null, heightCm: null }, // already fresh
+  { bbPlayerId: 4, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: new Date('2025-01-01'), potential: null, salary: null, heightCm: null },
+  { bbPlayerId: 5, ageNow: null, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: null, heightCm: null },       // unknown age excluded
 ];
 
 describe('selectCandidates (default)', () => {
@@ -25,4 +25,116 @@ describe('freeSlots', () => {
   it('18 minus protected', () => expect(freeSlots(4)).toBe(14));
   it('never negative', () => expect(freeSlots(20)).toBe(0));
   it('caps at 18', () => expect(freeSlots(0)).toBe(18));
+});
+
+// ─── Filter tests ─────────────────────────────────────────────────────────────
+
+const filterRows: CandidateRow[] = [
+  { bbPlayerId: 10, ageNow: 19, hasFreshFullThisSeason: false, oldestCapture: null, potential: 9, salary: 20000, heightCm: 195 },
+  { bbPlayerId: 11, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: null, potential: 6, salary: 50000, heightCm: 180 },
+  { bbPlayerId: 12, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: 15000, heightCm: 210 },
+  { bbPlayerId: 13, ageNow: 18, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: null, heightCm: null },
+];
+
+describe('minPotential filter', () => {
+  it('excludes rows below threshold', () => {
+    const out = selectCandidates(filterRows, { minPotential: 8 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([10, 13]);
+  });
+  it('null-potential EXCLUDED when minPotential is set', () => {
+    const out = selectCandidates(filterRows, { minPotential: 1 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(12);
+  });
+  it('null-potential INCLUDED when minPotential is unset', () => {
+    const out = selectCandidates(filterRows, {});
+    expect(out.map((r) => r.bbPlayerId)).toContain(12);
+  });
+});
+
+describe('maxPotential filter', () => {
+  it('excludes rows above threshold', () => {
+    const out = selectCandidates(filterRows, { maxPotential: 7 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([11]);
+  });
+  it('null-potential EXCLUDED when maxPotential is set', () => {
+    const out = selectCandidates(filterRows, { maxPotential: 10 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(12);
+  });
+});
+
+describe('maxSalary filter', () => {
+  it('excludes rows above threshold', () => {
+    const out = selectCandidates(filterRows, { maxSalary: 19000 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([12]);
+  });
+  it('null-salary EXCLUDED when maxSalary is set', () => {
+    const out = selectCandidates(filterRows, { maxSalary: 99999 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(13);
+  });
+  it('null-salary INCLUDED when maxSalary is unset', () => {
+    const out = selectCandidates(filterRows, {});
+    expect(out.map((r) => r.bbPlayerId)).toContain(13);
+  });
+});
+
+describe('minSalary filter', () => {
+  it('excludes rows below threshold', () => {
+    const out = selectCandidates(filterRows, { minSalary: 20000 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([10, 11]);
+  });
+  it('null-salary EXCLUDED when minSalary is set', () => {
+    const out = selectCandidates(filterRows, { minSalary: 1 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(13);
+  });
+});
+
+describe('height filter', () => {
+  it('minHeight excludes rows below threshold', () => {
+    const out = selectCandidates(filterRows, { minHeight: 200 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([12]);
+  });
+  it('maxHeight excludes rows above threshold', () => {
+    const out = selectCandidates(filterRows, { maxHeight: 185 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([11]);
+  });
+  it('height range works together', () => {
+    const out = selectCandidates(filterRows, { minHeight: 185, maxHeight: 200 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([10]);
+  });
+  it('null-height EXCLUDED when minHeight is set', () => {
+    const out = selectCandidates(filterRows, { minHeight: 1 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(13);
+  });
+  it('null-height EXCLUDED when maxHeight is set', () => {
+    const out = selectCandidates(filterRows, { maxHeight: 999 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(13);
+  });
+  it('null-height INCLUDED when no height filter', () => {
+    const out = selectCandidates(filterRows, {});
+    expect(out.map((r) => r.bbPlayerId)).toContain(13);
+  });
+});
+
+describe('age override', () => {
+  it('minAge/maxAge replaces the 18-21 default', () => {
+    const out = selectCandidates(filterRows, { minAge: 19, maxAge: 20 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([10, 11]);
+  });
+  it('minAge only widens lower bound', () => {
+    const out = selectCandidates(filterRows, { minAge: 20 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([11, 12]);
+  });
+});
+
+describe('combined filters', () => {
+  it('potential + salary together', () => {
+    const out = selectCandidates(filterRows, { minPotential: 8, maxSalary: 25000 });
+    // bbPlayerId 10: potential=9 >=8, salary=20000 <=25000 → pass
+    // bbPlayerId 13: potential=8 >=8, salary=null → EXCLUDED by maxSalary
+    expect(out.map((r) => r.bbPlayerId)).toEqual([10]);
+  });
+  it('max still caps results AFTER filtering', () => {
+    const out = selectCandidates(filterRows, { minPotential: 1, max: 1 });
+    expect(out.length).toBe(1);
+  });
 });

@@ -17,23 +17,44 @@ echo.
 echo   1.  Preview  (dry run - shows the plan, NO changes)
 echo   2.  Run full census
 echo   3.  Run a limited census (choose how many)
-echo   4.  Resume a previous run
-echo   5.  Re-scout everyone (even already-fresh players)
-echo   6.  Quit
+echo   4.  Run a FILTERED census (potential/salary/age/height)
+echo   5.  Resume a previous run
+echo   6.  Re-scout everyone (even already-fresh players)
+echo   7.  Quit
 echo.
-set /p choice="   Choose 1-6: "
+set /p choice="   Choose 1-7: "
 
 if "%choice%"=="1" ( set ARGS=-- --dry-run& goto run )
 if "%choice%"=="2" ( set ARGS=& goto confirm )
 if "%choice%"=="3" ( goto limited )
-if "%choice%"=="4" ( goto resume )
-if "%choice%"=="5" ( set ARGS=-- --all& goto confirm )
-if "%choice%"=="6" ( exit /b 0 )
+if "%choice%"=="4" ( goto filtered )
+if "%choice%"=="5" ( goto resume )
+if "%choice%"=="6" ( set ARGS=-- --all& goto confirm )
+if "%choice%"=="7" ( exit /b 0 )
 goto menu
 
 :limited
 set /p n="   How many players to scout? "
 set ARGS=-- --max %n%
+goto confirm
+
+:filtered
+echo.
+echo   Leave any filter blank to skip it (no restriction applied).
+echo.
+set /p mp="   Min potential (blank = any): "
+set /p xs="   Max weekly salary (blank = any): "
+set /p mia="   Min age (blank = 18): "
+set /p mxa="   Max age (blank = 21): "
+set /p mh="   Min height cm (blank = any): "
+set /p xh="   Max height cm (blank = any): "
+set ARGS=--
+if not "%mp%"=="" set ARGS=%ARGS% --min-potential %mp%
+if not "%xs%"=="" set ARGS=%ARGS% --max-salary %xs%
+if not "%mia%"=="" set ARGS=%ARGS% --min-age %mia%
+if not "%mxa%"=="" set ARGS=%ARGS% --max-age %mxa%
+if not "%mh%"=="" set ARGS=%ARGS% --min-height %mh%
+if not "%xh%"=="" set ARGS=%ARGS% --max-height %xh%
 goto confirm
 
 :resume
