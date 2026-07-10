@@ -21,6 +21,22 @@ Safety model: (1) protected pre-existing roster — fetched at start, never dism
 
 Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.aspx`. DB tables: `census_runs` (status: running|finished|aborted|failed; totals jsonb) and `census_items` (status: pending|recruited|captured|failed|skipped). Settings page shows last 10 census runs + newest run's per-item status breakdown (read-only — runs are started locally). Resume with: `npm run census -- --resume <runId>`.
 
+**Phase 5 (Player detail page) shipped 2026-07-10** — New `/players/[id]` route shows comprehensive player skill progression and history. Core components:
+
+**Skill Progression Chart**: 12-line SVG chart (one per skill, X-axis = snapshot dates, Y-axis = skill level 1-20) with legend toggle. Hand-rolled dependency-free charts (`src/components/charts/TimeSeriesChart.tsx` + `src/lib/chart-scale.ts` + `src/lib/series.ts`).
+
+**Metric Charts**: DMI + salary trajectory charts also rendered via hand-rolled SVG. Client wrapper `MetricChart` handles formatting because Next 16 forbids server→client function prop passing (e.g., `formatY`).
+
+**Snapshot History Table**: The authoritative view for "when are these skills from". Columns: date, source badge (api/manual/census), per-skill deltas vs. previous full snapshot (green +N for gains, red -N for losses). Every capture row shows snapshot metadata + skill comparison.
+
+**Position-over-Time Timeline**: Visual segment showing player's position edits across snapshots. Gotcha: `bestPosition` not yet stored per-snapshot, so currently shows one segment. Future enhancement: add position column to snapshots table for multi-segment timeline.
+
+**Notes + Tags**: Editable notes and tags via server actions. Player names in tables now link to `/players/[id]` (external BB link kept as ↗).
+
+**Known limitation**: per-snapshot `bestPosition` not stored yet — position timeline displays one segment (future enhancement).
+
+All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 5 detail).
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 
