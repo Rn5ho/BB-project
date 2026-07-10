@@ -6,6 +6,9 @@ describe('heightToCm', () => {
   it('parses combined form 6\'5" / 196 cm', () => expect(heightToCm(`6'5" / 196 cm`)).toBe(196));
   it('null-safe', () => expect(heightToCm(null)).toBeNull());
   it('garbage → null', () => expect(heightToCm('tall')).toBeNull());
+  it('converts inch values mislabeled as cm (BB API bug): "73 cm" → 185', () => expect(heightToCm('73 cm')).toBe(185));
+  it('converts "77 cm" → 196', () => expect(heightToCm('77 cm')).toBe(196));
+  it('leaves real cm untouched at the boundary: "165 cm" → 165', () => expect(heightToCm('165 cm')).toBe(165));
 });
 
 const v1Player = {

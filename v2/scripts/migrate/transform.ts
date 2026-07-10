@@ -17,10 +17,22 @@ export interface V1Snapshot {
   owner_team_name: string | null; owner_team_id: number | null;
 }
 
+/**
+ * Parses a height string and returns a value in centimetres.
+ *
+ * Handles two formats:
+ *  - Extension-scraped rows: e.g. `6'5" / 196 cm` — the numeric part is already cm.
+ *  - BB API-sourced (v1) rows: the API returns heights in **inches** but the v1
+ *    migration stored them with a "cm" suffix (e.g. `"73 cm"` where 73 is inches).
+ *    Basketball player heights are 165–236 cm / 65–93 in, so any value < 100
+ *    is unambiguously inches and is converted via Math.round(n * 2.54).
+ */
 export function heightToCm(height: string | null): number | null {
   if (!height) return null;
   const m = height.match(/(\d{2,3})\s*cm/);
-  return m ? Number(m[1]) : null;
+  if (!m) return null;
+  const n = Number(m[1]);
+  return n < 100 ? Math.round(n * 2.54) : n;
 }
 
 export function transformPlayer(p: V1Player) {
