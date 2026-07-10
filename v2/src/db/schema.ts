@@ -112,7 +112,7 @@ export const censusItems = pgTable('census_items', {
   id: serial('id').primaryKey(),
   runId: integer('run_id').notNull().references(() => censusRuns.id, { onDelete: 'cascade' }),
   playerId: integer('player_id').notNull(),
-  status: text('status', { enum: ['pending', 'captured', 'failed', 'skipped'] }).notNull(),
+  status: text('status', { enum: ['pending', 'recruited', 'captured', 'failed', 'skipped'] }).notNull(),
   error: text('error'),
 }, (t) => [index('idx_census_items_run').on(t.runId)]);
 
