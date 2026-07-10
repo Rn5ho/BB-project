@@ -5,6 +5,83 @@ import CountryPicker from '@/components/settings/CountryPicker';
 import TrackedCountryList from '@/components/settings/TrackedCountryList';
 import SyncButtons from '@/components/settings/SyncButtons';
 
+type CensusFilters = {
+  all?: boolean;
+  max?: number;
+  minAge?: number;
+  maxAge?: number;
+  minPotential?: number;
+  maxPotential?: number;
+  minSalary?: number;
+  maxSalary?: number;
+  minHeight?: number;
+  maxHeight?: number;
+};
+
+type CensusTotals = {
+  captured?: number;
+  failed?: number;
+  filters?: CensusFilters;
+  candidateCount?: number;
+  originalRoster?: unknown;
+} | null;
+
+function formatCensusFilters(totals: CensusTotals): string {
+  if (!totals) return '—';
+  const f = totals.filters;
+  if (!f) return '—';
+
+  const parts: string[] = [];
+
+  if (f.all) parts.push('all (re-scout)');
+
+  if (f.minPotential != null && f.maxPotential != null) {
+    parts.push(`pot ${f.minPotential}-${f.maxPotential}`);
+  } else if (f.minPotential != null) {
+    parts.push(`pot≥${f.minPotential}`);
+  } else if (f.maxPotential != null) {
+    parts.push(`pot≤${f.maxPotential}`);
+  }
+
+  if (f.minAge != null && f.maxAge != null) {
+    parts.push(`age ${f.minAge}-${f.maxAge}`);
+  } else if (f.minAge != null) {
+    parts.push(`age ≥${f.minAge}`);
+  } else if (f.maxAge != null) {
+    parts.push(`age ≤${f.maxAge}`);
+  }
+
+  if (f.minSalary != null && f.maxSalary != null) {
+    parts.push(`salary ${f.minSalary}-${f.maxSalary}`);
+  } else if (f.minSalary != null) {
+    parts.push(`salary ≥${f.minSalary}`);
+  } else if (f.maxSalary != null) {
+    parts.push(`salary ≤${f.maxSalary}`);
+  }
+
+  if (f.minHeight != null && f.maxHeight != null) {
+    parts.push(`ht ${f.minHeight}-${f.maxHeight} cm`);
+  } else if (f.minHeight != null) {
+    parts.push(`ht ≥${f.minHeight} cm`);
+  } else if (f.maxHeight != null) {
+    parts.push(`ht ≤${f.maxHeight} cm`);
+  }
+
+  if (totals.candidateCount != null) {
+    parts.push(`${totals.candidateCount} cands`);
+  }
+
+  return parts.length > 0 ? parts.join(' · ') : '—';
+}
+
+function formatCensusResult(totals: CensusTotals): string {
+  if (!totals) return '—';
+  if (totals.captured == null && totals.failed == null) return '—';
+  const captured = totals.captured ?? 0;
+  const failed = totals.failed ?? 0;
+  return `${captured} ✓ / ${failed} ✗`;
+}
+
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
@@ -56,7 +133,8 @@ export default async function SettingsPage() {
               <th className="py-1 pr-3">Run ID</th>
               <th className="pr-3">Started</th>
               <th className="pr-3">Status</th>
-              <th>Totals</th>
+              <th className="pr-3">Filters</th>
+              <th>Result</th>
             </tr>
           </thead>
           <tbody>
@@ -70,8 +148,11 @@ export default async function SettingsPage() {
                     : r.status === 'aborted' ? <span className="text-orange-400">aborted</span>
                     : <span className="text-red-400">{r.status}</span>}
                 </td>
+                <td className="pr-3 text-neutral-400 text-xs">
+                  {formatCensusFilters(r.totals as CensusTotals)}
+                </td>
                 <td className="text-neutral-400 text-xs">
-                  {r.totals ? JSON.stringify(r.totals) : '—'}
+                  {formatCensusResult(r.totals as CensusTotals)}
                   {r.id === newestRun?.id && Object.keys(newestItemCounts).length > 0 && (
                     <span className="ml-2 text-neutral-500">
                       ({Object.entries(newestItemCounts).map(([s, n]) => `${s}: ${n}`).join(', ')})
@@ -81,7 +162,7 @@ export default async function SettingsPage() {
               </tr>
             ))}
             {runs.length === 0 && (
-              <tr><td colSpan={4} className="py-2 text-neutral-500">No census runs yet.</td></tr>
+              <tr><td colSpan={5} className="py-2 text-neutral-500">No census runs yet.</td></tr>
             )}
           </tbody>
         </table>
