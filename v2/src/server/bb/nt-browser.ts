@@ -24,6 +24,7 @@ export class NtBrowser {
     // Use the dedicated /login.aspx page where the form is the visible content
     // (the header widget on default.aspx exists in the DOM but is hidden).
     await this.page.goto(`${BASE}/login.aspx`, { waitUntil: 'domcontentloaded' });
+    await this.dismissConsent();
     await this.page.fill('#cphContent_txtUserName', user);
     await this.page.fill('#cphContent_txtPassword', pass);
     await Promise.all([
@@ -33,6 +34,20 @@ export class NtBrowser {
     // verify: a logged-in page should not show the login form
     if (await this.page.locator('#cphContent_txtPassword').count() > 0) {
       throw new Error('BB browser login failed (login form still present)');
+    }
+  }
+
+  /** Dismiss the Google Funding Choices cookie-consent overlay if it appears (it is flaky and
+   *  its .fc-dialog-overlay intercepts clicks on the login button). Clicking Consent sets a
+   *  cookie, so it stays gone for the rest of the browser session. No-op when absent. */
+  private async dismissConsent(): Promise<void> {
+    try {
+      const btn = this.page.locator('.fc-cta-consent').first();
+      await btn.waitFor({ state: 'visible', timeout: 6000 });
+      await btn.click();
+      await this.page.waitForTimeout(500);
+    } catch {
+      // no consent dialog this time
     }
   }
 
