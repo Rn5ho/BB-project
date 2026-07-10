@@ -5,6 +5,7 @@ import { db, trackedCountries } from '@/db';
 import { eq } from 'drizzle-orm';
 import { runPlayersSync } from '@/server/sync/players';
 import { runSeasonsSync } from '@/server/sync/seasons';
+import { runMarketSweep } from '@/server/sync/market';
 
 export async function addTrackedCountry(countryId: number, name: string) {
   await db.insert(trackedCountries).values({ countryId, name }).onConflictDoNothing();
@@ -21,9 +22,12 @@ export async function toggleStar(id: number, starred: boolean) {
   revalidatePath('/settings');
 }
 
-export async function syncNow(job: 'players' | 'seasons') {
+export async function syncNow(job: 'players' | 'seasons' | 'market') {
   try {
-    const counts = job === 'players' ? await runPlayersSync() : await runSeasonsSync();
+    const counts =
+      job === 'players' ? await runPlayersSync()
+      : job === 'market' ? await runMarketSweep()
+      : await runSeasonsSync();
     revalidatePath('/settings');
     return { ok: true as const, counts };
   } catch (e) {

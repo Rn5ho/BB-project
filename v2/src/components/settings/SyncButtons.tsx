@@ -6,7 +6,7 @@ import { syncNow } from '@/app/settings/actions';
 export default function SyncButtons() {
   const [pending, start] = useTransition();
   const [result, setResult] = useState<string | null>(null);
-  const run = (job: 'players' | 'seasons') =>
+  const run = (job: 'players' | 'seasons' | 'market') =>
     start(async () => {
       setResult(`Running ${job} sync…`);
       const r = await syncNow(job);
@@ -21,6 +21,10 @@ export default function SyncButtons() {
       <button onClick={() => run('seasons')} disabled={pending}
         className="rounded border border-neutral-700 px-3 py-1.5 text-sm disabled:opacity-50">
         Sync seasons now
+      </button>
+      <button onClick={() => run('market')} disabled={pending}
+        className="rounded border border-amber-700 px-3 py-1.5 text-sm text-amber-400 disabled:opacity-50">
+        Sync market now
       </button>
       {result && <span className="text-xs text-neutral-400">{result}</span>}
     </div>

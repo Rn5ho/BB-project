@@ -146,6 +146,7 @@ export default function PlayerTable({
                   title={s.name}
                 />
               ))}
+              {showCountry && <th className="pr-3 whitespace-nowrap">Market</th>}
               <th>Data</th>
             </tr>
           </thead>
@@ -185,6 +186,7 @@ export default function PlayerTable({
                       <SkillCell value={p.skills?.[s.dbKey] ?? null} />
                     </td>
                   ))}
+                {showCountry && <td className="pr-3"><MarketChip row={p} /></td>}
                 <td>
                   {p.hasFullSkills ? (
                     <span className="text-xs rounded bg-green-900/40 text-green-400 px-1.5 py-0.5">skills</span>
@@ -197,7 +199,7 @@ export default function PlayerTable({
             {sorted.length === 0 && (
               <tr>
                 <td
-                  colSpan={10 + (showCountry ? 1 : 0) + (showSkills ? SKILLS.length : 0)}
+                  colSpan={10 + (showCountry ? 2 : 0) + (showSkills ? SKILLS.length : 0)}
                   className="py-8 text-center text-neutral-500"
                 >
                   No players match the current filters.
@@ -209,6 +211,28 @@ export default function PlayerTable({
       </div>
     </div>
   );
+}
+
+// ─── MarketChip ──────────────────────────────────────────────────────────────
+
+function MarketChip({ row }: { row: PlayerListRow }) {
+  const now = new Date();
+  if (row.onMarketUntil != null && row.onMarketUntil > now) {
+    const hoursLeft = Math.max(0, Math.round((row.onMarketUntil.getTime() - now.getTime()) / 3_600_000));
+    return (
+      <span className="text-xs rounded bg-amber-900/40 text-amber-400 px-1.5 py-0.5 whitespace-nowrap">
+        on market · ends ~{hoursLeft}h
+      </span>
+    );
+  }
+  if (row.isRookie) {
+    return (
+      <span className="text-xs rounded bg-neutral-800 text-neutral-400 px-1.5 py-0.5">
+        rookie
+      </span>
+    );
+  }
+  return <span className="text-neutral-600">–</span>;
 }
 
 // ─── SortTh ──────────────────────────────────────────────────────────────────
