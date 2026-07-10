@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function WorldPage({ searchParams }: { searchParams: Promise<{ country?: string }> }) {
   const { country } = await searchParams;
-  const all = await listPlayers({ excludeNationality: 'Slovenia' });
+  const all = await listPlayers('world');
   const countries = [...new Set(all.map((p) => p.nationality).filter((n): n is string => !!n))].sort();
   const rows = country ? all.filter((p) => p.nationality === country) : all;
   return (
