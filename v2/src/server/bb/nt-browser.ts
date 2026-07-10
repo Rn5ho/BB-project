@@ -21,15 +21,17 @@ export class NtBrowser {
     const user = process.env.BB_WEB_USERNAME || process.env.BB_API_USERNAME;
     const pass = process.env.BB_WEB_PASSWORD;
     if (!user || !pass) throw new Error('BB_WEB_USERNAME/BB_WEB_PASSWORD not configured');
-    await this.page.goto(`${BASE}/default.aspx`, { waitUntil: 'domcontentloaded' });
-    await this.page.fill('#txtLoginUserName', user);
-    await this.page.fill('#txtLoginPassword', pass);
+    // Use the dedicated /login.aspx page where the form is the visible content
+    // (the header widget on default.aspx exists in the DOM but is hidden).
+    await this.page.goto(`${BASE}/login.aspx`, { waitUntil: 'domcontentloaded' });
+    await this.page.fill('#cphContent_txtUserName', user);
+    await this.page.fill('#cphContent_txtPassword', pass);
     await Promise.all([
       this.page.waitForNavigation({ waitUntil: 'domcontentloaded' }).catch(() => {}),
-      this.page.click('#btnLogin'),
+      this.page.click('#cphContent_btnLoginUser'),
     ]);
     // verify: a logged-in page should not show the login form
-    if (await this.page.locator('#txtLoginPassword').count() > 0) {
+    if (await this.page.locator('#cphContent_txtPassword').count() > 0) {
       throw new Error('BB browser login failed (login form still present)');
     }
   }
