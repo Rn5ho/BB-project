@@ -8,21 +8,23 @@ export default async function WorldPage({ searchParams }: { searchParams: Promis
   const { country } = await searchParams;
   const all = await listPlayers({ excludeNationality: 'Slovenia' });
   const countries = [...new Set(all.map((p) => p.nationality).filter((n): n is string => !!n))].sort();
-  const rows = all
-    .filter((p) => !country || p.nationality === country)
-    .filter((p) => p.ageNow == null || (p.ageNow >= 18 && p.ageNow <= 21))
-    .sort((a, b) => (b.dmi ?? -1) - (a.dmi ?? -1));
+  const rows = country ? all.filter((p) => p.nationality === country) : all;
   return (
     <main className="p-6">
       <h1 className="text-lg font-semibold mb-1">World — tracked players</h1>
       <div className="flex flex-wrap gap-2 mb-4 text-sm">
         <Link href="/world" className={!country ? 'text-amber-500' : 'text-neutral-400'}>All</Link>
         {countries.map((c) => (
-          <Link key={c} href={`/world?country=${encodeURIComponent(c)}`}
-            className={country === c ? 'text-amber-500' : 'text-neutral-400 hover:text-white'}>{c}</Link>
+          <Link
+            key={c}
+            href={`/world?country=${encodeURIComponent(c)}`}
+            className={country === c ? 'text-amber-500' : 'text-neutral-400 hover:text-white'}
+          >
+            {c}
+          </Link>
         ))}
       </div>
-      <PlayerTable rows={rows} showCountry />
+      <PlayerTable rows={rows} variant="world" showCountry />
     </main>
   );
 }
