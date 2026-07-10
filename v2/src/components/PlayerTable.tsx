@@ -22,6 +22,33 @@ const STORAGE_KEY: Record<Variant, string> = {
   world: 'bbscout:table:world',
 };
 
+// ─── localStorage sanitizers ─────────────────────────────────────────────────
+
+function sanitizeFilter(raw: Partial<FilterState>): Partial<FilterState> {
+  const out: Partial<FilterState> = {};
+  const def = {} as FilterState; // use DEFAULT_FILTER shape for type reference
+  void def;
+  for (const _key of Object.keys(raw) as (keyof FilterState)[]) {
+    const val = raw[_key];
+    const expected = typeof DEFAULT_FILTER[_key];
+    if (expected === 'number') {
+      if (typeof val === 'number' && isFinite(val)) (out as Record<string, unknown>)[_key] = val;
+    } else if (expected === 'boolean') {
+      if (typeof val === 'boolean') (out as Record<string, unknown>)[_key] = val;
+    } else if (expected === 'string') {
+      if (typeof val === 'string') (out as Record<string, unknown>)[_key] = val;
+    }
+  }
+  return out;
+}
+
+function sanitizeSort(raw: Partial<SortState>): Partial<SortState> {
+  const out: Partial<SortState> = {};
+  if (typeof raw.key === 'string') out.key = raw.key as SortState['key'];
+  if (raw.direction === 'asc' || raw.direction === 'desc') out.direction = raw.direction;
+  return out;
+}
+
 interface StoredState {
   filter?: Partial<FilterState>;
   sort?: Partial<SortState>;
@@ -48,8 +75,8 @@ export default function PlayerTable({
       const raw = localStorage.getItem(STORAGE_KEY[variant]);
       if (raw) {
         const parsed: StoredState = JSON.parse(raw);
-        if (parsed.filter) setFilter({ ...DEFAULT_FILTER, ...parsed.filter });
-        if (parsed.sort) setSort({ ...DEFAULT_SORT[variant], ...parsed.sort });
+        if (parsed.filter) setFilter({ ...DEFAULT_FILTER, ...sanitizeFilter(parsed.filter) });
+        if (parsed.sort) setSort({ ...DEFAULT_SORT[variant], ...sanitizeSort(parsed.sort) });
       }
     } catch {
       // ignore
@@ -129,6 +156,7 @@ export default function PlayerTable({
                   <a
                     href={`https://buzzerbeater.com/player/${p.bbPlayerId}/overview.aspx`}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="hover:text-amber-500"
                   >
                     {p.name}
@@ -169,7 +197,7 @@ export default function PlayerTable({
             {sorted.length === 0 && (
               <tr>
                 <td
-                  colSpan={10 + (showCountry ? 1 : 0) + (showSkills ? SKILLS.length : 0) + 1}
+                  colSpan={10 + (showCountry ? 1 : 0) + (showSkills ? SKILLS.length : 0)}
                   className="py-8 text-center text-neutral-500"
                 >
                   No players match the current filters.

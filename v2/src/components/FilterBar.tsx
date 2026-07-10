@@ -14,10 +14,29 @@ interface FilterBarProps {
 
 export default function FilterBar({ filter, onChange, onReset, shown, total }: FilterBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
+  // Local string state for age inputs so clearing doesn't snap to 0
+  const [ageMinStr, setAgeMinStr] = useState<string>(String(filter.ageMin));
+  const [ageMaxStr, setAgeMaxStr] = useState<string>(String(filter.ageMax));
   const isDirty = !isFilterDefault(filter);
 
   function set<K extends keyof FilterState>(key: K, value: FilterState[K]) {
     onChange({ ...filter, [key]: value });
+  }
+
+  function handleReset() {
+    setMoreOpen(false);
+    setAgeMinStr(String(DEFAULT_FILTER.ageMin));
+    setAgeMaxStr(String(DEFAULT_FILTER.ageMax));
+    onReset();
+  }
+
+  function commitAge(field: 'ageMin' | 'ageMax', strVal: string) {
+    const defaultVal = DEFAULT_FILTER[field];
+    const n = strVal.trim() === '' ? defaultVal : Number(strVal);
+    const committed = isNaN(n) ? defaultVal : n;
+    set(field, committed);
+    if (field === 'ageMin') setAgeMinStr(String(committed));
+    else setAgeMaxStr(String(committed));
   }
 
   return (
@@ -38,19 +57,33 @@ export default function FilterBar({ filter, onChange, onReset, shown, total }: F
           <span>Age</span>
           <input
             type="number"
-            value={filter.ageMin}
+            value={ageMinStr}
             min={0}
             max={99}
-            onChange={(e) => set('ageMin', Number(e.target.value))}
+            onChange={(e) => {
+              setAgeMinStr(e.target.value);
+              if (e.target.value.trim() !== '') {
+                const n = Number(e.target.value);
+                if (!isNaN(n)) set('ageMin', n);
+              }
+            }}
+            onBlur={() => commitAge('ageMin', ageMinStr)}
             className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white w-14 text-right focus:outline-none focus:border-amber-500"
           />
           <span>–</span>
           <input
             type="number"
-            value={filter.ageMax}
+            value={ageMaxStr}
             min={0}
             max={99}
-            onChange={(e) => set('ageMax', Number(e.target.value))}
+            onChange={(e) => {
+              setAgeMaxStr(e.target.value);
+              if (e.target.value.trim() !== '') {
+                const n = Number(e.target.value);
+                if (!isNaN(n)) set('ageMax', n);
+              }
+            }}
+            onBlur={() => commitAge('ageMax', ageMaxStr)}
             className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white w-14 text-right focus:outline-none focus:border-amber-500"
           />
         </div>
@@ -115,7 +148,7 @@ export default function FilterBar({ filter, onChange, onReset, shown, total }: F
         {isDirty && (
           <button
             type="button"
-            onClick={onReset}
+            onClick={handleReset}
             className="text-amber-500 hover:text-amber-400 ml-auto"
           >
             Reset
