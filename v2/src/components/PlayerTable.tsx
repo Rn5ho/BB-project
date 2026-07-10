@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { PlayerListRow } from '@/queries/players';
 import { SKILLS, getPotentialColor, POTENTIAL_LEVELS } from '@/lib/constants';
 import {
@@ -160,14 +161,21 @@ export default function PlayerTable({
           <tbody>
             {sorted.map((p) => (
               <tr key={p.bbPlayerId} className="border-b border-neutral-900 hover:bg-neutral-900/50">
-                <td className="py-1.5 pr-3">
+                <td className="py-1.5 pr-3 whitespace-nowrap">
+                  <Link
+                    href={`/players/${p.bbPlayerId}`}
+                    className="hover:text-amber-500"
+                  >
+                    {p.name}
+                  </Link>
+                  {' '}
                   <a
                     href={`https://buzzerbeater.com/player/${p.bbPlayerId}/overview.aspx`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-amber-500"
+                    className="text-neutral-500 hover:text-amber-500 text-xs"
                   >
-                    {p.name}
+                    ↗
                   </a>
                 </td>
                 {showCountry && <td className="pr-3 text-neutral-400">{p.nationality ?? '–'}</td>}
