@@ -10,6 +10,7 @@ const opts = {
   all: has('--all'),
   dryRun: has('--dry-run'),
   confirmed: has('--confirm'),
+  countOnly: has('--count'),
   clearRoster: has('--clear-roster'),
   max: val('--max') ? Number(val('--max')) : undefined,
   resumeRunId: val('--resume') ? Number(val('--resume')) : undefined,

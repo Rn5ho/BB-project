@@ -12,6 +12,8 @@ export interface CensusOpts {
   dryRun?: boolean;
   /** Required for any real (non-dry-run) run. A missing value hard-refuses the run. */
   confirmed?: boolean;
+  /** Count matching candidates and exit immediately — no browser, no roster actions. */
+  countOnly?: boolean;
   /** Dismiss the user's own roster first (18 free slots), then re-recruit them at the end. */
   clearRoster?: boolean;
   resumeRunId?: number;
@@ -33,7 +35,7 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
   // HARD SAFETY GATE. A real census dismisses many players from the NT roster, which drains
   // NT enthusiasm — running it mid-season is destructive. It must NEVER be automated and must
   // NEVER run without a deliberate human confirmation. Anything but a preview requires --confirm.
-  if (!opts.dryRun && !opts.confirmed) {
+  if (!opts.dryRun && !opts.countOnly && !opts.confirmed) {
     throw new Error(
       'Refusing to run: a real census requires --confirm. It dismisses many players (drains NT ' +
       'enthusiasm) and must only be run in the OFF-SEASON. Use --dry-run to preview safely.',
@@ -60,6 +62,11 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log): Promi
   };
   const candidates = selectCandidates(rows, filters);
   log(`Season ${season}: ${candidates.length} candidates selected (of ${rows.length} Slovenian 18-21).`);
+
+  if (opts.countOnly) {
+    log(`${candidates.length} candidates match these filters.`);
+    return { runId: -1, captured: 0, failed: 0 };
+  }
 
   // 2. launch browser, login + protected roster
   const nt = new NtBrowser();

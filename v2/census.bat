@@ -90,6 +90,9 @@ echo   ------------------------------------------------------------
 echo.
 echo   Args to run:  %ARGS%
 echo.
+echo   Checking how many candidates match...
+call npm run census %ARGS% --count
+echo.
 set "clr="
 set /p clr="   Auto-clear your own roster for full speed then restore it? (y/N): "
 if /i "%clr%"=="Y" set ARGS=%ARGS% --clear-roster
