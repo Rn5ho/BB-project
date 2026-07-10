@@ -17,8 +17,9 @@ export async function createSessionToken(): Promise<string> {
 }
 
 export async function verifySessionToken(token: string): Promise<boolean> {
+  const key = secret(); // throws loudly on misconfiguration
   try {
-    await jwtVerify(token, secret());
+    await jwtVerify(token, key);
     return true;
   } catch {
     return false;
@@ -28,7 +29,8 @@ export async function verifySessionToken(token: string): Promise<boolean> {
 /** Constant-time-ish compare without node:crypto (single-user hobby app). */
 export function checkPassword(input: string): boolean {
   const expected = process.env.APP_PASSWORD ?? '';
-  if (!expected || input.length !== expected.length) return false;
+  if (!expected) throw new Error('APP_PASSWORD is not set');
+  if (input.length !== expected.length) return false;
   let diff = 0;
   for (let i = 0; i < expected.length; i++) diff |= input.charCodeAt(i) ^ expected.charCodeAt(i);
   return diff === 0;
