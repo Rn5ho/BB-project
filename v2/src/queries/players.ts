@@ -18,7 +18,7 @@ export interface PlayerListRow {
   snapshotSeason: number | null;
   // from latest FULL snapshot (skills present)
   tsp: number | null;
-  skills: Record<string, number> | null;
+  skills: Record<string, number | null> | null;
   skillsCapturedAt: Date | null;
   hasFullSkills: boolean;
 }
@@ -29,6 +29,9 @@ export async function getCurrentSeasonId(): Promise<number> {
 }
 
 export async function listPlayers(opts: { nationality?: string; excludeNationality?: string }): Promise<PlayerListRow[]> {
+  if (opts.nationality && opts.excludeNationality) {
+    throw new Error('nationality and excludeNationality are mutually exclusive');
+  }
   const where = opts.nationality
     ? sql`where p.nationality = ${opts.nationality}`
     : opts.excludeNationality
@@ -69,18 +72,18 @@ export async function listPlayers(opts: { nationality?: string; excludeNationali
     gameShape: r.game_shape as number | null,
     salary: r.salary as number | null,
     potential: r.potential as number | null,
-    capturedAt: r.captured_at ? new Date(r.captured_at as string) : null,
+    capturedAt: r.captured_at ? r.captured_at as Date : null,
     snapshotSeason: r.snap_season as number | null,
     tsp: r.tsp as number | null,
     skills: r.jump_shot == null ? null : {
-      jump_shot: r.jump_shot as number, jump_range: r.jump_range as number,
-      outside_def: r.outside_def as number, handling: r.handling as number,
-      driving: r.driving as number, passing: r.passing as number,
-      inside_shot: r.inside_shot as number, inside_def: r.inside_def as number,
-      rebounding: r.rebounding as number, shot_blocking: r.shot_blocking as number,
-      stamina: r.stamina as number, free_throw: r.free_throw as number,
+      jump_shot: r.jump_shot as number | null, jump_range: r.jump_range as number | null,
+      outside_def: r.outside_def as number | null, handling: r.handling as number | null,
+      driving: r.driving as number | null, passing: r.passing as number | null,
+      inside_shot: r.inside_shot as number | null, inside_def: r.inside_def as number | null,
+      rebounding: r.rebounding as number | null, shot_blocking: r.shot_blocking as number | null,
+      stamina: r.stamina as number | null, free_throw: r.free_throw as number | null,
     },
-    skillsCapturedAt: r.skills_captured_at ? new Date(r.skills_captured_at as string) : null,
+    skillsCapturedAt: r.skills_captured_at ? r.skills_captured_at as Date : null,
     hasFullSkills: r.jump_shot != null,
   }));
 }
