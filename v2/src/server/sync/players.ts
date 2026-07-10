@@ -56,25 +56,27 @@ export async function runPlayersSync(): Promise<PlayersSyncCounts> {
         });
       }
 
-      // dedup: one api snapshot per player per UTC day → update same-day, insert otherwise
+      // dedup: one api snapshot per player per UTC day.
+      // Strategy: delete any same-day rows in one batch, then bulk-insert all players.
+      // This beats ~800 sequential per-player UPDATE round-trips on neon-http (was ~61s → fits 60s limit).
       const todayStart = new Date(`${utcDayKey(new Date())}T00:00:00Z`);
       const todays = await db.select({ id: snapshots.id, playerId: snapshots.playerId }).from(snapshots)
         .where(and(eq(snapshots.source, 'api'), gte(snapshots.capturedAt, todayStart), inArray(snapshots.playerId, ids)));
       const todayByPlayer = new Map(todays.map((t) => [t.playerId, t.id]));
+      const todayIds = [...todayByPlayer.values()];
+
+      // Delete all same-day rows in one round-trip, then reinsert everything below
+      if (todayIds.length > 0) {
+        await db.delete(snapshots).where(inArray(snapshots.id, todayIds));
+      }
 
       const inserts: ReturnType<typeof mapApiPlayerToSnapshot>[] = [];
       for (const p of apiPlayers) {
-        const snap = mapApiPlayerToSnapshot(p, season);
-        const existingId = todayByPlayer.get(p.playerId);
-        if (existingId) {
-          await db.update(snapshots).set(snap).where(eq(snapshots.id, existingId));
-          counts.snapshotsUpdated++;
-        } else {
-          inserts.push(snap);
-        }
+        inserts.push(mapApiPlayerToSnapshot(p, season));
       }
       for (const chunk of chunks(inserts, 500)) await db.insert(snapshots).values(chunk);
-      counts.snapshotsInserted += inserts.length;
+      counts.snapshotsUpdated += todayIds.length;
+      counts.snapshotsInserted += Math.max(0, inserts.length - todayIds.length);
     }
 
     await db.update(syncLog).set({ finishedAt: new Date(), ok: true, counts }).where(sql`id = ${logRow.id}`);
