@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { skillSeries, dmiSeries, snapshotDeltas, positionTimeline, type Snap } from './series';
+import { skillSeries, dmiSeries, snapshotDeltas, positionTimeline, currentProfile, type Snap } from './series';
 
 const d = (s: string) => new Date(s);
 const snaps: Snap[] = [
-  { capturedAt: d('2026-01-01'), source: 'api', season: 70, age: 20, dmi: 100000, gameShape: 7, salary: 8000, potential: 8, tsp: null, bestPosition: 'PG',
+  { capturedAt: d('2026-01-01'), source: 'api', season: 70, age: 20, dmi: 100000, gameShape: 7, salary: 8000, potential: 8, experience: null, tsp: null, bestPosition: 'PG',
     skills: { jump_shot: null, jump_range: null, outside_def: null, handling: null, driving: null, passing: null, inside_shot: null, inside_def: null, rebounding: null, shot_blocking: null, stamina: null, free_throw: null } },
-  { capturedAt: d('2026-04-01'), source: 'census', season: 71, age: 20, dmi: 140000, gameShape: 8, salary: 9000, potential: 8, tsp: 90, bestPosition: 'PG',
+  { capturedAt: d('2026-04-01'), source: 'census', season: 71, age: 20, dmi: 140000, gameShape: 8, salary: 9000, potential: 8, experience: 3, tsp: 90, bestPosition: 'PG',
     skills: { jump_shot: 11, jump_range: 9, outside_def: 12, handling: 14, driving: 15, passing: 8, inside_shot: 10, inside_def: 6, rebounding: 4, shot_blocking: 1, stamina: 5, free_throw: 3 } },
-  { capturedAt: d('2026-07-01'), source: 'census', season: 72, age: 21, dmi: 180000, gameShape: 8, salary: 11000, potential: 8, tsp: 96, bestPosition: 'SG',
+  { capturedAt: d('2026-07-01'), source: 'census', season: 72, age: 21, dmi: 180000, gameShape: 8, salary: 11000, potential: 8, experience: 5, tsp: 96, bestPosition: 'SG',
     skills: { jump_shot: 13, jump_range: 9, outside_def: 12, handling: 14, driving: 16, passing: 8, inside_shot: 10, inside_def: 6, rebounding: 4, shot_blocking: 1, stamina: 5, free_throw: 3 } },
 ];
 
@@ -44,5 +44,44 @@ describe('positionTimeline', () => {
     const segs = positionTimeline(snaps);
     expect(segs.map((s) => s.position)).toEqual(['PG', 'SG']);
     expect(segs[0].from.getTime()).toBe(d('2026-01-01').getTime());
+  });
+});
+
+describe('currentProfile', () => {
+  it('returns skills from the latest full snap', () => {
+    const p = currentProfile(snaps);
+    expect(p.skills).not.toBeNull();
+    expect(p.skills!.jump_shot).toBe(13);   // from 2026-07-01 snap
+    expect(p.skills!.driving).toBe(16);
+    expect(p.skillsAsOf?.getTime()).toBe(d('2026-07-01').getTime());
+    expect(p.skillsSource).toBe('census');
+  });
+
+  it('returns dmi from the latest snap with dmi', () => {
+    const p = currentProfile(snaps);
+    expect(p.dmi).toBe(180000);
+    expect(p.dmiAsOf?.getTime()).toBe(d('2026-07-01').getTime());
+    expect(p.dmiSource).toBe('census');
+  });
+
+  it('returns meta (tsp, salary, experience, gameShape) from the latest full snap', () => {
+    const p = currentProfile(snaps);
+    expect(p.tsp).toBe(96);
+    expect(p.salary).toBe(11000);
+    expect(p.experience).toBe(5);
+    expect(p.gameShape).toBe(8);
+    expect(p.age).toBe(21);
+  });
+
+  it('returns skills null but dmi populated when no full snap exists', () => {
+    const dmiOnly: Snap[] = [
+      { capturedAt: d('2026-01-01'), source: 'api', season: 70, age: 20, dmi: 100000, gameShape: 7, salary: 8000, potential: 8, experience: null, tsp: null, bestPosition: 'PG',
+        skills: { jump_shot: null, jump_range: null, outside_def: null, handling: null, driving: null, passing: null, inside_shot: null, inside_def: null, rebounding: null, shot_blocking: null, stamina: null, free_throw: null } },
+    ];
+    const p = currentProfile(dmiOnly);
+    expect(p.skills).toBeNull();
+    expect(p.skillsAsOf).toBeNull();
+    expect(p.dmi).toBe(100000);
+    expect(p.dmiAsOf?.getTime()).toBe(d('2026-01-01').getTime());
   });
 });

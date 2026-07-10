@@ -2,6 +2,46 @@ import { SKILLS } from './constants';
 
 export type SkillKey = (typeof SKILLS)[number]['dbKey'];
 
+export interface CurrentProfile {
+  skills: Record<SkillKey, number> | null;
+  skillsAsOf: Date | null;
+  skillsSource: string | null;
+  tsp: number | null;
+  age: number | null;
+  gameShape: number | null;
+  salary: number | null;
+  potential: number | null;
+  experience: number | null;
+  dmi: number | null;
+  dmiAsOf: Date | null;
+  dmiSource: string | null;
+}
+
+export function currentProfile(snaps: Snap[]): CurrentProfile {
+  const asc = [...snaps].sort((a, b) => a.capturedAt.getTime() - b.capturedAt.getTime());
+  const isFullSnap = (s: Snap) => SKILLS.every(({ dbKey }) => s.skills[dbKey] != null);
+
+  const latestFull = [...asc].reverse().find(isFullSnap) ?? null;
+  const latestDmi = [...asc].reverse().find((s) => s.dmi != null) ?? null;
+
+  return {
+    skills: latestFull
+      ? (Object.fromEntries(SKILLS.map(({ dbKey }) => [dbKey, latestFull.skills[dbKey] as number])) as Record<SkillKey, number>)
+      : null,
+    skillsAsOf: latestFull ? latestFull.capturedAt : null,
+    skillsSource: latestFull ? latestFull.source : null,
+    tsp: latestFull?.tsp ?? null,
+    age: latestFull?.age ?? null,
+    gameShape: latestFull?.gameShape ?? null,
+    salary: latestFull?.salary ?? null,
+    potential: latestFull?.potential ?? null,
+    experience: latestFull?.experience ?? null,
+    dmi: latestDmi?.dmi ?? null,
+    dmiAsOf: latestDmi ? latestDmi.capturedAt : null,
+    dmiSource: latestDmi ? latestDmi.source : null,
+  };
+}
+
 export interface Snap {
   capturedAt: Date;
   source: string;
@@ -11,6 +51,7 @@ export interface Snap {
   gameShape: number | null;
   salary: number | null;
   potential: number | null;
+  experience: number | null;
   tsp: number | null;
   bestPosition: string | null;
   skills: Record<SkillKey, number | null>;

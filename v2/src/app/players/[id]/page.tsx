@@ -1,13 +1,14 @@
 import { notFound } from 'next/navigation';
 import { getPlayerDetail } from '@/queries/player-detail';
 import { getPotentialColor, POTENTIAL_LEVELS } from '@/lib/constants';
-import { skillSeries, dmiSeries, salarySeries, positionTimeline } from '@/lib/series';
+import { skillSeries, dmiSeries, salarySeries, positionTimeline, currentProfile } from '@/lib/series';
 import SkillProgression from '@/components/player/SkillProgression';
 import SnapshotHistory from '@/components/player/SnapshotHistory';
 import PositionTimeline from '@/components/player/PositionTimeline';
 import MetricChart from '@/components/player/MetricChart';
 import NotesSection from '@/components/player/NotesSection';
 import TagsSection from '@/components/player/TagsSection';
+import ProfileCard from '@/components/player/ProfileCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,6 +39,10 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
       </div>
 
       <TagsSection playerId={player.bbPlayerId} tags={tags} />
+
+      <section className="mt-6">
+        <ProfileCard profile={currentProfile(snaps)} heightCm={player.heightCm} bestPosition={player.bestPosition} />
+      </section>
 
       <section className="mt-6">
         <h2 className="font-medium mb-2">Skill progression</h2>

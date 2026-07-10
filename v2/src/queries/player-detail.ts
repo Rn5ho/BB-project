@@ -37,7 +37,7 @@ export async function getPlayerDetail(bbPlayerId: number): Promise<PlayerDetail 
     return {
       capturedAt: s.capturedAt, source: s.source, season: s.season, age: s.age,
       dmi: s.dmi == null ? null : Number(s.dmi), gameShape: s.gameShape, salary: s.salary,
-      potential: s.potential, tsp: s.tsp, bestPosition: p.bestPosition, skills,
+      potential: s.potential, experience: s.experience ?? null, tsp: s.tsp, bestPosition: p.bestPosition, skills,
     };
   });
 
