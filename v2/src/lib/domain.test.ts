@@ -25,6 +25,7 @@ describe('currentAge', () => {
   it('ages a player by elapsed seasons', () => expect(currentAge(19, 68, 70)).toBe(21));
   it('same season → same age', () => expect(currentAge(20, 70, 70)).toBe(20));
   it('returns null without snapshot season', () => expect(currentAge(20, null, 70)).toBeNull());
+  it('returns null without snapshot age', () => expect(currentAge(null, 68, 70)).toBeNull());
 });
 
 describe('pickCurrentSeason', () => {
@@ -38,4 +39,5 @@ describe('pickCurrentSeason', () => {
   it('falls back to highest id when between seasons', () => {
     expect(pickCurrentSeason(seasons, new Date('2026-08-15'))).toBe(70);
   });
+  it('throws on empty seasons list', () => { expect(() => pickCurrentSeason([], new Date())).toThrow(); });
 });

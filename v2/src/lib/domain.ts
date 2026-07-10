@@ -1,7 +1,7 @@
-import { SKILLS } from './constants';
+import { SKILLS, SkillDbKey } from './constants';
 
 /** Sum of all 12 skills; null if any is missing (light snapshot). */
-export function tsp(skills: Partial<Record<(typeof SKILLS)[number]['dbKey'], number | null>>): number | null {
+export function tsp(skills: Partial<Record<SkillDbKey, number | null>>): number | null {
   let sum = 0;
   for (const { dbKey } of SKILLS) {
     const v = skills[dbKey];
@@ -28,6 +28,7 @@ export interface SeasonRow { id: number; start: Date; finish: Date }
 
 /** Season containing `now`, else the highest-id season (between-season gap). */
 export function pickCurrentSeason(seasons: SeasonRow[], now: Date): number {
+  if (seasons.length === 0) throw new Error('No seasons provided');
   const active = seasons.find((s) => now >= s.start && now <= s.finish);
   if (active) return active.id;
   return Math.max(...seasons.map((s) => s.id));
