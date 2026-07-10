@@ -20,10 +20,10 @@ export async function GET(req: NextRequest) {
   }
   const force = req.nextUrl.searchParams.get('force'); // 'players' | 'market' | 'all'
   const results: Record<string, unknown> = {};
-  results.seasons = await runSeasonsSync();
-  results.market = await runMarketSweep(); // incremental daily
+  results.seasons = await runSeasonsSync('cron');
+  results.market = await runMarketSweep({}, 'cron'); // incremental daily
   if (new Date().getUTCDay() === 1 || force === 'players' || force === 'all') {
-    results.players = await runPlayersSync();
+    results.players = await runPlayersSync('cron');
   }
   return NextResponse.json({ ok: true, ...results });
 }

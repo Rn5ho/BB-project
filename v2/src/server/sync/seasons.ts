@@ -2,8 +2,8 @@ import { db, seasons, syncLog } from '@/db';
 import { fetchSeasons } from '@/server/bb/xml-api';
 import { sql } from 'drizzle-orm';
 
-export async function runSeasonsSync(): Promise<{ seasons: number }> {
-  const [logRow] = await db.insert(syncLog).values({ jobType: 'seasons' }).returning({ id: syncLog.id });
+export async function runSeasonsSync(trigger: 'cron' | 'manual' = 'manual'): Promise<{ seasons: number }> {
+  const [logRow] = await db.insert(syncLog).values({ jobType: 'seasons', trigger }).returning({ id: syncLog.id });
   try {
     const rows = await fetchSeasons();
     await db.insert(seasons).values(rows)

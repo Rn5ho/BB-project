@@ -119,6 +119,7 @@ export const censusItems = pgTable('census_items', {
 export const syncLog = pgTable('sync_log', {
   id: serial('id').primaryKey(),
   jobType: text('job_type').notNull(),
+  trigger: text('trigger').notNull().default('manual'),
   startedAt: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
   finishedAt: timestamp('finished_at', { withTimezone: true }),
   ok: boolean('ok'),

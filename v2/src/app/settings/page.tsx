@@ -172,18 +172,23 @@ export default async function SettingsPage() {
         <h2 className="font-medium mb-3">Sync log</h2>
         <table className="w-full text-sm">
           <thead className="text-left text-neutral-400 border-b border-neutral-800">
-            <tr><th className="py-1 pr-3">Job</th><th className="pr-3">Started</th><th className="pr-3">Status</th><th>Result</th></tr>
+            <tr><th className="py-1 pr-3">Job</th><th className="pr-3">Via</th><th className="pr-3">Started</th><th className="pr-3">Status</th><th>Result</th></tr>
           </thead>
           <tbody>
             {log.map((l) => (
               <tr key={l.id} className="border-b border-neutral-900">
                 <td className="py-1 pr-3">{l.jobType}</td>
+                <td className="pr-3">
+                  {l.trigger === 'cron'
+                    ? <span className="text-xs px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-400">cron</span>
+                    : <span className="text-xs px-1.5 py-0.5 rounded bg-neutral-800 text-sky-400">manual</span>}
+                </td>
                 <td className="pr-3 text-neutral-400">{l.startedAt.toISOString().replace('T', ' ').slice(0, 16)}</td>
                 <td className="pr-3">{l.ok === null ? '…' : l.ok ? <span className="text-green-400">ok</span> : <span className="text-red-400">failed</span>}</td>
                 <td className="text-neutral-400 text-xs">{l.error ?? JSON.stringify(l.counts ?? {})}</td>
               </tr>
             ))}
-            {log.length === 0 && <tr><td colSpan={4} className="py-2 text-neutral-500">No syncs yet.</td></tr>}
+            {log.length === 0 && <tr><td colSpan={5} className="py-2 text-neutral-500">No syncs yet.</td></tr>}
           </tbody>
         </table>
       </section>

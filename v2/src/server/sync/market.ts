@@ -35,8 +35,8 @@ export interface MarketSweepCounts {
   hitPageCap: boolean;
 }
 
-export async function runMarketSweep(opts: { fullSweep?: boolean } = {}): Promise<MarketSweepCounts> {
-  const [logRow] = await db.insert(syncLog).values({ jobType: 'market' }).returning({ id: syncLog.id });
+export async function runMarketSweep(opts: { fullSweep?: boolean } = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
+  const [logRow] = await db.insert(syncLog).values({ jobType: 'market', trigger }).returning({ id: syncLog.id });
   try {
     const session = new BbWebSession();
     await session.login();

@@ -18,8 +18,8 @@ export interface PlayersSyncCounts {
   snapshotsUpdated: number;
 }
 
-export async function runPlayersSync(): Promise<PlayersSyncCounts> {
-  const [logRow] = await db.insert(syncLog).values({ jobType: 'players' }).returning({ id: syncLog.id });
+export async function runPlayersSync(trigger: 'cron' | 'manual' = 'manual'): Promise<PlayersSyncCounts> {
+  const [logRow] = await db.insert(syncLog).values({ jobType: 'players', trigger }).returning({ id: syncLog.id });
   try {
     const catalog = await getCountriesCatalog();
     const nameOf = new Map(catalog.map((c) => [c.id, c.name]));
