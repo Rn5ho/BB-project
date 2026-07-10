@@ -223,6 +223,18 @@ export function sortRows(rows: PlayerListRow[], sort: SortState): PlayerListRow[
   });
 }
 
+// ─── showSkills sanitizer ─────────────────────────────────────────────────────
+
+/**
+ * Sanitize a `showSkills` value from a stored blob.
+ * Returns the stored value if it's a boolean, otherwise falls back to the
+ * page-provided default (which differs per variant: true for Slovenia, false for World).
+ */
+export function sanitizeShowSkills(stored: boolean | undefined, pageDefault: boolean): boolean {
+  if (typeof stored === 'boolean') return stored;
+  return pageDefault;
+}
+
 // ─── Cycle sort direction ─────────────────────────────────────────────────────
 
 /**

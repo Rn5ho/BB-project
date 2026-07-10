@@ -325,3 +325,31 @@ describe('DEFAULT_SORT', () => {
     expect(DEFAULT_SORT.world).toEqual({ key: 'dmi', direction: 'desc' });
   });
 });
+
+// ─── sanitizeShowSkills ───────────────────────────────────────────────────────
+
+import { sanitizeShowSkills } from './table';
+
+describe('sanitizeShowSkills', () => {
+  it('returns true when stored value is true', () => {
+    expect(sanitizeShowSkills(true, false)).toBe(true);
+  });
+
+  it('returns false when stored value is false', () => {
+    expect(sanitizeShowSkills(false, true)).toBe(false);
+  });
+
+  it('falls back to page default when stored value is undefined', () => {
+    expect(sanitizeShowSkills(undefined, true)).toBe(true);
+    expect(sanitizeShowSkills(undefined, false)).toBe(false);
+  });
+
+  it('falls back to page default when stored value is not a boolean (e.g. string)', () => {
+    expect(sanitizeShowSkills('yes' as unknown as boolean, true)).toBe(true);
+    expect(sanitizeShowSkills(1 as unknown as boolean, false)).toBe(false);
+  });
+
+  it('falls back to page default when stored value is null', () => {
+    expect(sanitizeShowSkills(null as unknown as boolean, true)).toBe(true);
+  });
+});

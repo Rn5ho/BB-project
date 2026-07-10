@@ -10,9 +10,11 @@ interface FilterBarProps {
   onReset: () => void;
   shown: number;
   total: number;
+  showSkills: boolean;
+  onToggleSkills: () => void;
 }
 
-export default function FilterBar({ filter, onChange, onReset, shown, total }: FilterBarProps) {
+export default function FilterBar({ filter, onChange, onReset, shown, total, showSkills, onToggleSkills }: FilterBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   // Local string state for age inputs so clearing doesn't snap to 0
   const [ageMinStr, setAgeMinStr] = useState<string>(String(filter.ageMin));
@@ -134,6 +136,19 @@ export default function FilterBar({ filter, onChange, onReset, shown, total }: F
           />
           Full skills only
         </label>
+
+        {/* Skills toggle */}
+        <button
+          type="button"
+          onClick={onToggleSkills}
+          className={`ml-1 px-2 py-0.5 rounded border text-sm ${
+            showSkills
+              ? 'border-amber-500 text-amber-400 bg-amber-500/10'
+              : 'border-neutral-700 text-neutral-400 hover:text-white'
+          }`}
+        >
+          Skills
+        </button>
 
         {/* More toggle */}
         <button

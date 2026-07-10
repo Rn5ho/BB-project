@@ -9,6 +9,7 @@ import {
   sortRows,
   filterRows,
   nextSortState,
+  sanitizeShowSkills,
   type FilterState,
   type SortState,
   type SortKey,
@@ -52,21 +53,23 @@ function sanitizeSort(raw: Partial<SortState>): Partial<SortState> {
 interface StoredState {
   filter?: Partial<FilterState>;
   sort?: Partial<SortState>;
+  showSkills?: boolean;
 }
 
 export default function PlayerTable({
   rows,
   showCountry,
-  showSkills,
+  defaultShowSkills = false,
   variant,
 }: {
   rows: PlayerListRow[];
   showCountry?: boolean;
-  showSkills?: boolean;
+  defaultShowSkills?: boolean;
   variant: Variant;
 }) {
   const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
   const [sort, setSort] = useState<SortState>(DEFAULT_SORT[variant]);
+  const [showSkills, setShowSkills] = useState<boolean>(defaultShowSkills);
   const [hydrated, setHydrated] = useState(false);
 
   // Load from localStorage after mount (hydration-safe)
@@ -77,27 +80,29 @@ export default function PlayerTable({
         const parsed: StoredState = JSON.parse(raw);
         if (parsed.filter) setFilter({ ...DEFAULT_FILTER, ...sanitizeFilter(parsed.filter) });
         if (parsed.sort) setSort({ ...DEFAULT_SORT[variant], ...sanitizeSort(parsed.sort) });
+        setShowSkills(sanitizeShowSkills(parsed.showSkills, defaultShowSkills));
       }
     } catch {
       // ignore
     }
     setHydrated(true);
-  }, [variant]);
+  }, [variant]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Persist to localStorage on change (only after hydration to avoid overwriting with defaults)
   useEffect(() => {
     if (!hydrated) return;
     try {
-      const state: StoredState = { filter, sort };
+      const state: StoredState = { filter, sort, showSkills };
       localStorage.setItem(STORAGE_KEY[variant], JSON.stringify(state));
     } catch {
       // ignore
     }
-  }, [filter, sort, hydrated, variant]);
+  }, [filter, sort, showSkills, hydrated, variant]);
 
   function handleReset() {
     setFilter(DEFAULT_FILTER);
     setSort(DEFAULT_SORT[variant]);
+    setShowSkills(defaultShowSkills);
     try {
       localStorage.removeItem(STORAGE_KEY[variant]);
     } catch {
@@ -120,6 +125,8 @@ export default function PlayerTable({
         onReset={handleReset}
         shown={filtered.length}
         total={rows.length}
+        showSkills={showSkills}
+        onToggleSkills={() => setShowSkills((v) => !v)}
       />
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
