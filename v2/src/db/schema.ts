@@ -131,3 +131,13 @@ export const settings = pgTable('settings', {
   value: jsonb('value').notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const archetypes = pgTable('archetypes', {
+  id: serial('id').primaryKey(),
+  key: text('key'),                         // default key this overrides; null = custom
+  name: text('name').notNull(),
+  description: text('description'),
+  rules: jsonb('rules').notNull(),          // ArchetypeRules
+  hidden: boolean('hidden').notNull().default(false),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [uniqueIndex('uq_archetypes_key').on(t.key)]);
