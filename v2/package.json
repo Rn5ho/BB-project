@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "migrate:data": "tsx scripts/migrate/index.ts",
-    "backfill:players": "tsx scripts/migrate/backfill-players.ts"
+    "backfill:players": "tsx scripts/migrate/backfill-players.ts",
+    "e2e": "tsx scripts/e2e-smoke.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -28,6 +29,7 @@
     "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "playwright": "^1.61.1",
     "tailwindcss": "^4",
     "tsx": "^4.23.0",
     "typescript": "^5",

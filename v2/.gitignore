@@ -43,3 +43,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# e2e test artifacts (screenshots)
+scripts/e2e-artifacts/
