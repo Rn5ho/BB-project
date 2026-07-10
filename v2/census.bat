@@ -51,6 +51,8 @@ rem  prompt leaves the variable UNCHANGED (keeps a prior run's value), so
 rem  without this a blank answer would silently reuse an earlier filter.
 set "mp="
 set /p mp="   Min potential (blank = any): "
+set "ns="
+set /p ns="   Min weekly salary (blank = any): "
 set "xs="
 set /p xs="   Max weekly salary (blank = any): "
 set "mia="
@@ -63,6 +65,7 @@ set "xh="
 set /p xh="   Max height cm (blank = any): "
 set ARGS=--
 if not "%mp%"=="" set ARGS=%ARGS% --min-potential %mp%
+if not "%ns%"=="" set ARGS=%ARGS% --min-salary %ns%
 if not "%xs%"=="" set ARGS=%ARGS% --max-salary %xs%
 if not "%mia%"=="" set ARGS=%ARGS% --min-age %mia%
 if not "%mxa%"=="" set ARGS=%ARGS% --max-age %mxa%
