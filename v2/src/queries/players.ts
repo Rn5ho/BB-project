@@ -21,6 +21,7 @@ export interface PlayerListRow {
   skills: Record<string, number | null> | null;
   skillsCapturedAt: Date | null;
   hasFullSkills: boolean;
+  scoutedThisSeason: boolean; // has a full-skill census/market/manual snapshot this season
   // from latest market snapshot
   onMarketUntil: Date | null;   // set only when auction_ends_at > now at query time
   lastListedPrice: number | null;
@@ -40,6 +41,7 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
   const slovene = sql`(p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))`;
   const notSlovene = sql`(p.country_id is distinct from 66 and (p.nationality is null or p.nationality not in ('Slovenia', 'Slovenija')))`;
   const where = scope === 'slovenia' ? sql`where ${slovene}` : sql`where ${notSlovene}`;
+  const season = await getCurrentSeasonId();
 
   const result = await db.execute(sql`
     with latest as (
@@ -55,6 +57,10 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       select distinct on (player_id) player_id, auction_ends_at, starting_price, is_rookie_listing
       from snapshots where source = 'market'
       order by player_id, captured_at desc
+    ),
+    fresh as (
+      select distinct player_id from snapshots
+      where jump_shot is not null and season = ${season} and source in ('census', 'market', 'manual')
     )
     select
       p.bb_player_id, p.name, p.nationality, p.height_cm, p.best_position,
@@ -62,15 +68,16 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       f.tsp, f.captured_at as skills_captured_at,
       f.jump_shot, f.jump_range, f.outside_def, f.handling, f.driving, f.passing,
       f.inside_shot, f.inside_def, f.rebounding, f.shot_blocking, f.stamina, f.free_throw,
-      m.auction_ends_at, m.starting_price, m.is_rookie_listing
+      m.auction_ends_at, m.starting_price, m.is_rookie_listing,
+      (fr.player_id is not null) as scouted_this_season
     from players p
     left join latest l on l.player_id = p.bb_player_id
     left join latest_full f on f.player_id = p.bb_player_id
     left join latest_market m on m.player_id = p.bb_player_id
+    left join fresh fr on fr.player_id = p.bb_player_id
     ${where}
   `);
 
-  const season = await getCurrentSeasonId();
   const now = new Date();
   return (result.rows as Record<string, unknown>[]).map((r) => {
     const auctionEndsAt = r.auction_ends_at ? r.auction_ends_at as Date : null;
@@ -99,6 +106,7 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       },
       skillsCapturedAt: r.skills_captured_at ? r.skills_captured_at as Date : null,
       hasFullSkills: r.jump_shot != null,
+      scoutedThisSeason: r.scouted_this_season === true || r.scouted_this_season === 't',
       onMarketUntil,
       lastListedPrice: r.starting_price == null ? null : Number(r.starting_price),
       isRookie: r.is_rookie_listing === true,
