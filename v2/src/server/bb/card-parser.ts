@@ -79,7 +79,7 @@ export function parseResultsTotal(html: string): number {
 
 export function parsePlayerCards(html: string): ParsedCard[] {
   // Split on the player-details anchors; each segment up to the next anchor is one card.
-  const anchors = [...html.matchAll(/<a id="cphContent_rpt\w+_hlPlayerDetails_\d+" href="[^"]*\/player\/(\d+)\/overview\.aspx">([\s\S]*?)<\/a>/g)];
+  const anchors = [...html.matchAll(/<a id="cphContent_[A-Za-z0-9]+_(?:hlPlayerDetails|HyperLink1)_\d+" href="[^"]*\/player\/(\d+)\/overview\.aspx">([\s\S]*?)<\/a>/g)];
   const cards: ParsedCard[] = [];
   for (let i = 0; i < anchors.length; i++) {
     const start = anchors[i].index!;

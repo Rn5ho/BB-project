@@ -4,6 +4,7 @@ import { parsePlayerCards, parsePageHeader, parseResultsTotal } from './card-par
 
 const p1 = readFileSync(new URL('./__fixtures__/transferlist-pot6-p1.html', import.meta.url), 'utf8');
 const p2 = readFileSync(new URL('./__fixtures__/transferlist-pot6-p2.html', import.meta.url), 'utf8');
+const roster = readFileSync(new URL('./__fixtures__/jnt-roster.html', import.meta.url), 'utf8');
 
 describe('parsePageHeader', () => {
   it('parses the as-of timestamp', () => {
@@ -77,5 +78,27 @@ describe('parsePlayerCards — first card of page 1', () => {
     expect(cards[5].isRookie).toBe(true);
     expect(cards[6].isRookie).toBe(true);
     expect(cards[9].isRookie).toBe(true);
+  });
+});
+
+describe('parsePlayerCards — NT roster page (Repeater1 markup)', () => {
+  const cards = parsePlayerCards(roster);
+  it('parses all 14 rostered players', () => expect(cards.length).toBe(14));
+  it('reads identity from the Repeater1 anchor', () => {
+    const c = cards.find((x) => x.bbPlayerId === 55158715)!;
+    expect(c).toBeDefined();
+    expect(c.name).toBe('Milan Peterec');
+  });
+  it('reads full skills + tsp on roster cards', () => {
+    const c = cards.find((x) => x.bbPlayerId === 55158715)!;
+    expect(Object.keys(c.skills).length).toBe(12);
+    expect(c.skills.jump_shot).toBe(11); // "prolific (11)"
+    expect(c.tsp).toBe(91);
+    for (const v of Object.values(c.skills)) { expect(v).toBeGreaterThanOrEqual(1); expect(v).toBeLessThanOrEqual(20); }
+  });
+  it('roster cards have no auction fields', () => {
+    const c = cards.find((x) => x.bbPlayerId === 55158715)!;
+    expect(c.auctionEnds).toBeNull();
+    expect(c.price).toBeNull();
   });
 });
