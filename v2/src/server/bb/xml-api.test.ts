@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseSeasonsXml, parseCountriesXml } from './xml-api';
+import { parseSeasonsXml, parseCountriesXml, parseTeamInfoXml } from './xml-api';
 
 const seasonsXml = `<?xml version='1.0'?><bbapi version='1'><seasons retrieved='x'>
   <season id='71'><start>2026-01-20T14:23:23Z</start><finish>2026-04-29T12:44:39Z</finish></season>
@@ -30,4 +30,25 @@ describe('parseCountriesXml', () => {
     { id: 7, name: 'España' },
   ]));
   it('throws on garbage', () => expect(() => parseCountriesXml('<bbapi/>')).toThrow());
+});
+
+const teamInfoXml = `<?xml version='1.0'?><bbapi version='1'><team id='114360'><teamName>Savlje BC</teamName><owner supporter='1'>Mod-Rn5ho [SLO U-21]</owner></team></bbapi>`;
+
+describe('parseTeamInfoXml', () => {
+  const team = parseTeamInfoXml(teamInfoXml);
+  it('parses teamId', () => expect(team.teamId).toBe(114360));
+  it('parses team name', () => expect(team.name).toBe('Savlje BC'));
+  it('parses owner alias', () => expect(team.ownerAlias).toBe('Mod-Rn5ho [SLO U-21]'));
+  it('decodes xml entities', () => {
+    const xml = `<team id='1'><teamName>A &amp; B</teamName><owner supporter='0'>Alice &amp; Bob</owner></team>`;
+    const t = parseTeamInfoXml(xml);
+    expect(t.name).toBe('A & B');
+    expect(t.ownerAlias).toBe('Alice & Bob');
+  });
+  it('returns nulls for missing fields', () => {
+    const t = parseTeamInfoXml(`<team id='99'></team>`);
+    expect(t.teamId).toBe(99);
+    expect(t.name).toBeNull();
+    expect(t.ownerAlias).toBeNull();
+  });
 });

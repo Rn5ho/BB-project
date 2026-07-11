@@ -12,7 +12,8 @@
     "backfill:players": "tsx scripts/migrate/backfill-players.ts",
     "e2e": "tsx scripts/e2e-smoke.mts",
     "census": "tsx scripts/census.mts",
-    "census:worker": "tsx scripts/census-worker.mts"
+    "census:worker": "tsx scripts/census-worker.mts",
+    "backfill:teams": "node scripts/backfill-teams.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

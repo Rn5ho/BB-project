@@ -133,6 +133,13 @@ export const settings = pgTable('settings', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const teams = pgTable('teams', {
+  teamId: integer('team_id').primaryKey(),
+  name: text('name'),
+  ownerAlias: text('owner_alias'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const archetypes = pgTable('archetypes', {
   id: serial('id').primaryKey(),
   key: text('key'),                         // default key this overrides; null = custom

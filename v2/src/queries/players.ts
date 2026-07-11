@@ -26,6 +26,10 @@ export interface PlayerListRow {
   onMarketUntil: Date | null;   // set only when auction_ends_at > now at query time
   lastListedPrice: number | null;
   isRookie: boolean;
+  // owner team info
+  ownerTeamId: number | null;
+  ownerTeamName: string | null;
+  ownerManager: string | null;
 }
 
 export async function getCurrentSeasonId(): Promise<number> {
@@ -58,13 +62,19 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       from snapshots where source = 'market'
       order by player_id, captured_at desc
     ),
+    latest_dmi as (
+      select distinct on (player_id) player_id, dmi
+      from snapshots where dmi is not null
+      order by player_id, captured_at desc
+    ),
     fresh as (
       select distinct player_id from snapshots
       where jump_shot is not null and season = ${season} and source in ('census', 'market', 'manual')
     )
     select
       p.bb_player_id, p.name, p.nationality, p.height_cm, p.best_position,
-      l.age as snap_age, l.season as snap_season, l.dmi, l.game_shape, l.salary, l.potential, l.captured_at,
+      p.owner_team_id, p.owner_team_name, t.owner_alias as owner_manager,
+      l.age as snap_age, l.season as snap_season, ld.dmi, l.game_shape, l.salary, l.potential, l.captured_at,
       f.tsp, f.captured_at as skills_captured_at,
       f.jump_shot, f.jump_range, f.outside_def, f.handling, f.driving, f.passing,
       f.inside_shot, f.inside_def, f.rebounding, f.shot_blocking, f.stamina, f.free_throw,
@@ -74,6 +84,8 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
     left join latest l on l.player_id = p.bb_player_id
     left join latest_full f on f.player_id = p.bb_player_id
     left join latest_market m on m.player_id = p.bb_player_id
+    left join latest_dmi ld on ld.player_id = p.bb_player_id
+    left join teams t on t.team_id = p.owner_team_id
     left join fresh fr on fr.player_id = p.bb_player_id
     ${where}
   `);
@@ -88,6 +100,9 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       nationality: r.nationality as string | null,
       heightCm: r.height_cm as number | null,
       bestPosition: r.best_position as string | null,
+      ownerTeamId: r.owner_team_id as number | null,
+      ownerTeamName: r.owner_team_name as string | null,
+      ownerManager: r.owner_manager as string | null,
       ageNow: currentAge(r.snap_age as number | null, r.snap_season as number | null, season),
       dmi: r.dmi == null ? null : Number(r.dmi),
       gameShape: r.game_shape as number | null,

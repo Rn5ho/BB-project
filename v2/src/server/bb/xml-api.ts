@@ -50,3 +50,51 @@ export async function fetchCountries(): Promise<BbCountry[]> {
     return parseCountriesXml(xml);
   });
 }
+
+export interface BbTeamInfo { teamId: number; name: string | null; ownerAlias: string | null }
+
+/** Parse a single teaminfo.aspx XML response. */
+export function parseTeamInfoXml(xml: string, fallbackTeamId?: number): BbTeamInfo {
+  const teamIdMatch = xml.match(/<team[^>]*\sid='(\d+)'/);
+  const teamId = teamIdMatch ? Number(teamIdMatch[1]) : (fallbackTeamId ?? 0);
+
+  const nameMatch = xml.match(/<teamName>([^<]*)<\/teamName>/);
+  const name = nameMatch ? decodeXmlEntities(nameMatch[1].trim()) : null;
+
+  // <owner supporter='1'>Alias here</owner>
+  const ownerMatch = xml.match(/<owner[^>]*>([^<]*)<\/owner>/);
+  const ownerAlias = ownerMatch ? decodeXmlEntities(ownerMatch[1].trim()) : null;
+
+  return { teamId, name, ownerAlias };
+}
+
+function decodeXmlEntities(s: string): string {
+  return s
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'");
+}
+
+/** Fetch team info for multiple team IDs in a single BB API session (~150 ms pacing). */
+export async function fetchTeamInfo(teamIds: number[]): Promise<BbTeamInfo[]> {
+  if (teamIds.length === 0) return [];
+  return withSession(async (cookie) => {
+    const results: BbTeamInfo[] = [];
+    for (let i = 0; i < teamIds.length; i++) {
+      const tid = teamIds[i];
+      if (i > 0) await new Promise((r) => setTimeout(r, 150));
+      try {
+        const xml = await (
+          await fetch(`${BASE}/teaminfo.aspx?teamid=${tid}`, { headers: { Cookie: cookie } })
+        ).text();
+        results.push(parseTeamInfoXml(xml, tid));
+      } catch (err) {
+        console.warn(`fetchTeamInfo: failed for team ${tid}:`, err);
+        results.push({ teamId: tid, name: null, ownerAlias: null });
+      }
+    }
+    return results;
+  });
+}

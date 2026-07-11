@@ -166,6 +166,7 @@ export default function PlayerTable({
               ))}
               {archetypeMatches && <th className="pr-3 whitespace-nowrap">Archetype</th>}
               {showCountry && <th className="pr-3 whitespace-nowrap">Market</th>}
+              <th className="pr-3 whitespace-nowrap">Owner</th>
               <th>Data</th>
             </tr>
           </thead>
@@ -218,6 +219,9 @@ export default function PlayerTable({
                   </td>
                 )}
                 {showCountry && <td className="pr-3"><MarketChip row={p} /></td>}
+                <td className="pr-3">
+                  <OwnerCell row={p} />
+                </td>
                 <td>
                   {p.hasFullSkills ? (
                     <span className="text-xs rounded bg-green-900/40 text-green-400 px-1.5 py-0.5">skills</span>
@@ -230,7 +234,7 @@ export default function PlayerTable({
             {sorted.length === 0 && (
               <tr>
                 <td
-                  colSpan={10 + (showCountry ? 2 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
+                  colSpan={11 + (showCountry ? 2 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
                   className="py-8 text-center text-neutral-500"
                 >
                   No players match the current filters.
@@ -264,6 +268,33 @@ function MarketChip({ row }: { row: PlayerListRow }) {
     );
   }
   return <span className="text-neutral-600">–</span>;
+}
+
+// ─── OwnerCell ───────────────────────────────────────────────────────────────
+
+function OwnerCell({ row }: { row: PlayerListRow }) {
+  if (!row.ownerTeamName && !row.ownerManager) {
+    return <span className="text-neutral-600">–</span>;
+  }
+  return (
+    <div className="whitespace-nowrap">
+      {row.ownerTeamId ? (
+        <a
+          href={`https://buzzerbeater.com/team/${row.ownerTeamId}/overview.aspx`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm hover:text-amber-500"
+        >
+          {row.ownerTeamName ?? String(row.ownerTeamId)}
+        </a>
+      ) : (
+        <span className="text-sm">{row.ownerTeamName ?? '–'}</span>
+      )}
+      {row.ownerManager && (
+        <div className="text-xs text-neutral-500">{row.ownerManager}</div>
+      )}
+    </div>
+  );
 }
 
 // ─── SortTh ──────────────────────────────────────────────────────────────────

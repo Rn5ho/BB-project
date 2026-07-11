@@ -29,6 +29,13 @@
       "when": 1783722868987,
       "tag": "0003_bored_grandmaster",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1783728260824,
+      "tag": "0004_perfect_stingray",
+      "breakpoints": true
     }
   ]
 }
