@@ -28,6 +28,8 @@ Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.as
 - **Testing**: To enqueue without UI, insert directly: `insert into census_runs (status, totals) values ('requested', '{"opts":{"all":true,"minPotential":9,"max":1,"confirmed":true}}');`
 - **Fallback**: Desktop `v2/census.bat` launcher still works for running census from the user's PC.
 
+**Phase 5.5 (Owner team/manager column + DMI fix) shipped 2026-07-11** — Player tables now display the owner TEAM name (links to BB team page) and owner MANAGER alias. New `teams` table (`team_id` pk, `name`, `owner_alias`, `updated_at`) populated via `teaminfo.aspx` API. Backfill: `npm run backfill:teams` (fetches distinct `players.owner_team_id`, ~865 teams). Daily cron calls `refreshTeams()` (in `src/server/sync/teams.ts`) after player sync to refresh >7 days old entries. Parsers/fetch: `parseTeamInfoXml`, `fetchTeamInfo` in `src/server/bb/xml-api.ts`. **DMI fix**: Census + market snapshots lack DMI (only `api` snapshots have it); players query previously read DMI from newest snapshot (often census with null DMI → showed "–"). Fixed with `latest_dmi` CTE in `src/queries/players.ts` reading DMI from most recent snapshot with non-null DMI. PlayerListRow gained `ownerTeamId`, `ownerTeamName`, `ownerManager`.
+
 **Phase 5 (Player detail page) shipped 2026-07-10** — New `/players/[id]` route shows comprehensive player skill progression and history. Core components:
 
 **Skill Progression Chart**: 12-line SVG chart (one per skill, X-axis = snapshot dates, Y-axis = skill level 1-20) with legend toggle. Hand-rolled dependency-free charts (`src/components/charts/TimeSeriesChart.tsx` + `src/lib/chart-scale.ts` + `src/lib/series.ts`).
