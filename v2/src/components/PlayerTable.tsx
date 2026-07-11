@@ -25,6 +25,8 @@ const STORAGE_KEY: Record<Variant, string> = {
   world: 'bbscout:table:world',
 };
 
+const NEW_CHIP_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+
 // ─── localStorage sanitizers ─────────────────────────────────────────────────
 
 function sanitizeFilter(raw: Partial<FilterState>): Partial<FilterState> {
@@ -120,6 +122,7 @@ export default function PlayerTable({
     setSort((prev) => nextSortState(prev, key));
   }
 
+  const newChipCutoff = new Date(Date.now() - NEW_CHIP_MS);
   const filtered = filterRows(rows, filter);
   // Archetype filter: applied here because archetypeMatches is only available in this component
   const archetypeFiltered = filter.archetype && archetypeMatches
@@ -189,6 +192,9 @@ export default function PlayerTable({
                   >
                     ↗
                   </a>
+                  {p.firstSeenAt != null && p.firstSeenAt >= newChipCutoff && (
+                    <span className="ml-1 text-xs rounded bg-sky-900/40 text-sky-300 px-1">new</span>
+                  )}
                 </td>
                 {showCountry && <td className="pr-3 text-neutral-400">{p.nationality ?? '–'}</td>}
                 <td className="pr-3">{p.ageNow ?? '–'}</td>

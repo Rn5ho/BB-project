@@ -26,6 +26,7 @@ export interface PlayerListRow {
   onMarketUntil: Date | null;   // set only when auction_ends_at > now at query time
   lastListedPrice: number | null;
   isRookie: boolean;
+  firstSeenAt: Date | null;
   // owner team info
   ownerTeamId: number | null;
   ownerTeamName: string | null;
@@ -72,7 +73,7 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       where jump_shot is not null and season = ${season} and source in ('census', 'market', 'manual')
     )
     select
-      p.bb_player_id, p.name, p.nationality, p.height_cm, p.best_position,
+      p.bb_player_id, p.name, p.nationality, p.height_cm, p.best_position, p.first_seen_at,
       p.owner_team_id, p.owner_team_name, t.owner_alias as owner_manager,
       l.age as snap_age, l.season as snap_season, ld.dmi, l.game_shape, l.salary, l.potential, l.captured_at,
       f.tsp, f.captured_at as skills_captured_at,
@@ -125,6 +126,7 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       onMarketUntil,
       lastListedPrice: r.starting_price == null ? null : Number(r.starting_price),
       isRookie: r.is_rookie_listing === true,
+      firstSeenAt: r.first_seen_at ? r.first_seen_at as Date : null,
     };
   });
 }

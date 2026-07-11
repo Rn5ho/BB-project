@@ -50,6 +50,7 @@ export interface FilterState {
   heightMin: string;
   heightMax: string;
   minGameShape: string;
+  discoveredWithinDays: string; // '' = Any; '1' | '7' | '30'
 }
 
 export type Variant = 'slovenia' | 'world';
@@ -76,6 +77,7 @@ export const DEFAULT_FILTER: FilterState = {
   heightMin: '',
   heightMax: '',
   minGameShape: '',
+  discoveredWithinDays: '',
 };
 
 // ─── Reset detection ─────────────────────────────────────────────────────────
@@ -95,7 +97,8 @@ export function isFilterDefault(f: FilterState): boolean {
     f.minSalary === DEFAULT_FILTER.minSalary &&
     f.heightMin === DEFAULT_FILTER.heightMin &&
     f.heightMax === DEFAULT_FILTER.heightMax &&
-    f.minGameShape === DEFAULT_FILTER.minGameShape
+    f.minGameShape === DEFAULT_FILTER.minGameShape &&
+    f.discoveredWithinDays === DEFAULT_FILTER.discoveredWithinDays
   );
 }
 
@@ -128,6 +131,10 @@ export function filterRows(rows: PlayerListRow[], f: FilterState): PlayerListRow
   const heightMin = parseNum(f.heightMin);
   const heightMax = parseNum(f.heightMax);
   const minGameShape = parseNum(f.minGameShape);
+  const discoveredDays = parseNum(f.discoveredWithinDays);
+  const discoveredCutoff = discoveredDays != null
+    ? new Date(Date.now() - discoveredDays * 86_400_000)
+    : null;
 
   return rows.filter((p) => {
     // Name search (diacritic-insensitive)
@@ -176,6 +183,11 @@ export function filterRows(rows: PlayerListRow[], f: FilterState): PlayerListRow
     // Min game shape — null fails if filter is set
     if (minGameShape !== null) {
       if (p.gameShape == null || p.gameShape < minGameShape) return false;
+    }
+
+    // Discovered within N days — null firstSeenAt fails when filter is active
+    if (discoveredCutoff !== null) {
+      if (p.firstSeenAt == null || p.firstSeenAt < discoveredCutoff) return false;
     }
 
     return true;

@@ -152,6 +152,18 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
           </select>
         )}
 
+        {/* Discovered within */}
+        <select
+          value={filter.discoveredWithinDays}
+          onChange={(e) => set('discoveredWithinDays', e.target.value)}
+          className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white focus:outline-none focus:border-amber-500"
+        >
+          <option value="">Discovered: any</option>
+          <option value="1">last 24h</option>
+          <option value="7">last 7 days</option>
+          <option value="30">last 30 days</option>
+        </select>
+
         {/* Skills toggle */}
         <button
           type="button"
