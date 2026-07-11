@@ -92,8 +92,12 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
   `);
 
   const now = new Date();
+  // NOTE: db.execute (raw SQL) returns timestamptz columns as STRINGS, not Date objects
+  // (unlike db.select()). Wrap every date field in new Date(...) so comparisons and Date
+  // methods on consumers work — a bare `as Date` cast is a lie that silently breaks them.
+  const toDate = (v: unknown): Date | null => (v ? new Date(v as string) : null);
   return (result.rows as Record<string, unknown>[]).map((r) => {
-    const auctionEndsAt = r.auction_ends_at ? r.auction_ends_at as Date : null;
+    const auctionEndsAt = toDate(r.auction_ends_at);
     const onMarketUntil = auctionEndsAt != null && auctionEndsAt > now ? auctionEndsAt : null;
     return {
       bbPlayerId: r.bb_player_id as number,
@@ -109,7 +113,7 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       gameShape: r.game_shape as number | null,
       salary: r.salary as number | null,
       potential: r.potential as number | null,
-      capturedAt: r.captured_at ? r.captured_at as Date : null,
+      capturedAt: toDate(r.captured_at),
       snapshotSeason: r.snap_season as number | null,
       tsp: r.tsp as number | null,
       skills: r.jump_shot == null ? null : {
@@ -120,13 +124,13 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
         rebounding: r.rebounding as number | null, shot_blocking: r.shot_blocking as number | null,
         stamina: r.stamina as number | null, free_throw: r.free_throw as number | null,
       },
-      skillsCapturedAt: r.skills_captured_at ? r.skills_captured_at as Date : null,
+      skillsCapturedAt: toDate(r.skills_captured_at),
       hasFullSkills: r.jump_shot != null,
       scoutedThisSeason: r.scouted_this_season === true || r.scouted_this_season === 't',
       onMarketUntil,
       lastListedPrice: r.starting_price == null ? null : Number(r.starting_price),
       isRookie: r.is_rookie_listing === true,
-      firstSeenAt: r.first_seen_at ? r.first_seen_at as Date : null,
+      firstSeenAt: toDate(r.first_seen_at),
     };
   });
 }
