@@ -46,3 +46,7 @@ next-env.d.ts
 
 # e2e test artifacts (screenshots)
 scripts/e2e-artifacts/
+
+# stray dev-server logs
+dev-out.txt
+dev-err.txt
