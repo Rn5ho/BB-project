@@ -1,5 +1,5 @@
-import { db, censusRuns } from '@/db';
-import { desc } from 'drizzle-orm';
+import { db, censusRuns, censusItems } from '@/db';
+import { desc, eq } from 'drizzle-orm';
 import CensusRunForm from '@/components/census/CensusRunForm';
 import CensusLivePoller from '@/components/census/CensusLivePoller';
 import { formatCensusFilters, formatCensusResult, type CensusTotals } from '@/lib/format-census';
@@ -24,6 +24,19 @@ export default async function CensusPage() {
   const hasActiveRun = runs.some(
     (r) => r.status === 'requested' || r.status === 'running',
   );
+
+  // For the newest run, fetch item counts by status
+  const newestRun = runs[0] ?? null;
+  const newestItemCounts: Record<string, number> = {};
+  if (newestRun) {
+    const items = await db
+      .select({ status: censusItems.status })
+      .from(censusItems)
+      .where(eq(censusItems.runId, newestRun.id));
+    for (const item of items) {
+      newestItemCounts[item.status] = (newestItemCounts[item.status] ?? 0) + 1;
+    }
+  }
 
   return (
     <main className="p-6 max-w-3xl space-y-10">
@@ -67,6 +80,11 @@ export default async function CensusPage() {
                 </td>
                 <td className="text-neutral-400 text-xs">
                   {formatCensusResult(r.totals as CensusTotals)}
+                  {r.id === newestRun?.id && Object.keys(newestItemCounts).length > 0 && (
+                    <span className="ml-2 text-neutral-500">
+                      ({Object.entries(newestItemCounts).map(([s, n]) => `${s}: ${n}`).join(', ')})
+                    </span>
+                  )}
                 </td>
               </tr>
             ))}
