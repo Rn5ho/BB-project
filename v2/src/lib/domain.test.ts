@@ -2,13 +2,26 @@ import { describe, it, expect } from 'vitest';
 import { tsp, skillCapForAge, currentAge, pickCurrentSeason, computeSkillDeltas } from './domain';
 
 describe('computeSkillDeltas', () => {
-  it('returns non-zero deltas only', () => {
+  it('returns non-zero gains only', () => {
     expect(
       computeSkillDeltas(
         { jump_shot: 13, passing: 8, handling: 10 },
         { jump_shot: 11, passing: 8, handling: 12 },
       ),
-    ).toEqual({ jump_shot: 2, handling: -2 });
+    ).toEqual({ jump_shot: 2 }); // handling "drop" is a misread — impossible before age 35
+  });
+
+  it('keeps negative stamina (the one skill that can drift down)', () => {
+    expect(
+      computeSkillDeltas(
+        { stamina: 4, jump_shot: 10 },
+        { stamina: 5, jump_shot: 12 },
+      ),
+    ).toEqual({ stamina: -1 });
+  });
+
+  it('returns null when only impossible drops exist', () => {
+    expect(computeSkillDeltas({ jump_shot: 10 }, { jump_shot: 12 })).toBeNull();
   });
 
   it('returns null when baseline or latest is null', () => {

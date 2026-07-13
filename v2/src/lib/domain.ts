@@ -14,6 +14,8 @@ export function tsp(skills: Partial<Record<SkillDbKey, number | null>>): number 
 /**
  * Per-skill change between two full-skill records: only non-zero, both-sides-present
  * deltas are returned. Null when either record is missing or nothing changed.
+ * BB rule: skills cannot drop before age 35, so negative deltas are snapshot misreads
+ * and discarded — except stamina, which really can drift down.
  */
 export function computeSkillDeltas(
   latest: Partial<Record<SkillDbKey, number | null>> | null,
@@ -25,7 +27,9 @@ export function computeSkillDeltas(
     const a = latest[s.dbKey];
     const b = baseline[s.dbKey];
     if (a == null || b == null) continue;
-    if (a !== b) out[s.dbKey] = a - b;
+    if (a === b) continue;
+    if (a < b && s.dbKey !== 'stamina') continue;
+    out[s.dbKey] = a - b;
   }
   return Object.keys(out).length > 0 ? out : null;
 }

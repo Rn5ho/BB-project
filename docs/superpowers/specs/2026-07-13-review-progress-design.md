@@ -33,8 +33,12 @@ again.
   Deltas are computed in JS by a pure helper `computeSkillDeltas(latest, baseline)`
   in `src/lib/domain.ts` (unit-tested).
 - Edge cases: no mark yet → null deltas. Player with no pre-mark full snapshot
-  (newly discovered) → null deltas (the existing "new" chip covers them). Negative
-  deltas kept and shown red — skill drops are signal.
+  (newly discovered) → null deltas (the existing "new" chip covers them).
+- **Negative deltas (amended 2026-07-13)**: BB skills cannot drop before age 35, so
+  a negative delta is a snapshot misread and is discarded — except **stamina**, the
+  one skill that genuinely drifts down (~1 every few months), which is kept and
+  shown red. `tspDelta` is the sum of surviving deltas (not raw TSP difference), so
+  one misread skill can't drag Δ negative.
 
 ### UI (Slovenia variant only; World rows carry null deltas and render nothing new)
 

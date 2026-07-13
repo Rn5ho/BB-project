@@ -96,7 +96,6 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       f.inside_shot, f.inside_def, f.rebounding, f.shot_blocking, f.stamina, f.free_throw,
       m.auction_ends_at, m.starting_price, m.is_rookie_listing,
       (fr.player_id is not null) as scouted_this_season,
-      b.tsp as baseline_tsp,
       b.jump_shot as b_jump_shot, b.jump_range as b_jump_range, b.outside_def as b_outside_def,
       b.handling as b_handling, b.driving as b_driving, b.passing as b_passing,
       b.inside_shot as b_inside_shot, b.inside_def as b_inside_def, b.rebounding as b_rebounding,
@@ -128,14 +127,14 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       rebounding: r.rebounding as number | null, shot_blocking: r.shot_blocking as number | null,
       stamina: r.stamina as number | null, free_throw: r.free_throw as number | null,
     };
-    const baselineSkills = r.b_jump_shot == null ? null : {
+    const skillDeltas = computeSkillDeltas(skills, r.b_jump_shot == null ? null : {
       jump_shot: r.b_jump_shot as number | null, jump_range: r.b_jump_range as number | null,
       outside_def: r.b_outside_def as number | null, handling: r.b_handling as number | null,
       driving: r.b_driving as number | null, passing: r.b_passing as number | null,
       inside_shot: r.b_inside_shot as number | null, inside_def: r.b_inside_def as number | null,
       rebounding: r.b_rebounding as number | null, shot_blocking: r.b_shot_blocking as number | null,
       stamina: r.b_stamina as number | null, free_throw: r.b_free_throw as number | null,
-    };
+    });
     return {
       bbPlayerId: r.bb_player_id as number,
       name: r.name as string,
@@ -156,8 +155,9 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
       skills,
       skillsCapturedAt: toDate(r.skills_captured_at),
       hasFullSkills: r.jump_shot != null,
-      skillDeltas: computeSkillDeltas(skills, baselineSkills),
-      tspDelta: r.tsp != null && r.baseline_tsp != null ? (r.tsp as number) - (r.baseline_tsp as number) : null,
+      skillDeltas,
+      // Sum of surviving pops, so a single misread skill can't drag Δ negative.
+      tspDelta: skillDeltas ? Object.values(skillDeltas).reduce((a, b) => a + b, 0) : null,
       scoutedThisSeason: r.scouted_this_season === true || r.scouted_this_season === 't',
       onMarketUntil,
       lastListedPrice: r.starting_price == null ? null : Number(r.starting_price),
