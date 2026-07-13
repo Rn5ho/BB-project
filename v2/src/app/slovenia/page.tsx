@@ -2,6 +2,9 @@ import { listPlayers } from '@/queries/players';
 import { getEffectiveArchetypes } from '@/queries/archetypes';
 import { matchingArchetypes } from '@/lib/archetypes/evaluate';
 import PlayerTable from '@/components/PlayerTable';
+import ReviewBar from '@/components/ReviewBar';
+import { db, reviewMarks } from '@/db';
+import { eq } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,7 +16,12 @@ function coverage(rows: Awaited<ReturnType<typeof listPlayers>>, minPot: number)
 }
 
 export default async function SloveniaPage() {
-  const [rows, archetypes] = await Promise.all([listPlayers('slovenia'), getEffectiveArchetypes()]);
+  const [rows, archetypes, markRows] = await Promise.all([
+    listPlayers('slovenia'),
+    getEffectiveArchetypes(),
+    db.select().from(reviewMarks).where(eq(reviewMarks.scope, 'slovenia')).limit(1),
+  ]);
+  const markedAtIso = markRows[0]?.markedAt.toISOString() ?? null;
   const cov = coverage(rows, 7);
   const covAll = coverage(rows, 0);
 
@@ -35,6 +43,7 @@ export default async function SloveniaPage() {
         <span className="text-neutral-400">{covAll.done}/{covAll.total} of all 18–21 ({covAll.pct}%)</span>
         {cov.total - cov.done > 0 && <span className="text-neutral-400"> · {cov.total - cov.done} relevant still to scout</span>}
       </p>
+      <ReviewBar markedAtIso={markedAtIso} />
       <PlayerTable rows={rows} variant="slovenia" defaultShowSkills archetypeMatches={archetypeMatches} archetypeNames={archetypeNames} />
     </main>
   );

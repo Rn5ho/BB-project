@@ -167,6 +167,9 @@ export default function PlayerTable({
               <SortTh label="DMI" sortKey="dmi" sort={sort} onClick={handleSortClick} className="pr-3 text-right" />
               <SortTh label="GS" sortKey="gameShape" sort={sort} onClick={handleSortClick} className="pr-3" />
               <SortTh label="TSP" sortKey="tsp" sort={sort} onClick={handleSortClick} className="pr-3 text-right" />
+              {variant === 'slovenia' && (
+                <SortTh label="Δ" sortKey="tspDelta" sort={sort} onClick={handleSortClick} className="pr-3 text-right" title="TSP change since last review" />
+              )}
               {showSkills && SKILLS.map((s) => (
                 <SortTh
                   key={s.dbKey}
@@ -224,10 +227,18 @@ export default function PlayerTable({
                 <td className="pr-3 text-right">{p.dmi?.toLocaleString() ?? '–'}</td>
                 <td className="pr-3">{p.gameShape ?? '–'}</td>
                 <td className="pr-3 text-right font-medium">{p.tsp ?? '–'}</td>
+                {variant === 'slovenia' && (
+                  <td className="pr-3 text-right">
+                    {p.tspDelta == null ? <span className="text-neutral-600">–</span>
+                      : p.tspDelta > 0 ? <span className="text-green-400">+{p.tspDelta}</span>
+                      : p.tspDelta < 0 ? <span className="text-red-400">{p.tspDelta}</span>
+                      : <span className="text-neutral-500">0</span>}
+                  </td>
+                )}
                 {showSkills &&
                   SKILLS.map((s) => (
                     <td key={s.dbKey} className="pr-2">
-                      <SkillCell value={p.skills?.[s.dbKey] ?? null} />
+                      <SkillCell value={p.skills?.[s.dbKey] ?? null} delta={p.skillDeltas?.[s.dbKey] ?? null} />
                     </td>
                   ))}
                 {archetypeMatches && (
@@ -251,7 +262,7 @@ export default function PlayerTable({
             {sorted.length === 0 && (
               <tr>
                 <td
-                  colSpan={11 + (showCountry ? 2 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
+                  colSpan={11 + (showCountry ? 2 : 0) + (variant === 'slovenia' ? 1 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
                   className="py-8 text-center text-neutral-500"
                 >
                   No players match the current filters.
