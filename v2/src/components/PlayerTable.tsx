@@ -35,6 +35,17 @@ function sanitizeFilter(raw: Partial<FilterState>): Partial<FilterState> {
   void def;
   for (const _key of Object.keys(raw) as (keyof FilterState)[]) {
     const val = raw[_key];
+    if (_key === 'skillMins') {
+      if (val && typeof val === 'object' && !Array.isArray(val)) {
+        const mins: Record<string, string> = {};
+        for (const s of SKILLS) {
+          const v = (val as Record<string, unknown>)[s.dbKey];
+          if (typeof v === 'string') mins[s.dbKey] = v;
+        }
+        (out as Record<string, unknown>)[_key] = mins;
+      }
+      continue;
+    }
     const expected = typeof DEFAULT_FILTER[_key];
     if (expected === 'number') {
       if (typeof val === 'number' && isFinite(val)) (out as Record<string, unknown>)[_key] = val;

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { POSITIONS, POTENTIAL_LEVELS } from '@/lib/constants';
-import { DEFAULT_FILTER, isFilterDefault, type FilterState } from '@/lib/table';
+import { POSITIONS, POTENTIAL_LEVELS, SKILLS, type SkillDbKey } from '@/lib/constants';
+import { DEFAULT_FILTER, isFilterDefault, countActiveSkillMins, type FilterState } from '@/lib/table';
 
 interface FilterBarProps {
   filter: FilterState;
@@ -17,6 +17,8 @@ interface FilterBarProps {
 
 export default function FilterBar({ filter, onChange, onReset, shown, total, showSkills, onToggleSkills, archetypeNames }: FilterBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
+  const [skillsOpen, setSkillsOpen] = useState(false);
+  const activeSkillCount = countActiveSkillMins(filter.skillMins);
   // Local string state for age inputs so clearing doesn't snap to 0
   const [ageMinStr, setAgeMinStr] = useState<string>(String(filter.ageMin));
   const [ageMaxStr, setAgeMaxStr] = useState<string>(String(filter.ageMax));
@@ -26,8 +28,13 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
     onChange({ ...filter, [key]: value });
   }
 
+  function setSkillMin(key: SkillDbKey, value: string) {
+    set('skillMins', { ...filter.skillMins, [key]: value });
+  }
+
   function handleReset() {
     setMoreOpen(false);
+    setSkillsOpen(false);
     setAgeMinStr(String(DEFAULT_FILTER.ageMin));
     setAgeMaxStr(String(DEFAULT_FILTER.ageMax));
     onReset();
@@ -186,6 +193,19 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
           More {moreOpen ? '▲' : '▾'}
         </button>
 
+        {/* Skill filters toggle */}
+        <button
+          type="button"
+          onClick={() => setSkillsOpen((v) => !v)}
+          className={`ml-1 px-2 py-0.5 rounded border text-sm ${
+            activeSkillCount > 0
+              ? 'border-amber-500 text-amber-400 bg-amber-500/10'
+              : 'border-neutral-700 text-neutral-400 hover:text-white'
+          }`}
+        >
+          Skill filters{activeSkillCount > 0 ? ` (${activeSkillCount})` : ''} {skillsOpen ? '▲' : '▾'}
+        </button>
+
         {/* Reset link */}
         {isDirty && (
           <button
@@ -223,6 +243,26 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
             />
           </div>
           <NumInput label="Min GS" value={filter.minGameShape} onChange={(v) => set('minGameShape', v)} />
+        </div>
+      )}
+
+      {/* Collapsible skill-min row */}
+      {skillsOpen && (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm border-t border-neutral-800 pt-2">
+          {SKILLS.map((s) => (
+            <label key={s.dbKey} className="flex items-center gap-1 text-neutral-400" title={s.name}>
+              <span>{s.name.split(' ').map((w) => w[0]).join('')} ≥</span>
+              <input
+                type="number"
+                min={1}
+                max={20}
+                placeholder="—"
+                value={filter.skillMins[s.dbKey] ?? ''}
+                onChange={(e) => setSkillMin(s.dbKey, e.target.value)}
+                className="bg-neutral-900 border border-neutral-700 rounded px-1.5 py-1 text-white w-12 text-right focus:outline-none focus:border-amber-500"
+              />
+            </label>
+          ))}
         </div>
       )}
 
