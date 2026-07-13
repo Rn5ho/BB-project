@@ -46,6 +46,13 @@ Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.as
 
 All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 4.5 worker, 5 detail).
 
+**2026-07-13 UX batch shipped** — three features (specs + plans in `docs/superpowers/`):
+1. **Settings rework**: `/settings` is three cards (tracked countries / data sync / sync log). Data sync card has one row per job (seasons/players/market/census) with schedule chip, plain-language description, live "last run" line (per-job `limit(1)` queries on `sync_log`), and Sync now buttons (census row links to `/census`). Census runs table removed from settings; its newest-run per-item breakdown moved to `/census`. Formatters shared in `src/lib/format-sync.tsx` + `src/lib/format-census.ts`.
+2. **Ad-hoc skill filters**: "Skill filters ▾" row in the shared `FilterBar` — 12 per-skill min inputs (`FilterState.skillMins`, filtering in `filterRows`; null skill fails when set). Works on Slovenia + World; badge shows active count; persists via localStorage (special-cased in `PlayerTable.sanitizeFilter`).
+3. **Progress since last review**: `review_marks` table (one row, scope 'slovenia') set by a "Mark as reviewed" button (`ReviewBar` + server action). `listPlayers` compares latest full snapshot vs latest at-or-before the mark (`baseline_full` CTE) → BB-style green `+N` / red `−N` superscripts on skill cells and a sortable Δ(TSP) column. No mark / no baseline → dormant.
+
+Known pre-existing issue: hydration mismatch on player tables (`toLocaleString()` server en-US vs client sl-SI for DMI/salary).
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 
