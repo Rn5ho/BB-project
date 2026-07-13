@@ -11,6 +11,25 @@ export function tsp(skills: Partial<Record<SkillDbKey, number | null>>): number 
   return sum;
 }
 
+/**
+ * Per-skill change between two full-skill records: only non-zero, both-sides-present
+ * deltas are returned. Null when either record is missing or nothing changed.
+ */
+export function computeSkillDeltas(
+  latest: Partial<Record<SkillDbKey, number | null>> | null,
+  baseline: Partial<Record<SkillDbKey, number | null>> | null,
+): Record<string, number> | null {
+  if (!latest || !baseline) return null;
+  const out: Record<string, number> = {};
+  for (const s of SKILLS) {
+    const a = latest[s.dbKey];
+    const b = baseline[s.dbKey];
+    if (a == null || b == null) continue;
+    if (a !== b) out[s.dbKey] = a - b;
+  }
+  return Object.keys(out).length > 0 ? out : null;
+}
+
 /** BB rule: 18yo skills are 1–7, 19yo 1–10, everyone else up to the 20-point scale max. */
 export function skillCapForAge(age: number): number {
   if (age <= 18) return 7;

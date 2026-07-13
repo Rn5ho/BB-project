@@ -5,6 +5,14 @@ import {
 
 export const SNAPSHOT_SOURCES = ['api', 'market', 'census', 'manual', 'extension'] as const;
 
+export const reviewMarks = pgTable('review_marks', {
+  id: serial('id').primaryKey(),
+  scope: text('scope').notNull(),
+  markedAt: timestamp('marked_at', { withTimezone: true }).notNull(),
+}, (t) => [
+  uniqueIndex('uq_review_marks_scope').on(t.scope),
+]);
+
 export const players = pgTable('players', {
   bbPlayerId: integer('bb_player_id').primaryKey(),
   name: text('name').notNull(),

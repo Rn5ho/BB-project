@@ -1,5 +1,29 @@
 import { describe, it, expect } from 'vitest';
-import { tsp, skillCapForAge, currentAge, pickCurrentSeason } from './domain';
+import { tsp, skillCapForAge, currentAge, pickCurrentSeason, computeSkillDeltas } from './domain';
+
+describe('computeSkillDeltas', () => {
+  it('returns non-zero deltas only', () => {
+    expect(
+      computeSkillDeltas(
+        { jump_shot: 13, passing: 8, handling: 10 },
+        { jump_shot: 11, passing: 8, handling: 12 },
+      ),
+    ).toEqual({ jump_shot: 2, handling: -2 });
+  });
+
+  it('returns null when baseline or latest is null', () => {
+    expect(computeSkillDeltas(null, { jump_shot: 10 })).toBeNull();
+    expect(computeSkillDeltas({ jump_shot: 10 }, null)).toBeNull();
+  });
+
+  it('skips skills missing on either side', () => {
+    expect(computeSkillDeltas({ jump_shot: 12, passing: null }, { jump_shot: 10 })).toEqual({ jump_shot: 2 });
+  });
+
+  it('returns null when nothing changed', () => {
+    expect(computeSkillDeltas({ jump_shot: 10 }, { jump_shot: 10 })).toBeNull();
+  });
+});
 
 describe('tsp', () => {
   it('sums all 12 skills', () => {
