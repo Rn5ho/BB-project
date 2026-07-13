@@ -33,6 +33,8 @@ function makePlayer(overrides: Partial<PlayerListRow> = {}): PlayerListRow {
     skills: null,
     skillsCapturedAt: null,
     hasFullSkills: false,
+    skillDeltas: null,
+    tspDelta: null,
     ...overrides,
   };
 }
@@ -111,6 +113,16 @@ describe('sortRows', () => {
     expect(sorted[0].bbPlayerId).toBe(2); // 15
     expect(sorted[1].bbPlayerId).toBe(1); // 10
     expect(sorted[2].bbPlayerId).toBe(3); // null → bottom
+  });
+
+  it('sorts by tspDelta desc with nulls at bottom', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, tspDelta: 2 }),
+      makePlayer({ bbPlayerId: 2, tspDelta: null }),
+      makePlayer({ bbPlayerId: 3, tspDelta: 7 }),
+    ];
+    const sorted = sortRows(rows, { key: 'tspDelta', direction: 'desc' });
+    expect(sorted.map((r) => r.bbPlayerId)).toEqual([3, 1, 2]);
   });
 
   it('does not mutate the original array', () => {

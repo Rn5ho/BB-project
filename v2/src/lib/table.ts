@@ -17,6 +17,7 @@ export type SortKey =
   | 'dmi'
   | 'gameShape'
   | 'tsp'
+  | 'tspDelta'
   | 'jump_shot'
   | 'jump_range'
   | 'outside_def'
@@ -233,6 +234,7 @@ function getValue(p: PlayerListRow, key: SortKey): string | number | null {
     case 'dmi':         return p.dmi;
     case 'gameShape':   return p.gameShape;
     case 'tsp':         return p.tsp;
+    case 'tspDelta':    return p.tspDelta;
     default:
       // skill key
       return p.skills?.[key] ?? null;
