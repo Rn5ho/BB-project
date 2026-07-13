@@ -1,100 +1,88 @@
-import { db, trackedCountries, syncLog, censusRuns, censusItems } from '@/db';
+import type { ReactNode } from 'react';
+import { db, trackedCountries, syncLog, censusRuns } from '@/db';
 import { desc, eq } from 'drizzle-orm';
 import { getCountriesCatalog } from '@/server/sync/countries';
 import CountryPicker from '@/components/settings/CountryPicker';
 import TrackedCountryList from '@/components/settings/TrackedCountryList';
-import SyncButtons from '@/components/settings/SyncButtons';
+import SyncJobsCard, { type JobLastRun, type CensusLastRun } from '@/components/settings/SyncJobsCard';
 import { formatStartedAt, formatDuration, formatSyncResult, type SyncCounts } from '@/lib/format-sync';
-import { formatCensusFilters, formatCensusResult, type CensusTotals } from '@/lib/format-census';
+import type { CensusTotals } from '@/lib/format-census';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
+function lastRunOf(job: string) {
+  return db.select().from(syncLog).where(eq(syncLog.jobType, job)).orderBy(desc(syncLog.startedAt)).limit(1);
+}
+
+function toJobLastRun(rows: (typeof syncLog.$inferSelect)[]): JobLastRun | null {
+  const r = rows[0];
+  if (!r) return null;
+  return {
+    startedAtIso: r.startedAt.toISOString(),
+    trigger: r.trigger,
+    ok: r.ok,
+    counts: r.counts as SyncCounts,
+    error: r.error ?? null,
+  };
+}
+
+function Card({ title, blurb, children }: { title: string; blurb?: string; children: ReactNode }) {
+  return (
+    <section className="rounded-lg border border-neutral-800 bg-neutral-900/40 p-4 mb-6">
+      <h2 className="font-medium mb-1">{title}</h2>
+      {blurb && <p className="text-sm text-neutral-500 mb-3">{blurb}</p>}
+      {children}
+    </section>
+  );
+}
+
 export default async function SettingsPage() {
-  const [tracked, log, catalog, runs] = await Promise.all([
+  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastCensusRows] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
     getCountriesCatalog().catch(() => []),
-    db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(10),
+    lastRunOf('seasons'),
+    lastRunOf('players'),
+    lastRunOf('market'),
+    db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(1),
   ]);
 
-  // For the newest run, fetch item counts by status
-  const newestRun = runs[0] ?? null;
-  let newestItemCounts: Record<string, number> = {};
-  if (newestRun) {
-    const items = await db.select({ status: censusItems.status }).from(censusItems).where(eq(censusItems.runId, newestRun.id));
-    for (const item of items) {
-      newestItemCounts[item.status] = (newestItemCounts[item.status] ?? 0) + 1;
-    }
-  }
+  const censusLastRun: CensusLastRun | null = lastCensusRows[0]
+    ? {
+        startedAtIso: lastCensusRows[0].startedAt.toISOString(),
+        status: lastCensusRows[0].status,
+        totals: lastCensusRows[0].totals as CensusTotals,
+      }
+    : null;
+
   const trackedIds = new Set(tracked.map((t) => t.countryId));
   const available = catalog.filter((c) => !trackedIds.has(c.id) && c.id !== 66);
+
   return (
     <main className="p-6 max-w-3xl">
       <h1 className="text-lg font-semibold mb-4">Settings</h1>
 
-      <section className="mb-8">
-        <h2 className="font-medium mb-1">Tracked countries</h2>
-        <p className="text-sm text-neutral-500 mb-3">
-          Synced weekly (ages 18–21) alongside Slovenia. Star season opponents.
-        </p>
+      <Card
+        title="Tracked countries"
+        blurb="Players aged 18–21 from these countries are synced weekly alongside Slovenia. Star countries you face this season."
+      >
         <CountryPicker available={available} />
         <TrackedCountryList tracked={tracked} />
-      </section>
+      </Card>
 
-      <section className="mb-8">
-        <h2 className="font-medium mb-3">Manual sync</h2>
-        <SyncButtons />
-      </section>
+      <Card title="Data sync">
+        <SyncJobsCard
+          lastRuns={{
+            seasons: toJobLastRun(lastSeasons),
+            players: toJobLastRun(lastPlayers),
+            market: toJobLastRun(lastMarket),
+          }}
+          censusLastRun={censusLastRun}
+        />
+      </Card>
 
-      <section className="mb-8">
-        <h2 className="font-medium mb-1">Census runs</h2>
-        <p className="text-xs text-neutral-500 mb-3">
-          Runs are started locally with <code className="bg-neutral-800 px-1 rounded">npm run census</code> — see project docs.
-        </p>
-        <table className="w-full text-sm">
-          <thead className="text-left text-neutral-400 border-b border-neutral-800">
-            <tr>
-              <th className="py-1 pr-3">Run ID</th>
-              <th className="pr-3">Started</th>
-              <th className="pr-3">Status</th>
-              <th className="pr-3">Filters</th>
-              <th>Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {runs.map((r) => (
-              <tr key={r.id} className="border-b border-neutral-900">
-                <td className="py-1 pr-3">#{r.id}</td>
-                <td className="pr-3 text-neutral-400">{r.startedAt.toISOString().replace('T', ' ').slice(0, 16)}</td>
-                <td className="pr-3">
-                  {r.status === 'finished' ? <span className="text-green-400">finished</span>
-                    : r.status === 'running' ? <span className="text-yellow-400">running</span>
-                    : r.status === 'aborted' ? <span className="text-orange-400">aborted</span>
-                    : <span className="text-red-400">{r.status}</span>}
-                </td>
-                <td className="pr-3 text-neutral-400 text-xs">
-                  {formatCensusFilters(r.totals as CensusTotals)}
-                </td>
-                <td className="text-neutral-400 text-xs">
-                  {formatCensusResult(r.totals as CensusTotals)}
-                  {r.id === newestRun?.id && Object.keys(newestItemCounts).length > 0 && (
-                    <span className="ml-2 text-neutral-500">
-                      ({Object.entries(newestItemCounts).map(([s, n]) => `${s}: ${n}`).join(', ')})
-                    </span>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {runs.length === 0 && (
-              <tr><td colSpan={5} className="py-2 text-neutral-500">No census runs yet.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </section>
-
-      <section>
-        <h2 className="font-medium mb-3">Sync log</h2>
+      <Card title="Sync log" blurb="Every sync run, newest first — cron and manual.">
         <table className="w-full text-sm">
           <thead className="text-left text-neutral-400 border-b border-neutral-800">
             <tr>
@@ -126,7 +114,7 @@ export default async function SettingsPage() {
             {log.length === 0 && <tr><td colSpan={6} className="py-2 text-neutral-500">No syncs yet.</td></tr>}
           </tbody>
         </table>
-      </section>
+      </Card>
     </main>
   );
 }
