@@ -4,6 +4,7 @@ import {
   filterRows,
   nextSortState,
   isFilterDefault,
+  countActiveSkillMins,
   DEFAULT_FILTER,
   DEFAULT_SORT,
   type PlayerListRow,
@@ -268,6 +269,66 @@ describe('filterRows', () => {
     // null and 3 fail, 8 passes
     expect(result).toHaveLength(1);
     expect(result[0].bbPlayerId).toBe(2);
+  });
+});
+
+// ─── skill min filters ───────────────────────────────────────────────────────
+
+function fullSkills(overrides: Partial<Record<string, number | null>> = {}): Record<string, number | null> {
+  return {
+    jump_shot: null, jump_range: null, outside_def: null, handling: null,
+    driving: null, passing: null, inside_shot: null, inside_def: null,
+    rebounding: null, shot_blocking: null, stamina: null, free_throw: null,
+    ...overrides,
+  };
+}
+
+describe('skill min filters', () => {
+  it('passes players at/above threshold, fails below', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, skills: fullSkills({ outside_def: 11 }) }),
+      makePlayer({ bbPlayerId: 2, skills: fullSkills({ outside_def: 10 }) }),
+    ];
+    const result = filterRows(rows, { ...DEFAULT_FILTER, skillMins: { outside_def: '11' } });
+    expect(result.map((r) => r.bbPlayerId)).toEqual([1]);
+  });
+
+  it('null or missing skills fail when that filter is set', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, skills: fullSkills({ outside_def: null }) }),
+      makePlayer({ bbPlayerId: 2, skills: null }),
+      makePlayer({ bbPlayerId: 3, skills: fullSkills({ outside_def: 12 }) }),
+    ];
+    const result = filterRows(rows, { ...DEFAULT_FILTER, skillMins: { outside_def: '5' } });
+    expect(result.map((r) => r.bbPlayerId)).toEqual([3]);
+  });
+
+  it('multiple skill mins combine with AND', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, skills: fullSkills({ outside_def: 11, jump_shot: 13, passing: 8 }) }),
+      makePlayer({ bbPlayerId: 2, skills: fullSkills({ outside_def: 11, jump_shot: 12, passing: 8 }) }),
+    ];
+    const result = filterRows(rows, {
+      ...DEFAULT_FILTER,
+      skillMins: { outside_def: '11', jump_shot: '13', passing: '8' },
+    });
+    expect(result.map((r) => r.bbPlayerId)).toEqual([1]);
+  });
+
+  it('empty-string min is inactive (nulls pass)', () => {
+    const rows = [makePlayer({ skills: null })];
+    expect(filterRows(rows, { ...DEFAULT_FILTER, skillMins: { outside_def: '' } })).toHaveLength(1);
+  });
+
+  it('isFilterDefault: {} and all-empty are default; a set min is not', () => {
+    expect(isFilterDefault({ ...DEFAULT_FILTER, skillMins: {} })).toBe(true);
+    expect(isFilterDefault({ ...DEFAULT_FILTER, skillMins: { passing: '' } })).toBe(true);
+    expect(isFilterDefault({ ...DEFAULT_FILTER, skillMins: { passing: '8' } })).toBe(false);
+  });
+
+  it('countActiveSkillMins counts non-empty entries', () => {
+    expect(countActiveSkillMins({})).toBe(0);
+    expect(countActiveSkillMins({ passing: '8', outside_def: '', jump_shot: '13' })).toBe(2);
   });
 });
 

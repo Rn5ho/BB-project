@@ -1,4 +1,5 @@
 import type { PlayerListRow } from '@/queries/players';
+import { SKILLS, type SkillDbKey } from '@/lib/constants';
 export type { PlayerListRow };
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -51,6 +52,13 @@ export interface FilterState {
   heightMax: string;
   minGameShape: string;
   discoveredWithinDays: string; // '' = Any; '1' | '7' | '30'
+  skillMins: SkillMins; // per-skill minimums; empty string / absent = inactive
+}
+
+export type SkillMins = Partial<Record<SkillDbKey, string>>;
+
+export function countActiveSkillMins(mins: SkillMins): number {
+  return Object.values(mins).filter((v) => v != null && v.trim() !== '').length;
 }
 
 export type Variant = 'slovenia' | 'world';
@@ -78,6 +86,7 @@ export const DEFAULT_FILTER: FilterState = {
   heightMax: '',
   minGameShape: '',
   discoveredWithinDays: '',
+  skillMins: {},
 };
 
 // ─── Reset detection ─────────────────────────────────────────────────────────
@@ -98,7 +107,8 @@ export function isFilterDefault(f: FilterState): boolean {
     f.heightMin === DEFAULT_FILTER.heightMin &&
     f.heightMax === DEFAULT_FILTER.heightMax &&
     f.minGameShape === DEFAULT_FILTER.minGameShape &&
-    f.discoveredWithinDays === DEFAULT_FILTER.discoveredWithinDays
+    f.discoveredWithinDays === DEFAULT_FILTER.discoveredWithinDays &&
+    countActiveSkillMins(f.skillMins) === 0
   );
 }
 
@@ -135,6 +145,11 @@ export function filterRows(rows: PlayerListRow[], f: FilterState): PlayerListRow
   const discoveredCutoff = discoveredDays != null
     ? new Date(Date.now() - discoveredDays * 86_400_000)
     : null;
+  const activeSkillMins: [SkillDbKey, number][] = [];
+  for (const s of SKILLS) {
+    const min = parseNum(f.skillMins[s.dbKey] ?? '');
+    if (min !== null) activeSkillMins.push([s.dbKey, min]);
+  }
 
   return rows.filter((p) => {
     // Name search (diacritic-insensitive)
@@ -188,6 +203,12 @@ export function filterRows(rows: PlayerListRow[], f: FilterState): PlayerListRow
     // Discovered within N days — null firstSeenAt fails when filter is active
     if (discoveredCutoff !== null) {
       if (p.firstSeenAt == null || p.firstSeenAt < discoveredCutoff) return false;
+    }
+
+    // Skill minimums — null/missing skill fails when that filter is set
+    for (const [key, min] of activeSkillMins) {
+      const v = p.skills?.[key] ?? null;
+      if (v == null || v < min) return false;
     }
 
     return true;
