@@ -17,7 +17,9 @@
     "backfill:minutes": "tsx scripts/backfill-minutes.mts",
     "training:report": "tsx scripts/training/report.mts",
     "training:simulate": "tsx scripts/training/simulate.mts",
-    "training:refit-salary": "tsx scripts/training/refit-salary.mts"
+    "training:refit-salary": "tsx scripts/training/refit-salary.mts",
+    "training:scrape-history": "tsx scripts/training/scrape-training-history.mts",
+    "training:replay": "tsx scripts/training/replay-case.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

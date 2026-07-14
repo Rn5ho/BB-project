@@ -1,0 +1,237 @@
+{
+  "label": "Tim Zorec (55688998) — scraped 2026-07-14",
+  "source": "traininghistory.aspx (own team); end skills from latest full snapshot; start skills back-tracked from first pops",
+  "player": {
+    "bbPlayerId": 55688998,
+    "heightCm": 185,
+    "potential": 9,
+    "age": 19,
+    "startSkillsDisplayed": {
+      "js": 9,
+      "jr": 9,
+      "od": 6,
+      "ha": 8,
+      "dr": 9,
+      "pa": 6,
+      "is": 9,
+      "id": 4,
+      "rb": 1,
+      "sb": 5
+    },
+    "startStamina": 7,
+    "startFreeThrow": 9,
+    "endSnapshotDate": "2026-07-09T22:00:00.000Z"
+  },
+  "coachLevel": 5,
+  "youthTrainerLevel": 6,
+  "rawWeeks": [
+    {
+      "date": "4/29/2026",
+      "label": "AGE",
+      "positions": "",
+      "minutes": null,
+      "trainingId": null,
+      "pops": [],
+      "ageEvent": "Turned 19 years old."
+    },
+    {
+      "date": "5/1/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 47,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 8,
+          "to": 9
+        },
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 9,
+          "to": 10
+        }
+      ]
+    },
+    {
+      "date": "5/8/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 37,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 7,
+          "to": 8
+        }
+      ]
+    },
+    {
+      "date": "5/15/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 1,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 9,
+          "to": 10
+        }
+      ]
+    },
+    {
+      "date": "5/22/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 46,
+      "trainingId": 1,
+      "pops": [
+        {
+          "skill": "Jump Range",
+          "key": "jr",
+          "from": 9,
+          "to": 10
+        }
+      ]
+    },
+    {
+      "date": "5/29/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 10,
+          "to": 11
+        },
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 9,
+          "to": 10
+        },
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 10,
+          "to": 11
+        }
+      ]
+    },
+    {
+      "date": "6/5/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 48,
+      "trainingId": 9,
+      "pops": [
+        {
+          "skill": "Outside Def.",
+          "key": "od",
+          "from": 6,
+          "to": 7
+        }
+      ]
+    },
+    {
+      "date": "6/12/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 0,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "6/19/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "6/26/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 48,
+      "trainingId": 9,
+      "pops": [
+        {
+          "skill": "Outside Def.",
+          "key": "od",
+          "from": 7,
+          "to": 8
+        },
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 4,
+          "to": 5
+        }
+      ]
+    },
+    {
+      "date": "7/3/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 10,
+          "to": 11
+        },
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 11,
+          "to": 12
+        },
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 8,
+          "to": 9
+        }
+      ]
+    },
+    {
+      "date": "7/10/2026",
+      "label": "Passing",
+      "positions": "PG",
+      "minutes": 48,
+      "trainingId": 18,
+      "pops": [
+        {
+          "skill": "Passing",
+          "key": "pa",
+          "from": 6,
+          "to": 7
+        }
+      ]
+    }
+  ],
+  "endSkillsDisplayed": {
+    "js": 11,
+    "jr": 10,
+    "od": 8,
+    "ha": 11,
+    "dr": 12,
+    "pa": 7,
+    "is": 9,
+    "id": 5,
+    "rb": 1,
+    "sb": 5
+  }
+}

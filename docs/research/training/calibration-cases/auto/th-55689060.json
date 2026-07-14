@@ -1,0 +1,214 @@
+{
+  "label": "Dore Lovreković (55689060) — scraped 2026-07-14",
+  "source": "traininghistory.aspx (own team); end skills from latest full snapshot; start skills back-tracked from first pops",
+  "player": {
+    "bbPlayerId": 55689060,
+    "heightCm": 218,
+    "potential": 9,
+    "age": 19,
+    "startSkillsDisplayed": {
+      "js": 3,
+      "jr": 10,
+      "od": 5,
+      "ha": 2,
+      "dr": 4,
+      "pa": 3,
+      "is": 10,
+      "id": 9,
+      "rb": 9,
+      "sb": 7
+    },
+    "startStamina": 3,
+    "startFreeThrow": 3,
+    "endSnapshotDate": "2026-07-09T22:00:00.000Z"
+  },
+  "coachLevel": 6,
+  "youthTrainerLevel": 6,
+  "rawWeeks": [
+    {
+      "date": "5/8/2026",
+      "label": "One on One",
+      "positions": "SF/PF",
+      "minutes": 48,
+      "trainingId": 16,
+      "pops": []
+    },
+    {
+      "date": "5/15/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 21,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 3,
+          "to": 4
+        },
+        {
+          "skill": "Inside Shot",
+          "key": "is",
+          "from": 10,
+          "to": 11
+        }
+      ]
+    },
+    {
+      "date": "5/22/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 21,
+      "pops": [
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 1,
+          "to": 2
+        }
+      ]
+    },
+    {
+      "date": "5/29/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 21,
+      "pops": [
+        {
+          "skill": "Inside Shot",
+          "key": "is",
+          "from": 11,
+          "to": 12
+        }
+      ]
+    },
+    {
+      "date": "6/5/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 21,
+      "pops": [
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 9,
+          "to": 10
+        },
+        {
+          "skill": "Rebounding",
+          "key": "rb",
+          "from": 9,
+          "to": 10
+        }
+      ]
+    },
+    {
+      "date": "6/12/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 21,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 4,
+          "to": 5
+        },
+        {
+          "skill": "Outside Def.",
+          "key": "od",
+          "from": 5,
+          "to": 6
+        },
+        {
+          "skill": "Inside Shot",
+          "key": "is",
+          "from": 12,
+          "to": 13
+        }
+      ]
+    },
+    {
+      "date": "6/19/2026",
+      "label": "Rebounding",
+      "positions": "PF/C",
+      "minutes": 48,
+      "trainingId": 27,
+      "pops": [
+        {
+          "skill": "Experience",
+          "key": null,
+          "from": 1,
+          "to": 2
+        }
+      ]
+    },
+    {
+      "date": "6/26/2026",
+      "label": "Inside Defense",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 24,
+      "pops": [
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 10,
+          "to": 11
+        }
+      ]
+    },
+    {
+      "date": "7/3/2026",
+      "label": "Inside Defense",
+      "positions": "C",
+      "minutes": 47,
+      "trainingId": 24,
+      "pops": [
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 2,
+          "to": 3
+        }
+      ]
+    },
+    {
+      "date": "7/10/2026",
+      "label": "Rebounding",
+      "positions": "PF/C",
+      "minutes": 48,
+      "trainingId": 27,
+      "pops": [
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 11,
+          "to": 12
+        },
+        {
+          "skill": "Rebounding",
+          "key": "rb",
+          "from": 10,
+          "to": 11
+        }
+      ]
+    }
+  ],
+  "endSkillsDisplayed": {
+    "js": 5,
+    "jr": 10,
+    "od": 6,
+    "ha": 2,
+    "dr": 4,
+    "pa": 3,
+    "is": 13,
+    "id": 12,
+    "rb": 11,
+    "sb": 7
+  }
+}

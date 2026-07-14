@@ -1,0 +1,175 @@
+{
+  "label": "Patrik Murko (55689054) — scraped 2026-07-14",
+  "source": "traininghistory.aspx (own team); end skills from latest full snapshot; start skills back-tracked from first pops",
+  "player": {
+    "bbPlayerId": 55689054,
+    "heightCm": 216,
+    "potential": 8,
+    "age": 19,
+    "startSkillsDisplayed": {
+      "js": 7,
+      "jr": 5,
+      "od": 1,
+      "ha": 1,
+      "dr": 3,
+      "pa": 8,
+      "is": 8,
+      "id": 9,
+      "rb": 6,
+      "sb": 3
+    },
+    "startStamina": 4,
+    "startFreeThrow": 6,
+    "endSnapshotDate": "2026-07-09T22:00:00.000Z"
+  },
+  "coachLevel": 6,
+  "youthTrainerLevel": 6,
+  "rawWeeks": [
+    {
+      "date": "5/8/2026",
+      "label": "One on One",
+      "positions": "SF/PF",
+      "minutes": 48,
+      "trainingId": 16,
+      "pops": [
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 3,
+          "to": 4
+        },
+        {
+          "skill": "Inside Shot",
+          "key": "is",
+          "from": 8,
+          "to": 9
+        }
+      ]
+    },
+    {
+      "date": "5/15/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 7,
+      "trainingId": 21,
+      "pops": []
+    },
+    {
+      "date": "5/22/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 0,
+      "trainingId": 21,
+      "pops": []
+    },
+    {
+      "date": "5/29/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 0,
+      "trainingId": 21,
+      "pops": [
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 5,
+          "to": 6
+        }
+      ]
+    },
+    {
+      "date": "6/5/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 0,
+      "trainingId": 21,
+      "pops": []
+    },
+    {
+      "date": "6/12/2026",
+      "label": "Inside Scoring",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 21,
+      "pops": []
+    },
+    {
+      "date": "6/19/2026",
+      "label": "Rebounding",
+      "positions": "PF/C",
+      "minutes": 16,
+      "trainingId": 27,
+      "pops": [
+        {
+          "skill": "Jump Range",
+          "key": "jr",
+          "from": 5,
+          "to": 6
+        },
+        {
+          "skill": "Rebounding",
+          "key": "rb",
+          "from": 6,
+          "to": 7
+        }
+      ]
+    },
+    {
+      "date": "6/26/2026",
+      "label": "Inside Defense",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 24,
+      "pops": [
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 9,
+          "to": 10
+        }
+      ]
+    },
+    {
+      "date": "7/3/2026",
+      "label": "Inside Defense",
+      "positions": "C",
+      "minutes": 48,
+      "trainingId": 24,
+      "pops": [
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 10,
+          "to": 11
+        }
+      ]
+    },
+    {
+      "date": "7/10/2026",
+      "label": "Rebounding",
+      "positions": "PF/C",
+      "minutes": 48,
+      "trainingId": 27,
+      "pops": [
+        {
+          "skill": "Inside Shot",
+          "key": "is",
+          "from": 9,
+          "to": 10
+        }
+      ]
+    }
+  ],
+  "endSkillsDisplayed": {
+    "js": 7,
+    "jr": 6,
+    "od": 1,
+    "ha": 1,
+    "dr": 4,
+    "pa": 8,
+    "is": 10,
+    "id": 11,
+    "rb": 7,
+    "sb": 3
+  }
+}

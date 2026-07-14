@@ -1,0 +1,507 @@
+{
+  "label": "Lenart Kos (55135481) — scraped 2026-07-14",
+  "source": "traininghistory.aspx (own team); end skills from latest full snapshot; start skills back-tracked from first pops",
+  "player": {
+    "bbPlayerId": 55135481,
+    "heightCm": 185,
+    "potential": 8,
+    "age": 21,
+    "startSkillsDisplayed": {
+      "js": 10,
+      "jr": 10,
+      "od": 10,
+      "ha": 13,
+      "dr": 13,
+      "pa": 5,
+      "is": 1,
+      "id": 5,
+      "rb": 4,
+      "sb": 6
+    },
+    "startStamina": 5,
+    "startFreeThrow": 7,
+    "endSnapshotDate": "2026-07-09T22:00:00.000Z"
+  },
+  "coachLevel": 5,
+  "youthTrainerLevel": 6,
+  "rawWeeks": [
+    {
+      "date": "1/2/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 10,
+          "to": 11
+        },
+        {
+          "skill": "Rebounding",
+          "key": "rb",
+          "from": 4,
+          "to": 5
+        }
+      ]
+    },
+    {
+      "date": "1/9/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 13,
+          "to": 14
+        }
+      ]
+    },
+    {
+      "date": "1/16/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 13,
+          "to": 14
+        }
+      ]
+    },
+    {
+      "date": "1/20/2026",
+      "label": "AGE",
+      "positions": "",
+      "minutes": null,
+      "trainingId": null,
+      "pops": [],
+      "ageEvent": "Turned 20 years old."
+    },
+    {
+      "date": "1/23/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 11,
+          "to": 12
+        },
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 14,
+          "to": 15
+        },
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 3,
+          "to": 4
+        }
+      ]
+    },
+    {
+      "date": "1/30/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "2/6/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 14,
+          "to": 15
+        },
+        {
+          "skill": "Inside Def.",
+          "key": "id",
+          "from": 5,
+          "to": 6
+        },
+        {
+          "skill": "Experience",
+          "key": null,
+          "from": 1,
+          "to": 2
+        }
+      ]
+    },
+    {
+      "date": "2/13/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 12,
+          "to": 13
+        }
+      ]
+    },
+    {
+      "date": "2/20/2026",
+      "label": "Outside Shooting",
+      "positions": "SG",
+      "minutes": 48,
+      "trainingId": 5,
+      "pops": [
+        {
+          "skill": "Jump Range",
+          "key": "jr",
+          "from": 10,
+          "to": 11
+        },
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 15,
+          "to": 16
+        }
+      ]
+    },
+    {
+      "date": "2/27/2026",
+      "label": "Outside Shooting",
+      "positions": "SG",
+      "minutes": 48,
+      "trainingId": 5,
+      "pops": []
+    },
+    {
+      "date": "3/6/2026",
+      "label": "Outside Shooting",
+      "positions": "SG",
+      "minutes": 41,
+      "trainingId": 5,
+      "pops": [
+        {
+          "skill": "Jump Range",
+          "key": "jr",
+          "from": 11,
+          "to": 12
+        }
+      ]
+    },
+    {
+      "date": "3/13/2026",
+      "label": "Outside Shooting",
+      "positions": "SG",
+      "minutes": 48,
+      "trainingId": 5,
+      "pops": [
+        {
+          "skill": "Inside Shot",
+          "key": "is",
+          "from": 1,
+          "to": 2
+        }
+      ]
+    },
+    {
+      "date": "3/20/2026",
+      "label": "Outside Shooting",
+      "positions": "SG",
+      "minutes": 48,
+      "trainingId": 5,
+      "pops": [
+        {
+          "skill": "Jump Range",
+          "key": "jr",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 4,
+          "to": 5
+        }
+      ]
+    },
+    {
+      "date": "3/27/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 1,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 13,
+          "to": 14
+        },
+        {
+          "skill": "Shot Blocking",
+          "key": "sb",
+          "from": 6,
+          "to": 7
+        }
+      ]
+    },
+    {
+      "date": "4/3/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 1,
+      "pops": []
+    },
+    {
+      "date": "4/10/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 13,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "4/17/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 23,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "4/24/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 47,
+      "trainingId": 9,
+      "pops": [
+        {
+          "skill": "Outside Def.",
+          "key": "od",
+          "from": 10,
+          "to": 11
+        }
+      ]
+    },
+    {
+      "date": "4/29/2026",
+      "label": "AGE",
+      "positions": "",
+      "minutes": null,
+      "trainingId": null,
+      "pops": [],
+      "ageEvent": "Turned 21 years old."
+    },
+    {
+      "date": "5/1/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 14,
+          "to": 15
+        },
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 15,
+          "to": 16
+        }
+      ]
+    },
+    {
+      "date": "5/8/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 16,
+          "to": 17
+        },
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 5,
+          "to": 6
+        }
+      ]
+    },
+    {
+      "date": "5/15/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 1,
+      "pops": []
+    },
+    {
+      "date": "5/22/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 1,
+      "pops": [
+        {
+          "skill": "Jump Shot",
+          "key": "js",
+          "from": 15,
+          "to": 16
+        },
+        {
+          "skill": "Jump Range",
+          "key": "jr",
+          "from": 13,
+          "to": 14
+        },
+        {
+          "skill": "Experience",
+          "key": null,
+          "from": 2,
+          "to": 3
+        }
+      ]
+    },
+    {
+      "date": "5/29/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "6/5/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 48,
+      "trainingId": 9,
+      "pops": [
+        {
+          "skill": "Outside Def.",
+          "key": "od",
+          "from": 11,
+          "to": 12
+        }
+      ]
+    },
+    {
+      "date": "6/12/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 48,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "6/19/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Handling",
+          "key": "ha",
+          "from": 16,
+          "to": 17
+        }
+      ]
+    },
+    {
+      "date": "6/26/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 48,
+      "trainingId": 9,
+      "pops": [
+        {
+          "skill": "Outside Def.",
+          "key": "od",
+          "from": 12,
+          "to": 13
+        },
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 6,
+          "to": 7
+        }
+      ]
+    },
+    {
+      "date": "7/3/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 48,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Driving",
+          "key": "dr",
+          "from": 17,
+          "to": 18
+        },
+        {
+          "skill": "Stamina",
+          "key": "stamina",
+          "from": 6,
+          "to": 5
+        }
+      ]
+    },
+    {
+      "date": "7/10/2026",
+      "label": "Passing",
+      "positions": "PG",
+      "minutes": 35,
+      "trainingId": 18,
+      "pops": [
+        {
+          "skill": "Passing",
+          "key": "pa",
+          "from": 5,
+          "to": 6
+        }
+      ]
+    }
+  ],
+  "endSkillsDisplayed": {
+    "js": 16,
+    "jr": 14,
+    "od": 13,
+    "ha": 17,
+    "dr": 18,
+    "pa": 6,
+    "is": 2,
+    "id": 6,
+    "rb": 5,
+    "sb": 7
+  }
+}

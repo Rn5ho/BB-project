@@ -1,0 +1,145 @@
+{
+  "label": "Jaka Zgonec (55689011) — scraped 2026-07-14",
+  "source": "traininghistory.aspx (own team); end skills from latest full snapshot; start skills back-tracked from first pops",
+  "player": {
+    "bbPlayerId": 55689011,
+    "heightCm": 201,
+    "potential": 5,
+    "age": 19,
+    "startSkillsDisplayed": {
+      "js": 3,
+      "jr": 7,
+      "od": 7,
+      "ha": 7,
+      "dr": 6,
+      "pa": 4,
+      "is": 6,
+      "id": 9,
+      "rb": 8,
+      "sb": 8
+    },
+    "startStamina": 1,
+    "startFreeThrow": 3,
+    "endSnapshotDate": "2026-07-09T22:00:00.000Z"
+  },
+  "coachLevel": 5,
+  "youthTrainerLevel": 6,
+  "rawWeeks": [
+    {
+      "date": "4/29/2026",
+      "label": "AGE",
+      "positions": "",
+      "minutes": null,
+      "trainingId": null,
+      "pops": [],
+      "ageEvent": "Turned 19 years old."
+    },
+    {
+      "date": "5/1/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "5/8/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "5/15/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 1,
+      "pops": []
+    },
+    {
+      "date": "5/22/2026",
+      "label": "Jump Shot",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 1,
+      "pops": []
+    },
+    {
+      "date": "5/29/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "6/5/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 0,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "6/12/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 0,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "6/19/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 15,
+      "pops": [
+        {
+          "skill": "Free Throw",
+          "key": "free_throw",
+          "from": 2,
+          "to": 3
+        }
+      ]
+    },
+    {
+      "date": "6/26/2026",
+      "label": "Outside Defense",
+      "positions": "PG",
+      "minutes": 0,
+      "trainingId": 9,
+      "pops": []
+    },
+    {
+      "date": "7/3/2026",
+      "label": "One on One",
+      "positions": "PG/SG",
+      "minutes": 0,
+      "trainingId": 15,
+      "pops": []
+    },
+    {
+      "date": "7/10/2026",
+      "label": "Passing",
+      "positions": "PG",
+      "minutes": 0,
+      "trainingId": 18,
+      "pops": []
+    }
+  ],
+  "endSkillsDisplayed": {
+    "js": 3,
+    "jr": 7,
+    "od": 7,
+    "ha": 7,
+    "dr": 6,
+    "pa": 4,
+    "is": 6,
+    "id": 9,
+    "rb": 8,
+    "sb": 8
+  }
+}
