@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { eligibleTrainings, fullTrainingMinutes, minutesAtPositions, planToWeeks, playerStateFromSnapshot } from './bridge';
+import { bandSeries, eligibleTrainings, fullTrainingMinutes, minutesAtPositions, planToWeeks, playerStateFromSnapshot } from './bridge';
+import { ensembleProject } from './ensemble';
 
 const wk = (m: Partial<Record<'minPg'|'minSg'|'minSf'|'minPf'|'minC', number>>) => ({
   season: 40, seasonWeek: 5, games: 2,
@@ -43,5 +44,23 @@ describe('bridge', () => {
   it('full training minutes follows the age bands (44 at 19, 47 at 21)', () => {
     expect(fullTrainingMinutes(19)).toBe(44);
     expect(fullTrainingMinutes(21)).toBe(47);
+  });
+
+  it('bandSeries maps ensemble weeks to a per-week TSP band with a starting point', () => {
+    const player = playerStateFromSnapshot({
+      skills: { jump_shot: 8, jump_range: 6, outside_def: 7, handling: 9, driving: 7, passing: 10,
+                inside_shot: 4, inside_def: 3, rebounding: 5, shot_blocking: 2 },
+      age: 19, heightCm: 190, potential: 8,
+    });
+    const plan = planToWeeks([{ trainingId: 15, weeks: 3 }], 5, 0);
+    const result = ensembleProject(player, plan);
+    const series = bandSeries(result);
+    expect(series).toHaveLength(4); // starting point + 3 weeks
+    expect(series[0].x).toBe(0);
+    expect(series[0].central).toBe(series[0].low);
+    expect(series[0].central).toBe(series[0].high);
+    expect(series[3].x).toBe(3);
+    expect(series[3].low).toBeLessThanOrEqual(series[3].central);
+    expect(series[3].central).toBeLessThanOrEqual(series[3].high);
   });
 });
