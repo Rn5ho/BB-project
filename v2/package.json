@@ -14,6 +14,7 @@
     "census": "tsx scripts/census.mts",
     "census:worker": "tsx scripts/census-worker.mts",
     "backfill:teams": "node scripts/backfill-teams.mjs",
+    "backfill:minutes": "tsx scripts/backfill-minutes.mts",
     "training:report": "tsx scripts/training/report.mts",
     "training:simulate": "tsx scripts/training/simulate.mts",
     "training:refit-salary": "tsx scripts/training/refit-salary.mts"
