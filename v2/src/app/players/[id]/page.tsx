@@ -1,8 +1,14 @@
+import { eq } from 'drizzle-orm';
 import { notFound } from 'next/navigation';
+import { db, seasons } from '@/db';
 import { getPlayerDetail } from '@/queries/player-detail';
 import { getPotentialColor, POTENTIAL_LEVELS } from '@/lib/constants';
 import { skillSeries, dmiSeries, salarySeries, positionTimeline, currentProfile } from '@/lib/series';
 import { getEffectiveArchetypes } from '@/queries/archetypes';
+import { getActivePlan, getPlayerWeeklyMinutes } from '@/queries/minutes';
+import { playerStateFromSnapshot } from '@/lib/training/bridge';
+import { PLAN_TEMPLATES } from '@/lib/training/templates';
+import { seasonWeekOf } from '@/server/sync/minutes';
 import SkillProgression from '@/components/player/SkillProgression';
 import SnapshotHistory from '@/components/player/SnapshotHistory';
 import PositionTimeline from '@/components/player/PositionTimeline';
@@ -11,6 +17,8 @@ import NotesSection from '@/components/player/NotesSection';
 import TagsSection from '@/components/player/TagsSection';
 import ProfileCard from '@/components/player/ProfileCard';
 import ArchetypeMatches from '@/components/player/ArchetypeMatches';
+import DevelopmentSection from '@/components/player/DevelopmentSection';
+import MinutesStrip from '@/components/player/MinutesStrip';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +44,21 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const dmi = dmiSeries(snaps).map((p) => ({ x: p.x.getTime(), y: p.y }));
   const salary = salarySeries(snaps).map((p) => ({ x: p.x.getTime(), y: p.y }));
 
+  const [weeklyMinutes, activePlan, [seasonRow]] = await Promise.all([
+    getPlayerWeeklyMinutes(player.bbPlayerId),
+    getActivePlan(player.bbPlayerId),
+    db.select().from(seasons).where(eq(seasons.id, detail.seasonNow)),
+  ]);
+  const startWeekOfSeason = seasonRow ? Math.min(14, Math.max(1, seasonWeekOf(new Date(), seasonRow.start))) : 1;
+  const fullSkills = profile.skills && Object.values(profile.skills).filter((v) => v != null).length >= 10;
+  const playerState = profile.skills && fullSkills && player.ageNow != null && player.heightCm != null
+    ? playerStateFromSnapshot({
+        skills: profile.skills, age: player.ageNow, heightCm: player.heightCm,
+        potential: profile.potential ?? player.potential ?? 0,
+        stamina: profile.skills.stamina, freeThrow: profile.skills.free_throw,
+      })
+    : null;
+
   return (
     <main className="p-6 max-w-5xl">
       <div className="flex items-baseline gap-3 mb-1">
@@ -55,6 +78,30 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
 
       <section className="mt-6">
         <ProfileCard profile={profile} heightCm={player.heightCm} bestPosition={player.bestPosition} />
+      </section>
+
+      <section className="mt-6">
+        <h2 className="font-medium mb-2">Weekly minutes by position</h2>
+        <MinutesStrip weeks={weeklyMinutes} age={player.ageNow} />
+      </section>
+
+      <section className="mt-6">
+        <h2 className="font-medium mb-2">Development</h2>
+        {playerState ? (
+          <DevelopmentSection
+            playerId={player.bbPlayerId}
+            playerState={playerState}
+            startWeekOfSeason={startWeekOfSeason}
+            weeks={weeklyMinutes}
+            age={player.ageNow}
+            initialPlan={activePlan}
+            templates={PLAN_TEMPLATES}
+            skillsDb={profile.skills ?? {}}
+            potential={profile.potential ?? player.potential}
+          />
+        ) : (
+          <p className="text-sm text-neutral-500">Needs a full-skill snapshot (census or API) to project development.</p>
+        )}
       </section>
 
       <section className="mt-6">
