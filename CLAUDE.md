@@ -53,6 +53,20 @@ All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 4.5 worker, 5 
 
 Known pre-existing issue: hydration mismatch on player tables (`toLocaleString()` server en-US vs client sl-SI for DMI/salary).
 
+**Training engine Phase A shipped 2026-07-14** — Pure-TS training model layer in
+`v2/src/lib/training/`: three provenance-tagged parameter sets (`coach-parrot` extracted
+from cp_2_1, `open-source-live` from recorded buzzeriq probes, `bbscout` synthesis =
+default), `weekStep`/`project` engine (14-week seasons, decimal sublevels, ceil display),
+ensemble min-max bands (`ensembleProject`), Josef Ka salary + potential-cap sub-models
+(`salary.ts`; cap = Σ(pos-weights·skills) ≥ 8+2·potential, slowdown ×0.15). Calibration:
+CP worked-example gate (±1e-4), buzzeriq fixture replay (`docs/research/training/buzzeriq/probes/`,
+worst open-source-live error 0.008), forum weeks-per-pop sanity. Scripts: `npm run training:simulate`,
+`training:report`, `training:refit-salary` (2026-07-14 fit vs Neon: deflationScale 0.7163,
+median |err| 11.8% on 58 players — the announced-2024 BB salary rework is real; refit on
+better data in Phase B). Research archive + provenance chain: `docs/research/training/README.md`.
+Design spec: `docs/superpowers/specs/2026-07-14-training-planner-v2-design.md` (Phases B–D:
+position-minutes pipeline, inference flywheel, planner UI).
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 
