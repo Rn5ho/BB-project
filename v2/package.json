@@ -14,7 +14,9 @@
     "census": "tsx scripts/census.mts",
     "census:worker": "tsx scripts/census-worker.mts",
     "backfill:teams": "node scripts/backfill-teams.mjs",
-    "training:report": "tsx scripts/training/report.mts"
+    "training:report": "tsx scripts/training/report.mts",
+    "training:simulate": "tsx scripts/training/simulate.mts",
+    "training:refit-salary": "tsx scripts/training/refit-salary.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
