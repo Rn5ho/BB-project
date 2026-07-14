@@ -939,13 +939,16 @@ Live corrections to encode (from API-MAP.md):
    - id 1 `JS for 12`: `{ js: 0.5, jr: 0.2, dr: 0.05, ha: 0.05 }` (probe JS 0.52 = 0.5×1.04)
    - id 21 `IS for 5`: `{ js: 0.125, is: 0.5, id: 0.1 }` (probe 0.13/0.525/0.10)
    - id 24 `ID for 5`: `{ is: 0.1, id: 0.5, sb: 0.1 }` (probe IS 0.105 = 0.1×1.05)
-4. Height table: sergiu file table (HA flat 1.0, PA RISING with height — keep verbatim,
-   including PA's irregular steps), but with live-observed overrides at 201cm:
-   DR column = 0.95 at all steps ≥ 201 is NOT supported by evidence — instead add the
-   observed multipliers as two-point corrections ONLY where probed (175, 200/201):
-   encode the file table verbatim and set `confidence: 'estimate'`, with a comment
-   listing the probed deviations (DR ~0.95 and IS ~1.05 at 201; IS ~0.65/ID ~0.5 at 175).
-   Fixture tests (Task 9 report) will quantify residual drift — do not guess unprobed cells.
+4. Height table: sergiu file table verbatim (HA flat 1.0, PA RISING with height,
+   including PA's irregular steps) EXCEPT probe-observed cell corrections, which are
+   required for the Task 9 definitional replay to pass at 0.02 tolerance:
+   - at 201cm: JS → 1.04, DR → 0.95, IS → 1.05, PA → 1.0 (probes 01/04/05/06: JS-for-12
+     gave JS 0.52 = 0.5×1.04; HA-for-1 gave DR 0.38 = 0.4×0.95; IS-for-5 gave IS 0.525 =
+     0.5×1.05; PA-for-1 gave PA 0.60 = 0.6×1.0 vs the file's ~1.2)
+   - at 175cm: IS → 0.65, ID → 0.5 (probe 24-h175-IS5)
+   Comment each corrected cell with its probe name. Unprobed cells keep file values;
+   overall confidence 'estimate' with the probed cells noted as 'measured' in a comment.
+   The Task 9 report quantifies residual drift — do not guess unprobed cells.
 5. Youth trainer: no effect (`perLevel: 0`, 'measured'); minutes: none; xtrain: none;
    weeksPerSeason 14; ST/FT rates 0 (live API no-ops; 'measured') — the bbscout model
    is the one that simulates ST/FT.

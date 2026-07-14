@@ -22,3 +22,4 @@ web/.vercel
 # TypeScript
 *.tsbuildinfo
 web/next-env.d.ts
+.superpowers/
