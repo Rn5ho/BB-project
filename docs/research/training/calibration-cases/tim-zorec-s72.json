@@ -1,0 +1,36 @@
+{
+  "label": "Tim Zorec (55688998) — season 72, owner-trained, complete inputs",
+  "source": "BB Player Training History screenshot 2026-07-14 + census snapshot 2026-07-10 (post-update); starting skills back-tracked from pop log",
+  "player": {
+    "bbPlayerId": 55688998,
+    "heightCm": 185,
+    "potential": 9,
+    "age": 19,
+    "note": "turned 19 on 2026-04-29, before week 1; age 19 for all replayed weeks",
+    "startSkillsDisplayed": { "js": 9, "jr": 9, "od": 6, "ha": 8, "dr": 9, "pa": 6, "is": 9, "id": 4, "rb": 1, "sb": 5 },
+    "startStamina": 7,
+    "startFreeThrow": 7
+  },
+  "coachLevel": 5,
+  "youthTrainerLevel": 6,
+  "weeks": [
+    { "date": "2026-05-01", "trainingId": 15, "minutes": 47, "observedPops": { "ha": 9, "dr": 10 } },
+    { "date": "2026-05-08", "trainingId": 15, "minutes": 37, "observedPops": {}, "unmodeledPops": { "free_throw": 8 } },
+    { "date": "2026-05-15", "trainingId": 1, "minutes": 48, "observedPops": { "js": 10 } },
+    { "date": "2026-05-22", "trainingId": 1, "minutes": 46, "observedPops": { "jr": 10 } },
+    { "date": "2026-05-29", "trainingId": 15, "minutes": 48, "observedPops": { "js": 11, "ha": 10, "dr": 11 } },
+    { "date": "2026-06-05", "trainingId": 9, "minutes": 48, "observedPops": { "od": 7 } },
+    { "date": "2026-06-12", "trainingId": 9, "minutes": 0, "observedPops": {} },
+    { "date": "2026-06-19", "trainingId": 15, "minutes": 48, "observedPops": {} },
+    { "date": "2026-06-26", "trainingId": 9, "minutes": 48, "observedPops": { "od": 8, "id": 5 } },
+    { "date": "2026-07-03", "trainingId": 15, "minutes": 48, "observedPops": { "ha": 11, "dr": 12 }, "unmodeledPops": { "free_throw": 9 } },
+    { "date": "2026-07-10", "trainingId": 18, "minutes": 48, "observedPops": { "pa": 7 } }
+  ],
+  "endSkillsDisplayed": { "js": 11, "jr": 10, "od": 8, "ha": 11, "dr": 12, "pa": 7, "is": 9, "id": 5, "rb": 1, "sb": 5 },
+  "notes": [
+    "FT popped twice (5/8, 7/3) with ZERO free-throw training weeks — evidence of training-court passive FT training and/or cross-training slots landing on FT. Not modeled in Phase A/B engines.",
+    "6/12 week had 0 minutes: no training, no pops — minutes gate confirmed.",
+    "5/8 week had 37 minutes (sub-threshold for 19yo): no skill pops that week, FT pop unaffected (passive).",
+    "IS 9 at draft, unchanged all season (no IS in his trainings) — no unexplained IS drift."
+  ]
+}
