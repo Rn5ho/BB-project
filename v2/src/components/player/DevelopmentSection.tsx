@@ -12,7 +12,6 @@ import type { PlanTemplate } from '@/lib/training/templates';
 import { SKILL_DB_NAMES, SKILL_KEYS, type Skills } from '@/lib/training/types';
 import type { PlanRow, WeekMinutes } from '@/queries/minutes'; // type-only import is fine (no IO)
 import CapBar from './CapBar';
-import MinutesStrip from './MinutesStrip';
 import PlanEditor, { type PlanValue } from './PlanEditor';
 
 const SKILL_NAME: Record<string, string> = Object.fromEntries(SKILLS.map((s) => [s.dbKey, s.name]));
@@ -78,11 +77,6 @@ export default function DevelopmentSection({
 
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-sm font-medium text-neutral-300 mb-2">Weekly minutes by position</h3>
-        <MinutesStrip weeks={weeks} age={age} />
-      </div>
-
       <div>
         <h3 className="text-sm font-medium text-neutral-300 mb-2">Projected TSP</h3>
         {result ? (
