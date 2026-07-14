@@ -12,7 +12,7 @@ export interface PlanValue {
 const WEEKS_PER_SEASON = 14; // BBSCOUT.weeksPerSeason — kept local to avoid pulling engine params into the UI
 
 export default function PlanEditor({
-  value, onChange, onSave, saving, templates, startAge, endAge: endAgeExact,
+  value, onChange, onSave, saving, templates, startAge, endAge: endAgeExact, hideSave,
 }: {
   value: PlanValue;
   onChange: (next: PlanValue) => void;
@@ -23,6 +23,8 @@ export default function PlanEditor({
   startAge?: number | null;
   /** Season-aware final age from the projection — preferred over the rough estimate. */
   endAge?: number | null;
+  /** Hides the Save button (e.g. for hypothetical players with nothing to persist). */
+  hideSave?: boolean;
 }) {
   const totalWeeks = value.blocks.reduce((a, b) => a + b.weeks, 0);
   const seasons = totalWeeks / WEEKS_PER_SEASON;
@@ -105,13 +107,15 @@ export default function PlanEditor({
         {endAge != null && ` · ends at age ${endAge}`}
       </p>
 
-      <button
-        onClick={onSave}
-        disabled={saving || value.blocks.length === 0}
-        className="rounded bg-amber-600 px-3 py-1.5 text-sm font-medium disabled:opacity-50"
-      >
-        {saving ? 'Saving…' : 'Save plan'}
-      </button>
+      {!hideSave && (
+        <button
+          onClick={onSave}
+          disabled={saving || value.blocks.length === 0}
+          className="rounded bg-amber-600 px-3 py-1.5 text-sm font-medium disabled:opacity-50"
+        >
+          {saving ? 'Saving…' : 'Save plan'}
+        </button>
+      )}
     </div>
   );
 }
