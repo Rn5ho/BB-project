@@ -1,8 +1,18 @@
 # User-gathered training research (BB-U21-tool folder, ingested 2026-07-14)
 
-Five files collected by the NT manager over time, assessed against the Phase A
+Files collected by the NT manager over time, assessed against the Phase A
 research archive. Verdicts below reference `../model-comparison.md` and the
 Phase A models in `v2/src/lib/training/models/`.
+
+Later additions (same day):
+- `dev-statements-2026.md` + `discord-dev-*.png` — 2026 dev (Justin) Q&A
+  translations from the Slovenian Discord: 3-stage potential-cap ladder
+  (ADOPTED into bbscout), precise cross-training spec, sub-threshold minutes
+  data points, skills-exceed-20 (ADOPTED), GS-training diminishing returns.
+- `in-depth-guide-extraction.md` + `In_Depth_buzzerbeater_Training_Guide.pdf` —
+  USA community senior-NT guide: the ORIGINAL signed elastic chart (negatives!,
+  proves Sergiu's table is a lossy copy), modern trainer ladder (86-100%),
+  passive training-court FT rates, senior archetype plan templates.
 
 ## `TrainingBB (40).pdf` → digested to `training-matrix-full.csv` — THE BIG ONE
 

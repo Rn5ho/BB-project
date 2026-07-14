@@ -58,7 +58,9 @@ Known pre-existing issue: hydration mismatch on player tables (`toLocaleString()
 from cp_2_1, `open-source-live` from recorded buzzeriq probes, `bbscout` synthesis =
 default), `weekStep`/`project` engine (14-week seasons, decimal sublevels, ceil display),
 ensemble min-max bands (`ensembleProject`), Josef Ka salary + potential-cap sub-models
-(`salary.ts`; cap = Σ(pos-weights·skills) ≥ 8+2·potential, slowdown ×0.15). Calibration:
+(`salary.ts`; cap = Σ(pos-weights·skills) ≥ offset+2·potential — dev-blessed 3-stage ladder
+×0.725/0.45/0.25 at offsets 8/9/10, per 2026 Discord dev Q&A; internal skills may exceed 20,
+display clamps). Calibration:
 CP worked-example gate (±1e-4), buzzeriq fixture replay (`docs/research/training/buzzeriq/probes/`,
 worst open-source-live error 0.008), forum weeks-per-pop sanity. Scripts: `npm run training:simulate`,
 `training:report`, `training:refit-salary` (2026-07-14 fit vs Neon: deflationScale 0.7144,

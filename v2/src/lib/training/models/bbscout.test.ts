@@ -26,11 +26,26 @@ describe('bbscout parameters', () => {
     expect(half.gains.ha).toBeCloseTo(full.gains.ha * 0.5, 10);
   });
 
-  it('cap slows training to x0.15 using Josef Ka weights', () => {
+  it('deep past all cap stages: training slows to x0.25 (dev stage 3)', () => {
     const capped = { ...flat7(), skills: skillsFromArray([19, 19, 19, 19, 19, 19, 19, 19, 19, 19]), potential: 5 };
     const r = weekStep(capped, { trainingId: 12, coachLevel: 5 }, BBSCOUT);
     expect(r.capped).toBe(true);
-    expect(r.gains.ha).toBeCloseTo(0.5 * 0.15, 5);
+    expect(r.gains.ha).toBeCloseTo(0.5 * 0.25, 5);
+  });
+
+  it('mid-ladder: score past stage 2 but not stage 3 slows to x0.45', () => {
+    // all-10s, potential 5: max position score = SF/PF weights sum 1.95 x 10 = 19.5
+    // stages at 18 / 19 / 20 -> deepest passed is stage 2 (offset 9)
+    const p = { ...flat7(), skills: skillsFromArray([10, 10, 10, 10, 10, 10, 10, 10, 10, 10]), potential: 5 };
+    const r = weekStep(p, { trainingId: 12, coachLevel: 5 }, BBSCOUT);
+    expect(r.capped).toBe(true);
+    expect(r.gains.ha).toBeCloseTo(0.5 * 0.45, 5);
+  });
+
+  it('internal skills grow past 20 (displayed clamps at 20)', () => {
+    const p = { ...flat7(), skills: skillsFromArray([7, 7, 7, 19.9, 7, 7, 7, 7, 7, 7]), potential: 11 };
+    const r = weekStep(p, { trainingId: 12, coachLevel: 5 }, BBSCOUT);
+    expect(r.skillsAfter.ha).toBeGreaterThan(20);
   });
 
   it('youth trainer boosts 18-19 year olds only', () => {

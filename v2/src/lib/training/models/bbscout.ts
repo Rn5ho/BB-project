@@ -41,10 +41,20 @@ export const BBSCOUT: ModelParams = {
   },
   xtrain: { value: { kind: 'top-skill-malus', coeff: 0.925 }, source: `${RESEARCH}/coachparrot/training_scalars.txt`, confidence: 'fitted' },
   cap: {
-    // slowdown 0.15: at-cap pop every ~6-7 weeks (thread 98371) vs ~weekly uncapped
-    value: { kind: 'weighted-sum', weights: JK_POTENTIAL_WEIGHTS, slowdown: 0.15 },
-    source: `${RESEARCH}/forum-research/EXTRACTED-DATA.md §1 + salary-potential/t98371-m35.txt`,
-    confidence: 'estimate',
+    // Dev-blessed 3-stage ladder (2026 Discord Q&A): ~70-75% / ~40-50% / 25%.
+    // Stages placed inside Josef Ka's cap range [8+2p, 10+2p] (sublevels decide
+    // where in the range capping starts). Replaces the earlier single x0.15 step.
+    value: {
+      kind: 'staged-weighted-sum',
+      weights: JK_POTENTIAL_WEIGHTS,
+      stages: [
+        { offset: 8, slowdown: 0.725 },
+        { offset: 9, slowdown: 0.45 },
+        { offset: 10, slowdown: 0.25 },
+      ],
+    },
+    source: `${RESEARCH}/user-notes/dev-statements-2026.md §1 + forum-research/EXTRACTED-DATA.md §1`,
+    confidence: 'measured',
   },
   minutes: {
     // manual: 45/48/40 with an official 1-minute buffer => effective 44/47/39.
@@ -56,15 +66,23 @@ export const BBSCOUT: ModelParams = {
   weeksPerSeason: { value: 14, source: `${RESEARCH}/model-comparison.md (weeks/season)`, confidence: 'measured' },
 };
 
-function variant(id: ModelParams['id'], f: number, capSlowdown: number, ytPerLevel: number): ModelParams {
+function variant(
+  id: ModelParams['id'],
+  f: number,
+  stageSlowdowns: [number, number, number],
+  ytPerLevel: number,
+): ModelParams {
   const v = structuredClone(BBSCOUT);
   v.id = id;
   v.rates = { ...v.rates, value: scaleRates(BBSCOUT.rates.value, f) };
-  if (v.cap.value.kind === 'weighted-sum') v.cap.value.slowdown = capSlowdown;
+  if (v.cap.value.kind === 'staged-weighted-sum') {
+    v.cap.value.stages.forEach((s, i) => { s.slowdown = stageSlowdowns[i]; });
+  }
   v.youthTrainer = { ...v.youthTrainer, value: { perLevel: ytPerLevel } };
   return v;
 }
 
 // ±15% rate scale = median cross-source cell disagreement (model-comparison.md).
-export const BBSCOUT_LOW: ModelParams = variant('bbscout-low', 0.85, 0.1, 0);
-export const BBSCOUT_HIGH: ModelParams = variant('bbscout-high', 1.15, 1 / 3, 0.05);
+// Stage slowdowns spread across the dev-quoted ranges (70-75% / 40-50% / 25%).
+export const BBSCOUT_LOW: ModelParams = variant('bbscout-low', 0.85, [0.7, 0.4, 0.25], 0);
+export const BBSCOUT_HIGH: ModelParams = variant('bbscout-high', 1.15, [0.75, 0.5, 0.25], 0.05);

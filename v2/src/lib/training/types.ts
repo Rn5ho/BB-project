@@ -43,6 +43,10 @@ export type CapSpec =
   /** Josef Ka / CP: capped when max over positions of Σ(weights·skills) ≥ 8 + 2·potential.
    *  weights arrays follow SKILL_KEYS order. All gains ×slowdown when capped. */
   | { kind: 'weighted-sum'; weights: Record<Position, number[]>; slowdown: number }
+  /** Dev-blessed 3-stage ladder (2026 Discord Q&A): capped at stage i when
+   *  max over positions of Σ(weights·skills) ≥ stages[i].offset + 2·potential;
+   *  the deepest passed stage's slowdown applies. Stages ordered by offset asc. */
+  | { kind: 'staged-weighted-sum'; weights: Record<Position, number[]>; stages: Array<{ offset: number; slowdown: number }> }
   /** Deployed open_source: per-skill ×slowdown once that skill ≥ threshold (potential ignored). */
   | { kind: 'high-skill'; threshold: number; slowdown: number };
 

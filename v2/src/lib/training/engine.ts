@@ -1,7 +1,7 @@
 import { getTrainingType } from './catalog';
 import {
   ALL_POSITIONS, SKILL_KEYS,
-  type ModelParams, type SkillKey, type Skills,
+  type ModelParams, type Position, type SkillKey, type Skills,
 } from './types';
 
 export interface PlayerState {
@@ -44,16 +44,40 @@ export function heightMultiplier(model: ModelParams, heightCm: number, skill: Sk
   return bySkill[skill][best];
 }
 
+function potentialCapScore(weights: Record<Position, number[]>, player: PlayerState): number {
+  const arr = SKILL_KEYS.map((k) => player.skills[k]);
+  return Math.max(
+    ...ALL_POSITIONS.map((pos) => weights[pos].reduce((acc, w, i) => acc + w * arr[i], 0)),
+  );
+}
+
 export function isCapped(model: ModelParams, player: PlayerState): boolean {
   const cap = model.cap.value;
-  if (cap.kind !== 'weighted-sum') return false;
-  const arr = SKILL_KEYS.map((k) => player.skills[k]);
-  const score = Math.max(
-    ...ALL_POSITIONS.map((pos) =>
-      cap.weights[pos].reduce((acc, w, i) => acc + w * arr[i], 0),
-    ),
-  );
-  return score >= 8 + 2 * player.potential;
+  if (cap.kind === 'weighted-sum') {
+    return potentialCapScore(cap.weights, player) >= 8 + 2 * player.potential;
+  }
+  if (cap.kind === 'staged-weighted-sum') {
+    return potentialCapScore(cap.weights, player) >= cap.stages[0].offset + 2 * player.potential;
+  }
+  return false;
+}
+
+/** Slowdown factor from the potential cap (1 = uncapped). high-skill caps are per-skill,
+ *  handled inside weekStep. */
+function capSlowdownFactor(model: ModelParams, player: PlayerState): number {
+  const cap = model.cap.value;
+  if (cap.kind === 'weighted-sum') {
+    return isCapped(model, player) ? cap.slowdown : 1;
+  }
+  if (cap.kind === 'staged-weighted-sum') {
+    const score = potentialCapScore(cap.weights, player);
+    let factor = 1;
+    for (const stage of cap.stages) {
+      if (score >= stage.offset + 2 * player.potential) factor = stage.slowdown;
+    }
+    return factor;
+  }
+  return 1;
 }
 
 function elasticMultiplier(model: ModelParams, skills: Skills, trained: SkillKey): number {
@@ -106,6 +130,7 @@ export function weekStep(player: PlayerState, config: WeekConfig, model: ModelPa
     const maxSkill = Math.max(...SKILL_KEYS.map((k) => player.skills[k]));
     const avgAll = SKILL_KEYS.reduce((a, k) => a + player.skills[k], 0) / SKILL_KEYS.length;
     const capSpec = model.cap.value;
+    const capFactor = capSlowdownFactor(model, player);
     for (const k of SKILL_KEYS) {
       const rate = row[k];
       if (!rate) continue;
@@ -116,18 +141,20 @@ export function weekStep(player: PlayerState, config: WeekConfig, model: ModelPa
       if (xt.kind === 'top-skill-malus' && player.skills[k] === maxSkill) {
         g *= Math.pow(xt.coeff, player.skills[k] - avgAll);
       }
-      if (capSpec.kind === 'weighted-sum' && capped) g *= capSpec.slowdown;
+      g *= capFactor;
       if (capSpec.kind === 'high-skill' && player.skills[k] >= capSpec.threshold) g *= capSpec.slowdown;
       gains[k] = g;
     }
   }
 
+  // Internal skills can exceed 20 (dev-confirmed: "22 HA helps more than 20 HA");
+  // only the DISPLAYED value clamps at 20.
   const skillsAfter = { ...player.skills };
   const pops: Partial<Record<SkillKey, boolean>> = {};
   for (const k of SKILL_KEYS) {
     if (!gains[k]) { pops[k] = false; continue; }
     const before = skillsAfter[k];
-    skillsAfter[k] = Math.min(20, before + gains[k]);
+    skillsAfter[k] = before + gains[k];
     pops[k] = displayed(skillsAfter[k]) > displayed(before);
   }
 
