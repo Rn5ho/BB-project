@@ -71,6 +71,23 @@ better data in Phase B). Research archive + provenance chain: `docs/research/tra
 Design spec: `docs/superpowers/specs/2026-07-14-training-planner-v2-design.md` (Phases B–D:
 position-minutes pipeline, inference flywheel, planner UI).
 
+**Training Phase B shipped 2026-07-14** — Position-minutes pipeline + player-page Development
+tab. Tables: `matches` (boxscore_fetched_at null = pending work), `player_match_minutes`
+(per-position minutes per tracked player per match), `training_plans` (jsonb blocks,
+one active per player); `teams.schedule_synced_at/_season` tracks per-club schedule
+freshness. Sync: `runMinutesSync` in `src/server/sync/minutes.ts` (incremental, batch-limited:
+distinct owner clubs of Slovenian prospects → `schedule.aspx` → countable finished matches
+(`league.*`/`cup`/`friendly`/`pl.*`; NOT bbm/nt/b3/unknown) → `boxscore.aspx` per-position
+minutes; runs daily in `/api/cron/daily` (`?force=minutes` = bigger batches); manual row on
+/settings; `npm run backfill:minutes -- --season N` for backfills. Week bucketing: 7-day
+season-weeks from `seasons.start` (`seasonWeekOf`). Player page: MinutesStrip (stacked
+per-week position minutes + eligible-training chips), DevelopmentSection (ensemble TSP
+band chart via client-side `ensembleProject`, per-skill projection table, dual CapBar
+now/end-of-plan, PlanEditor seeded from `src/lib/training/templates.ts` archetypes, savePlan
+server action). Bridge helpers (snapshot→PlayerState at displayed−0.5, `eligibleTrainings`,
+`planToWeeks`, `bandSeries`): `src/lib/training/bridge.ts`. Gotcha: use `toLocaleString('en-US')`
+in client components (server/client locale hydration mismatch).
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 
