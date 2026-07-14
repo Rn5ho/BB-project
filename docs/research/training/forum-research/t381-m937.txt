@@ -1,0 +1,321 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > Training Speed Analysis
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > Training Speed Analysis
+Back to the Sneak Peek
+BB Global (English)
+wich tactic to use
+2
+Is a real PG important?
+2
+view live is n/a for cup
+2
+Weekly Minutes
+27
+the finer points of tactics
+2
+Lost Transfer
+1
+wrong starters...
+2
+Training Speed Analysis 2
+3
+Compensation fees nt-players
+11
+Training Speed Analysis
+1000
+Economy page
+2
+Transfer Ad Thread 2/23-3/1
+260
+help !
+3
+When will scrimmages be back
+3
+Dunk Contest
+4
+45082 active teams!
+37
+GM
+5
+BB-Charles
+2
+BuzzerBeater democracy
+2
+Delete an acount
+3
+<
+>
+Favorite Folders
+Training Speed Analysis
+(thread closed)
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+BB-Edju (5)
+GM-brian (1)
+WFU03 (8)
+Shoei (1)
+Huzzel (1)
+Riceball (3)
+CitB (1)
+GM-Bevzil (1)
+GM-Ehud (2)
+Mod-dror amit (1)
+Superfly Guy (2)
+Calum (4)
+Pappy ODaniel (1)
+squeakrico7 (1)
+RiP88 (2)
+GM-kozlodoev (2)
+Ali24 (6)
+Mustang (1)
+polskidude (2)
+run and gun TJ (1)
+LA-Nirman (2)
+docend24 (3)
+atabakin (1)
+Heathcoat (2)
+Silverado (1)
+Lux4 (3)
+pacerized (1)
+Search this Thread (Supporter Feature)
+From:
+polskidude
+This Post:
+381.937
+in reply to 381.936
+Date:
+02/11/2009 08:01:57
+M@T0D TEAM
+III.12
+Average on Posts:
+Here are my results of training Pressure (PG/SG) for a few weeks (Trainer lvl: 5)
+First the players' info (pot.=potental)
+Name age pot. height
+Alfred___19__8___6'5
+Dariusz__20__6___6'0
+Grzegorz_20__5___6'6
+Radoslaw 22__7___6'3
+Wilhelm__19__4___6'0
+Rafal____19__2___6'9
+The primary skill improvement: OD (arrow indicates a pop)
+(table shows weeks training OD=Pressure and the minutes played by a player)
+Training 1OD 2OD 3OD 4OD 5OD 6ST 7HN 8OD 9OD 10OD
+Alfred___36__48↑_48__48__48↑_________48__48__48
+Dariusz__48↑_48__48↑_48__48↑_________48__48__48↑
+Grzegorz_48↑_28__35__19__36__________48__48↑_48
+Radoslaw 40__48↑_36__48__48__________48↑_48__48
+Wilhelm__36__48↑_39__48↑_48__________48__48↑_47
+Rafal_____6___6___0___0___2__________48__44__44↑
+7HN - all got 48min of training.
+The secondary skill improvement:
+Alfred: 9OD -pop in ID
+Dariusz: 8OD -pop in ID, 7HN -pop in HN, 7HN -pop in DV
+Grzegorz: 10HN -pop in DV
+Radoslaw:
+Wilhelm 1OD -pop in ID
+Rafal: 2OD -pop in DV
+Seems that hight has quite some influance on the speed of Pressure training.
+6'0 players were poping almost every 2 weeks while for 6'5 player it takes around 3 weeks. I noticed that the potential doesn't influance the training until a certain skill level is reached. Seems like a player with a starter potential can easily reach 2-3 skills around prominent level without the potential slowing down the training.
+Also the improvement of HN, DV and ID takes way more than 7-8 weeks to pop. I trained OS last season which also "trains" DV and HN as secondary skills and I only got pops this season. It seams that, at least in my case, the 7-8 weeks for DV and HN are more like a full season - 14-16 weeks.
+So to conclude:
+Pressure
+PG/SG:
+Trains OD @ 2-3 weeks
+Trains ID @ 14-16 weeks
+Trains HN @ 14-16 weeks
+Trains DV @ 14-16 weeks
+Hope that info helps;)
+e: typo
+Last edited by polskidude at 02/11/2009 08:08:57
+From:
+WFU03
+To:
+polskidude
+This Post:
+381.938
+in reply to 381.937
+Date:
+02/11/2009 10:38:52
+Wake Forest
+NBBA
+Average on Posts:
+Thanks for the info!
+This post was fantastic and exactly what this thread needs more of!
+From:
+polskidude
+To:
+WFU03
+This Post:
+381.939
+in reply to 381.938
+Date:
+02/11/2009 11:37:32
+M@T0D TEAM
+III.12
+Average on Posts:
+It seems that most people don't submit correct data. If you really think my post is what the thread needs I think you could place a link at the first post to my info so that people could see the form in which submitted info is useful for this thread.
+I'm glad I could help. Ill try submitting info from last season's OS training as well.
+From:
+GM-JuicePats
+This Post:
+381.940
+in reply to 381.939
+Date:
+02/11/2009 11:49:47
+Salisbury Auerbachs
+NBBA
+Average on Posts:
+60 more posts before we head to a new thread.
+NO ONE at this table ordered a rum & Coke Charles: Penn has some good people 4/27: ARMAGEDDON http://xrl.in/4yg2
+From:
+Ali24
+To:
+GM-JuicePats
+This Post:
+381.941
+in reply to 381.940
+Date:
+02/11/2009 19:08:13
+WKS Slask Wroclaw
+III.9
+Average on Posts:
+some data from trining:
+tr.level 4,type-one on one(team)
+heigh age week1(pops) week2 week3 week4
+player A 6.4 19 full(dr,hand) full full full(hand)
+player B 6.8 21 full(hand) full full(dr) full
+player c 6.7 21 40m(hand) full(driv) full full
+player D 6.1 19 full(hand) full full full(hand,dr)
+player E 6.4 19 full(hand) full(driv) full full
+player F 6.4 18 full(driv) full full(hand) full(driv)
+player G 6.9 20 full full(driv) full full(hand)
+player H 7.1 19 full 28m 29m(driv) 32m
+player I 7.1 20 full full full(driv,hand) full
+player J 6.11 23 full full full(driv) full(hand)
+player K 6.11 20 full full full full(driv)
+player L 5.10 21 23m 10m 18m 29m(driv)
+any comments?
+From:
+CitB
+This Post:
+381.942
+in reply to 381.941
+Date:
+02/11/2009 22:10:01
+CRACKCREW
+Bundesliga
+Average on Posts:
+ok here some data of an allstarpotentialplayer 55 weeks training 1 or 2 positions changed training nearly every week, trainerlevel 9 or 10 old 5 or 6 new, guardtraining, pops like this 7 <jumpShot> , 3<range>,4<outsideDef>,6<handling>,7 <driving>,5 <passing>1 <insideDef>,1 <stamina>, 34 total + 2 xp ,
+he got lot of sub even in insideshot ^^
+From:
+GM-Ehud
+This Post:
+381.943
+in reply to 381.942
+Date:
+02/12/2009 04:41:13
+Maccabi Tazmania
+Ligat Ha'al
+Average on Posts:
+Hello
+Can someone tell me whats the difference between JS for PG/SG to SG/SF ?? (is there a difference in the trainning speed)
+same question for Outside shooting
+"catching a man on a lie is like playing basketball with a retarded kid and calling him for double dribble. you gotta let some Sh#@% slide..." - Chris rock
+From:
+Riceball
+To:
+GM-Ehud
+This Post:
+381.944
+in reply to 381.943
+Date:
+02/12/2009 05:29:54
+Got Rice?
+DBA Pro A
+Average on Posts:
+Hello
+Can someone tell me whats the difference between JS for PG/SG to SG/SF ?? (is there a difference in the trainning speed)
+same question for Outside shooting
+Guards:
+Trains JS @ 2-3 weeks
+Trains JR @ 7-8 weeks
+Trains HN @ 7-8 weeks
+Trains DV @ 7-8 weeks
+Forwards:
+Trains JS @ 2-3 weeks
+Trains JR @ 7-8 weeks
+Trains IS @ 7-8 weeks
+Wingmen:
+Trains JS @ 2-3 weeks
+Trains JR @ 7-8 weeks
+Trains DV @ 7-8 weeks
+Trains HN @ 7-8 weeks
+Trians IS @ 7-8 weeks
+If you would just go to the first page you will see that SG/SF gets subtraining in JR.
+You can look for the Outside Shooting yourself. Show some effort...
+From:
+GM-Ehud
+To:
+Riceball
+This Post:
+381.945
+in reply to 381.944
+Date:
+02/12/2009 05:37:29
+Maccabi Tazmania
+Ligat Ha'al
+Average on Posts:
+thanks - and I'll show some effort as soon as I'll know it (I've never trainned Outside shooting)
+I am aware of the list you've sent, but it doesn't make sence that wingmen has an advantage over PG/SG. (Inside shot). I would think that if that is the case then PG/SG should get pops more often...
+"catching a man on a lie is like playing basketball with a retarded kid and calling him for double dribble. you gotta let some Sh#@% slide..." - Chris rock
+From:
+LA-Nirman
+This Post:
+381.946
+in reply to 381.11
+Date:
+02/12/2009 05:37:49
+Maccabi Nirman BC
+Ligat Ha'al
+Average on Posts:
+i whoud be interested if any one know the speed for JR not JS for wingmans
+Build a man a fire and he will be warm for a day Set a man on fire and he will be warm for the rest of his life (Terry Pratchett)
+From:
+Mod-dror amit
+This Post:
+381.947
+in reply to 381.944
+Date:
+02/12/2009 06:18:24
+amit united
+Ligat Ha'al
+Average on Posts:
+Wingmen:
+Trains JS @ 2-3 weeks
+Trains JR @ 7-8 weeks
+Trains DV @ 7-8 weeks
+Trains HN @ 7-8 weeks
+Trians IS @ 7-8 weeks
+i traines wingmen for mor than 8 week's
+and not even once
+their was a pop up in IS
+so i can not agree with that
+unless someone
+can write it from his experience
+if you love someone sent him free if he comes back he is yours if he does not he never was
+Endorsement
+Advertisement
+Terms Of Service
+|
+Rules of Conduct
+|
+Download Flash Player
+|
+Partners
+|
+Advertise on BuzzerBeater

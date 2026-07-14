@@ -1,0 +1,140 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > TSP vs game shape & DMI value
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > TSP vs game shape & DMI value
+Back to the Sneak Peek
+BB Global (English)
+Offence vs defence (moved / dé...
+1
+Pacifying a player (moved / dé...
+1
+Does all-time great trains slo...
+6
+TSP vs game shape & DMI value
+6
+How to neutralize superior tea...
+1
+pp100
+9
+Who is better?  (moved / dépla...
+1
+All-Star Game Voting
+1
+Training height question (move...
+1
+Make MVP potential higher than...
+1
+Match engine (moved / déplacé)
+1
+The new "Career Stats" feature
+108
+Walter's World: the lockdown f...
+15
+Bugs (moved)
+1
+change post position (moved / ...
+1
+Training Simulator
+3
+Negative rating
+5
+Semi important details queries...
+1
+<
+>
+Favorite Folders
+TSP vs game shape & DMI value
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+GM-Perpete (1)
+Joey Ka (1)
+Myles (1)
+goranj (1)
+Jer&#252;nderbar (2)
+Search this Thread (Supporter Feature)
+From:
+goranj
+This Post:
+0
+304344.1
+Date:
+5/16/2020 7:17:20 AM
+Overall Posts Rated:
+170
+hey,
+first question: where does DMI come from? I tried to calculate it somehow. Salary x game shape doesn't work. shows lower or higher values than suggested. calculating it from the other way around shows that game shape could have value 14 instead of 8. when calculating it for player with all 1, TSP 10, shows nothing also. any hidden factor is having no reasonable value for me
+second question connected is: what is showing the actual better player at the very moment? who will play better? I have 2 players to compare. One has TSP 15 points more than the other, but his game shape is 6, while the second players has game shape at lvl 8 & higher DMI (first question). who will play better in the game?
+PS. players are basically the same position so I can say that the one with higher TSP is just simply better player in general.
+King Crimson
+Mark Unread
+Ignore User
+From:
+Myles
+To:
+goranj
+This Post:
+0
+304344.2
+in reply to 304344.1
+Date:
+5/16/2020 2:26:00 PM
+Overall Posts Rated:
+323
+I can only attest to the first question. It seems as though DMI is partially based on salary and game shape, yet I believe that a game shape value is much like a skill value, with sub levels counting as well. There are high 8's and low 8's, as I've seen my players have higher DMI's with some 8's than others, and the same goes for 9's, 7's, 6's, etc.
+But then you realize it isn't based on CURRENT salary at all. My trainees get better GS as the season goes along due to the fact that they are getting better. Their 8's get higher, as do 9's and etc. This means that it goes based off a hidden "real salary" or "real value" estimate. As it goes based off what I deem to be what their salary would've been if salaries reset on that given day.
+DMI does help you make your decisions, but it doesn't truly factor in your multi-skilled players, much like salary.
+Mark Unread
+Ignore User
+From:
+Jeründerbar
+To:
+goranj
+This Post:
+2
+304344.4
+in reply to 304344.1
+Date:
+5/20/2020 2:38:42 AM
+Woodbridge Wreckers
+DBA Pro A
+Overall Posts Rated:
+1449
+I believe DMI is calculated from skill levels (including stamina) and gameshape, and sublevels in those do matter. That's why DMI can help you notice differences in sublevels in gameshape. For example, if you player has 1 million DMI at gameshape 9, and the next week he his gameshape 8 with 950.000 DMI you know he's a high 8 for gameshape.
+As to how to evaluate who is a better player at this moment, you'll need a combination factors. In isolation you can focus on the individual skill levels (including stamina and free throws, and not all skills are equally valuable) combined with gameshape. However, when deciding who to put where in your lineup, there's also the factors of offensive and defensive tactics, matchups, team composition which can influence the decision. There's not a single number that helps you make this decision. If you don't have the experience to make this complete evaluation, DMI can be a somewhat helpful shortcut to it I think. However, you need to put some extra emphasis on secondary skills, as they are not reflected properly in DMI.
+Mark Unread
+Ignore User
+From:
+Jeründerbar
+To:
+Joey Ka
+This Post:
+0
+304344.6
+in reply to 304344.5
+Date:
+5/23/2020 9:13:50 AM
+Woodbridge Wreckers
+DBA Pro A
+Overall Posts Rated:
+1449
+That was my assumption but I wasnt sure, good to have that confirmed.
+Mark Unread
+Ignore User
+Disable Emoticons and Images
+Terms Of Service
+|
+Privacy Policy
+|
+Rules of Conduct
+|
+Partners
+|
+Advertise on BuzzerBeater
+|
+|
+|
+|

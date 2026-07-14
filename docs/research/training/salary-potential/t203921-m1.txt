@@ -1,0 +1,361 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > The BB Training Crowd-Sourcing Project
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > The BB Training Crowd-Sourcing Project
+Back to the Sneak Peek
+BB Global (English)
+NBA Season 16/17 MVP
+47
+new tool: rebound
+48
+Half Court Shots
+18
+When 1 second lasts an eternit...
+2
+BuzzerBeater's Best
+1
+Buying player before playoffs ...
+1
+Help, I am a new BB fam. (move...
+1
+Youtube series?
+13
+JR ?
+1
+Season 38 new things
+135
+The BB Training Crowd-Sourcing...
+475
+BB's Conservative Mindset
+12
+training efect 96'
+6
+Player ejected from BB game!
+10
+Outside Defense Pop in 1v1 F T...
+4
+Private League
+2
+Question about training
+2
+Changing players when crushing...
+6
+closed
+2
+Why same skilled shooters shot...
+10
+<
+>
+Favorite Folders
+The BB Training Crowd-Sourcing Project
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+brian (1)
+wozzvt (59)
+darykjozef (2)
+Marot (5)
+Coco (1)
+GrFlur (1)
+Dangerous boy (1)
+Calum (7)
+Seba (2)
+LA-Karangula (2)
+D. Milicic (1)
+Tesse (5)
+Mojo F (1)
+Joey Ka (10)
+GM-kalebam (1)
+justme (8)
+Petrus Magnus (1)
+Thunder Dan (4)
+Codemasters (3)
+Azariah (1)
+danbo (2)
+alexFerguson (3)
+Azrail (7)
+LA-seelenjaeger (19)
+strilfe (1)
+Manouche (1)
+jokeru (2)
+Kukoc (8)
+Yellow cake (14)
+Shanmag (2)
+Paco el Ni&#241;o de Piombo (2)
+7ton (8)
+Banan-mat69 (1)
+Benny_RLK(Indo-U21-Coach) (1)
+Killer Penguin (1)
+whitemaggot (2)
+JamesBond (1)
+Melo9 (1)
+LeftHook (2)
+red (3)
+andrei_r (1)
+MCSmooth (2)
+rubbercube (4)
+Bballin (2)
+FSH (1)
+FresRez (1)
+Manon (26)
+Weylin (4)
+HPR (1)
+bossofbosses (2)
+Wolph (41)
+GM-incow sk (1)
+kr1shna (3)
+Koperboy (18)
+TrinZ (1)
+LA-kiks (1)
+Thelonious (1)
+dirk_nowitzki_pije_hlapicev_sok (1)
+buzer_ko (1)
+Jay_m (5)
+m0nkey (1)
+MPL (12)
+sailor_man (2)
+Headless T Gunner (20)
+Mr AD (1)
+bermi (4)
+Big Dogs (1)
+El patriota (1)
+WFUnDina (3)
+Flamen (3)
+capali (2)
+Beener not Beanerz (4)
+GM-hrudey (4)
+Pini פיני (7)
+Tangosz (8)
+Tmu1988 (1)
+Big BO$$ (1)
+fieldstar (1)
+Ralph54 (2)
+Gajus Julijus Cezaris (6)
+Jaumator (1)
+Fulansu (1)
+Prof. Bricks (5)
+GM-Pesty Magician (1)
+BigB (1)
+Ulkar (1)
+HHtheKing (4)
+rhyminsimon (3)
+HAHA (2)
+Cowstreet (2)
+w_alloy (2)
+Muffins (2)
+tough (4)
+jspurgeon8 (1)
+Atlas1 (8)
+LBJisaCancer (1)
+PeachesTheApache (1)
+Phat Panda (1)
+kico (1)
+LOPO_ (3)
+mavibst (3)
+Billy (1)
+jamseharden (2)
+Aleksandar (1)
+Phyr (4)
+Patg (1)
+Omega Man (1)
+Aleksandar (2)
+Cownboy (2)
+Vari3 (5)
+Tiger Kookie (1)
+permaloso (1)
+Desh026 (1)
+fireonice (1)
+Search this Thread (Supporter Feature)
+From:
+wozzvt
+This Post:
+44
+203921.1
+Date:
+12/3/2011 4:11:59 PM
+Overall Posts Rated:
+228
+So, it's been about two years since the training analysis thread (78242.01) was updated.  And while this thread was great at giving us a rough idea of how much training players get, it leaves a lot to be desired in terms of exact training rates, the effect of things like age, height, trainer level and partial minutes, not to mention things like the much-speculated elastic effect, and the new cross-training effects.
+With that in mind, I'm looking for people who are interested in participating in a new crowd-sourcing project that I've created with the help of a few other BB managers.  The project uses a greasemonkey script to send data directly from the BB Training page to a webpage where you can track your training history.  It then uses the bbapi to automatically grab minutes and player info so that we can do some serious analysis of training speeds.  We've been using this in the USA NT community for a few weeks now, and the quality of the data is top notch, but we need more users (and more weeks of training data) to start answering some of the really interesting questions.  If you're interested, there's more info available at the website:
+(http://training.bb-usa.net/)
+You can log in with your bbapi user name and access key, and on the main page you'll see instructions on how to get and use the greasemonkey script, which will add a button to your training page. Then each week, all you have to do is click the button, and everything else will happen like magic.
+So what's in it for you?  A few things are available immediately:
+- We've developed a pretty simple, but pretty useful interface for tracking training history and progress.  Makes it easy to keep track of what you've trained and when, without having to worry about spreadsheets.  Access it from anywhere!
+- When you click on a player page, you'll get some useful additional information.  In particular, it will tell you how much training he's had in each skill since the last time he popped, including primary and secondary training, so you can get a better sense of when they should pop again.  You'll also get a full pop history (since you've started updating), an estimate of how close the player is to capping and their estimated salary, and an estimate of how much a pop in each skill will effect the salary and cap value.
+- A training planner that let's you change a player's skills to see how the future skills will affect salary and cap values.
+And of course, long term, all the training info we gather will be available to people who have been regularly updating their info, including:
+- Estimates of how much each training type trains each skill.
+- How much age, height and trainer level really matter.
+- What fraction of training each player gets if they fall short of the 48+ minutes.
+- Access to the raw data.  All identifying information (player names, IDs, teams, etc) will always be kept anonymous, but the basic training data (minutes, training type, trainer info and skill pops) will be made available for anyone who's interested in doing their own analysis of the data.
+Since this uses the BB Training page to get skill updates, supporters will be able to add info retroactively, but non-supporters will only be able to add the most recent data.  Because of this, depending on how many supporters participate, we may be able to start getting some of the analysis in place pretty quickly since we've already got a head start from USA users that have been using this for the past month or so.  Feel free to drop a note here or BB-mail me if you've got any questions.
+(http://training.bb-usa.net/)
+Last edited by wozzvt at 6/15/2012 6:39:55 AM
+Mark Unread
+Ignore User
+From:
+wozzvt
+To:
+wozzvt
+This Post:
+1
+203921.2
+in reply to 203921.1
+Date:
+12/3/2011 5:05:35 PM
+Overall Posts Rated:
+228
+One thing I should have mentioned is that the greasemonkey portion of the script will probably only work if you're language is set to english (US).  We'll work on resolving this, but for now unfortunately I think we're stuck with it.
+Mark Unread
+Ignore User
+From:
+alexFerguson
+To:
+wozzvt
+This Post:
+2
+203921.3
+in reply to 203921.1
+Date:
+12/3/2011 5:31:35 PM
+Overall Posts Rated:
+888
+That's cool. About few days ago in our Brainiac fed we have discussed the training analysis based on DMI changing for players keeping GS 9. In this case the DMI changes only due to the skill-ups and is not affected by GS.
+Btw.
+Because of this, depending on how many supporters participate, we may be able to start getting some of the analysis in place pretty quickly
+If the supporters changed the coach some time ago - then the script will send the data with the current coach level, but not with the one that was before. Right? That may lead to some incorrect results, so it's better not to send the data of trainings with the previous coach.
+P.s. Training histry doesn't show any results for me. Chrome 15. English US is set.
+Last edited by alexFerguson at 12/3/2011 5:33:32 PM
+Mark Unread
+Ignore User
+From:
+wozzvt
+To:
+alexFerguson
+This Post:
+1
+203921.4
+in reply to 203921.3
+Date:
+12/3/2011 5:36:00 PM
+Overall Posts Rated:
+228
+That's cool. About few days ago in our Brainiac fed we have discussed the training analysis based on DMI changing for players keeping GS 9. In this case the DMI changes only due to the skill-ups and is not affected by GS.
+Yup, it's tracking both DMI and GS to make this possible.  I'm not totally sold on the idea yet (comparing across players will be difficult given the relationship of DMI to various skills, etc), but that's one of the reasons I mentioned about making the data available to anyone who has ideas on how best to analyze it.
+If the supporters changed the coach some time ago - then the script will send the data with the current coach level, but not with the one that was before. Right? That may lead to some incorrect results, so it's better not to send the data of trainings with the previous coach.
+Yup, this is an unavoidable problem.  In the meantime, anyone who wants to add old data and remembers when or about when they changed trainers can just bb-mail me and i'll fix it manually in the database.
+Last edited by wozzvt at 12/3/2011 5:36:35 PM
+Mark Unread
+Ignore User
+From:
+wozzvt
+To:
+Joey Ka
+This Post:
+2
+203921.6
+in reply to 203921.5
+Date:
+12/4/2011 10:44:28 AM
+Overall Posts Rated:
+228
+Do you have some data protection policy for non-US NT players? If not, would you consider making one?
+Hi Josef,
+This is of course a concern with anything that uses the bbapi (buzzer-manager, etc), and all I can really do is promise that identifiable data certainly won't be shared in any way.  In fact, even for the US version of this that we've been using we keep the data quite separate from our NT databases so that users can access this feature independently of whether their players are being tracked for NT purposes. I am the only one that has access to the database itself, and only venture in as far as is necessary to track down bugs.
+As for the data-sharing portion of this project, skills themselves will never be shared.  At some point we will be interested in looking at things like the "elastic effects" which require skills, but in these cases, the skills themselves will never be shared.  I may look into whether certain summary statistics (mean/standard deviation across skills, etc) can be shared, but this will only happen if it can really be done without identifying the player.  If this can't be done, I'll limit it to analyses that I run, and if people want to try out new analyses, they can do it through me.
+As for a specific policy regarding non-US NT players, they get treated like everyone else. I don't want to exclude them because high skill players are going to be important for tracking down some aspects of training (and because we can't tell they're NT players through the bbapi).  Their data certainly won't be shared, but that applies to all players, not just NTers.
+I completely understand that not everyone will want to participate because of this though.
+Mark Unread
+Ignore User
+From:
+Kukoc
+To:
+wozzvt
+This Post:
+1
+203921.7
+in reply to 203921.6
+Date:
+12/4/2011 12:53:05 PM
+Overall Posts Rated:
+1336
+I think this project is a great idea!
+Mark Unread
+Ignore User
+From:
+whitemaggot
+This Post:
+0
+203921.8
+in reply to 203921.1
+Date:
+12/4/2011 9:22:20 PM
+Overall Posts Rated:
+68
+Looks interesting I'm in.
+Mark Unread
+Ignore User
+From:
+wozzvt
+This Post:
+6
+203921.9
+in reply to 203921.8
+Date:
+12/6/2011 11:11:58 AM
+Overall Posts Rated:
+228
+Thanks to all those who have joined so far!  If you haven't participated, you still can!  Just head to (http://bb-training.comuf.com/)
+We've already collected 441 weeks of training data, which when combined with what we have from the US database is starting to produce some good results.
+I've added a link that takes you to an "Analysis" overview page, outlining the different results we're getting, and provides access to the raw data.  For now, I've put up a basic "training speed analysis", which basically replicates the old thread here in BB-Global, but with more data and (hopefully) more accurate speed estimates.  It will also update automatically as more data is added, so the estimates will continue to be refined.  And you can specify an age range to look at, so you can set 18-25 to get a sense of relative speeds based on a very large sample, or set it to 18-18 to get a specific data point, but with potential small sample size issues (for now!).
+As a teaser to those still on the fence, here are the training rates for JS Wingman training, based on players aged 18-25.
+JS: 0.4
+JR: 0.1
+Hnd: 0.05
+Drv: 0.03
+IS: 0 (!)
+And 1v1 for Forwards:
+JS: 0.14
+Hnd: 0.35
+Drv: 0.39
+IS: 0.18
+And if you've ever wondered how those Hnd/Drv rates compare to 1v1 for Guards, you can see that as well.
+If this looks like data you'd be interested in, join in! The more data we get, the better the quality of results will be. It's available to everyone who's added at least 2 weeks of training data, which should be everyone who's participated.
+Mark Unread
+Ignore User
+From:
+Manouche
+To:
+wozzvt
+This Post:
+1
+203921.10
+in reply to 203921.9
+Date:
+12/6/2011 12:14:15 PM
+Overall Posts Rated:
+699
+Great stuff as expected ! Some very surprising results for HN and DRV as secondaries despite what looks like a reasonable sample. It really seems way off.
+But an awesome tool that will quickly help to solve those little mysteries and dirty secrets :)
+Thank you !
+edit : I want to add that more date is needed. Supporters, sign up !
+Last edited by Manouche at 12/6/2011 12:18:37 PM
+Mark Unread
+Ignore User
+Disable Emoticons and Images
+Terms Of Service
+|
+Privacy Policy
+|
+Rules of Conduct
+|
+Partners
+|
+Advertise on BuzzerBeater
+|
+|
+|
+|

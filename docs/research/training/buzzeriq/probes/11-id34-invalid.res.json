@@ -1,0 +1,1 @@
+{"detail":[{"type":"value_error","loc":["body","training_schedule"],"msg":"Value error, Training type at week 1 must be 1-33, got 34","input":[34],"ctx":{"error":{}}}]}

@@ -1,0 +1,306 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > Formula for Potential Uncovered
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > Formula for Potential Uncovered
+Back to the Sneak Peek
+BB Global (English)
+How much money  does b3 winner...
+1
+The oldest active team
+33
+Mentor (New to game!) (moved)
+1
+Search for the all time bests
+2
+Integrated excel calculator (m...
+1
+Becoming a HomeGrown (HG) Team...
+6
+Do BBM matches count for train...
+1
+Subsciption error (moved)
+1
+I couldn't find an official su...
+1
+Aging Players
+3
+Challenges
+1
+How to challenge another team ...
+3
+Formula for Potential Uncovere...
+137
+Why didn't we follow depth cha...
+1
+Private League (moved / déplac...
+1
+Merry Christmas and a happy Ne...
+95
+Season Ticket Holders Season 6...
+1
+Draft robbery
+17
+Suggestion (moved / déplacé)
+1
+<
+>
+Favorite Folders
+Formula for Potential Uncovered
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+CrazyEye (2)
+Dragonlance (2)
+rwystyrk (1)
+Joey Ka (2)
+Iso_Massimo (2)
+Steve Karenn (3)
+LA-seelenjaeger (1)
+B.B.King (6)
+Einpeitscher (2)
+Coach Motto (1)
+hupfingatsch ihm sein Knecht (1)
+Alex CB (2)
+Tutori (1)
+Ludwig Van Spraydosen (2)
+Thelonious (1)
+Flamen (1)
+Ralph54 (1)
+dantoleon (2)
+Lucifer (1)
+The Sentinel (1)
+Search this Thread (Supporter Feature)
+From:
+Coach Motto
+To:
+CrazyEye
+This Post:
+0
+188524.102
+in reply to 188524.101
+Date:
+7/27/2011 6:33:28 AM
+Overall Posts Rated:
+150
+but you should consider that the formula is made with average values, so when you have low respectable is should be more like 6,5 then 7.
+Now I´m confused... I don´t underestand what you mean. Why a low respectable sould be closer than 6.5 than to 7? even considering that the formula is made with average values I don´t get it. Could you explain it a little bit more?
+I have players close to their cap and I´m trying to make a non intensive trainiing to make them last a little bit longer, that´s why I want to be really precise stimating where they are (18,56 or 18, 67, etc...)
+Mark Unread
+Ignore User
+From:
+Steve Karenn
+To:
+CrazyEye
+This Post:
+0
+188524.103
+in reply to 188524.101
+Date:
+7/27/2011 7:08:12 AM
+Overall Posts Rated:
+404
+I mean in the sub of the skill. As far as I know is impossible to predict the sub of the potential until is too late...
+If I apply Josef Ka´s potential formulas including sublevels (i.e: 9.5 instead of 9 ) , I would be closer to the real cap number of that player (whatever it is) than if I just put the entire number (no decimals). Is that right?
+but you should consider that the formula is made with average values, so when you have low respectable is should be more like 6,5 then 7.
+No,because respectable is among 7 and 7.9
+The formula is made with average value,but when a player reach respectable level,his skill is always superior to 7,at max you could consider a value more like 7.5 than 7
+Mark Unread
+Ignore User
+From:
+CrazyEye
+To:
+Steve Karenn
+This Post:
+0
+188524.104
+in reply to 188524.103
+Date:
+7/27/2011 7:13:47 AM
+Overall Posts Rated:
+959
+I mean in the sub of the skill. As far as I know is impossible to predict the sub of the potential until is too late...
+If I apply Josef Ka´s potential formulas including sublevels (i.e: 9.5 instead of 9 ) , I would be closer to the real cap number of that player (whatever it is) than if I just put the entire number (no decimals). Is that right?
+but you should consider that the formula is made with average values, so when you have low respectable is should be more like 6,5 then 7.
+No,because respectable is among 7 and 7.9
+The formula is made with average value,but when a player reach respectable level,his skill is always superior to 7,at max you could consider a value more like 7.5 than 7
+so if you examine 100 players with skill 7, the average skill ingame should be around 7,5. In the formula it appears at 7.
+So when you have a seven ingame, shouldn't it 0,5 points below 7,5(which is 7 here)?
+Last edited by CrazyEye at 7/27/2011 7:14:04 AM
+Mark Unread
+Ignore User
+From:
+Steve Karenn
+To:
+CrazyEye
+This Post:
+0
+188524.105
+in reply to 188524.104
+Date:
+7/27/2011 8:03:01 AM
+Overall Posts Rated:
+404
+I mean in the sub of the skill. As far as I know is impossible to predict the sub of the potential until is too late...
+If I apply Josef Ka´s potential formulas including sublevels (i.e: 9.5 instead of 9 ) , I would be closer to the real cap number of that player (whatever it is) than if I just put the entire number (no decimals). Is that right?
+but you should consider that the formula is made with average values, so when you have low respectable is should be more like 6,5 then 7.
+No,because respectable is among 7 and 7.9
+The formula is made with average value,but when a player reach respectable level,his skill is always superior to 7,at max you could consider a value more like 7.5 than 7
+so if you examine 100 players with skill 7, the average skill ingame should be around 7,5. In the formula it appears at 7.
+So when you have a seven ingame, shouldn't it 0,5 points below 7,5(which is 7 here)?
+that's non sense
+when Josef received/observed the skill of the player to analize,he sees respectable as a value among 7 and 7.9,received for some/many player information about trainings and then come out with the formula
+In game,if you know that a player has respectable,his value go among 7 and 7.9 because you don't know the decimals of that player,plain and simple
+Mark Unread
+Ignore User
+From:
+CrazyEye
+To:
+Steve Karenn
+This Post:
+0
+188524.106
+in reply to 188524.105
+Date:
+7/27/2011 8:30:40 AM
+Overall Posts Rated:
+959
+I mean in the sub of the skill. As far as I know is impossible to predict the sub of the potential until is too late...
+If I apply Josef Ka´s potential formulas including sublevels (i.e: 9.5 instead of 9 ) , I would be closer to the real cap number of that player (whatever it is) than if I just put the entire number (no decimals). Is that right?
+but you should consider that the formula is made with average values, so when you have low respectable is should be more like 6,5 then 7.
+No,because respectable is among 7 and 7.9
+The formula is made with average value,but when a player reach respectable level,his skill is always superior to 7,at max you could consider a value more like 7.5 than 7
+so if you examine 100 players with skill 7, the average skill ingame should be around 7,5. In the formula it appears at 7.
+So when you have a seven ingame, shouldn't it 0,5 points below 7,5(which is 7 here)?
+that's non sense
+when Josef received/observed the skill of the player to analize,he sees respectable as a value among 7 and 7.9,received for some/many player information about trainings and then come out with the formula
+In game,if you know that a player has respectable,his value go among 7 and 7.9 because you don't know the decimals of that player,plain and simple
+in this ase you had to predict unknown player all with X,5 values, don't you think he would have mention this?
+And Josef took player from transferlist, are you sure he ask for training them, to get a feeling for their subs? Especially when he research in an area with unknown knowledge about training speed?
+Mark Unread
+Ignore User
+From:
+Steve Karenn
+To:
+CrazyEye
+This Post:
+0
+188524.107
+in reply to 188524.106
+Date:
+7/27/2011 10:24:34 AM
+Overall Posts Rated:
+404
+You should ask Josef about the method he used and if he consider some kind of adjustements for decimals
+And I think that some users send him the skills of their own player with the backword trainings(he surely didn't ask to train players to test formula -.-" ) to help his research
+Mark Unread
+Ignore User
+From:
+Iso_Massimo
+To:
+Joey Ka
+This Post:
+0
+188524.108
+in reply to 188524.107
+Date:
+7/27/2011 11:12:29 AM
+Socks & Balls
+SM-Koris
+Overall Posts Rated:
+498
+Second Team:
+Really Small Socks
+How 'bout that Coach_Parrot integration? Is it coming anytime soon? I'm too lazy to insert the formula myself not that I probably even could ;)
+Mark Unread
+Ignore User
+From:
+rwystyrk
+To:
+Steve Karenn
+This Post:
+0
+188524.109
+in reply to 188524.107
+Date:
+7/27/2011 3:11:20 PM
+BC Hostivař
+II.1
+Overall Posts Rated:
+1319
+Second Team:
+Jirkov
+I expect that he used 7.00-7.99 for respectable. I asked him in case of salary formula long time ago. And if I remember right it was like that. So probably this time as well.
+Mark Unread
+Ignore User
+From:
+Alex CB
+To:
+Iso_Massimo
+This Post:
+1
+188524.110
+in reply to 188524.108
+Date:
+8/4/2011 3:06:50 AM
+Overall Posts Rated:
+30
+if you want a simple tool that uses Josef Ka great work, i created for my self an Excel file that I wanted to share and you can download it here :
+(192823.1)
+there's an Excel version and an Open office (not tested).
+any feedback is welcome.
+Many thanks to Josef Ka and contributers for this great work !
+Mark Unread
+Ignore User
+From:
+Iso_Massimo
+To:
+Alex CB
+This Post:
+0
+188524.111
+in reply to 188524.110
+Date:
+8/4/2011 4:45:54 AM
+Socks & Balls
+SM-Koris
+Overall Posts Rated:
+498
+Second Team:
+Really Small Socks
+Great, thanks!
+Mark Unread
+Ignore User
+From:
+Ludwig Van Spraydosen
+To:
+Joey Ka
+This Post:
+0
+188524.112
+in reply to 188524.84
+Date:
+8/4/2011 1:12:38 PM
+Overall Posts Rated:
+15
+I think the answer to my question does lie somewhere in this thread and i think i have read it as well but i'm asking in order to clarify it and be sure that i got you right.
+Is it correct, that the Capcalculation is independent of the position, the player is listed by the engine or the most suitable, and should be done for all positions, since a player has reached his cap, if he did so at any position, no matter what. Thus only the skillset, apllied on your formula - by position - does come into account here?
+Mark Unread
+Ignore User
+Disable Emoticons and Images
+Advertisement
+Terms Of Service
+|
+Privacy Policy
+|
+Rules of Conduct
+|
+Partners
+|
+Advertise on BuzzerBeater
+|
+|
+|
+|

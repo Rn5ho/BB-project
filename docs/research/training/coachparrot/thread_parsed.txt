@@ -1,0 +1,106 @@
+--- msg 1 (1/10/2018 4:28:39 PM) ---
+Coach Parrot is a great tool and it helps me a lot, and it predicts team ratings pretty well . But when I saw the coefficients that it uses, there are some things that I doubt that are correct.
+Just as an example, according to coach Parrot, the rebounding team rating depends on:
+rebounding 78%
+Passing 7%
+Jump Range 7%
+IS, 5%
+JS, 2%
+ID, 1%
+I would expect maybe rebounding 100%, maybe a little bit of handling to grab the ball, maybe ID to block in the rebound .... but passing and jump range???
+So the question is, are those coefficients real, or are they mathematics "errors" produced by the method used?.
+--- msg 2 (1/11/2018 2:32:20 PM) ---
+You should write to Joey_Ka the creator of the tool and ask. I dont think anyone else can give a better answer then him.
+--- msg 3 (8/17/2018 7:06:10 PM) ---
+Did you get answer? I am curious about that ;)
+--- msg 4 (8/17/2018 7:20:52 PM) ---
+I don't have anything new to say about this. Sorry.
+--- msg 5 (8/17/2018 7:42:09 PM) ---
+I asked Josef Ka that much, so he stopped answering
+--- msg 6 (8/17/2018 7:43:09 PM) ---
+Where you found that info about rebounding in Coach Parrot?
+--- msg 7 (8/17/2018 7:51:05 PM) ---
+All coefficients are in the "Coeff" page of the excel file.
+There is a whole table of rebounding coefficients for each tactic.
+--- msg 8 (8/17/2018 7:59:25 PM) ---
+That was so complicated that I did not watch there, thanks ;)
+Do you know what this is: (https://i.imgur.com/4vCsZfy.png)
+What is energy in BB?
+--- msg 9 (8/17/2018 8:02:11 PM) ---
+What means elastic Coeff is 0.91?
+What means Xtrain coeff is 0.93? What is Xtrain?
+--- msg 10 (8/17/2018 8:07:50 PM) ---
+Two more questions: (https://i.imgur.com/FkJP8Yb.jpg)
+--- msg 11 (8/17/2018 8:17:21 PM) ---
+To know at what point we are, what do you DO understand from coach Parrot? What do you use that file for?
+--- msg 12 (8/17/2018 8:36:03 PM) ---
+I understand approximately everything in MyData, Scout and Calculators sections and a little bit in CoachParrot section. I started using Coach Parrot about 2-3 months ago. I want to analyze other Coach Parrot sections and learn something new.
+--- msg 13 (8/17/2018 10:42:17 PM) ---
+If I recall correctly:
+elasticCoeff means, that in the case of training skill X, if average of skills linked to X by elastic effect is Y levels lower than level of X skill, the training of X skill gets elasticCoeff^Y multiplier. Please notice that in CoachParrot elasticCoeff may be lower than 1, but it seems that in real calculations only elasticCoeff is taken into consideration only if it's higher than 1.
+Xtrain is cross-training - X is just short for cross.
+Xtrain coeff means, that if you train the highest skill of your player, it gets Xtrain coeff^(highest skill value - average skill value) multiplier.
+--- msg 14 (8/17/2018 10:54:07 PM) ---
+Is this true about cross training? Others say that cross training is always, highest skill or not... Thanks for respond
+I dont dont understand only elasticCoeff, can you give me example?
+--- msg 15 (8/17/2018 11:41:58 PM) ---
+Well, let's clarify it - we can consider cross-training as two effects happening at once. The first one is the cross-training malus to best skill training - that's where Xtrain coeff matters, and that's the part I've explained in my previous post. The second half is random training of other skills - and you right, that part always happens during the training calculation. 
+elasticCoeff may be explained at the example of OD training - OD is linked with HN and DV (CoachParrot also says that ID is also linked with OD, but at least I think that we can't be really sure about it).
+Let's say you have the player with such skill-set:
+OD 8
+HN 10
+DV 12
+The average from HN and DV is 11. Therefore, the elasticCoeff formula looks like elasticCoeff^(11-8), which equals to 0,91^3, and gives us a 0,754 multiplier (rounded). OD training it that example is 25% slower than training of player with such skillset:
+OD 8
+HN 8
+DV 8
+or:
+OD 8
+HN 6
+DV 10
+or even:
+OD 15
+HN 15
+DV 15 (as difference between average of linked skills and trained skill is 0 in all of those 3 examples, making elasticCoeffmultiplier=1).
+--- msg 16 (8/18/2018 10:39:00 AM) ---
+Thanks very much! Earlier I thought that you have to calculate difference between OD and Ha and multiply by 0.05 (rounded) and add OD and Dr difference and multiply by 0.05. That sum I added to 1 and I got Coeff. By my calcuation it will be (for the first example) it will be 0.7, not 0.754 so it is not bad at all, but your method is much more accurate. Does the same thing with Ha and Dr when you train OD? 
+What about my other questons?
+The main question for me now: what is energy in BB?
+--- msg 17 (8/18/2018 10:59:10 AM) ---
+Please notice that in CoachParrot elasticCoeff may be lower than 1, but it seems that in real calculations only elasticCoeff is taken into consideration only if it's higher than 1.
+So elasticity effect cant do negative effect on skills, only positive?
+--- msg 18 (8/18/2018 11:11:03 AM) ---
+But if:
+OD: 1
+Ha: 20
+Dr:20
+Then elastic coeff will be 6 * 0.5 (OD for PG coeff)=3, can skill be trained more than per one skill at one training?
+--- msg 19 (8/20/2018 9:51:52 AM) ---
+The main question for me now: what is energy in BB?This is the percentage of full performance left to a player after X minutes on the court, considering his stamina level. You can read more about this here (116609.48) This is used in the prediction of team ratings - and in turn, the coefficients for this model were gained from team ratings-data in BuzzerBeater games.
+To understand the coachParrot tool, one needs to keep in mind that its coefficients come from the sources that we as users can observe:
+- team ratings of games
+- training results
+- (and player salaries observable in the transfer market, but the salary coefficients in coachParrot have been obsolete for a long time now - the current ones are included in the buzzer-manager.com tool)
+coachParrot was put together without any secret source of insight beyond what every user of the game can observe in principle. Therefore if a few skill dependencies in coachParrot models seem implausible, this may be due to insufficient and/or noisy data when the models were built. The expert user will form his own opinion. However I have strong confidence that the structure of most models is correct. And this structure can be re-engineered from the spread-sheet and the forum threads from 2009-2010, see here: (119279.4)
+--- msg 20 (8/20/2018 11:33:18 AM) ---
+Thank you very much! Can you answer me some more questions:
+What means those coefficients: (https://i.imgur.com/FkJP8Yb.jpg)
+Can't elasticity effect do negative effect on skills, only positive?
+Can skill be trained more than per one skill at one training?
+Thanks for your time...
+--- msg 21 (8/20/2018 12:35:03 PM) ---
+Forgot about answering your questions- yes, you can level up in skill twice during one training, usually when extreme cases of elastic effect happen.
+In CP calculations, elasticity may have a negative effect, but far as I believe, in real calculations elastic can only increase the amount of training. There's no clear answer here.
+--- msg 22 (8/20/2018 1:00:48 PM) ---
+You can figure out these details from the spreadsheet yourself :-)
+--- msg 23 (8/20/2018 2:05:37 PM) ---
+Sincerely thank you ;)
+--- msg 24 (8/20/2018 2:06:18 PM) ---
+OK ;)
+--- msg 25 (8/20/2018 8:02:05 PM) ---
+if a few skill dependencies in coachParrot models seem implausible, this may be due to insufficient and/or noisy data when the models were built. I don't know what mathematical technique you used. Would it be an option for you to set some coefficients to zero (those which a priori seem implausible), and see how these limits affect the other coefficients?
+--- msg 26 (8/20/2018 8:10:50 PM) ---
+I did this, iteratively. I minimised error terms to the target terms using the excel solver. When some property yielded very little contribution, I would set it to zero in the next iteration. But I had to do some manual work in collecting the data from the bbapi interface, and I only had some 450 games to study in the end I believe. We are talking about stuff from 2009 here ;-)
+--- msg 27 (8/20/2018 8:43:58 PM) ---
+Yes, 450 games is a small sample when you have to determine such a big lot of coefficients.
+Anyway, Coach Parrot is the biggest contribution to the analysis of the game. Much respect.

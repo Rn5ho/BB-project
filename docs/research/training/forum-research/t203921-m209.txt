@@ -1,0 +1,261 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > The BB Training Crowd-Sourcing Project
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > The BB Training Crowd-Sourcing Project
+Back to the Sneak Peek
+BB Global (English)
+Private League Ad Thread 12
+61
+Logo Requests Thread 2
+170
+Official Fed Ad Thread 2
+57
+Let's Get BB Publicized!
+147
+BB Chat Tutorial.
+5
+Forum Rules
+2
+Hi All
+3
+Players for Sale (moved / dépl...
+1
+BuzzerBeaterStats
+587
+Training Speed Analysis 2
+721
+The BB Training Crowd-Sourcing...
+247
+BuzzerBeater World Records 2
+340
+ST vs GS
+7
+out right buy (moved / déplacé...
+1
+Awesome New Draft Prospects
+39
+this is just too funny (player...
+876
+The new player
+2
+Things are finally normal in B...
+6
+<
+>
+Favorite Folders
+The BB Training Crowd-Sourcing Project
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+wozzvt (3)
+Marot (2)
+Calum (1)
+Josef Ka (2)
+justme (1)
+GM-seelenjaeger (1)
+Kukoc (2)
+7ton (2)
+red (2)
+Manon (2)
+Wolph (8)
+LA-Koperboy (2)
+LA-kiks (1)
+buzer_ko (1)
+bermi (4)
+justututukas (2)
+Muffins (2)
+jspurgeon8 (1)
+Search this Thread (Supporter Feature)
+From:
+Manon
+To:
+wozzvt
+This Post:
+0
+203921.209
+in reply to 203921.1
+Date:
+03/02/2012 10:46:18
+Knätofs BBK
+II.1
+Overall Posts Rated:
+923
+I am training a player that may cap just about anytime now. Will this be giving misleading data to your research?
+From:
+wozzvt
+To:
+Manon
+This Post:
+0
+203921.210
+in reply to 203921.209
+Date:
+03/02/2012 10:56:19
+Burlington Mountain Goats
+NBBA
+Overall Posts Rated:
+138
+We've been looking into efficient ways to exclude players that may be capped. Should have something before too long, but in the meantime, I'm fairly convinced that it's a small enough % that you won't really notice a difference with them excluded.
+From:
+Manon
+To:
+wozzvt
+This Post:
+0
+203921.211
+in reply to 203921.210
+Date:
+03/02/2012 11:03:52
+Knätofs BBK
+II.1
+Overall Posts Rated:
+923
+Ok then ill just keep sending my training reports in and contribute with my other two players at least.
+From:
+Wolph
+To:
+wozzvt
+This Post:
+0
+203921.212
+in reply to 203921.210
+Date:
+03/02/2012 17:04:44
+Fire Country Trail Blazers
+JBBL
+Overall Posts Rated:
+609
+where/how are the partial minute excluded? or are they just by default being excluded now?
+The reason I say this is you are talking about removing capped players, most of my capped (or near cap) players getting training is partials and are getting it by accident really.
+From:
+justme
+This Post:
+4
+203921.213
+in reply to 203921.1
+Date:
+03/10/2012 02:46:03
+RakBa
+SM-Koris
+Overall Posts Rated:
+154
+Most popular training types all time:
+Pressure PG: 981
+1v1 Forwards: 710
+Passing PG: 491
+RB C/PF: 478
+ID C: 419
+And people wonder why inside tactics work better than outside :)
+From:
+Kukoc
+To:
+wozzvt
+This Post:
+0
+203921.214
+in reply to 203921.210
+Date:
+03/10/2012 15:24:33
+LaLunaBasket
+Kõrgliiga
+Overall Posts Rated:
+478
+Is the site having somekind of trouble again. I could shortcut to login screen, but can't seem to log in. It get's stuck at loading club/home.php
+Perhaps it's just a temporary issue. Been able to load up data just fine until this week. Atleast it made me glance into global forums again.
+Tere! Ma olen julmosav!
+From:
+Wolph
+To:
+justme
+This Post:
+0
+203921.215
+in reply to 203921.213
+Date:
+03/10/2012 20:22:22
+Fire Country Trail Blazers
+JBBL
+Overall Posts Rated:
+609
+I agree that training patterns defenitely affect how tactics function.
+Still when playing bots though there is no excuse. I don't want to sidetrack the thread, but in my experience playing bots (we do it a lot in Japan) LI still yields the best results. I recently faced a bot with 1 OD and 1 RB and played an outside tactics buying outside guys. Obviously the bot didn't run LI and wasn't geared for it. I didn't find the results as dominate as LI on a bot.
+From:
+red
+To:
+Wolph
+This Post:
+1
+203921.216
+in reply to 203921.215
+Date:
+03/11/2012 08:42:22
+Hows My Dirk Taste
+NBBA
+Overall Posts Rated:
+180
+If we make the assumption that when playing a bot most to all shots are going to be open ones, then I don't think it is so hard to fathom that Inside offense works better than Outside. I also think that probably regardless of if it were a bot or not, that isnt a conclusion we can draw from that. Anyway, i would say that since inside shots go in at a higher rate than jump shots, and about every shot is going to be open, it makes sense to me.
+From:
+Wolph
+To:
+red
+This Post:
+0
+203921.217
+in reply to 203921.216
+Date:
+03/11/2012 08:57:29
+Fire Country Trail Blazers
+JBBL
+Overall Posts Rated:
+609
+hehe...Did I just buy a plyer off of you??
+NEway 3pointers are worth 3 and inside 2. So for jumpers versus layups...yea taking higher % should work better.... but if you get 3s then yea. And well interior defence, defending the paint etc. is one thing where as a teams ability to hit jumpers and pressure is another.
+But well its really hard to tell/say without a testing ability. so many variables with the matches we see.
+From:
+red
+To:
+Wolph
+This Post:
+0
+203921.218
+in reply to 203921.217
+Date:
+03/11/2012 09:17:31
+Hows My Dirk Taste
+NBBA
+Overall Posts Rated:
+180
+Wasn't meant anything against you, just saying what I thought on that front. I dont disagree with you that LI is strong, but I'm not yet ready to say it is a GE problem at this point. I still think motion is very good, and having certain types of players could make it near impossible to defend as well.
+And yes, you did buy that guy off me :) When I went back and looked at his stats, he actually performed better than I thought he did, so hopefully he works out for you. He is +1 OD training and about 30 minutes passing, or whatever minutes he got at PG last week in passing.
+From:
+Wolph
+To:
+red
+This Post:
+0
+203921.219
+in reply to 203921.218
+Date:
+03/11/2012 22:15:39
+Fire Country Trail Blazers
+JBBL
+Overall Posts Rated:
+609
+Well I tend to buy my players based on who they played for. Its a double edged sword.
+On one hand I know they had some kinda use to a winner.
+On the other hand I know that winner no longer sees a use and is happy to let go of said player at that price.
+One thing I messed up on this one though is I was looking at price and skills for what I needed at the moment. I think he can fetch 300kish more on TL than he was sold, so I thought STEAL!!! I could be wrong.
+What I failed to realize is his trainability and NT prospects. 2~3 pops in PA/OD plus 2~3 ID/IS and he is up in the mix for his nation. Unfortuantley I am already stacked with 3 trainees.
+I'll probably do two position until the cup is over then I will need to sell him or my other dude, I hate sitting on players iwth decent build and potential under 27 if I aint trianing them...and stuff.
+Terms Of Service
+|
+Rules of Conduct
+|
+Download Flash Player
+|
+Partners
+|
+Advertise on BuzzerBeater

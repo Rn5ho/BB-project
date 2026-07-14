@@ -1,0 +1,260 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > Training Simulator
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > Training Simulator
+Back to the Sneak Peek
+BB Global (English)
+NT schedule
+25
+Mid season 53 news
+114
+What's up with the aggression?...
+1
+League prize
+2
+Why Северна Македонија?
+3
+Utopia is the biggest nation
+3
+BB Madness TIER 4
+3
+Bid on ex-player
+5
+How to win my final  (moved / ...
+1
+stamina (moved / déplacé)
+1
+DMX
+5
+Training Simulator
+149
+Flag Chasing! Competition 2
+90
+Geezers (moved / déplacé)
+1
+About game speed
+100
+Proud of Myself
+11
+Create profit as a new team / ...
+1
+That's all folks....
+6
+Closed
+2
+<
+>
+Favorite Folders
+Training Simulator
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+sperlov (1)
+mark_lenders (1)
+Dangerous boy (1)
+Seba (1)
+Eli (1)
+GM-Perpete (1)
+Kareem (2)
+minde (2)
+Azrail (2)
+LA-seelenjaeger (1)
+jokeru (1)
+GM-SherlockH (1)
+Chosen (1)
+Pomato (1)
+rubbercube (1)
+fewmit (1)
+EGM-Nickleon (1)
+Manon (3)
+Wolph (3)
+Koperboy (1)
+aMORFIczny (1)
+Headless T Gunner (1)
+Man-Jimaru (2)
+Big Dogs (3)
+GM-hrudey (6)
+Tangosz (1)
+FenXas (1)
+Kumiko (CAN U21) (1)
+D0p (1)
+Ulkar (1)
+LA-CaptainTeemo (1)
+Pichii (2)
+rhyminsimon (37)
+Coach Morwood(Canada U21) (1)
+P. Tom (1)
+Cowstreet (1)
+Timbo4 (4)
+jonte (1)
+Atlas1 (1)
+Westri (1)
+J-Lion (1)
+Knowledge (1)
+jv03 (1)
+tykit (2)
+Jer&#252;nderbar (6)
+maddoghellas (10)
+Olgrey (3)
+Aleksandar (3)
+locopaps (1)
+Phyr (2)
+Sixth Man (2)
+TheZenMaster (1)
+Aleksandar (4)
+jonte (1)
+Nock (1)
+brazilianblur (1)
+LTJ (1)
+Maupster (1)
+sergio (1)
+pepek (1)
+Cobra Kai (1)
+Bernspin (1)
+Rhyminsimon (5)
+Search this Thread (Supporter Feature)
+From:
+rhyminsimon
+This Post:
+43
+229484.1
+Date:
+11/6/2012 4:10:14 PM
+Overall Posts Rated:
+498
+After going through a couple versions of this on my own and with some suggestions from guys on the USA-Offsite, I think it's ready for the broader community:
+Now v2.6.S25!
+.xls (https://drive.google.com/file/d/0ByNXe6cWgZCed1FLd2dYWERXW...)
+.ods (https://drive.google.com/file/d/0ByNXe6cWgZCedGF3NzlERGZ5R...)
+Once you click on this link, open the "file" menu and select "download."
+This spreadsheet is a tool for modeling training based on the information gathered from the BB Training Project. It allows you to input skills, heights, ages, potential, trainer level, weeks of training and which trainees get minutes. And it models the training, including the elastic effect. You must download it and open it on your computer for it to work.
+Please let me know if you have any questions, problems or suggestions and I'll do my best to respond quickly. Enjoy!
+And please help this tool get more accurate and more useful by contributing data to the BB Training Project! Check it out here: (203921.1)
+EDIT: v2.6.S25 – Updated for Season 25
+EDIT: v2.6.S24 – Updated for Season 24, "SP/$1k" replaces the opaque "Salary Efficiency" metric
+EDIT: v2.6.S23 – Updated for Season 23
+EDIT: v2.6 – All coefficients updated to include the most recent data from the Training Site (203921.364)
+EDIT: v2.5.4 – Display age during/after training button, past dates cross out, empty player slots gray
+EDIT: v2.5.3 – Fixed Ssn 24 Training Regimen Drop-down boxes
+EDIT: v2.5.2 – New page for improved skill input process, salary efficiency metric, date specific training (allows you to keep past training regimen), Salary Estimator update for Ssn 22, 10 seasons and 12 players.
+EDIT: v2.4 – Added the salary estimator from the BB Training Site. Also created better instructions and explanations.
+EDIT: v2.3 – Fixed a bug that made 6'11" and 6'10" guys train like they were 6'1"
+EDIT: v2.2 – Fixed a bug in how the elastic effect was calculated.
+Last edited by rhyminsimon at 11/9/2013 8:27:56 PM
+Join the official USA offsite forum for helper tools, camaraderie and advice! (http://s3.zetaboards.com/BuzzerBeater_USA_NT/index/) – Builder of the Training Simulator: (229484.1) – Former host of the Golden Clam Invitational (http://www.buzzerbeater.com/community/fedoverview.aspx?fe...)
+Mark Unread
+Ignore User
+From:
+Kumiko (CAN U21)
+To:
+rhyminsimon
+This Post:
+0
+229484.2
+in reply to 229484.1
+Date:
+11/6/2012 4:45:39 PM
+Overall Posts Rated:
+774
+Thank you to rhyminsimon, USA offsite contributors, and BB Training Project data collectors and submitters for this.
+If you remember me, then I don't care if everyone else forgets.
+Mark Unread
+Ignore User
+From:
+Tangosz
+To:
+Kumiko (CAN U21)
+This Post:
+2
+229484.3
+in reply to 229484.2
+Date:
+11/6/2012 4:57:12 PM
+Overall Posts Rated:
+573
+We can definitely use more people submitting their training results! Many of the estimates we have are based on a solid amount of data, but there are places where we could get more accurate if there were more results. The effect of trainer level is still a bit cloudy, as are some training types, especially shotblocking. :)
+So if you're not already submitting your training, go here (203921.1) and find out how you can contribute!
+Mark Unread
+Ignore User
+From:
+rhyminsimon
+To:
+Tangosz
+This Post:
+0
+229484.4
+in reply to 229484.3
+Date:
+11/6/2012 5:16:01 PM
+Overall Posts Rated:
+498
+Yes! I hope people continue to submit their training results.
+Added incentive: As the data grows and the analysis gets clearer, I'll be able to tweak the sheet to make it more accurate.
+(As it is, my comparison of the model and reality on my 6'2" guy with 3 seasons of training showed that it is accurate to within .5 of a level.)
+Last edited by rhyminsimon at 11/6/2012 5:18:52 PM
+Join the official USA offsite forum for helper tools, camaraderie and advice! (http://s3.zetaboards.com/BuzzerBeater_USA_NT/index/) – Builder of the Training Simulator: (229484.1) – Former host of the Golden Clam Invitational (http://www.buzzerbeater.com/community/fedoverview.aspx?fe...)
+Mark Unread
+Ignore User
+From:
+Azrail
+To:
+Wolph
+This Post:
+1
+229484.7
+in reply to 229484.5
+Date:
+11/7/2012 2:34:39 AM
+Overall Posts Rated:
+259
+I think I am responsible for a good chunk of the SB training Data LOL. ....  SO yea we need some help there!
+me too :)
+Mark Unread
+Ignore User
+From:
+Azrail
+To:
+Manon
+This Post:
+0
+229484.9
+in reply to 229484.8
+Date:
+11/7/2012 9:02:13 AM
+Overall Posts Rated:
+259
+I will be switching to SB training now on my trainees and will contribute with some more in that section.
+Nice! I trained 7 SB and hope to train more :)
+Mark Unread
+Ignore User
+From:
+rhyminsimon
+This Post:
+1
+229484.10
+in reply to 229484.9
+Date:
+11/7/2012 5:19:35 PM
+Overall Posts Rated:
+498
+Just fixed a bug. So you'll wanna download v2.2.
+Join the official USA offsite forum for helper tools, camaraderie and advice! (http://s3.zetaboards.com/BuzzerBeater_USA_NT/index/) – Builder of the Training Simulator: (229484.1) – Former host of the Golden Clam Invitational (http://www.buzzerbeater.com/community/fedoverview.aspx?fe...)
+Mark Unread
+Ignore User
+Disable Emoticons and Images
+Terms Of Service
+|
+Privacy Policy
+|
+Rules of Conduct
+|
+Partners
+|
+Advertise on BuzzerBeater
+|
+|
+|
+|

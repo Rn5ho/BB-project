@@ -1,0 +1,93 @@
+# Training Model Research Archive
+
+Collected 2026-07-14 during the Training Planner v2 design recon (two multi-agent
+sweeps). Everything here is source material for `v2` training model parameters —
+each parameter in the implementation should cite a file in this directory.
+
+## Contents
+
+### `model-comparison.md`
+Side-by-side comparison of every training-model parameter family across four
+sources (v1 `web/lib/training/data.ts`, Sergiu's open-source simulator,
+CoachParrot, the official BBmanual), with per-family verdicts
+(AGREE / CONFLICT / GAP) and a ranked top-10 list of unknowns.
+Key verdicts: v1's elastic direction is unsupported (backwards), v1's Ball
+Handling PG row has a primary/secondary swap, v1 used 16 training weeks/season
+(real: 14).
+
+### `coachparrot/`
+Complete extraction of the CoachParrot 2.1 spreadsheet training model
+(SourceForge: https://sourceforge.net/projects/coachparrot/ — cp_2_1;
+binaries not committed).
+
+- `model_formula.md` — reconstructed model with exact cell references (implementation-ready)
+- `training_rate_matrix.csv` — 33 training types × 10 skills, levels/week
+- `age_coefficients.csv`, `height_coefficients.csv`, `coach_coefficients.csv`
+- `elastic_links.csv` — linked-skill sets for the `0.91^(skill − avg(linked))` elastic multiplier
+- `potential_weights.csv` — per-position weights for the cap formula
+- `training_scalars.txt` — ST/FT flat rates, cross-training 0.925 malus, potential ×1/3 step
+- `values_Coeff.csv`, `formulas_Calculators.tsv`, `coeff_region_addressed.txt` — raw sheet regions the above were derived from
+- `thread_parsed.txt` — forum thread 291954 "Coefficients in Coach Parrot" (all 27
+  messages): provenance. Author (Joey/Josef Ka) fitted coefficients by Excel-Solver
+  least squares on ~450 BBAPI games + crowd-sourced training logs (2009–2013 era).
+
+### `buzzeriq/`
+buzzeriq.com training simulator = validation oracle (server-side models,
+unauthenticated `POST /api/tools/training/simulate` and `/solve`).
+
+- `API-MAP.md` — full endpoint schemas, 33 training-type ID table, per-parameter
+  behavior findings, open_source vs coach_parrot differences
+- `probes/*.json` — 37 recorded request/response fixture pairs (calibration test inputs)
+- `sergiu-logic.js` — the GitHub source of the "open_source" model (MIT,
+  github.com/trainingsimulator/Sergiuilescu.github.io). WARNING: the *deployed*
+  model differs from this file in several coefficients — trust `probes/`, not this.
+- `run-probes.sh` — the probe script (rate-limited; reusable to record more fixtures)
+
+### `forum-research/`
+Archived BB forum research threads (mostly via Wayback; `t<thread>-m<msg>.txt`).
+
+- `EXTRACTED-DATA.md` — consolidated index: weeks-per-pop table (WFU03),
+  potential-cap weights + ranges, dev quotes (BBCharles, BBMark), BB Training
+  Project derived rates, trainer-level percentages
+- Thread 381 + 78242 — "Training Speed Analysis" 1 & 2: raw measured training logs
+  (2007–2016), usable as validation data points
+- Thread 203921 — wozzvt's BB Training Crowd-Sourcing Project (441+ logged weeks;
+  raw DB lost with training.bb-usa.net — survives only via derived tools)
+- Thread 229484 — rhyminsimon's Training Simulator release thread (canonical
+  community model, ±0.5 level over 3 seasons claim). Spreadsheet NOT yet obtained:
+  Drive links are owner-locked; re-request via forum/Discord.
+- Thread 188524 — Josef Ka "Formula for Potential Uncovered" (2,276 samples)
+
+### `salary-potential/`
+Salary, potential-cap, sublevel, and game-shape sources.
+
+- `EXTRACTS.md` — ready-to-implement digest with per-claim citations
+- `chromebb-salarycalc.js` — public-domain JS with BOTH salary formulas
+  (Josef Ka base-300 + BB-USA/wozzvt base-245) incl. deflation constants
+- `bb-salary-calc-content.txt` — extracted formulas from Josef Ka's own
+  bb-salary-calc 1.0.6 .ods (newer deflation coefficients than chromebb)
+- `bm-evaluations.user.js` — documents Buzzer-Manager's open salary API
+  (`GET buzzer-manager.com/api/getEstimatedSalary.php?...` — live second oracle,
+  returns potential caps as TSP bands)
+- `t*.txt` — cap studies (LeYeNdiNhA 2009, at-cap pop every ~6–7 weeks), DMI
+  sublevel method, game-shape guides, and thread 324393: **official Jun-2024
+  salary-rework announcement** (⇒ refit salary multipliers against our own Neon
+  data; don't trust 2013 constants)
+
+### `bbapi/`
+Evidence that BBAPI `boxscore.aspx` returns per-player minutes **split by
+position** (`<minutes><PG/><SG/><SF/><PF/><C/></minutes>`) with plain read-only
+credentials — the data source for weekly training-eligibility inference.
+
+- `boxscore_example.xml` — real captured response
+- `bb-schemas.md`, `bbapi_docs_*.txt` — community-documented endpoint schemas
+
+## Provenance chain (one lineage!)
+
+Nearly all community coefficients descend from a single line of research:
+forum threads 381/78242 (hand-logged pops) → wozzvt's crowd-sourcing project
+(training.bb-usa.net, dead) → rhyminsimon's spreadsheet + CoachParrot (both
+least-squares fits of that data) → BuzzerIQ (aggregates CoachParrot + Sergiu).
+Agreement between these sources is NOT independent confirmation. The data is
+2009–2013 era; post-2013 game rebalances are the biggest systematic risk —
+mitigate via our own observed-pops calibration (see design spec).

@@ -1,0 +1,326 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > Formula for Potential Uncovered
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > Formula for Potential Uncovered
+Back to the Sneak Peek
+BB Global (English)
+Dynamic Salaries Season 17
+10
+Formula for Potential Uncovere...
+129
+Rookie Needs Lineup Help... (h...
+1
+Team Website?
+37
+coachParrot - assistant tool
+252
+New Team Website! Anyone else ...
+2
+[P]BBs and the forums
+12
+Flag Chase
+644
+National Scout
+15
+potential/salary calc
+13
+Pre-determined winners?? (move...
+1
+Potential calculation - Excel ...
+11
+BuzzerBeater's Best (B3-season...
+4
+Choose Your Opponents' Defensi...
+20
+anyone looking for a shooting ...
+1
+Suspensions? déplacé
+1
+What If Cross-Training Was Opt...
+16
+<
+>
+Favorite Folders
+Formula for Potential Uncovered
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+brian (1)
+GM-CrazyEye (6)
+Dragonlance (2)
+GM-somdetsfinest (1)
+Coco (1)
+moutlinho (5)
+HoF - Elmacca (1)
+Newton07 (1)
+rwystyrk (Czech NT Manager) (2)
+LA-3point king (1)
+Calum (1)
+Josef Ka (23)
+justme (1)
+Iso_Massimo (2)
+Steve Karenn (6)
+LA-seelenjaeger (16)
+B.B.King (7)
+Mamba888 (1)
+Einpeitscher (6)
+Coach Moto (3)
+WasabiSam (1)
+Jesus Knecht Swaggerstar (1)
+whitemaggot (2)
+kLepTo (1)
+red (3)
+alex cb (1)
+Tutori (2)
+Eminence Front (3)
+Mike Rice (1)
+thylacine (7)
+Mathcorejay (4)
+shoe lover (1)
+Ludwig Van Spraydosen (2)
+Dunkface (1)
+LA-Koperboy (4)
+il7mago (1)
+Captain P-Dog (1)
+MG23_morfeusz (1)
+Asasasa (1)
+flamen (1)
+Tangosz (2)
+Search this Thread (Supporter Feature)
+From:
+Josef Ka
+This Post:
+23
+188524.1
+Date:
+07/01/2011 04:21:27
+Meidling Parrots
+Bundesliga
+Overall Posts Rated:
+563
+Formula for Potential Caps
+(see this thread below for discussion; this message has final results based on a research using 2276 player samples)
+To calculate whether a player has reached his potential cap, calculate the maximum of his five positional 'Potential Scores', where each positional score is defined by the sum of multiplying the player's skill with the weights given below. Since these weight coefficients are different from the salary formula (that determines the position displayed on the player page), it can happen that a player's maximum Potential Score is from a neighbouring position role, for example a C is sometimes capped by the potential-formula for PFs.
+PU(X)=max(PU_PG(X),PU_SG(X),PU_SF(X),PU_PF(X),PU_C(X))
+For example, PU_PG(X) would be 0.18*JS(X)+0.26*JR(X)+...+0.03*SB(X)
+JS JR OD HA DR PA IS ID RB SB
+PG ,18 ,26 ,30 ,24 ,12 ,52 ,03 ,04 ,20 ,03
+SG ,45 ,50 ,42 ,05 ,04 ,08 ,03 ,05 ,25 ,03
+SF ,58 ,34 ,26 ,05 ,03 ,03 ,05 ,25 ,33 ,03
+PF ,32 ,06 ,07 ,05 ,03 ,02 ,40 ,40 ,40 ,20
+C ,06 ,08 ,01 ,04 ,03 ,01 ,46 ,46 ,46 ,25
+Potential has sublevels. For each level of potential, the Cap is a Potential Score-value in the range as stated below. You do not know beforehand where in the range your player will cap, that is a question of luck. Sublevels of skills influence the calculation as well. For example, if your player has potential 7 perennial allstar, he will reach his cap when he reaches a Potential Score somewhere between 22 and 24. From that moment on, his training will be 3 times slower than before (this is an estimate). The transition is gradual, the training will become progressively slower as the player gets very close to his cap and crosses the threshold - it is not understood yet how this slowdown progresses exactly.
+Based on anecdotal evidence it is believed that potential 0 announcer is just the minimum sublevel of bench-warmer, and that potential 11 all-time great is the maximum sublevel of hall of famer. Even at the highest levels of potential, there are a few players in the game that have clearly reached their Cap.
+Caps:
+0 announcer: 10
+1 bench-warmer: 10 - 12
+2 role player: 12 - 14
+3 6th man: 14 - 16
+4 starter: 16 - 18
+5 star: 18 - 20
+6 allstar: 20 - 22
+7 perennial allstar: 22 - 24
+8 superstar: 24 - 26
+9 MVP: 26 - 28
+10 hall of famer: 28 - 30
+11 all-time great: 30
+Last edited by Josef Ka at 07/19/2011 10:17:18
+From:
+Josef Ka
+This Post:
+3
+188524.2
+in reply to 188524.1
+Date:
+07/01/2011 04:22:27
+Meidling Parrots
+Bundesliga
+Overall Posts Rated:
+563
+So over the last few days the Parrot on my shoulder got curious about potential, after reading some ideas floating around in the forums, mostly in this thread (187979.10) . I started collecting some data from the transfer list for playing around, then yesterday on the bus I had an idea for how to drill down on this and after a few hours of fiddling last night, to my surprise there was the structure of the formula, with some workable estimates for all coefficients, based on a grand total of c. 135 player samples. Because it is so little data there are still some artefacts in the coefficients which will go away once we have about three times as much data – for which I’ll request your help in a moment. But to keep up the bragging-momentum, here’s the story first:
+At any given moment there are about 10000 players on the transfer list, distributed over 10 levels of potential and 5 nominal positions, so that makes 200 at each position/potential combination. It is likely that at least the “best” few of each 200-group are capped at a high sublevel of the respective potential-level, in particular since noticing that one’s player is capped (often at a low level of potential, don’t think MVP/hall of famer here!) is an incentive to sell. Of course initially we don’t know what “best” means for purposes of potential, it could be more like sum of skills or more like salary, but only one of these two - salary - is searchable, and you would assume that in any case also among the players with the highest salary, some are capped, so this is the easy route: search at every level of potential, and every position, for a few players with the highest salaries, then record all their skills. Don’t necessarily search for the ones with the maximum salary, because they can be outliers that have been trained far beyond the cap, especially at lower levels of potential, but search for a leading group that is close together – then the extreme outliers can be eliminated, and one ends up with players that are at or minimally above the cap, at a high sublevel of their potential (notice that this is an advantage over HeadPaperPusher’s previous method, which could not distinguish sublevels).
+Initially these are very few data points at each position/potential combination, but this is where my idea from the bus comes in: As has been known for a while, and as quick look at such data confirms, both the salary and the skillsum perspective reveal differences depending on position: at all levels of potential, capped guards almost always have higher salaries than capped SFs, and higher sums of skills than capped Bigs. Capped PFs have lower salaries but higher sums of skills than capped Cs. But potential should not look like this; what you want (as a game designer) is a single value that defines a level of potential; for example “(max sublevel of) bench warmer = max. 6”, independent of position. So then there is a big constraint: whatever the Potential formula is, it has to equalize those differences between the cap-levels for the five positions, and it has to do so at each of the 10 levels of potential – and since this equalization has to happen for all players in the database simultaneously, we now can use the whole dataset to determine the coefficients – suddenly we have much more training data to determine the coefficients than we thought we did!
+(continued below)
+From:
+Josef Ka
+This Post:
+11
+188524.3
+in reply to 188524.2
+Date:
+07/01/2011 04:22:48
+Meidling Parrots
+Bundesliga
+Overall Posts Rated:
+563
+It turned out that the formula is again position dependent, there are no good results when searching for a formula for all positions simultaneously (sorry Crazy!) So we are looking for 5x10=50 coefficients. 135 data points are the bare minimum to get results on that fitting task, but still with artefacts, so we really want 400 before the coefficients are stable enough to be published. But what I can say already after achieving very good match on the data is this:
+A) Potential is a position-dependent linear combination involving the ten skills
+B) The weights in the Potential formula are different from both salary and team rating weights – they are somehow in between, with an interesting feature (hope it stays like this when more data come in):
+C) Offensive skills are weighted more heavily in the Potential formula than defensive skills; you need relatively higher potential to train a franchise leader that shines on offense. If a player has an issue with potential, then a more defensive profile may be more suitable for him – I love this :-)
+D) Since the Potential formula is different from the salary formula, it happens that players get capped by the limit on a neighbouring position role.
+E) Potential levels are spaced like this:
+0 announcer: cap 5 [in potential-units]
+1 bench-warmer: 5 (cap at minimum sublevel of potential) to 6 (cap at maximum sublevel)
+2 role player: 6 to 7
+3 6th man: 7 to 8
+4 starter: 8 to 9
+5 star: 9 to 9.75
+6 allstar: 9.75 to 10.5
+7 perennial allstar: 10.5 to 11.25
+8 superstar: 11.25 to 12
+9 MVP: 12 to 13
+10 hall of famer: 13 to 14
+11 all-time great: 14
+The four middle levels of potentials, which are shared by the largest number of players, are more closely spaced than the more infrequent levels at the extremes; announcer is simply minimum sublevel of bench-warmer, and all-time great is maximum sublevel of hall of famer; I believe there are two capped all-time greats in the game and several capped hall of famers. Salaries much above what we are seeing now at the top end are highly unlikely also for the future.
+The request for help for collecting the next 270 player samples is in the next message.
+From:
+Josef Ka
+This Post:
+6
+188524.4
+in reply to 188524.3
+Date:
+07/01/2011 04:24:31
+Meidling Parrots
+Bundesliga
+Overall Posts Rated:
+563
+If you want to help, please send by bbmail (not in the forum, that wouldn’t be allowed) links to players currently on the TL that meet the following criteria (at each position I specify a minimum threshold for salary and skills. I need samples that are above either one or both of these thresholds):
+1 bench-warmer: PG $4200 / 55; SG $4800 / 50; SF 4200 / 50; PF 5200 / 48; C 5700 / 48
+2 role player: PG $7500 / 62; SG $7500 / 56; SF $8200 / 58; PF $9k / 58; C $11k / 57
+3 6th man: PG $13k / 70; SG $14k / 65; SF $13k / 60; PF $15k / 60 ; C $ 15k / 60
+4 starter: PG $21k / 75; SG $22k / 74; SF $23k / 72; PF $ 20k / 67; C $27k / 65
+5 star: PG $42k / 80; SG $38k / 72; SF $30k / 72; PF $34k / 75; C $48k / 65
+6 allstar: PG $61k / 90; SG 75k / 80; SF $50k / 85; PF 58k / 85; C 85k / 71
+7 perennial allstar: PG $88k / 95; SG $110k / 90; SF $65k / 90; PF 100k / 85; C 115k / 75
+8 superstar: PG 150k / 100; SG $140k / 100; SF $85k / 105; PF 170k / 90; C 170k / 75
+9 MVP: PG 220k / 110; SG $220k / 110; SF $140k / 110; PF $190k / 100; C 270k / 90 If you own such a player and he is not on the TL, I’d be grateful for a bbmail with his (English) skills.
+Last edited by Josef Ka at 07/06/2011 10:42:51
+From:
+Mamba888
+To:
+Josef Ka
+This Post:
+0
+188524.5
+in reply to 188524.4
+Date:
+07/01/2011 06:16:44
+Dionysus
+CBSL
+Overall Posts Rated:
+20
+I also tried to study the potential cap and find something interesting.
+The salaries of all five positions in total for a capped player are very close for the same potential level, no matter what kind of player he is. pure PG, PF with 15+ handling and driving, monster C, all-arounded SF and whatever.
+According to players from TL and China NT & U21, Calculated by the salary formula for season 15, I guess the salary cap for potential over 7 maybe like this (total of five positions) :
+7 perennial allstar: 150-200K
+8 superstar: 300-350K
+9 MVP: 450-500K
+10 HOF: 650-750K
+Just wild guess ;)
+Hope this would help you to find the more accurate formula for potential.
+From:
+GM-somdetsfinest
+To:
+Josef Ka
+This Post:
+0
+188524.6
+in reply to 188524.4
+Date:
+07/01/2011 06:45:37
+Gachai
+สมาคมแห่งชาติ
+Overall Posts Rated:
+264
+Once again, nice work. You should have some sort of special two-letter designation in front of your name, like FW- formula wizard.
+Once I scored a basket that still makes me laugh.
+From:
+Eminence Front
+To:
+Josef Ka
+This Post:
+0
+188524.7
+in reply to 188524.4
+Date:
+07/01/2011 08:34:00
+Droids
+III.5
+Overall Posts Rated:
+67
+I have a couple of C's who've either hit your skill sum count or are very close, would you like a BB-mail with skills?
+From:
+Josef Ka
+To:
+Eminence Front
+This Post:
+0
+188524.8
+in reply to 188524.7
+Date:
+07/01/2011 08:47:16
+Meidling Parrots
+Bundesliga
+Overall Posts Rated:
+563
+sure, cannot hurt. If they are too low they fall out of the dataset anyway. And I can give you feedback where the formula sees them in relation to the cap.
+From:
+LA-seelenjaeger
+To:
+Josef Ka
+This Post:
+0
+188524.9
+in reply to 188524.8
+Date:
+07/01/2011 13:49:37
+Soul Hunters
+II.1
+Overall Posts Rated:
+149
+Having a player well below your set borders but still most likely capped is not going to help you much, isnt it?
+Zwei Dinge sind unendlich, die Dummheit und das All...
+From:
+Josef Ka
+To:
+LA-seelenjaeger
+This Post:
+0
+188524.10
+in reply to 188524.9
+Date:
+07/01/2011 13:55:40
+Meidling Parrots
+Bundesliga
+Overall Posts Rated:
+563
+he could have a low sublevel, there's place for that in the model. And I don't want to exclude any counter-evidence too prematurely either ;-) - so please send his data.
+From:
+Einpeitscher
+To:
+GM-somdetsfinest
+This Post:
+0
+188524.11
+in reply to 188524.6
+Date:
+07/02/2011 05:56:12
+Upstreams
+Nationalliga A
+Overall Posts Rated:
+240
+Once again, nice work. You should have some sort of special two-letter designation in front of your name, like FW- formula wizard.
+I also vote for this - again impressed by the beauty of such clear thinking.
+Terms Of Service
+|
+Rules of Conduct
+|
+Download Flash Player
+|
+Partners
+|
+Advertise on BuzzerBeater

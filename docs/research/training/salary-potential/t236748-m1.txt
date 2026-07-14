@@ -1,0 +1,161 @@
+BuzzerBeater | BuzzerBeater Forums | Help - English > Buzzer-Manager/Training calculator/cap
+BuzzerBeater
+BuzzerBeater Forums
+Help - English > Buzzer-Manager/Training calculator/cap
+Back to the Sneak Peek
+Help - English
+D.IV Arena Promotion Bonus
+6
+Too many choices
+6
+Promoting to D III
+2
+New ticket prices for promotio...
+3
+Ridiculous Playoff Attendance
+37
+Is talent everything?
+9
+Scouting players
+6
+Achievements
+2
+ENTH>Win?
+14
+Buzzer-Manager/Training calcul...
+10
+A tie breaker reallY???
+5
+Outside shooting
+8
+Finals Advice
+14
+Defensive Tactic Help
+3
+Gameshape training
+12
+Championship Game
+6
+Training Advice
+3
+rebounding question
+3
+Doctor effect after injury
+10
+Stadium advice
+14
+<
+>
+Favorite Folders
+Buzzer-Manager/Training calculator/cap
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+B.B.King (1)
+Manon (4)
+rhyminsimon (1)
+jonte (4)
+Search this Thread (Supporter Feature)
+From:
+jonte
+This Post:
+0
+236748.1
+Date:
+3/1/2013 1:53:50 PM
+Overall Posts Rated:
+33
+i am checking the different offsides at the moment.
+i am wondering what the different numbers for potential and cap mean..
+first there is buzzer-manager.com. my trainee will have 88%-98% in the potential bar at the end of his training plan
+in the trainingcalculator he has 20,76 and the range for cap is defined as 20-22.
+What does this mean? is it the approximate number for low and hard cap or just an estimate and he is somewhere inbetween?
+my second question is: what happens if he hits the low cap. how much does his training decrease?
+Last edited by jonte at 3/1/2013 2:23:41 PM
+Mark Unread
+Ignore User
+From:
+jonte
+To:
+Manon
+This Post:
+0
+236748.3
+in reply to 236748.2
+Date:
+3/1/2013 2:32:41 PM
+Overall Posts Rated:
+33
+isn't there a soft cap which just decreases the training speed before you hit the hardcap?
+Mark Unread
+Ignore User
+From:
+jonte
+To:
+Manon
+This Post:
+0
+236748.5
+in reply to 236748.4
+Date:
+3/1/2013 2:38:05 PM
+Overall Posts Rated:
+33
+that is what i want to avoid :\
+im planning to cap my SF with 1on1 along with fresh guardtrainees, but if he is already capped at this point I'll have a Sf with under 10 DR/HA. so i will try to keep him under the cap. it is just not so clearly understood when exactly the cap-wall hits.
+anyone some experience with the programms?
+Last edited by jonte at 3/1/2013 2:38:19 PM
+Mark Unread
+Ignore User
+From:
+rhyminsimon
+To:
+jonte
+This Post:
+0
+236748.8
+in reply to 236748.1
+Date:
+3/1/2013 5:58:35 PM
+Overall Posts Rated:
+498
+So there are two things that pertain to your question:
+1) there are sublevels of potential and
+2) a player doesn't have a cap really, just a point at which training slows down.
+This means that there is no finite limit on potential. And so josefka's formula that I use in the training simulator describes cap as a range within which training slows down. (FYI it automatically takes into account the player type, too.) What the numbers in the training simulator represent are the edges of the range in which the training slow-down may begin.
+So, your plan to get your player to 20,76 is likely not to run into cap problems. And if he does, you can probably spend not more than a couple of extra weeks to get to your final goals.
+Join the official USA offsite forum for helper tools, camaraderie and advice! (http://s3.zetaboards.com/BuzzerBeater_USA_NT/index/) – Builder of the Training Simulator: (229484.1) – Former host of the Golden Clam Invitational (http://www.buzzerbeater.com/community/fedoverview.aspx?fe...)
+Mark Unread
+Ignore User
+From:
+jonte
+To:
+Manon
+This Post:
+0
+236748.10
+in reply to 236748.9
+Date:
+3/3/2013 9:42:04 AM
+Overall Posts Rated:
+33
+thank you all. i guess it makes sense then to cap them with 1on1 because i will have my new guard trainees as well to at least have some pops each week while im waiting for skillups on my old guys :)
+Mark Unread
+Ignore User
+Disable Emoticons and Images
+Terms Of Service
+|
+Privacy Policy
+|
+Rules of Conduct
+|
+Partners
+|
+Advertise on BuzzerBeater
+|
+|
+|
+|

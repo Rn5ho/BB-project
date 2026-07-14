@@ -1,0 +1,4 @@
+elastic_coeff (Coeff!AZ226) = 0.91
+xtrain_coeff (Coeff!AZ229) = 0.925
+cap_coeff (Coeff!AZ232) = 0.3333333333333333  (hard slowdown once potential cap reached; Calculators!D19 hardcodes 1/3)
+age_mult_sum (Coeff!AK212) = 7.120000000000001  (normalization for career_share column only)

@@ -1,0 +1,162 @@
+BuzzerBeater | BuzzerBeater Forums | BB Global (English) > The BB Training Crowd-Sourcing Project
+BuzzerBeater
+BuzzerBeater Forums
+BB Global (English) > The BB Training Crowd-Sourcing Project
+Back to the Sneak Peek
+BB Global (English)
+Private League Ad Thread 12
+707
+Let's Get BB Publicized!
+162
+Logo Requests Thread 2
+260
+Official Fed Ad Thread 2
+58
+Forum Rules
+3
+BB Chat Tutorial.
+5
+BuzzerBeaterBest S21
+133
+Biggest BB Arena
+30
+Training Simulator 2.1
+14
+BB's Greatest Games! (your opi...
+23
+BuzzerBeater World Records 2
+474
+Team websites
+92
+The BB Training Crowd-Sourcing...
+333
+Another poor sap
+5
+Holiday in Portugal
+2
+Market value (moved / déplacé)
+1
+Playoffs and Relegation series...
+1
+Flag Chasing! Competition 2
+54
+<
+>
+Favorite Folders
+The BB Training Crowd-Sourcing Project
+Set priority
+High
+Normal
+Low
+Show messages by
+Everybody
+Headless T Gunner (1)
+Tangosz (1)
+rhyminsimon (1)
+w_alloy (2)
+Search this Thread (Supporter Feature)
+From:
+w_alloy
+To:
+wozzvt
+This Post:
+0
+203921.329
+in reply to 203921.328
+Date:
+09/24/2012 23:35:04
+Valhalla!
+III.10
+Overall Posts Rated:
+60
+One of the most interesting things to me is the chart for JS forwards. If the graph is accurate (I'll get back to this later), this would make it significantly easier to train short players in IS. Compare what a 6' 18 year old would get in two weeks of training:
+One week IS center + one week JS guard 6' 18yo:
+.60 JS
+.44 IS
+.16 JR
+.07 HA/DR
+.04 ID
+Total of 1.31 pops (counting HA/DR as half each)
+Two weeks JS forward training 6' 18yo:
+.74 JS
+.68 IS
+.12 JR
+Total 1.54 pops with more to difficult IS
+As to the accuracy, I'm really curious what people who are more familiar with the database have to say. From what people have said in this thread it seems like it could be either way. The IS data for short players is probably exaggerated to a certain degree because shorter player will have lower IS on average, but it is hard to doubt that JS-forward training gives a good amount of IS.
+From:
+Headless T Gunner
+To:
+w_alloy
+This Post:
+0
+203921.330
+in reply to 203921.329
+Date:
+09/25/2012 04:24:05
+Headless Thompson Gunners
+Naismith
+Overall Posts Rated:
+134
+You are not taking into account elastic effect,
+the fact that the shorter 18 year old guys are almost always starting out with terrible inside skills,
+thus, they will tend to pop faster at first.
+I have a SG that popped 3 times in a row at Passing because he started out weak compared to his other skills.
+Same goes for IS
+From:
+w_alloy
+To:
+Headless T Gunner
+This Post:
+0
+203921.331
+in reply to 203921.330
+Date:
+09/25/2012 05:36:24
+Valhalla!
+III.10
+Overall Posts Rated:
+60
+1. I did mention this in my post. "The IS data for short players is probably exaggerated to a certain degree because shorter player will have lower IS on average"
+2. Why isn't there a similar affect for IS-center training?
+3. Players of all heights gain a good amount of IS off of forward JS training so it would still be worth it even if this was true.
+From:
+Tangosz
+To:
+w_alloy
+This Post:
+0
+203921.332
+in reply to 203921.331
+Date:
+09/25/2012 06:30:21
+Njords Hakarl
+III.7
+Overall Posts Rated:
+430
+I think your analysis is completely spot on. Now, as you both said, there are probably some uncertainties in the data, and the exact training increase v. height slopes might not be completely accurate, but I think the pattern is clear. JS forwards seems to bite the big one if you're using it for tall guys. Of course, there is less of an out of position penalty for playing a big man in the PF spot. so I can see times when JS forwards is good to do. Plus, it's a two position training, so you can add more guys to the mix, which can be useful if you have enough young guys.
+But in the end, for big man training, the best way to boost both JS and IS is a combination of JS guards/wingmen, and IS@C.
+For short guys, you can probably get a decent amount of IS training through a combination of 1v1f and JSf. You'll still get more training on that individual trainee if you do IS@C, at the cost of half the training slots, and more out of position penalty to performance.
+US GMs! Join the US offsite community; register then BBMail mod-jfarb to get activated. http://s3.zetaboards.com/BuzzerBeater_USA_NT/index/
+From:
+rhyminsimon
+This Post:
+0
+203921.333
+in reply to 203921.332
+Date:
+11/06/2012 16:19:46
+Drunken Clams
+IV.30
+Overall Posts Rated:
+113
+Just posted a helper tool I made in Excel that converts the BB-Training Project analysis into a training modeler that includes the elastic effect. (229484.1) Hope you enjoy!
+Join the official USA offsite forum! Get advice from experienced U.S. managers, see how your new recruit stacks up, and find helper tools like Attendance Helper, Training Planner, Matchup Predictor, and more. (http://s3.zetaboards.com/BuzzerBeater_USA_NT/index/)
+Terms Of Service
+|
+Rules of Conduct
+|
+Download Flash Player
+|
+Partners
+|
+Advertise on BuzzerBeater
