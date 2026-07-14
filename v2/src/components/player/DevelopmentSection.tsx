@@ -114,8 +114,8 @@ export default function DevelopmentSection({
               </table>
             </div>
             <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-sm text-neutral-400">
-              <span>Salary now: {salaryNow != null ? `$${salaryNow.toLocaleString()}` : '–'}</span>
-              <span>Salary projected: {salaryProjected != null ? `$${salaryProjected.toLocaleString()}` : '–'}</span>
+              <span>Salary now: {salaryNow != null ? `$${salaryNow.toLocaleString('en-US')}` : '–'}</span>
+              <span>Salary projected: {salaryProjected != null ? `$${salaryProjected.toLocaleString('en-US')}` : '–'}</span>
               <span>Final age: {result.central.finalAge}</span>
             </div>
           </>
