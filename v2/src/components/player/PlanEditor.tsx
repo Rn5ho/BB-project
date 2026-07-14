@@ -2,6 +2,7 @@
 
 import { TRAINING_CATALOG } from '@/lib/training/catalog';
 import type { PlanTemplate } from '@/lib/training/templates';
+import BoundedNumberInput from '@/components/training/BoundedNumberInput';
 
 export interface PlanValue {
   blocks: Array<{ trainingId: number; weeks: number }>;
@@ -66,9 +67,9 @@ export default function PlanEditor({
             >
               {TRAINING_CATALOG.map((tt) => <option key={tt.id} value={tt.id}>{tt.label}</option>)}
             </select>
-            <input
-              type="number" min={1} max={140} value={b.weeks}
-              onChange={(e) => updateBlock(i, { weeks: Math.max(1, Math.min(140, Number(e.target.value) || 1)) })}
+            <BoundedNumberInput
+              value={b.weeks} min={1} max={140}
+              onCommit={(n) => updateBlock(i, { weeks: n })}
               className="w-16 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm"
             />
             <span className="text-xs text-neutral-500">wks</span>

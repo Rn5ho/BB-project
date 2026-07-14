@@ -1,6 +1,8 @@
 'use client';
 
 import { POTENTIAL_LEVELS, SKILLS } from '@/lib/constants';
+import { CP_HEIGHT_STEPS } from '@/lib/training/models/coach-parrot';
+import BoundedNumberInput from './BoundedNumberInput';
 
 export interface ManualPlayer {
   age: number;
@@ -16,6 +18,12 @@ export const DEFAULT_MANUAL_PLAYER: ManualPlayer = {
   skills: Object.fromEntries(SKILLS.map((s) => [s.dbKey, 7])) as Record<string, number>,
 };
 
+/** "196 cm · 6'5\"" — BB heights map 1:1 onto inches 69..90. */
+function heightLabel(cm: number): string {
+  const inches = Math.round(cm / 2.54);
+  return `${cm} cm · ${Math.floor(inches / 12)}'${inches % 12}"`;
+}
+
 /** Age/height/potential + a 12-skill grid for building a hypothetical player from scratch. */
 export default function ManualPlayerForm({
   value, onChange,
@@ -23,28 +31,28 @@ export default function ManualPlayerForm({
   value: ManualPlayer;
   onChange: (next: ManualPlayer) => void;
 }) {
-  function setSkill(dbKey: string, n: number) {
-    onChange({ ...value, skills: { ...value.skills, [dbKey]: Math.max(1, Math.min(20, n)) } });
-  }
-
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap gap-4">
         <label className="flex flex-col gap-0.5 text-xs text-neutral-400">
           Age
-          <input
-            type="number" min={18} max={35} value={value.age}
-            onChange={(e) => onChange({ ...value, age: Math.max(18, Math.min(35, Number(e.target.value) || 18)) })}
+          <BoundedNumberInput
+            value={value.age} min={18} max={35}
+            onCommit={(n) => onChange({ ...value, age: n })}
             className="w-20 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm text-white"
           />
         </label>
         <label className="flex flex-col gap-0.5 text-xs text-neutral-400">
-          Height (cm)
-          <input
-            type="number" min={175} max={229} value={value.heightCm}
-            onChange={(e) => onChange({ ...value, heightCm: Math.max(175, Math.min(229, Number(e.target.value) || 175)) })}
-            className="w-24 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm text-white"
-          />
+          Height
+          <select
+            value={value.heightCm}
+            onChange={(e) => onChange({ ...value, heightCm: Number(e.target.value) })}
+            className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm text-white"
+          >
+            {CP_HEIGHT_STEPS.map((cm) => (
+              <option key={cm} value={cm}>{heightLabel(cm)}</option>
+            ))}
+          </select>
         </label>
         <label className="flex flex-col gap-0.5 text-xs text-neutral-400">
           Potential
@@ -66,9 +74,9 @@ export default function ManualPlayerForm({
           {SKILLS.map((s) => (
             <label key={s.dbKey} className="flex items-center justify-between gap-2 text-xs text-neutral-400">
               {s.name}
-              <input
-                type="number" min={1} max={20} value={value.skills[s.dbKey] ?? 7}
-                onChange={(e) => setSkill(s.dbKey, Number(e.target.value) || 1)}
+              <BoundedNumberInput
+                value={value.skills[s.dbKey] ?? 7} min={1} max={20}
+                onCommit={(n) => onChange({ ...value, skills: { ...value.skills, [s.dbKey]: n } })}
                 className="w-14 rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-sm text-white"
               />
             </label>

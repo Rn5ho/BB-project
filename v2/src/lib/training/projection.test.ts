@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { COACH_PARROT } from './models/coach-parrot';
+import { BBSCOUT } from './models/bbscout';
 import { project, type PlayerState } from './engine';
 import { skillsFromArray } from './types';
 
@@ -29,6 +30,20 @@ describe('project', () => {
     expect(proj.totalGains.ha).toBeCloseTo(proj.finalSkills.ha - 7, 10);
     expect(proj.displayedGains.ha).toBeGreaterThanOrEqual(1);
     expect(proj.popCount).toBeGreaterThanOrEqual(1);
+  });
+
+  it('youth trainer boost ends the week the player turns 20 mid-plan', () => {
+    const player = {
+      skills: skillsFromArray([7, 7, 7, 7, 7, 7, 7, 7, 7, 7]),
+      age: 19, heightCm: 201, potential: 9,
+    };
+    const plan = Array.from({ length: 8 }, () => ({ trainingId: 12, coachLevel: 5, youthTrainerLevel: 4 }));
+    // start at season week 10 -> 5 weeks left at age 19, then the season turns and so does the player
+    const proj = project(player, plan, BBSCOUT, { startWeekOfSeason: 10 });
+    expect(proj.weeks[4].age).toBe(19);
+    expect(proj.weeks[4].result.multipliers.youth).toBeCloseTo(1.1, 10); // 1 + 0.025*4
+    expect(proj.weeks[5].age).toBe(20);
+    expect(proj.weeks[5].result.multipliers.youth).toBe(1); // youth trainer no longer applies
   });
 
   it('later weeks train slower as the player ages', () => {
