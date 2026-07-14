@@ -4,6 +4,20 @@
 **Status:** Approved (user: "Lets go", detailed feedback deferred to first testable build)
 **Research archive:** `docs/research/training/` (all coefficients cited below live there)
 
+> **Status update (end of 2026-07-14):** Phases A and B are SHIPPED, plus several
+> items beyond this spec: the standalone `/training` lab (DB player or manual build),
+> facilities modeling (gym cross-training scatter, training-court passive FT),
+> sublevel-uncertainty ensemble bounds, the dev-validated additive elastic and
+> 3-stage cap ladder, and — replacing the spec's "fixture class 5 grows in Phase C"
+> assumption — a working own-team ground-truth pipeline TODAY
+> (`training:scrape-history` + `training:replay`; 7 trainees, 98 pops, bbscout MAE
+> 0.41 levels / 61% exact finals). See CLAUDE.md v2 section for the full shipped
+> record. Remaining from §5: cohort board (product 2), coach handoff (3), reverse
+> planner (4), ceiling evaluator (5) — i.e. Phase C/D. Phase C's inference now has
+> both halves live (weekly position-minutes in DB + engine to explain pops), plus a
+> new opportunity this spec didn't foresee: pop-anchored sublevel tracking from
+> scraped/observed pop dates.
+
 ## Problem
 
 v1's training simulator (`web/lib/training/`) produced predictions the user
