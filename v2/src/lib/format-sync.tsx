@@ -70,6 +70,27 @@ export function formatSyncResult(
     );
   }
 
+  if (jobType === 'minutes') {
+    const clubsSynced = n('clubsSynced');
+    const matchesDiscovered = n('matchesDiscovered');
+    const boxscoresFetched = n('boxscoresFetched');
+    const minutesRows = n('minutesRows');
+    const matchesRemaining = n('matchesRemaining');
+
+    const parts: string[] = [];
+    if (clubsSynced > 0) parts.push(`${clubsSynced} club${clubsSynced !== 1 ? 's' : ''} synced`);
+    if (matchesDiscovered > 0) parts.push(`${matchesDiscovered} match${matchesDiscovered !== 1 ? 'es' : ''} found`);
+    parts.push(`${boxscoresFetched} boxscore${boxscoresFetched !== 1 ? 's' : ''} fetched`);
+    if (minutesRows > 0) parts.push(`${minutesRows} minutes row${minutesRows !== 1 ? 's' : ''}`);
+
+    return (
+      <span>
+        {parts.join(' · ') || '—'}
+        {matchesRemaining > 0 && <span className="text-neutral-500"> · {matchesRemaining} remaining</span>}
+      </span>
+    );
+  }
+
   if (jobType === 'players') {
     const countries = n('countriesSynced');
     const apiPlayers = n('apiPlayers');

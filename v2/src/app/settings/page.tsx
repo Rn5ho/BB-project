@@ -38,13 +38,14 @@ function Card({ title, blurb, children }: { title: string; blurb?: string; child
 }
 
 export default async function SettingsPage() {
-  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastCensusRows] = await Promise.all([
+  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastCensusRows] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
     getCountriesCatalog().catch(() => []),
     lastRunOf('seasons'),
     lastRunOf('players'),
     lastRunOf('market'),
+    lastRunOf('minutes'),
     db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(1),
   ]);
 
@@ -77,6 +78,7 @@ export default async function SettingsPage() {
             seasons: toJobLastRun(lastSeasons),
             players: toJobLastRun(lastPlayers),
             market: toJobLastRun(lastMarket),
+            minutes: toJobLastRun(lastMinutes),
           }}
           censusLastRun={censusLastRun}
         />
