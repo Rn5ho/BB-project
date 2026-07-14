@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { runSeasonsSync } from '@/server/sync/seasons';
 import { runPlayersSync } from '@/server/sync/players';
 import { runMarketSweep } from '@/server/sync/market';
+import { runMinutesSync } from '@/server/sync/minutes';
 import { refreshTeams } from '@/server/sync/teams';
 
 export const maxDuration = 300;
@@ -9,9 +10,10 @@ export const dynamic = 'force-dynamic';
 
 /**
  * Daily dispatcher: seasons every run; market every run (incremental, stopsEarly);
- * players weekly (Mondays UTC) or forced.
+ * minutes every run (incremental, batch-limited); players weekly (Mondays UTC) or forced.
  * ?force=players  → forces player sync; market always runs (no special branch needed)
  * ?force=market   → no-op branch; market already runs unconditionally
+ * ?force=minutes  → larger minutes batch (clubBatch 200, matchBatch 800)
  * ?force=all      → forces player sync (market already runs)
  */
 export async function GET(req: NextRequest) {
@@ -19,10 +21,19 @@ export async function GET(req: NextRequest) {
   if (!secret || req.headers.get('authorization') !== `Bearer ${secret}`) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
-  const force = req.nextUrl.searchParams.get('force'); // 'players' | 'market' | 'all'
+  const force = req.nextUrl.searchParams.get('force'); // 'players' | 'market' | 'minutes' | 'all'
   const results: Record<string, unknown> = {};
   results.seasons = await runSeasonsSync('cron');
   results.market = await runMarketSweep({}, 'cron'); // incremental daily
+  const minutesOpts = force === 'minutes'
+    ? { clubBatch: 200, matchBatch: 800 }
+    : { clubBatch: 100, matchBatch: 400 };
+  try {
+    results.minutes = await runMinutesSync(minutesOpts, 'cron');
+  } catch (err) {
+    console.error('minutes sync failed (non-fatal):', err);
+    results.minutes = { error: String(err) };
+  }
   if (new Date().getUTCDay() === 1 || force === 'players' || force === 'all') {
     results.players = await runPlayersSync('cron');
     // Refresh teams for any owner_team_id that is missing or stale — non-fatal
