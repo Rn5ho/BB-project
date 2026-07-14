@@ -136,3 +136,63 @@ export function weekStep(player: PlayerState, config: WeekConfig, model: ModelPa
     multipliers: { age: ageMult, coach: coachMult, youth: youthMult, minutes: minMult },
   };
 }
+
+export interface ProjectOptions {
+  startWeekOfSeason?: number; // 1..14, default 1
+}
+
+export interface ProjectionWeek {
+  weekNumber: number; // 1-based across the whole plan
+  age: number;
+  seasonWeek: number; // 1..weeksPerSeason
+  config: WeekConfig;
+  result: WeekResult;
+}
+
+export interface Projection {
+  weeks: ProjectionWeek[];
+  finalSkills: Skills;
+  totalGains: Skills;
+  displayedGains: Partial<Record<SkillKey, number>>;
+  finalAge: number;
+  popCount: number;
+}
+
+export function project(
+  player: PlayerState,
+  plan: WeekConfig[],
+  model: ModelParams,
+  opts: ProjectOptions = {},
+): Projection {
+  const wps = model.weeksPerSeason.value;
+  let seasonWeek = opts.startWeekOfSeason ?? 1;
+  let state: PlayerState = { ...player, skills: { ...player.skills } };
+  const weeks: ProjectionWeek[] = [];
+  let popCount = 0;
+
+  for (let i = 0; i < plan.length; i++) {
+    const result = weekStep(state, plan[i], model);
+    weeks.push({ weekNumber: i + 1, age: state.age, seasonWeek, config: plan[i], result });
+    popCount += SKILL_KEYS.filter((k) => result.pops[k]).length;
+    state = {
+      ...state,
+      skills: result.skillsAfter,
+      ftSkill: result.ftAfter,
+      staminaSkill: result.staminaAfter,
+    };
+    seasonWeek++;
+    if (seasonWeek > wps) {
+      seasonWeek = 1;
+      state.age++;
+    }
+  }
+
+  const totalGains = Object.fromEntries(
+    SKILL_KEYS.map((k) => [k, state.skills[k] - player.skills[k]]),
+  ) as Skills;
+  const displayedGains = Object.fromEntries(
+    SKILL_KEYS.map((k) => [k, displayed(state.skills[k]) - displayed(player.skills[k])]),
+  ) as Partial<Record<SkillKey, number>>;
+
+  return { weeks, finalSkills: state.skills, totalGains, displayedGains, finalAge: state.age, popCount };
+}
