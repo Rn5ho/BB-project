@@ -112,7 +112,7 @@ export const OPEN_SOURCE_LIVE: ModelParams = {
   ftRate: { value: 0, source: `${SRC}/API-MAP.md (live API no-op)`, confidence: 'measured' },
   age: { value: OSL_AGE, source: `${SRC}/sergiu-logic.js (getAgeCoefficient) + API-MAP.md probe 23-age21`, confidence: 'measured' },
   height: { value: oslHeightTable(), source: `${SRC}/sergiu-logic.js (heightMultipliers) + API-MAP.md probes 01/04/05/06, 24-h175-IS5`, confidence: 'estimate' },
-  coach: { value: OSL_COACH, source: `${SRC}/sergiu-logic.js (implied CoachParrot-equivalent coach table)`, confidence: 'estimate' },
+  coach: { value: OSL_COACH, source: `${SRC}/sergiu-logic.js (implied CoachParrot-equivalent coach table) + API-MAP.md probes 12-coach{1,2,3,4,6,7} (exact match at every level)`, confidence: 'measured' },
   youthTrainer: { value: { perLevel: 0 }, source: `${SRC}/API-MAP.md (no youth trainer effect observed)`, confidence: 'measured' },
   elastic: {
     value: { kind: 'pair-linear', pairs: OSL_ELASTIC_PAIRS },

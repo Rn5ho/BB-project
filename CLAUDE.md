@@ -61,8 +61,8 @@ ensemble min-max bands (`ensembleProject`), Josef Ka salary + potential-cap sub-
 (`salary.ts`; cap = Σ(pos-weights·skills) ≥ 8+2·potential, slowdown ×0.15). Calibration:
 CP worked-example gate (±1e-4), buzzeriq fixture replay (`docs/research/training/buzzeriq/probes/`,
 worst open-source-live error 0.008), forum weeks-per-pop sanity. Scripts: `npm run training:simulate`,
-`training:report`, `training:refit-salary` (2026-07-14 fit vs Neon: deflationScale 0.7163,
-median |err| 11.8% on 58 players — the announced-2024 BB salary rework is real; refit on
+`training:report`, `training:refit-salary` (2026-07-14 fit vs Neon: deflationScale 0.7144,
+median |err| 11.7% on 58 players — the announced-2024 BB salary rework is real; refit on
 better data in Phase B). Research archive + provenance chain: `docs/research/training/README.md`.
 Design spec: `docs/superpowers/specs/2026-07-14-training-planner-v2-design.md` (Phases B–D:
 position-minutes pipeline, inference flywheel, planner UI).

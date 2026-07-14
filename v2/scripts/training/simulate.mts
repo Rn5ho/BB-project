@@ -13,7 +13,11 @@ function arg(name: string, fallback?: string): string {
     if (fallback !== undefined) return fallback;
     throw new Error(`missing --${name}`);
   }
-  return process.argv[i + 1];
+  const value = process.argv[i + 1];
+  if (value === undefined || value.startsWith('--')) {
+    throw new Error(`missing --${name}`);
+  }
+  return value;
 }
 
 const player = {
@@ -26,7 +30,12 @@ const coachLevel = Number(arg('coach', '5'));
 const plan = arg('plan')
   .split(',')
   .flatMap((block) => {
-    const [id, weeks] = block.split('x').map(Number);
+    const m = /^(\d+)x(\d+)$/.exec(block);
+    const id = m ? Number(m[1]) : NaN;
+    const weeks = m ? Number(m[2]) : NaN;
+    if (!m || id < 1 || id > 33 || weeks < 1) {
+      throw new Error(`invalid --plan block "${block}" (expected <trainingId>x<weeks>, e.g. 12x14)`);
+    }
     return Array.from({ length: weeks }, () => ({ trainingId: id, coachLevel }));
   });
 
