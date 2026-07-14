@@ -50,3 +50,6 @@ scripts/e2e-artifacts/
 # stray dev-server logs
 dev-out.txt
 dev-err.txt
+
+.playwright-mcp/
+*.png
