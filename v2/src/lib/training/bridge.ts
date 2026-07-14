@@ -39,7 +39,8 @@ export function minutesAtPositions(week: WeekMinutes, trainingId: number): numbe
   return tt.positions.reduce((sum, pos) => sum + week[POSITION_FIELD[pos]], 0);
 }
 
-function minutesThresholdForAge(age: number): number {
+/** Minutes/week (at a training's qualifying positions) needed for FULL-rate training at this age. */
+export function fullTrainingMinutes(age: number): number {
   const spec = BBSCOUT.minutes.value;
   if (spec.kind !== 'threshold-linear') return 0;
   const band = spec.bands.find((b) => age <= b.maxAge) ?? spec.bands[spec.bands.length - 1];
@@ -48,7 +49,7 @@ function minutesThresholdForAge(age: number): number {
 
 /** Training-type ids trainable at FULL rate given a week's minutes and the player's age. */
 export function eligibleTrainings(week: WeekMinutes, age: number): number[] {
-  const threshold = minutesThresholdForAge(age);
+  const threshold = fullTrainingMinutes(age);
   const ids: number[] = [];
   for (const tt of TRAINING_CATALOG) {
     // Stamina/FT are whole-roster trainings — always eligible.

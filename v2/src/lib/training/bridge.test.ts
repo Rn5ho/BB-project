@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { eligibleTrainings, minutesAtPositions, planToWeeks, playerStateFromSnapshot } from './bridge';
+import { eligibleTrainings, fullTrainingMinutes, minutesAtPositions, planToWeeks, playerStateFromSnapshot } from './bridge';
 
 const wk = (m: Partial<Record<'minPg'|'minSg'|'minSf'|'minPf'|'minC', number>>) => ({
   season: 40, seasonWeek: 5, games: 2,
@@ -38,5 +38,10 @@ describe('bridge', () => {
     expect(weeks).toHaveLength(3);
     expect(weeks[0]).toEqual({ trainingId: 15, coachLevel: 6, youthTrainerLevel: 4 });
     expect(weeks[2].trainingId).toBe(9);
+  });
+
+  it('full training minutes follows the age bands (44 at 19, 47 at 21)', () => {
+    expect(fullTrainingMinutes(19)).toBe(44);
+    expect(fullTrainingMinutes(21)).toBe(47);
   });
 });
