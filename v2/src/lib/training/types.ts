@@ -1,0 +1,89 @@
+export const SKILL_KEYS = ['js', 'jr', 'od', 'ha', 'dr', 'pa', 'is', 'id', 'rb', 'sb'] as const;
+export type SkillKey = (typeof SKILL_KEYS)[number];
+/** Decimal sublevel values (displayed value = ceil, 1..20). */
+export type Skills = Record<SkillKey, number>;
+export type Position = 'PG' | 'SG' | 'SF' | 'PF' | 'C';
+export const ALL_POSITIONS: Position[] = ['PG', 'SG', 'SF', 'PF', 'C'];
+
+export function skillsFromArray(ns: number[]): Skills {
+  if (ns.length !== 10) throw new Error(`expected 10 skills, got ${ns.length}`);
+  return Object.fromEntries(SKILL_KEYS.map((k, i) => [k, ns[i]])) as Skills;
+}
+export function skillsToArray(s: Skills): number[] {
+  return SKILL_KEYS.map((k) => s[k]);
+}
+
+/** Map to the snake_case skill columns used by v2 snapshots. */
+export const SKILL_DB_NAMES: Record<SkillKey, string> = {
+  js: 'jump_shot', jr: 'jump_range', od: 'outside_def', ha: 'handling', dr: 'driving',
+  pa: 'passing', is: 'inside_shot', id: 'inside_def', rb: 'rebounding', sb: 'shot_blocking',
+};
+
+export type Confidence = 'official' | 'measured' | 'fitted' | 'estimate';
+/** A parameter family with provenance. `source` is a repo-relative path into docs/research/training/. */
+export interface Param<T> {
+  value: T;
+  source: string;
+  confidence: Confidence;
+}
+
+/** Levels/week contributed to each skill by one training type (missing key = 0). */
+export type RateRow = Partial<Record<SkillKey, number>>;
+
+export type ElasticSpec =
+  | { kind: 'none' }
+  /** CoachParrot: multiplier coeff^(trained − avg(links[trained])) on the trained skill.
+   *  boostOnly clamps the multiplier at ≥ 1 (only helps lagging skills). */
+  | { kind: 'exp-linked'; coeff: number; boostOnly: boolean; links: Partial<Record<SkillKey, SkillKey[]>> }
+  /** Sergiu: gain *= 1 + Σ coeff·(other − trained) over pairs where other > trained. */
+  | { kind: 'pair-linear'; pairs: Array<{ trained: SkillKey; other: SkillKey; coeff: number }> };
+
+export type CapSpec =
+  | { kind: 'none' }
+  /** Josef Ka / CP: capped when max over positions of Σ(weights·skills) ≥ 8 + 2·potential.
+   *  weights arrays follow SKILL_KEYS order. All gains ×slowdown when capped. */
+  | { kind: 'weighted-sum'; weights: Record<Position, number[]>; slowdown: number }
+  /** Deployed open_source: per-skill ×slowdown once that skill ≥ threshold (potential ignored). */
+  | { kind: 'high-skill'; threshold: number; slowdown: number };
+
+export type MinutesSpec =
+  | { kind: 'none' }
+  /** Full rate at/above the age-band threshold, linear below. */
+  | { kind: 'threshold-linear'; bands: Array<{ maxAge: number; minutes: number }> };
+
+export type XtrainSpec =
+  | { kind: 'none' }
+  /** CP: the player's highest skill trains ×coeff^(maxSkill − avg(all 10)). */
+  | { kind: 'top-skill-malus'; coeff: number };
+
+/** Height multipliers at the 22 BB height steps, per skill. */
+export interface HeightTable {
+  stepsCm: number[];
+  bySkill: Record<SkillKey, number[]>;
+}
+
+export interface TrainingType {
+  id: number; // 1..33, BuzzerIQ/BB dropdown order
+  name: string;
+  primary: SkillKey | null; // null for stamina/FT
+  positions: Position[]; // qualifying positions for the minutes requirement
+  kind: 'skill' | 'stamina' | 'freethrow';
+}
+
+export interface ModelParams {
+  id: 'coach-parrot' | 'open-source-live' | 'bbscout' | 'bbscout-low' | 'bbscout-high';
+  /** RateRow per skill-training id (1..31). Stamina/FT use stRate/ftRate. */
+  rates: Param<Record<number, RateRow>>;
+  stRate: Param<number>; // stamina levels/week, no multipliers
+  ftRate: Param<number>; // free-throw levels/week, no multipliers
+  age: Param<Record<number, number>>; // 18..36
+  height: Param<HeightTable>;
+  coach: Param<Record<number, number>>; // trainer level 1..7
+  /** Multiplicative bonus per youth-trainer level, ages 18-19 only: mult = 1 + perLevel·level. */
+  youthTrainer: Param<{ perLevel: number }>;
+  elastic: Param<ElasticSpec>;
+  xtrain: Param<XtrainSpec>;
+  cap: Param<CapSpec>;
+  minutes: Param<MinutesSpec>;
+  weeksPerSeason: Param<number>;
+}
