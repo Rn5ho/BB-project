@@ -40,6 +40,7 @@ export default function ProjectionPanel({
   });
   const [saving, startSaving] = useTransition();
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const weekConfigs = useMemo(
     () => planToWeeks(plan.blocks, plan.coachLevel, plan.youthTrainerLevel),
@@ -54,14 +55,20 @@ export default function ProjectionPanel({
   function handleChange(next: PlanValue) {
     setPlan(next);
     setSaved(false);
+    setSaveError(null);
   }
 
   function handleSave() {
     if (!onSave) return;
     setSaved(false);
+    setSaveError(null);
     startSaving(async () => {
-      await onSave(plan);
-      setSaved(true);
+      try {
+        await onSave(plan);
+        setSaved(true);
+      } catch (err) {
+        setSaveError(err instanceof Error ? err.message : 'Save failed');
+      }
     });
   }
 
@@ -142,6 +149,7 @@ export default function ProjectionPanel({
           hideSave={!onSave}
         />
         {onSave && saved && <p className="text-xs text-green-500 mt-2">Saved.</p>}
+        {onSave && saveError && <p className="text-xs text-red-400 mt-2">Could not save: {saveError}</p>}
       </div>
     </div>
   );

@@ -85,8 +85,19 @@ per-week position minutes + eligible-training chips), DevelopmentSection (ensemb
 band chart via client-side `ensembleProject`, per-skill projection table, dual CapBar
 now/end-of-plan, PlanEditor seeded from `src/lib/training/templates.ts` archetypes, savePlan
 server action). Bridge helpers (snapshot→PlayerState at displayed−0.5, `eligibleTrainings`,
-`planToWeeks`, `bandSeries`): `src/lib/training/bridge.ts`. Gotcha: use `toLocaleString('en-US')`
+`planToWeeks`, `bandSeries` — display-equivalent scale = sublevel+0.5 so untrained skills
+hold their displayed value): `src/lib/training/bridge.ts`. Gotcha: use `toLocaleString('en-US')`
 in client components (server/client locale hydration mismatch).
+
+**Training lab tab shipped 2026-07-14** — `/training` (nav: Training): pick a tracked
+full-skill player (`?player=ID`, saves plans via the same server action) or "Build a player"
+(manual age/height/potential + 12 skills) → `ProjectionPanel` (extracted from
+DevelopmentSection: band chart, projection table, cap bars, plan editor; Save hidden without
+`onSave`). Query: `getProjectablePlayers()`. Catalog carries in-game `label`s ("One on One
+(PG/SG)") alongside research keys ("DR for 12"). Gated-forum mining (logged-in BbWebSession):
+Joey Ka's exact DMI/GS/salary formulas + BB-Justin cap-ladder confirmation in
+`docs/research/training/forum-research/gated/` (FINDINGS.md = digest; rhyminsimon sheet
+permanently lost, 410).
 
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
