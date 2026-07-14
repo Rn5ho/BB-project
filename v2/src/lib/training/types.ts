@@ -36,7 +36,11 @@ export type ElasticSpec =
    *  boostOnly clamps the multiplier at ≥ 1 (only helps lagging skills). */
   | { kind: 'exp-linked'; coeff: number; boostOnly: boolean; links: Partial<Record<SkillKey, SkillKey[]>> }
   /** Sergiu: gain *= 1 + Σ coeff·(other − trained) over pairs where other > trained. */
-  | { kind: 'pair-linear'; pairs: Array<{ trained: SkillKey; other: SkillKey; coeff: number }> };
+  | { kind: 'pair-linear'; pairs: Array<{ trained: SkillKey; other: SkillKey; coeff: number }> }
+  /** Real-game structure per the 2026 Slovenian-community worked example: an ADDITIVE
+   *  sublevel bonus Σ coeff·max(0, other − trained), applied after the multiplier chain
+   *  and NOT scaled by age/height/trainer. */
+  | { kind: 'additive-pair'; pairs: Array<{ trained: SkillKey; other: SkillKey; coeff: number }> };
 
 export type CapSpec =
   | { kind: 'none' }

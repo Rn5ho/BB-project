@@ -42,6 +42,19 @@ describe('bbscout parameters', () => {
     expect(r.gains.ha).toBeCloseTo(0.5 * 0.45, 5);
   });
 
+  it('reproduces the 2026 community worked example structure (additive elastic)', () => {
+    // "trening OPK": 198cm, age 25, trainer L6, IS 19 / ID 10 ->
+    // gain = rate x 0.42 x 0.95 x 1.03 + (19-10) x 0.02
+    // (example uses rate 0.55 from the full matrix PDF; bbscout carries CP's 0.5 -
+    // the structure and every multiplier are what this test pins down)
+    const p = {
+      skills: skillsFromArray([5, 5, 5, 5, 5, 5, 19, 10, 5, 5]),
+      age: 25, heightCm: 198, potential: 11,
+    };
+    const r = weekStep(p, { trainingId: 24, coachLevel: 6 }, BBSCOUT);
+    expect(r.gains.id).toBeCloseTo(0.5 * 0.42 * 0.95 * 1.03 + (19 - 10) * 0.02, 10);
+  });
+
   it('internal skills grow past 20 (displayed clamps at 20)', () => {
     const p = { ...flat7(), skills: skillsFromArray([7, 7, 7, 19.9, 7, 7, 7, 7, 7, 7]), potential: 11 };
     const r = weekStep(p, { trainingId: 12, coachLevel: 5 }, BBSCOUT);

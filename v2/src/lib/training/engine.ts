@@ -80,24 +80,41 @@ function capSlowdownFactor(model: ModelParams, player: PlayerState): number {
   return 1;
 }
 
-function elasticMultiplier(model: ModelParams, skills: Skills, trained: SkillKey): number {
+/** Elastic effect on a trained skill: a multiplier on the core gain and/or an additive
+ *  sublevel bonus applied after the multiplier chain (additive-pair kind — the bonus is
+ *  NOT scaled by age/height/trainer, per the 2026 worked example). */
+function elasticEffect(
+  model: ModelParams,
+  skills: Skills,
+  trained: SkillKey,
+): { mult: number; add: number } {
   const spec = model.elastic.value;
-  if (spec.kind === 'none') return 1;
+  if (spec.kind === 'none') return { mult: 1, add: 0 };
   if (spec.kind === 'exp-linked') {
     const links = spec.links[trained];
-    if (!links || links.length === 0) return 1;
+    if (!links || links.length === 0) return { mult: 1, add: 0 };
     const avg = links.reduce((a, k) => a + skills[k], 0) / links.length;
     const mult = Math.pow(spec.coeff, skills[trained] - avg);
-    return spec.boostOnly ? Math.max(1, mult) : mult;
+    return { mult: spec.boostOnly ? Math.max(1, mult) : mult, add: 0 };
   }
-  // pair-linear (sergiu): boost trained skill by coeff·(other − trained) for each higher other
-  let factor = 1;
+  if (spec.kind === 'pair-linear') {
+    // sergiu: boost trained skill by coeff·(other − trained) for each higher other
+    let factor = 1;
+    for (const p of spec.pairs) {
+      if (p.trained !== trained) continue;
+      const diff = skills[p.other] - skills[trained];
+      if (diff > 0) factor += p.coeff * diff;
+    }
+    return { mult: factor, add: 0 };
+  }
+  // additive-pair: raw sublevel bonus, boost-only
+  let add = 0;
   for (const p of spec.pairs) {
     if (p.trained !== trained) continue;
     const diff = skills[p.other] - skills[trained];
-    if (diff > 0) factor += p.coeff * diff;
+    if (diff > 0) add += p.coeff * diff;
   }
-  return factor;
+  return { mult: 1, add };
 }
 
 function minutesFactor(model: ModelParams, age: number, minutes: number | undefined): number {
@@ -134,14 +151,17 @@ export function weekStep(player: PlayerState, config: WeekConfig, model: ModelPa
     for (const k of SKILL_KEYS) {
       const rate = row[k];
       if (!rate) continue;
-      let g = rate * ageMult * coachMult * youthMult * minMult;
-      g *= heightMultiplier(model, player.heightCm, k);
-      g *= elasticMultiplier(model, player.skills, k);
+      const elastic = elasticEffect(model, player.skills, k);
+      let core = rate * ageMult * coachMult * youthMult;
+      core *= heightMultiplier(model, player.heightCm, k);
+      core *= elastic.mult;
       const xt = model.xtrain.value;
       if (xt.kind === 'top-skill-malus' && player.skills[k] === maxSkill) {
-        g *= Math.pow(xt.coeff, player.skills[k] - avgAll);
+        core *= Math.pow(xt.coeff, player.skills[k] - avgAll);
       }
-      g *= capFactor;
+      // additive elastic joins AFTER the multiplier chain (unscaled by age/height/trainer);
+      // minutes and cap apply to the whole gain (judgment call — documented open question).
+      let g = (core + elastic.add) * minMult * capFactor;
       if (capSpec.kind === 'high-skill' && player.skills[k] >= capSpec.threshold) g *= capSpec.slowdown;
       gains[k] = g;
     }

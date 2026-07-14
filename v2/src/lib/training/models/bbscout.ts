@@ -1,7 +1,7 @@
 // BB Scout's default synthesis: CoachParrot structure + evidence-driven corrections.
 // Rationale per parameter: docs/superpowers/specs/2026-07-14-training-planner-v2-design.md §1.
 import type { ModelParams, Position, RateRow } from '../types';
-import { CP_AGE, CP_COACH, CP_ELASTIC_LINKS, CP_RATES, cpHeightTable } from './coach-parrot';
+import { CP_AGE, CP_COACH, CP_RATES, cpHeightTable } from './coach-parrot';
 
 const RESEARCH = 'docs/research/training';
 
@@ -34,10 +34,30 @@ export const BBSCOUT: ModelParams = {
   coach: { value: CP_COACH, source: `${RESEARCH}/coachparrot/coach_coefficients.csv`, confidence: 'fitted' },
   youthTrainer: { value: { perLevel: 0.025 }, source: `${RESEARCH}/model-comparison.md (youth trainer: estimate)`, confidence: 'estimate' },
   elastic: {
-    // boost-only: manual line 709 + thread 291954 msg 13/21 lean this way
-    value: { kind: 'exp-linked', coeff: 0.91, boostOnly: true, links: CP_ELASTIC_LINKS },
-    source: `${RESEARCH}/coachparrot/model_formula.md + forum-research/EXTRACTED-DATA.md §6`,
-    confidence: 'fitted',
+    // ADDITIVE post-multiplier structure per the 2026 worked example (ID gain =
+    // rate×age×height×coach + (IS−ID)×0.02) — elastic is NOT scaled by age/height/trainer.
+    // Coefficients: Dormouse per-pair table (user-notes/elastic.png; ID←IS 0.02 validated
+    // by the worked example). rb←is listed as "0.20" in the source — treated as a
+    // transcription artifact for 0.020. jr←od and sb←id filled from the In-Depth guide
+    // chart (the two pairs Dormouse left unknown).
+    value: {
+      kind: 'additive-pair',
+      pairs: [
+        { trained: 'js', other: 'dr', coeff: 0.011 },
+        { trained: 'od', other: 'ha', coeff: 0.007 },
+        { trained: 'ha', other: 'od', coeff: 0.05 },
+        { trained: 'dr', other: 'ha', coeff: 0.005 },
+        { trained: 'pa', other: 'ha', coeff: 0.03 },
+        { trained: 'is', other: 'id', coeff: 0.001 },
+        { trained: 'id', other: 'is', coeff: 0.02 },
+        { trained: 'rb', other: 'is', coeff: 0.02 },
+        { trained: 'rb', other: 'id', coeff: 0.01 },
+        { trained: 'jr', other: 'od', coeff: 0.0371 },
+        { trained: 'sb', other: 'id', coeff: 0.0197 },
+      ],
+    },
+    source: `${RESEARCH}/user-notes/dev-statements-2026.md (worked example) + user-notes/elastic.png + user-notes/in-depth-guide-extraction.md`,
+    confidence: 'measured',
   },
   xtrain: { value: { kind: 'top-skill-malus', coeff: 0.925 }, source: `${RESEARCH}/coachparrot/training_scalars.txt`, confidence: 'fitted' },
   cap: {
