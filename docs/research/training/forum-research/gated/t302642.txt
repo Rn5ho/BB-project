@@ -1,0 +1,21 @@
+# BB forum thread 302642 — "BuzzerBeater | BuzzerBeater Forums | Help - English > Training Analysis"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,13,25.
+# 3 unique messages extracted (10 per page around each m).
+
+--- 302642.1 | souzera | 12/31/2019 6:49:07 PM ---
+Reading the forums I came across:
+
+"Inside scoring (C): 0.5 IS, 0.1 JS, 0.05 ID. Sum: 0.65
+Inside defense (C): 0.5 ID, 0.10 SB, 0.05 IS. Sum: 0.65
+Shot blocking (C): 0.5 SB, 0.2 ID, 0.1 Reb. Sum: 0.8
+Rebounding (PF/C): 0.5 Rb, 0.05 IS, 0.05 ID. Sum: 0.60 (2pos)"
+
+But I couldn't find the rest of the training descriptions. Can someone link me thread with the full training descriptions? (Or just post here)
+
+Thanks.
+
+--- 302642.2 | ? | 1/1/2020 1:46:13 AM ---
+http://www.buzzerbeater.com/community/forum/read.aspx?thread=295510&m=11
+
+--- 302642.3 | ? | 1/1/2020 6:19:51 PM ---
+Thanks!!

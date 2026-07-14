@@ -1,0 +1,309 @@
+# BB forum thread 323477 — "BuzzerBeater | BuzzerBeater Forums | Help - English > Training Guide: Including Benchmarks by Age"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,13,25.
+# 23 unique messages extracted (10 per page around each m).
+
+--- 323477.1 | DrChristopher | 4/12/2024 3:37:46 PM ---
+THIS IS A PERSONAL GUIDE MANY OF THE IDEAS ARE THEORY OR IN PROCESS OF BEING HAMMERED OUT.
+
+I've been trying to pull together all the research I've been doing. Figured I'd leave this here in case it helps managers judge whether a player is behind in regards to training.
+
+It's wild the difference in training from unoptimized training infrastructure (low trainer lv and no gym levels) to fully optimized (lv 7 trainer/YT, using elastics, lv 3 gym).
+
+So the new spectrum of training I have right now is as follows…
+
+18 Year old Draftees
+Starting TSP: 45 (bad), 50 (average), 55+ (ideal)
+19 Year old Draftees
+Starting TSP: 58 (bad), 64 (average), 70+ (ideal)
+
+NT Checkpoints:
+
+Age: TSP At Start (+ Avg Pops During that season)
+Age 18: 55 (+15)
+Age 19: 70 (+13.4)
+Age 20: ~83 (+11.9)
+Age 21: ~95 (+10.5)
+Age 22: ~105 (+9.2)
+Age 23: 115 (+8)
+Age 24: 123 (+6.9)
+Age 25: ~129 (+5.9)
+Age 26: ~135 (+5)
+Age 27: ~140 (+4.2)
+Age 28: 145 (Finished)
+
+Average Checkpoints:
+
+Age: TSP At Start (+ Avg Pops During that season)
+Age 18: 50 (+13.5)
+Age 19: ~63 (+11.9)
+Age 20: ~75 (+10.4)
+Age 21: ~85 (+9)
+Age 22: ~94 (+7.7)
+Age 23: ~102 (+6.5)
+Age 24: 109 (+5.4)
+Age 25: ~114 (+4.4)
+Age 26: ~118 (+3.5)
+Age 27: ~122 (+2.7)
+Age 28: 125 (Finished)
+
+Non-Optimized/Minimal Checkpoints:
+
+Age: TSP At Start (+ Avg Pops During that season)
+Age 18: 45 (+12)
+Age 19: 57 (+10.4)
+Age 20: ~67 (+8.9)
+Age 21: ~76 (+7.5)
+Age 22: ~83 (+6.2)
+Age 23: 90 (+5)
+Age 24: 95 (+3.9)
+Age 25: ~98 (+2.9)
+Age 26: ~101 (+2)
+Age 27: ~103 (+1.2)
+Age 28: 105 (Finished)
+
+Possible Hinderances/Boosts to Training
+There are 2 hinderances players get affected by...
+
+1st is training any skills above all others will always cause a hinderance to occur when training that skill, but elastic effects are as follows.*
+
+JS> accelerates driving and inside shot.
+JR> decelerates jump shot and rebounding.
+OD> accelerates jump range, handling, and decelerates inside shot.
+HA> accelerates outside defense and passing.
+DR> accelerates jump shot.
+PA> accelerates handling and driving.
+IS> accelerates inside defense.
+ID> accelerates inside shot, rebounding, and shot blocking.
+RB> accelerates inside shot.
+SB> decelerates inside defense.
+
+*decelerations via elastic effect are very small. They are often ~0.005 or ~0.5% decrease in training speed for every skill SB is higher than ID for every week of ID training. This is super small. Whereas accelerations are ~0.02 or ~2% increase in training every week you train JS when you have higher driving skill. More specifically, for each level of
+Driving above Jumpshot you get ~2% increase in training (estimated). All accelerations and decelerations are different but a decent rule of thumb is decelerations are roughly 1/4 of accelerations. The compounding effect is what you need to watch for because if you are trying to train your (ID of 4) on a player with (SB of 14) you will experience a ~5% training speed reduction.
+
+Last edited by DrChristopher at 12/28/2024 5:58:31 AM
+
+--- 323477.2 | ? | 4/12/2024 3:38:14 PM ---
+Hinderances/Boosts Continued...
+
+2nd is training above their GSP or BSP height build calculation. The process of identifying this is as follows.
+
+Calculation
+HA and DR don’t get calculated. So Guard Skills Points (GSP) are OD, JS, JR, and PA only. Big Skill Points (BSP) are the usual IS, ID, SB, and RB.
+What is your player’s Potential?
+All-Star - 40 gsp & 40 bsp
+Perennial - 44 gsp & 44 bsp
+Superstar - 48 gsp & 48 bsp
+MVP - 52 gsp & 52 bsp
+Hall of Fame - 56 gsp & 56 bsp
+All time great - 60 gsp & 60 bsp
+
+However, that even split of skills is only for players that are 6’6” exactly. Any inch up or down is a 2 point shift to that side. (With 67 BSP being the highest BSP I've seen.)(With 71 GSP being the highest GSP I've seen, leaving out HA and DR of course.)
+
+Examples:
+So a 6' 0" allstar it's 52 gsp and 28 bsp. (+12 GSP, -12 BSP for the 6 inches of shift)
+For a 7'3 mvp it's 34 gsp and 67 bsp.(-18 GSP, +18 BSP for the 9 inches of shift)
+This balance creates the fastest training.
+
+Remember a 6’0” allstar with more BSP could work but it will most likely cause training to last a few more weeks than is strictly necessary to achieve.
+
+Lastly, as the balance gets more skewed the taller players train the BSP faster and the shorter players the GSP faster.
+
+For Example, that 7’3” mvp will train fast in BSP, but miserably slow in GSP.
+
+Remember for these calculations DR and HA are not included.
+
+Potential Training Cap
+
+The final cap to training is salary based on potential and potential sub-level. Once that is reached you will have a precipitous drop off in training speed.
+
+Expended on by Jeründerbar...
+[this] "Soft cap" has always had a very specific meaning for a player that reaches his potential cap and having his training slowed down significantly because of that, before hitting what used to be called a hard cap, but has since been found to be 3 levels of decreasing training speed.
+
+Last edited by DrChristopher at 4/22/2024 4:10:32 PM
+
+--- 323477.3 | ? | 4/13/2024 2:48:42 AM ---
+1st is training any skills above the potential corresponding color. (See Chart Below)
+0 - announcer = mediocre (5)
+1 - bench warmer = average (6)
+2 - role player = respectable (7)
+3 - 6th man = strong (8)
+4 - starter = proficient (9)
+5 - star = prominent (10)
+6 - allstar = prolific (11)
+7 - perennial allstar = sensational (12)
+8 - superstar = tremendous (13)
+9 - MVP = marvelous (15)
+10 - hall of famer = prodigious (16)
+11 - all-time great = stupendous (17)
+
+2nd is training above handling or driving for guard or big skills.
+
+I'm not sure if I've ever heard of soft cap depending on potential and I'm not really sure if I understood the 2nd item, otherwise excellent post! Lots of extremely relevant infos!
+
+--- 323477.4 | ? | 4/13/2024 7:48:46 AM ---
+Thank you brother for this wonderful guide
+
+--- 323477.5 | ? | 4/13/2024 9:00:46 PM ---
+I'm not sure if I've ever heard of soft cap depending on potential and I'm not really sure if I understood the 2nd item, otherwise excellent post! Lots of extremely relevant info's!
+
+No worries Bern. Yeah like a said these aren't my ideas these are just my accumulated research across the discord, top tier manager conversations through BB-mail, and the forums.
+
+Training any skills above all others will always cause a soft cap to training, I think that was the gist of that soft cap, but the elastic effects are as follows.
+
+JS> accelerates driving and inside shot.
+JR> decelerates jump shot and rebounding.
+OD> accelerates jump range, handling, and decelerates inside shot.
+HA> accelerates outside defense and passing.
+DR> accelerates jump shot.
+PA> accelerates handling and driving.
+IS> accelerates inside defense.
+ID> accelerates inside shot, rebounding, and shot blocking.
+RB> accelerates inside shot.
+SB> decelerates inside defense.
+
+Hope this helps.
+
+--- 323477.6 | ? | 4/14/2024 7:05:08 PM ---
+…
+JR> decelerates jump shot and rebounding.
+OD> accelerates jump range, handling, and decelerates inside shot.
+…
+SB> decelerates inside defense.
+
+Thai is the First time I read about a negative elastic effect … is it officially confirmed?
+
+--- 323477.7 | ? | 4/14/2024 9:34:40 PM ---
+We can let that one slide., but...
+
+Soft Caps for Potential
+There are 3 soft caps players get affected by
+...
+1st is training any skills above the potential corresponding color.
+...
+10 - hall of famer = prodigious (16)Turns out most of us are soft-capping our players at 19yo though...
+
+--- 323477.8 | ? | 4/15/2024 12:49:29 AM ---
+This is meant to be collective. If any of this is contrary to your expierence please let us know.
+
+I guess being more definitive might help in this context.
+
+soft cap to me is anything that slows normal skill growth. By that extension age is essentially a soft cap. Soft caps aren't meant to be a all out stop sign in my mind. More like guiding forces that prevent one type of player of being the master of all skills and builds.
+
+It certainly incentives build well-rounded players...
+
+For example, why buy 7-footers if you could train a 6'1" guys as fast as a 7-footer in big skills? That would certainly change the draft and the prospect market. Would it help the game engine if there was no deterrent to training single skill monsters to say 30 rebounding skill, or 30 jump range skill?
+
+I think the coolest part of this game is the time to profitability ratio in training. You have a most precious commodity... Training slots how will you utilize them. How about over the 14-week season? Are you militant about it? Do you just want to give yourself an edge, or do you want to build some sort of money making conveyer belt of a team training regime?
+
+Big fan of it...
+
+--- 323477.9 | ? | 4/15/2024 12:58:45 AM ---
+This is the graphic (https://ibb.co/bz3jzyc) I have seen on two forums as well as the discord. Its been stickied so I imagine its vetted, but the forum is mainly a thread to avoid me having a big google doc with all this info and centralize it so others can utilize it.
+
+It is a super small decrease though like higher SB slows ID skill training by -0.0052 every full training. So training full weekly training of ID training all season with SB higher. Would slow your ID training that season by 0.0728 of a skill point, total, across all those weeks.
+
+Even at 27 years old a 6'0" player trains ID at 0.09 skill points a week by single position (C) training. That is 1.26 skill points of ID after 14 weeks. Minus 0.0728 of decrease due to negative elastic effect that is still 1.1872 skill points of ID in 14 weeks. Truly very negligible, but maybe if someone is doing that across multiple season maybe you lose a few pops across 9-10 seasons. Or maybe training take a extra week it didn't need to, but good point none the less ill add a footnote for clarity.
+
+Last edited by DrChristopher at 4/15/2024 1:16:58 AM
+[links: https://ibb.co/bz3jzyc]
+
+--- 323477.10 | ? | 4/15/2024 12:43:22 PM ---
+…
+It is a super small decrease though like higher SB slows ID skill training by -0.0052 every full training. So training full weekly training of ID training all season with SB higher. Would slow your ID training that season by 0.0728 of a skill point, total, across all those weeks.
+
+Thus nothing to worry about 🤷‍♂️
+
+--- 323477.11 | ? | 4/15/2024 1:22:11 PM ---
+Soft Caps for Potential
+There are 3 soft caps players get affected by...
+
+What I find somewhat apalling is: if this is true, this countradicts one of the most important dogmas of buzzerbeater which is potential does not affect the speed of training
+
+Last edited by Bernspin at 4/15/2024 1:22:39 PM
+
+--- 323477.13 | ? | 4/15/2024 7:12:29 PM ---
+Soft Caps for Potential
+There are 3 soft caps players get affected by...
+
+What I find somewhat apalling is: if this is true, this countradicts one of the most important dogmas of buzzerbeater which is potential does not affect the speed of training
+(322627.4)
+
+In addition.
+
+--- 323477.14 | ? | 4/15/2024 7:14:01 PM ---
+Soft Caps for Potential
+There are 3 soft caps players get affected by...
+
+What I find somewhat apalling is: if this is true, this countradicts one of the most important dogmas of buzzerbeater which is potential does not affect the speed of training
+
+Yes, if I understand your statement right. Yes, potential is simply an upper limit on max skills and build (combination of skills) capacity, not a boost or hinderance to training speed.
+
+--- 323477.15 | ? | 4/16/2024 12:49:40 PM ---
+Yes, if I understand your statement right. Yes, potential is simply an upper limit on max skills and build (combination of skills) capacity, not a boost or hinderance to training speed.
+
+What is commonly understood as training cap is a overall cap, not a skill-specific cap. If it is true that superstar plays slow down training for every skill that is 13+, this is a huge change in the perception of how training works.
+
+--- 323477.16 | ? | 4/17/2024 4:30:36 AM ---
+Yes, if I understand your statement right. Yes, potential is simply an upper limit on max skills and build (combination of skills) capacity, not a boost or hinderance to training speed.
+
+What is commonly understood as training cap is a overall cap, not a skill-specific cap. If it is true that superstar plays slow down training for every skill that is 13+, this is a huge change in the perception of how training works.
+
+For context, the amount of deceleration hasn't been stated in any of what I have read and the elastic deceleration (a similar soft cap) is very small. I would imagine the potential to corresponding colour skill soft cap may interact similarly.
+
+Last edited by DrChristopher at 4/17/2024 4:31:05 AM
+
+--- 323477.17 | ? | 4/17/2024 6:27:04 AM ---
+I can tell you from years of U21 training and managing, that the "skill cap" posted in here is not accurate/how it works. Dozens of 7-8 potential U21 players have surpassed that 13+ skill mark without any training speed decrease. The USA U21 NT had a 8 potential player well above that mark and he still hit 121 tsp by the end of his 21-year-old season.
+
+--- 323477.18 | ? | 4/17/2024 12:11:06 PM ---
+That's nice to know.
+
+--- 323477.19 | ? | 4/17/2024 7:51:47 PM ---
+I can tell you from years of U21 training and managing, that the "skill cap" posted in here is not accurate/how it works. Dozens of 7-8 potential U21 players have surpassed that 13+ skill mark without any training speed decrease. The USA U21 NT had a 8 potential player well above that mark and he still hit 121 tsp by the end of his 21-year-old season.
+
+Cool i edited the first post for anyone finding this thread late. Appreciate the correction.
+
+--- 323477.20 | ? | 4/21/2024 11:47:36 AM ---
+You would be wise to verify anything your sources claim. Spreading false information like this (stated as researched facts) is not helping anyone. If you want to start a discussion to find out things that's fine, but make it clear you have no idea if it's actually true. You should stick with statements from BB's or data that shows a statistical significant relation, and possibly some experienced users that do thorough research. Just because someone says something on the Discord channel doesn't make it true. There are many there that just blabber anything that sounds nice in their heads, in fact some of the most loud persons there are full of crap.
+
+Also your usage of the term "soft cap" for when training slows down for any reason is very confusing. "Soft cap" has always had a very specific meaning for a player that reaches his potential cap and having his training slowed down significantly because of that, before hitting what used to be called a hard cap, but has since been found to be 3 levels of decreasing training speed as linked to here and confirmed by BB-Justin.
+
+(With 67 BSP being the highest BSP ever seen.)
+This is false by a significant margin.
+
+2nd is training above their GSP or BSP height cap
+Where did you even get this from and what data do you have that supports this claim?
+
+--- 323477.21 | ? | 4/21/2024 6:21:23 PM ---
+My friend I am happy to write a big disclaimer in the first post of this thread.
+
+This is just a game my friend. No need to be harsh.
+
+I hope I have never implied these training ideas to be fact. If I have I apologize. This is just the incredible knowledge on training I felt like I have really valued and have written down since I started playing in season 16. Some of the ideas may need to be adjusted some maybe discarded. That's what putting these out there is meant to do. Fine-tuning.
+
+Could you take the time to write out the exact BSP that is possible? Please be specific, that what this thread is for.
+
+You can call it misinformation, but there is a huge chasm of knowledge you need to have to be good at this game. I am somewhere in that learning curve. I have never held myself up as guru or omnipotent. If you and the BBs want to dictate how everyone is to play the game that is fine man. If a layman comes by and has thoughts that's fine too.
+
+If you would like to add. Be kind. Be Instructive. Be inclusive.
+
+As for the height soft cap calculation it was given to me by a long term manager through the discord. His support for the data was that it was his estimation, of a rule of thumb he found for making builds that ensured quicker training by not training players too big or too small for the role. I will see if I can get more specific data. From our conversation it appears to be the difference in how many weeks to takes to train 30 GSP in a 6'6" guy versus 30 GSP in a 6'10" guy.
+
+--- 323477.22 | ? | 4/22/2024 10:24:51 AM ---
+Thanks for adjusting. Do you see the risk of others reading your guide thinking it contains researched facts, and start telling other managers about how things work based on what they read from you, which is just based on what you heard from others, who knows how they got their info or just made it up? And that's not even accounting for chinese whispers, which seems to be the case with your soft cap based on height. The way I read it, this manager is just saying height influences training speed of different skills, which is supported by research data. However, I know of no data that shows there is a cap for a certain level of skills that influence this. The influence of height is always there. Maybe it is confused with compounding factors like age or the potential limits, but those are independent factors.
+
+Also I have no idea what exact BSP is possible, I only know I've personally seen higher BSP than 67. I have no data to support the idea that the number I know is a maximum, so why would I or anyone claim it as such just because you haven't seen any higher?
+
+There has been plenty of research done and published (ie (229484.1)), I don't see how adding a confusing guide of your own helps anything. Just add or ask to the topics that exist already. By adding more stuff you make it more confusing and harder to find good info for others.
+
+--- 323477.23 | Sr. Malisimo | 4/27/2024 8:32:45 PM ---
+When you say "accelerates", are you meaning that you have to train that ability and it will raise with higher %?
+
+I founded this guide (in spanish) and i think is only general.
+
+https://i.ibb.co/F6FjzWQ/Entrenos-subidas-totales-y-secundarias-por-semana.png
+
+Last edited by Sr. Malisimo at 4/27/2024 8:33:22 PM
+
+--- 323477.25 | ? | 2/7/2025 5:29:08 AM ---
+The link to 229484.1 is to a training simulator spreadsheet that isn't used anymore and is inaccessible. The conversation was mostly about tech issues regarding the simulator spreadsheet.

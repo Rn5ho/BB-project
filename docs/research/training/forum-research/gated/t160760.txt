@@ -1,0 +1,145 @@
+# BB forum thread 160760 — "BuzzerBeater | BuzzerBeater Forums | BB Global (English) > Formula for DMI, game shape, enthusiasm, and salary"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,10,20,30,40.
+# 17 unique messages extracted (10 per page around each m).
+
+--- 160760.1 | Joey Ka | 10/13/2010 12:12:08 AM ---
+Here are some results on modelling a few of the formulas behind BuzzerBeater that we as users did not fully understand until now. In particular these results concern:
+1) DMI
+2) Game Shape change
+3) Enthusiasm
+4) Salary (not much new here, but the current estimates had not found their way to the forum somehow)
+
+I present some information on these topics below, but if you're not into formulas I suggest that you just play around with the Calculators sheet in the new version 2.0 (or any future version) of the coachParrot tool (119279.157) that tries to turn all of this into something useful and was published at the same time as this thread.
+
+1) DMI
+Relevance: The Deliberately Meaningless Index is not so meaningless after all. As it turns out it is a function of the virtual current salary (i.e. salary based on current skills, if a seasonal update occurred right now. For DMI the salary deflation coefficient is not included here), game shape, stamina and free throws. Because of how the formula looks like, it can be useful in three distinct ways:
+a) For players at game shape 7 or 8 and whose skills are known, DMI can be used to give a sublevel estimate for game shape
+b) For players at other levels of game shape, and in particular game shape 9, DMI can be used to give a more precise estimate of virtual current salary than what is possible with the skill-based salary estimators we have had so far.
+c) For players at game shape 9 in two successive weeks, we can now get a clear reading on the salary effect of a week's training, and will be able in the future to use this to get much more precise training speed analysis than what we have until now.
+Formula: There is an exponential decay of the DMI in game shapes below 9 (in addition to a small signomial 'garbage' term I need), multiplied with a linear weight of stamina, multiplied with a linear weight of free throw.There is also a constant term.
+DMI=100*int(VirtualSalary^(1/SalaryDeflator)*(0.1+0.76*exp(-1.13567746*(9-GS))+0.015780656*GS^0.9)*(1-0.035*(10-ST))*(1+0.018*(FT-1))/10)
+Diagrams: DMI_model_vs_observations_at_ST10.PNG http://img163.imageshack.us/img163/3784/dmimodelvsobserva...This diagram shows how DMI falls in line with game shape, comparing the observed data points and predictions according to the formula. Values are for ST 10, FT 1 and minimum sublevels of GS.
+Method: Because of the strong dependence on game shape, valuable data have been those from players at game shape 9.0 (GS 9 has no sublevels) and at game shape 7.0, which is what all players have in the second week of the season. Also stamina 10.0 (no sublevels either). For other levels of GS and ST, it was a matter of collecting data and more data, to find minima at low sublevels at all of GS, ST and FT. In the end I used some 800 observations collected off the transfer list. An early part of the observations was gathered with the help of the community in the 'little DMI research project' thread (114729.1)
+Quality of the model: This formula explains almost all observed data points at GS 9.0 and GS 7.0 and varying ST and FT. It also explains the DMI of all estimates of data at ST 10.0 .
+
+Last edited by Joey Ka at 10/13/2010 1:20:58 PM
+[links: http://img163.imageshack.us/img163/3784/dmimodelvsobservationsa.png]
+
+--- 160760.2 | ? | 10/13/2010 12:12:35 AM ---
+2) Game Shape (part 1 of 2)
+Relevance: Game Shape is subject to heavy random effects, but mostly depends on minutes played as well as on GS in the previous week. Therefore a model can state the most likely GS if a player plays a certain amount of minutes in the current week, but more important is the distribution of probabilities of where GS can end up with these minutes, so that managers can make a rational choice on whether the benefits of deviating from optimal weekly minutes - 60 is the magic number - for competition reasons are worth the cost of suboptimal GS probabilities for next week.
+Formula: The model states that a calculated GS value for the subsequent week is subjected to a random effect of between -10% and +10% of the calculated value. When I assumed less random, then there was no fitting model for my collected data, whereas allowing even more random did not contribute more explanatory power. Under these conditions the model describes the range of minimum to maximum possible game shape, and by assuming a constant distribution of the random over the +10%/-10% interval , it gives probability estimates for each level of game shape. Experimenting with minutes and game shapes of weeks before the current one, it turned out that weeks before the current one do not have a direct effect on next week's game shape, although they do bias the sublevel of the current week's game shape and thus have a very small indirect effect. But this is not useful information, in particular as DMI can now be exploited to get an estimate of the GS sublevel, at least at the relevant GS levels of 7 and 8. The model assumes a signomial relation of GS to minutes played, but there is not enough evidence to conclude that this is really correct. The dependence of next week's GS on this week's GS is also assumed signomial.
+nextGS=(8.75-0.36*(9-currentGS)^1.2-0.00036*(abs(minutes-60))^2.145)*random_in_the_range_0.9_to_1.1
+Diagrams:
+a) GS_model_possible_ranges.PNG http://img692.imageshack.us/img692/1268/gsmodelpossiblera... This diagram shows upper(H) and lower(L) bounds on next weeks game shape for each level of game shape
+b) GS_observations_and_trend.PNG http://img145.imageshack.us/img145/272/gsobservationsandt... This diagram shows polynomial trendlines for the collected data
+c) GS_model_most_likely_values.PNG http://img580.imageshack.us/img580/8158/gsmodelmostlikely... This diagram shows the most likely GS changes as predicted by the formula
+
+Last edited by Joey Ka at 10/13/2010 12:19:09 AM
+[links: http://img692.imageshack.us/img692/1268/gsmodelpossibleranges.png | http://img145.imageshack.us/img145/272/gsobservationsandtrend.png | http://img580.imageshack.us/img580/8158/gsmodelmostlikelyvalues.png]
+
+--- 160760.3 | Joey Ka | 10/13/2010 12:12:56 AM ---
+2) Game Shape (part 2 of 2)
+Method: Over 5 seasons I collected 729 complete tuples of GS->minutes->GS from players on my team. Since I like to deploy my players close to the 60 minutes optimum, this means that the data are clustered around this central area and there are few observations at very low levels of GS or at extreme minutes. To determine the formula I tried to fit a model that assumes the range of possible GS sublevels (i.e. from 0 sublevel to almost at the next major level), applies the formula, then subtracts maximum random from the lower estimate, adds maximum random to the higher estimate, and tries to cover all data points in this range, iteratively finding the right amount of random and the other coefficients so that a model that can explain almost all data with minimum random is derived. For the probabilities of GS levels, since I failed to invert the random effects in algebra, these probabilities are computed generatively over the ranges of possible GS sublevels and possible random effects. This should lead to a good estimate if the model is broadly correct and the distribution of the random is constant over its entire range.
+Quality of the model: I believe that the current model definitely manages to create an intuitive grasp of the probability distributions, but I am also pretty sure that some of the current modelling assumptions are wrong. For example the dependence on current GS and minutes could just as well be Gaussian instead of signomial, or the distribution of random could be Gaussian or follow any other arbitrary stochastic function. Future work could use the GS sublevel estimates from DMI analysis to get more constrained observations, smaller ranges of inputs and thus more precision.
+
+Last edited by Joey Ka at 10/13/2010 12:20:15 AM
+
+--- 160760.4 | Joey Ka | 10/13/2010 12:13:12 AM ---
+3) Enthusiasm
+Relevance: Enthusiasm changes that occur due to playing games at reduced effort (TIE, enthusiasm increases by a third after the game) or increased effort (CT, enthusiasm falls by half after the game) can be learnt quite well intuitively, so the need to have the formula spelled out is maybe not huge. But intuition starts to break down over longer sequences of games, where it is interesting to know what enthusiasm can be expected in a key game at the end of the sequence. For this one needs an enthusiasm calculator.
+Formula: Every day enthusiasm gets closer to its neutral value of 5.0. The speed of the change is calculated by the product of a linear and an exponential function on distance to the neutral value. This formula cannot always explain the observed enthusiasm - we have to assume that a very small random element is involved here as well.
+ENTnew=5+(ENTold-5)*0.9535*exp(-abs(ENTold-5)/60)
+Method: A while ago I collected 176 daily records of GS both before and after games, over a period of about 2 seasons. The model presented here cannot explain all these data, but most of them, and the remaining ones are predicted with a small margin of error. I believe the reason for the deviations is a random effect rather than a model error. On a personal note, this particular formula appears slightly weird to me - exponential and linear, multiplied? - and I wasted a good amount of time until I found it and even later started to believe it is correct ;-)
+
+Last edited by Joey Ka at 10/13/2010 12:59:23 AM
+
+--- 160760.5 | Joey Ka | 10/13/2010 12:14:49 AM ---
+4) Salary
+I have nothing new to say about skill-based prediction of virtual current salary, but I have noticed that obsolete versions of the coefficients pop up occasionally in the forums. So for the reference, here are the current coefficients as used in the coachParrot tool since about a year ago:
+Formula:
+___JS___JR___OD___HA___ DR___PA___IS___ID___RB___BL___const
+PG 1,025 1,045 1,080 1,080 1,040 1,155 1,000 1,000 1,035 1,000 300
+SG 1,125 1,150 1,130 1,000 1,000 1,000 1,000 1,000 1,065 1,000 300
+SF 1,180 1,085 1,065 1,000 1,000 1,000 1,000 1,060 1,090 1,005 300
+PF 1,080 1,000 1,000 1,000 1,000 1,000 1,115 1,115 1,115 1,060 300
+_C 1,000 1,000 1,000 1,000 1,000 1,000 1,138 1,135 1,130 1,065 300
+There is also a salary deflation coefficient that changes every season, for season 14 it is 0.991970
+The virtual current salary of a player is the maximum of the five positional salaries, where each of them is computed as
+VirtualSalary=(300*CoeffJS^JSlevelOfPlayer*CoeffJR^JRlevelOfPlayer.......)^SalaryDeflator
+
+As stated above in the section on DMI, at least for players at GS 9 a more precise method for calculating virtual current salary is by inverting the DMI formula:
+VirtualSalary=(DMI/(10*(0.1+0.76*exp(-1.13567746*(9-GS))+0.015780656*GS^0.9)*(1-0.035*(10-ST))*(1+0.018*(FT-1))))^SalaryDeflator
+…which for GS 9 becomes:
+VirtualSalary_at_GS9=(DMI/(9,74*(1-0.035*(10-ST))*(1+0.018*(FT-1))))^SalaryDeflator
+
+When the sublevel of GS is known, the DMI-based method is more precise because inaccuracies derive only from sublevels of stamina (< 3.5%) and free throws (< 1.8%), whereas in skill-based calculators already a single primary skill can introduce an inaccuracy of 9% (in the case of the JS of SFs).
+
+[Update for season 48 onwards in (160760.16)]
+
+Last edited by Joey Ka at 11/25/2019 3:50:07 PM
+
+--- 160760.6 | ? | 10/13/2010 12:58:06 AM ---
+Impressive as always Mr. Josef Ka.
+
+I have to admit though that I'm a little surprised the random factor for game shape is only between -10% and +10%. I had a theory that there could be close to a 30% or 40% swing in either direction when it came to determining game shape. Thanks for proving me wrong
+
+--- 160760.7 | Simply Vince | 10/13/2010 8:21:55 AM ---
+lol could some one dumb it down for the less mathematically inclined and non-jargon understanding people like me?
+
+So which is the optimal mins for improving GS? (if you ignore the +10% , - 10% random factor) Still round about 60?
+
+--- 160760.8 | ? | 10/13/2010 9:24:16 AM ---
+60 is the magic number, sir ;-)
+
+--- 160760.9 | ? | 10/13/2010 10:32:07 AM ---
+60 is the magic number, sir ;-)
+
+Do you have an estimate with the massage trainer too? Would this boost up the magical number by 5 or possibly 10%?
+
+--- 160760.10 | ? | 10/13/2010 10:33:33 AM ---
+no idea about the massage trainer, personally I doubt it is that much difference
+
+--- 160760.11 | ? | 10/13/2010 10:49:43 AM ---
+no idea about the massage trainer, personally I doubt it is that much difference
+
+Based on the differences you see with things like lvl 6 & 7 trainers?
+
+--- 160760.12 | ? | 10/13/2010 11:07:00 AM ---
+no idea about the massage trainer, personally I doubt it is that much differenceBased on the differences you see with things like lvl 6 & 7 trainers?Based on a long personal history of disappointments with specialists ;-)
+
+--- 160760.13 | ? | 10/13/2010 1:45:58 PM ---
+Just to give you a new challenge: what about a capping model? ;)
+
+--- 160760.14 | ? | 10/13/2010 9:31:13 PM ---
+My wife won't let me rename our son Josef Ka
+
+--- 160760.15 | ? | 10/14/2010 3:46:16 AM ---
+VirtualSalary=(300*CoeffJS^JS*CoeffJR^JR.......)^SalaryDeflator
+Actually, I'm trying to understand the first salary calculation above. ^ usually indicates an exponent, but if used that way here will create a ridiculous salary. If someone could spell out the calculation, PM me, or point to the relevant thread I would be very grateful.
+
+--- 160760.16 | ? | 11/25/2019 3:45:39 PM ---
+I have reverse-engineered the coefficients of the salary formula as used in the tool http://www.buzzer-manager.com - I just entered some values and observed the changes. As compared to the fomula earlier in this thread, this one is much more accurate in season 48, but it does not have the added flexibility of the "salary deflation coefficients" as in my old version. [Which also means that to use this version in coachParrot, you have to enter these coefficients in cells r8:ab12 on sheet Coeff, and put the values 1 / 0 / 1 / 0 in cells aa2:aa5]
+
+Formula:
+___JS___JR___OD___HA___ DR___PA___IS___ID___RB___BL___const
+PG 0,030 0,039 0,072 0,071 0,036 0,147 0,001 0,001 0,036 0,001 228,0
+SG 0,107 0,121 0,124 0,003 0,002 0,006 0,002 0,002 0,063 0,001 220,7
+SF 0,160 0,071 0,059 0,002 0,002 0,003 0,001 0,057 0,086 0,002 242,9
+PF 0,078 0,001 0,001 0,000 0,001 0,001 0,107 0,107 0,106 0,044 246,6
+_C 0,002 0,001 0,001 0,001 0,001 0,001 0,124 0,125 0,124 0,051 241,9
+
+For more information on the structure of this formula, see this message from 2010 close to the top of this thread: (160760.5)
+
+Last edited by Joey Ka at 11/25/2019 3:46:49 PM
+[links: http://www.buzzer-manager.com]
+
+--- 160760.17 | ? | 11/25/2019 3:57:00 PM ---
+with a '.' decimal separator:
+
+___JS___JR___OD___HA___ DR___PA___IS___ID___RB___BL___const
+PG 0.030 0.039 0.072 0.071 0.036 0.147 0.001 0.001 0.036 0.001 228.0
+SG 0.107 0.121 0.124 0.003 0.002 0.006 0.002 0.002 0.063 0.001 220.7
+SF 0.160 0.071 0.059 0.002 0.002 0.003 0.001 0.057 0.086 0.002 242.9
+PF 0.078 0.001 0.001 0.000 0.001 0.001 0.107 0.107 0.106 0.044 246.6
+_C 0.002 0.001 0.001 0.001 0.001 0.001 0.124 0.125 0.124 0.051 241.9

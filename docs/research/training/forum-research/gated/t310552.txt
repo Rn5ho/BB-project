@@ -1,0 +1,117 @@
+# BB forum thread 310552 — "BuzzerBeater | BuzzerBeater Forums | Help - English > Elastic effect (SB/ID)"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,13.
+# 18 unique messages extracted (10 per page around each m).
+
+--- 310552.1 | A Good Guy | 6/28/2021 3:50:03 PM ---
+Hi all, I just drafted this player:
+
+Weekly salary: $ 3 550
+Role: draws a paycheck
+
+DMI: 0
+Age: 18
+Height: 6'6" / 198 cm
+Potential: hall of famer
+Game Shape: respectable
+Jump Shot: respectable Jump Range: respectable
+Outside Def.: average Handling: average
+Driving: average Passing: mediocre
+Inside Shot: inept Inside Def.: atrocious
+Rebounding: inept Shot Blocking: respectable
+Stamina: average Free Throw: pitiful
+
+Experience: atrocious TSP: 53 (37 + 16)
+
+I'm happy with his skills except his ID. I want to make him a top class SG who is not too bad in ID. I'm wondering if his ID will train pretty fast owing to his high SB. Thx~
+
+--- 310552.2 | ? | 6/30/2021 2:54:55 AM ---
+In terms of elastics, yes. Tho at 6'6" I'd go with outside training first coz his ID will pop with OD. Plus jacking up his IS via One on One forwards should also provide him with elastics, so I reckon it's something you can fix later on in his career (although you'd be playing a high salary guy in C)
+
+--- 310552.3 | ? | 6/30/2021 10:34:48 AM ---
+Well, i do not want to take over this thread... but a general question about the mechanic of elastics:
+
+Related skills +3, +4 ? or the higher, the better? At some point the main skill will come close or is wanted to be higher than the related skill (e.g. OD vs. DV) so when is the point, training will drastricly slow down?
+
+regards, Ted
+
+--- 310552.4 | ? | 7/2/2021 5:03:19 PM ---
+It's exponential. Imagine an S shaped curve with +0 being the center. The difference between +0 and +1 in skills is not that big but the differnce between +5 and +6 already a lot more. Once you get to +10 levels you'll sometimes see double pops (players ging from pitiful to inept, skipping awful for example).
+
+Source: We used to have an old external site that gathered data on elasticity and it modeled this curve.
+
+--- 310552.5 | ? | 7/3/2021 3:27:37 PM ---
+I can confirm double ups are a thing, one person in lithuanian bb discord got a double passing skill up.
+
+--- 310552.6 | ? | 7/3/2021 3:53:22 PM ---
+Do we have an elastics thread which we can read more about it in detail?
+
+--- 310552.7 | ? | 7/3/2021 5:59:11 PM ---
+Id definitely train ID for this player at some point, he is 1.98 so really why not, great draftee for you, think id aim for 20/21 OD and 11-12 ID, lots of IS, 20+-, perfect height for this stuff
+
+--- 310552.8 | ? | 7/3/2021 9:13:49 PM ---
+Sorry I only vaguely remember this website from years ago when elastic effect was introduced. There were probably threads about it but I wouldn't know where t find them. Joey or Joseph Ka and Nachtmahr were the main researchers so possibly one of them was involved.
+
+--- 310552.9 | ? | 7/4/2021 4:46:38 AM ---
+Ah I see. Thanks. I have found some very detailed threads on training but surprisingly never about elastic effects. I guess it might take some time to find it. Haha
+
+--- 310552.10 | ? | 7/4/2021 9:56:09 AM ---
+That was a long time ago ;) JoeyKa had detailed numbers.
+
+I was one of the first guys who trained SB primally and only after that ID. The effect was nice. Currently I have a 21 y/o in Utopia, who received such a Training. IT worked like a charme ;)
+
+--- 310552.11 | ? | 7/5/2021 8:56:37 AM ---
+Thank you for your explanation.
+
+Given that no skill is useless, i still gave some doubts.
+E.g. extraordanary high driving, or nachtmahrs example with Blocking.
+
+This training also Costs some time (which is needed for other skilks) and pushes the skills to hights qhich i probably dont want. (Salary- and rostercompilation-wise)?
+
+What do you think?
+
+Regards, Ted
+
+--- 310552.13 | ? | 7/5/2021 3:13:51 PM ---
+This training also Costs some time (which is needed for other skilks) and pushes the skills to hights qhich i probably dont want. (Salary- and rostercompilation-wise)?
+
+I can see that you are a potential customer for my decades-old free tool, the coachParrot excel sheet, see (119279.1) and other threads linked from there.
+
+You can use the 'Scout' tab of the coachParrot tool to try to answer this sort of questions of how to develop a player. You can experiment with target skill profiles and set priorities for the training of each skill. The tool will then generate a training plan that approaches your target, and by varying the skill priorities you can check how long it takes to reach the target with different priority settings, or how close you can get if the target is not quite achievable.
+
+coachParrot includes a model of the elastic effect that is probably quite close to the truth, so as a learning tool it has its merits. Just take everything with a pinch of salt, since most of the formulas are off by a few percentage points, because we never collected enough data to fix the model perfectly. The best thing we ever had before everybody went lazy were some 30,000 weekly training results collected by the US NT community. Good luck!
+
+--- 310552.14 | ? | 7/5/2021 3:37:21 PM ---
+Been using it since day one and boy, it's awesome. Outside training is pretty accurate, inside is nerfed but if one knows the real levels nowadays it's quite easy to calculate the actual values.
+
+It's a great learning tool about elastics. No doubt about that.
+
+I would like to express my gratitude personally for your work on that, Joey. Simply amazing!
+
+--- 310552.15 | ? | 7/5/2021 4:26:10 PM ---
+Hi,
+
+Does the Coach parrot excel calculates the youth trainer and gym, training court effects?
+My guess would be no, because every year my U21 candidates are actually train faster than what CP excel propose.
+In other words when I set the my target skills at early 18y and what CP gives me as a plan, that is way longer that what is the reality.
+Thanks
+Sz.
+
+--- 310552.16 | ? | 7/5/2021 4:45:14 PM ---
+You are right, it doesn't have these things. I'm content that it underestimates the real speeds, better than the other way round for keeping the peace in the forums...
+
+@minkOff / [team=XXX], thanks for the kind words.
+
+--- 310552.17 | ? | 7/5/2021 9:19:04 PM ---
+Thank you
+
+--- 310552.18 | ? | 7/6/2021 11:27:16 AM ---
+I'm also a fan of SB (right now, my guys are (ID-SB) 17-19 and 17-20, with both of them probably going one skill up in the future, hopefully for both skills; bench is 12-16 and 14-14, with the latter guy being a primary bench big who'll end up somewhere in the 16-18 range).
+
+The thing with SB is that it necessitates slashing another skill due to cap reasons; my choice was IS since I always wanted to run an outside-oriented team. Salary-wise, it's very affordable with not so great JS (starters' salaries are 74k and 95k respectively, with 15 and 16 RB and very low IS), but you can go for higher JS and consequently higher salaries, depending on the potential, though my option would be to stack them with PA instead and have 1-3 positions as primary offensive guys. Of course, you can also adapt this overall plan to your level of competition and not go for skills as high as possible like I did. However, I think that 95k for a very good defensive big with some JS and PA is not that much of a problem (or 75k for 17-20 with less shooting). People still force inside tactics predominantly, and they're in for a nice surprise that way. And just to boast a little bit, I'm pretty sure my guy posted the best blk/game average in my first league ever last season, with a nice and round 4.0. SB works if you know how to use it.
+
+The effect of SB is noticeable and positive for your team, especially if you construct it so as to be able to play 3-2 zone (RB pretty much all round, though not necessarily very high on 1-3 pos).
+
+Last edited by The Sentinel at 7/6/2021 11:31:31 AM
+
+--- 310552.19 | ? | 7/6/2021 3:04:41 PM ---
+Thank you for sharing

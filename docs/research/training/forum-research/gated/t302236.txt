@@ -1,0 +1,28 @@
+# BB forum thread 302236 — "BuzzerBeater | BuzzerBeater Forums | Help - English > Latest version of training simulator"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,13,25,50.
+# 7 unique messages extracted (10 per page around each m).
+
+--- 302236.1 | deakdzso | 11/23/2019 10:16:44 PM ---
+Hi All,
+Does anyone know which is the latest version of the good old training simulator?
+Thanks!
+
+--- 302236.2 | ? | 11/24/2019 3:14:51 AM ---
+This one (https://docs.google.com/spreadsheets/d/1CwTrcEAGffBHhfxSEG...)
+[links: https://docs.google.com/spreadsheets/d/1CwTrcEAGffBHhfxSEGqlP6Kc6uoegT8z-QoWAVwM2DE/edit?usp=sharing]
+
+--- 302236.3 | ? | 11/24/2019 7:55:37 AM ---
+Thank you!
+
+--- 302236.4 | ? | 3/23/2020 11:31:51 AM ---
+The Document there did not work for me. The exel sheed did not use my imported players. Is the file defect or did i do something wrong?
+Thank you
+
+--- 302236.5 | ? | 3/24/2020 1:25:28 AM ---
+Did you use the "SET YOUR LINEUP" option on the second tab? That's where you would copy and paste your player data. You'll need to manually input the player's age, height and potential.
+
+--- 302236.6 | Macoy Bolivia | 8/12/2021 10:03:17 PM ---
+Is anyone still using this Training Simulator?
+
+--- 302236.7 | ? | 8/13/2021 9:40:24 AM ---
+I am. It's quite accurate you know. Maybe not the best in the world, but fair enough. I guess my training goes almost exactly the way the spreadsheet predicted it, maybe a little to modest in terms of skills jumps. Let's say that it's ~90-95 % accurate in my case.

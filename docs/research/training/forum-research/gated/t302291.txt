@@ -1,0 +1,261 @@
+# BB forum thread 302291 — "BuzzerBeater | BuzzerBeater Forums | Help - English > Training Simulator"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,13,25,50.
+# 30 unique messages extracted (10 per page around each m).
+
+--- 302291.1 | markus450 | 11/26/2019 1:58:47 AM ---
+I'm pretty new understanding how BB training works and would appreciate some help very much! First and foremost, I'm using the training simulator and have no idea how to actually use it. Also, a question I have basically is what is this elasticity I keep seeing during these forums?
+
+--- 302291.2 | ? | 11/26/2019 3:18:39 AM ---
+I've been using the sim a lot lately so I can tell you how I've been setting it up. Other users might have other methods, but below is how I've set it up.
+
+1. Go to the Player Input sheet and select "SET YOUR LINEUP" Option.
+
+2. In BB go to one of your upcoming games Set Lineup in the Schedule.
+
+3. If your tactics view is Allstar, you should see Show/Hide Skills Table under your lineup selection. Click that and copy the players and their skills you want to sim.
+
+4. Paste the player info into the Player Input sheet. You'll need to type in Age, Height, and Potential values.
+
+5. Go back to the Training Calculator sheet and select your Trainer Level.
+
+6. If the copy of the sim you have is old, the dates for the training weeks are going to be all crossed out. So next to Week 1 of the first season input 11/22/19 and the rest of the dates will update.
+
+7. Now you should be able to select the training for your players and see the effect in the Training Results.
+
+Using the sim should give you a rough idea if your expectations for training that season are realistic and help you figure out how to hit that target.
+
+Elasticity refers to the increase a skill can receive based on the level of other certain skills. For instance, Inside Defense affects Inside Shot. Let's say you have a 7'0" 18 y/o trainee. Training single position IS for that trainee increases his IS by 0.61*. But if the trainee's ID is higher than his IS, he receives a slight increase in skill points. So if the trainee's ID is 10 and IS is 7, training IS would increase the trainee's skill by an additional 0.0289* points. The higher the difference between ID and IS skills, the greater the additional training. This is vital since trainees receive reduced training as they get older. Setting up elastics helps minimize the training drop off and allow you to get the most value out of training.
+
+*The values I'm using are estimates and could be off.
+
+Last edited by glasschimera at 11/26/2019 3:21:02 AM
+
+--- 302291.3 | ? | 11/26/2019 5:54:58 PM ---
+Hey, thanks so much dude! This is extremely helpful!
+
+As for elasticity, in the case of the 7'0" 18 y/o, you'd basically want to train him in either IS or ID exclusively so that when he grows older his training drops would not occur as frequently?
+
+--- 302291.4 | klastes | 11/26/2019 6:22:21 PM ---
+Hi guys, let me ask you 2 questions related with training/trainer:
+1.do trainers have sub-levels the same way players do?
+2. do I get any penalty (f.e in a fun survey) for hiring new trainer?I want to hire the trainer with the same level as I have now, and I can see they are cheaper on the market than mine current trainer.
+Thanks
+
+--- 302291.5 | ? | 11/26/2019 8:17:50 PM ---
+1. If they did we'd have very little way to actually know or test this since training already has way too many variables associated with it.
+
+2. It does not impact fan survey at all however there is a firing cost for the old trainer which is the salary he would have gotten paid on the monday of that week
+
+--- 302291.6 | ? | 11/26/2019 10:23:46 PM ---
+That's not how it works.
+
+Elasticity means simply what the first responder told you: there is a bonus or penalty depending on the relative level of different skills. IS training speed is impacted by JS and ID, meaning that if JS and ID are higher than IS the training will be a bit faster and if they are lower it will be a bit slower. This says nothing about the baseline speed of IS training.
+
+There is one glaring takeaway from elasticity: 1v1 is always the best choice of training for outside skills as it primarily trains HA and DR which together have an elastic effect on JS, JR, OD and PA. 1v1 is also the fastest training regime available, and 1v1 forwards also trains IS and JS secondarily, so it really is a no brainer.
+
+Now, for inside skills it is less clear cut and since only SB has a baseline speed which is clearly higher than the other 3 there is no significant advantage in prioritising a skill over another, you can just go with the fastest provided it fits the training regime. However since 1v1 also trains is and JS has an elastic effect on IS, if you plan to train IS and train some secondaries for a big man (OD, PA etc) then you will still start with 1v1 forwards, do the outside skills to the level you want them and then move to IS and ID, likely alternating between them when they have similar training speed.
+
+All of the above is subject to the player's potential and especially for big men this is very relevant. So be careful, do not accidentally cap the player before you actually added the skills you wanted, plan and track the pops so that you know where you stand. After a player hits his cap you can keep training him, but it will be much slower everything else being equal.
+
+Last edited by Lemonshine at 11/26/2019 10:27:45 PM
+
+--- 302291.7 | ? | 11/26/2019 11:31:49 PM ---
+1v1 guards might be the better option for bigs depending on the starting skills. Higher training in JS and HA allows you to get training out of the way faster for OD and PA. Assuming inside skills are relatively the same, there is an order to train them that gets the most out of elastics. ID first, RB second, and IS third. The increase is small but it's still an increase. But I agree that it doesn't mean training 1 skill to 17 when the others are still sitting at 7-8.
+
+--- 302291.8 | ? | 11/26/2019 11:54:42 PM ---
+Higher training in JS and HA allows you to get training out of the way faster for OD and PANot really. JS has no impact on OD and PA and whether it's guards or forwards 1v1 yields the same amount of HA and DR training (the only difference is that all secondary training go to JS in 1v1 guards, while it's split 50/50 between JS and IS in forwards)
+
+There is almost never any benefit in doing 1v1 guards instead of 1v1 forwards. The only 2 cases I can think of:
+- when the player is very short and IS will train so slow that you may as well give up from the start
+- when the training plan is predicated on punting IS
+In all other circumstances, you want to have IS instead of more JS, it's better for cap management, it's better for salary reasons and it's also usually better for the impact on the court (depends on the height of the player which affects IS and JS training speed).
+
+ID first, RB second, and IS third. The increase is small but it's still an increase.ID is pulled by IS and SB, trains ID+IS/SB secondary
+IS is pulled by ID and JS, trains IS+ID/JS secondary
+RB is pulled by IS and ID, trains RB+IS/ID secondary
+ID>RB>IS is not the optimal choice, IS>ID>RB and ID>IS>RB are both better in absolute terms. If you focus only on IS+ID+RB, then RB first is the marginally better choice. Often the optimal strategy with inside skills is simply to train the skill with the higher overall yield, given the actual skills of the player (this means you reach a point where you start rotating skills). I'm pretty sure RB first always produces the worst results since it has a lower baseline yield than IS and ID.
+
+Last edited by Lemonshine at 11/27/2019 2:34:16 PM
+
+--- 302291.9 | ? | 11/27/2019 1:48:43 AM ---
+JS has no impact on OD and PA and whether it's guards or forwards 1v1 yields the same amount of HA and DR training (the only difference is that all secondary training go to JS in 1v1 guards, while it's split 50/50 between JS and IS in forwards)
+I agree that JS has no impact on OD/PA. I meant to include that as having an impact on IS. I disagree that 1v1 trains the same amount of HA and DR. 1v1 guards trains more HA for bigs. 1v1 forwards trains more DR. 1v1 guards also trains a significant amount of JS reducing the need for JS training later on and allows you to focus on inside skills.
+
+ID is pulled by IS and SB, trains ID+IS/SB secondary
+IS is pulled by ID and JS, trains IS+ID/JS secondary
+RB is pulled by IS and ID, trains RB+IS/ID secondary
+Cross training and elastics are not the same thing.
+
+ID is affected by IS and SB. Higher IS has a positive effect, while higher SB has a small negative effect.
+IS is affected by JS, OD, ID, and RB. Higher JS, ID, and RB has a positive effect, while higher OD has a small negative effect.
+RB is affected by ID and JR. Higher ID is positive and higher JR is negative.
+
+That being said, all of this is theoretical based on data put together by BB users. So we could both be wrong.
+
+--- 302291.10 | ? | 11/27/2019 2:15:35 AM ---
+I disagree that 1v1 trains the same amount of HA and DR. 1v1 guards trains more HA for bigs. 1v1 forwards trains more DR. 1v1 This is wrong, you can have a look at the results from the US offsite project for confirmation.
+
+There is no evidence that 1v1 guards and forwards are any different in respect of primary training (so HA and DR). The only difference is that the secondary training is concentrated in JS for guards and is split for forwards.
+
+Yes guards trains more JS, but my point was why would you want to give up IS for more JS? It's almost never a good trade-off.
+
+Cross training and elastics are not the same thing.Again, I'm not sure what you're talking about. I haven't mentioned crosstraining. What I provided is primary and secondary training. You always get training in the skills I mentioned, crosstraining is random.
+
+Higher IS has a positive effect, while higher SB has a small negative effect.This is incorrect, higher SB (than ID) will make ID train faster, higher ID (than SB) will make SB train faster. That is exactly how the elastic effect works.
+
+IS is affected by JS, OD, ID, and RB. Higher JS, ID, and RB has a positive effect, while higher OD has a small negative effect.
+RB is affected by ID and JR. Higher ID is positive and higher JR is negative.Wrong wrong wrong. OD and RB have no elastic influence on IS. JR has no elastic effect on anything except for JS.
+
+Also there is no 'negative effect' it's a simple relationship: the higher skill pulls the lower skill making training faster. Obviously if you flip it around, you will have the opposite effect (lower skill drags the higher skill).
+
+this is theoretical based on data put together by BB users.Well, it was a statistical analysis based on thousands and thousands of data points. Regressions have been run on that data set in order to estimate the training speed and the impact of other factors like height, age and trainer level. So while the model built on that analysis is not exact, it is a very good approximation. Besides in respect of identifying which skill have an elastic effect on other skills the error should be basically zero. Keep in mind that the elastic effect was something the developers talked about, so people looked for it in the data: while we can discuss how accurate the elastic effect estimate from the analysis is, we can pretty much be sure of the relationship between different skills (i.e. you can be 99.99% sure skill A has an elastic effect on skill B, however you can only say that the effect is x% with a lower level of confidence).
+
+--- 302291.11 | ? | 11/27/2019 12:24:45 PM ---
+From my experience one on one for guards is a better option to train big guys from one on one forwards.
+JS coeff. is always 1 and not impacted by height.While IS coeff. is 1 for 201 cm tall players,for 203 cm is already 1,05 and its growing for taller players.This is why I believe in this theory.And the opposite is for smaller players they will get more from one on one on forwards positions because they train IS with lower coeff. from 1.
+Also JS will have a good elastic effect later on IS skill.So definitely its a better choice for taller players.
+
+--- 302291.13 | ? | 11/28/2019 7:29:06 AM ---
+1on1 guards doesnt train IS compared to 1on1 forwards which trains both IS and JS. That might be useful in a scenario where your trainee has very low JS. I do rely on elastics in training, so I can also see where you are coming from. I think every trainee is unique. When someone prescribes a generic training plan disregarding how skills are broken down it shows that elastics are not given equal weight. Every trainee is different.
+
+--- 302291.14 | ? | 11/28/2019 10:07:21 PM ---
+Yes I agree I used one on one guards first time when I was fixed one of my trainees low starting JS skill.
+
+But I also used in training this guy for our NT team,,it was my intention to build better player I can from him.
+http://www.buzzerbeater.com/player/39593406/overview.aspx
+
+He is currenly on TL so you can seen his skills.But if you cant he is 146 TSP:
+19 9
+19 18
+20 10
+17 17
+8 9
+
+My idea was to build a quality attacking-defensive SF player,who also can be really effective on PF or C if you using patient.
+Now I am working on even better player from Bodiroga.I wish to train him with even more JR and PA from Bodiroga up to 12-13 in both.Maybe with slighter lower ID from him if I will not able to finish that.Currently he is:
+18 12
+15 15
+16 13
+12 11
+7 9
+
+--- 302291.15 | ? | 11/29/2019 7:05:01 PM ---
+Per USA off-site data, taller bigs should be trained in 1v1G because it trains HA quicker on the bigs and IS actually trains slower the taller the player is.
+
+1v1F trains IS quicker for shorter guys.
+
+So as a result, it is better to train 1v1F for guards ( typically 6'4" and shorter) and 1v1G for bigs (6'11" and taller). For guys between 6'5" and 6'10" I think 1v1F would probably be fine.
+
+--- 302291.16 | ? | 11/30/2019 12:22:39 AM ---
+1v1G because it trains HA quicker on the bigs and IS actually trains slower the taller the player is.It's like you guys have never looked at the training simulator or coachParrot which use the coefficients estimated based on that data or just go by hearsay.
+1. 1v1G and 1v1F train HA and DR exactly the same way
+2. The training on HA and DR is unaffected by height
+
+IS actually trains slower the taller the player is.IS always trains faster for taller guys. Always. Both as primary (IS) and secondary training (ID, RB, JSF, 1v1F).
+
+As I said before, JS has an elastic effect on IS but not vice versa so if you are planning to have the most TSP, then yes 1v1G will give you highest TSP. However since it always results in less IS it's usually not a good choice in terms of salary, cap and on-court efficiency, except for a few selected situations which I already listed.
+
+Last edited by Lemonshine at 11/30/2019 12:24:46 AM
+
+--- 302291.17 | ? | 11/30/2019 12:46:08 AM ---
+It might be because we still have some of the old crowdsourced data, which show a much different training increment vs height for the two 1v1 formats. In fact, the IS increase added by a week of 1v1 forwards declines with height, from 6 foot through 7 foot. This is distinct from the slope for inside scoring at C, where taller guys definitely train faster.
+
+Recall that Jozef Ka changed or ignored the nonlinearity of some of the training types. Why exactly he did isn't clear to me now.
+
+And to be strictly correct, I don't believe that wozzvt found an elastic linkage between JS and IS. If I recall correctly, the only inside skills he linked were ID, which sped up IS. Of course the data analysis for this was tricky. There is actually more week to week variation in the skill points a trained player receives. So teasing out what were sometimes small effects was difficult.
+
+--- 302291.18 | ? | 11/30/2019 1:47:36 AM ---
+Is it possible that the IS training speed slowed down because of negative elastics. Was that factored in your old data? I got to agree with Lemonshine on this topic. I would have to say that coach Parrot is 90% accurate for me. Maybe you can share your data with us to compare.
+
+--- 302291.19 | ? | 11/30/2019 2:06:21 AM ---
+It's certainly possible that there were other effects at play that slowed the apparent IS gain for tall guys during 1v1f training. Perhaps negative elastics, or perhaps a cross training penalty.
+
+But the data also weren't just for the tall guys, but also included all heights, so the slope from 6 foot to 6 1/2 foot also plays a role in the calculated slope. There might be fewer data points where very high inside skills are biasing the slope for those height ranges.
+
+To look at the effects of height on predicted training that wozzvt's project generated, you can take a look at the old training simulator spreadsheet that rhyminsimon made (linked in the helpful programs thread I think). Personally I found that more accurate than Coach Parrot, but I never did a head to head comparison, and I never used CP too much for training stuff.
+
+--- 302291.20 | ? | 11/30/2019 2:17:37 AM ---
+This is the table used in coachParrot for elastics calculations:
+https://imgur.com/smjYhlI
+
+This is the table with the training coefficients:
+https://imgur.com/gm8zvYB
+
+And these are the other tables for height, age, trainer (cap coeff was most definitely changed by me):
+https://imgur.com/2YbTZLX
+
+I now see that rhyminsimon's tool had a decresing relationship, but he also has 1v1F being faster than 1v1G by over 10% for short players, which sounds highly unlikely. The distortion in the coefficients for HA and DR is likely due to skills that affect HA but not DR via elastics (OD). If you look through his coefficients (which were older than the ones Jozef Ka worked with) there are a lot of things that make little sense. If you look at IS training at 6'0'' he estimates the secondary training on JS to be 3% of primary training, while at 7'6'' he estimates a 30%.
+
+I would need to see the dataset and run my own analysis, but at a glance I'd say rhyminsimons numbers defy common sense. According to that, JR and SB benefit from no elastic effect, so yeah.
+
+Last edited by Lemonshine at 11/30/2019 4:07:18 AM
+[links: https://imgur.com/smjYhlI | https://imgur.com/gm8zvYB | https://imgur.com/2YbTZLX]
+
+--- 302291.21 | ? | 11/30/2019 3:15:24 AM ---
+The data were the data. They were something like over 10,000 player-weeks of training. Even with that amount of data (and lots with info on consecutive pops between a single skill) there were remained some uncertainties, as the weekly variation was large relative to some of the effect magnitudes. The elastic effects and the difference between level 6 and 7 trainers come to mind as small effect magnitude. I'm not sure he was ever completely happy with the data for shotblocking - then as now it wasn't always high on the trainer priority list. We could never really figure out how to estimate the effect of cross training (and the more I train I wonder if this is a large effect).
+
+So believe the estimates or don't. They were surprising to us when they emerged, and wozzvt routinely double checked them. But at a certain point, the estimates - especially in the widely trained skills like 1v1, OD, and passing - stopped changing much as new training results were added. Things like the different height coefficients for 1v1 guards vs forwards were consistent, as was the positive slope for passing and height. The data gave us the best info on the effect of age and training speed, and the differences between level 4, 5, and 6 trainers. The conclusions on the elastic effect showed that it wasn't reciprocal, so you could actually get an increase in training speed, and completely changed how the community trained.
+
+--- 302291.22 | ? | 11/30/2019 3:41:41 AM ---
+I think the math was what turned me off in training analysis when I was still a newbie. I have seen a couple of 150+ tsp guys (not a lot) in my 25+ seasons playing this game. It would be nice to see how their trainers pulled it off and what method they used. More recently, a Lithuanian manager broke down the table of Parrot which i thought made training very simple to understand even to a newbie with average intelligence. My mistake before was under estimating height in training speed its advantage and disadvantage. I constantly refer to that table to this day when I need to think about a training plan because it is convenient, and I do find it close to simulating training in this game that we all play.
+
+Though both of you are in opposite views, its not productive to pursue because the conclusion was not based on the same data. So i am just going to go back to what works for me as a trainer. So unless i see more 150+ TSP hofs and atg on the transfer list i am not going to waste energy arguing 2-3 more skill points here and there.
+
+--- 302291.23 | ? | 11/30/2019 3:45:13 AM ---
+So you believe that training IS for tall players you get 1 JS pop for every 3 IS pops and for a 6'0'' player you get 1 pop every 30? The difference is so large that this should be easy to test.
+
+Crosstraining seems to be a % of the total training going to 1 or more random skills (and presumably the gym replicates that 1x-3x). Whether restrictions exist to this allocation could make a difference, because if it's completely random it could also fall to on the primary training skill. Crosstraining also creates noise in the data.
+
+The PA and 1v1 connection to height is very bland even in rhyminsimon coefficients and it's certainly not as significant as it is for other skills. And since there a multiple variables involved here, I assume the relationship between all the variables was tested. For example, the PA slope may be entirely explained by elastic effect and the typical configuration of skills for players of different height. This could mean that the minimal connection with height is in fact no connection at all as it's driven by other variables highly correlated with height.
+
+Using coachParrot I have not been getting pops in HA with 1 specific player (at least 3 several consecutive pops), while DR was on point. With each pop the margin of error should be decreasing, so something else was going on there. That player in particular had a fairly big imbalance between HA and DR. Using the other coefficients (the training simulator one) the estimate would have been even more off.
+
+Last edited by Lemonshine at 11/30/2019 3:52:37 AM
+
+--- 302291.25 | ? | 11/30/2019 4:32:04 AM ---
+I never trained a 7'6" guy, so I can't say how fast he would pop in JS given only IS training. Sounds like an interesting experiment. Some of those experiments almost certainly existed in the dataset.
+
+Your cross training hypothesis is certainly reasonable, and I think that's how most folks conceive of it (especially as that's how Charles described it when it was introduced). How exactly it works isn't clear. As you said, could it be randomly applied to the trained skill itself- or what about secondaries? Is the likelihood that a non-trained skill gets increased weighted by how low that skill is? Is there a malus, so that the training removed from the primary skill doesn't get applied to other skills? Maybe the effect of the new building is to reduce the likelihood of lost training. What set of skills causes a cross training effect to occur? Does a more unbalanced set of skills cause a larger effect, or is there just a threshold above which the effect is constant?
+
+Obviously the crowdsourced estimates contain these cross training effects, and the elastic effect. Wozzvt is an excellent scientist, and so he looked for relationships among all the variables that were tracked (age, trainer level, skills, height). So it's useful to remember these are average estimates, and reflect the average trainee as it was when the data were collected. The average trainee may have changed since then, given the massive change in trainer behavior once the elastic effect was described. Still, they are useful estimates to help guide training choices.
+
+In the end, I prefer those real world estimates over "common sense" or an assumption regarding the designer's choices. Of course, I'm a dyed in the wool experimentalist when it comes to my science, so that's not surprising.
+
+--- 302291.26 | ? | 12/1/2019 11:13:47 AM ---
+The fact remains though that the US community never built a model for elasticity (or cross-training), and elasticity is known to have a big impact on training speed. Therefore every player that does not correspond to the average elasticity conditions in the database sample will get severely distorted training speed predictions. The coachparrot model of elasticity is clearly not 100% correct, but it's at least 70-80% there (it minimizes the entropy of the same database and adds some smoothing on top). My hope would be that the US group eventually build their own model of elasticity from the database - and ideally publish it ;-)
+
+--- 302291.27 | ? | 12/15/2020 5:10:19 AM ---
+Hey @Glasschimera,
+
+Do you know if there is a bug on that doc that you provided last year? I made a copy of the doc and followed the steps outlined on the "Player Input" Tab (Sheet). Now when trying to use the "Training Calculator" Tab (Sheet), the data is all messed up.
+
+Is there a copy floating around with no bugs? Or perhaps I missed a step between inputting the data and having it sync to the "Training Calculator" Tab correctly?
+
+Many thanks!
+
+--- 302291.28 | ? | 12/15/2020 7:05:38 AM ---
+Looks like there were a few users that didn't realize it was a publicly shared doc. I reverted it back to the correct version (https://docs.google.com/spreadsheets/d/1CwTrcEAGffBHhfxSEG...)
+[links: https://docs.google.com/spreadsheets/d/1CwTrcEAGffBHhfxSEGqlP6Kc6uoegT8z-QoWAVwM2DE/edit#gid=547116093]
+
+--- 302291.29 | ? | 12/18/2020 2:53:12 PM ---
+try and have HA greater than or equal to OD and passing (most of the
+By this you mean OD + PA = HA? Or HA = OD = PA ?
+
+--- 302291.30 | ? | 12/18/2020 4:03:59 PM ---
+I mean the HA = OD = PA for most of the player's training, other than perhaps a rookie season with more 1v1 to set up elastic effect.
+
+But for the rest of the training I like things to be generally equal. Obviously in the end it depends on the final build design. In my experience over many trainees, players with more balanced skills seem to pop faster than those with unbalanced skills. This might be a result of elastic effects, cross training effects, or it may be "seeing" a pattern that's actually random noise.
+
+Spreading the training out evenly over time also eases integration of new, younger trainees.
+
+--- 302291.31 | ? | 12/18/2020 4:36:56 PM ---
+But aren't elastic effects best utilized when there is a big difference between HA, DR, and OD? Then you train OD and it pops quicker or am I missing smth?
+
+--- 302291.32 | ? | 12/21/2020 3:13:26 PM ---
+Yes, that would maximize the elastic effect. And that likely is greater than the negative of the cross training penalty (otherwise creating the super high TSP players in the game would not be possible).
+
+One issue against that is how expensive handling becomes at very high skill levels. I don't typically want HA to get super high, so I want to take into account the added HA that will come with the final OD/PA, and some JS/JR training.
+
+Then there's the issue of doing a full season of 1v1 to set up the elastic effect. It works well with multiple trainees of the same age. But I often have trainees staggered a couple years apart.
+
+Really in the end it depends on the goal - you're right that if you're looking to maximize TSP on a single player then definitely max out the elastic effect.

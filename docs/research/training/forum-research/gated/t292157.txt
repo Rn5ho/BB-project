@@ -1,0 +1,130 @@
+# BB forum thread 292157 — "BuzzerBeater | BuzzerBeater Forums | BB Global (English) > Training speed"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,13.
+# 22 unique messages extracted (10 per page around each m).
+
+--- 292157.1 | ig | 1/20/2018 2:54:27 PM ---
+Just discovered that according coach parrot, the training speed increases just by about 3% for 1 coach level. In other words, the difference between lvl 4 and lvl 6 level coach is just one extra training per season.
+
+I wonder if this is the reality, and if so, why people throw millions on lvl.6 and lvl.7 coaches (or even lvl.5 ones), when a slightly worse one costs alnist nothing, as according to current prices, my assumption states that the difference should be at least 10% per level, starting from lvl. 5
+
+Last edited by ig at 1/20/2018 2:57:40 PM
+
+--- 292157.2 | ? | 1/20/2018 8:02:24 PM ---
+Let's say one level gets you one more pop in a season.
+
+It doesn't sound that much, but...
+
+That means 10 skill levels in 10 seasons (from rookie to 28 years old player when he is usually done with training).
+
+So level 4 gets him, for instance, to TSP 110, which is mediocre.
+Level 5 gets him to TSP 120, that means he's a good player.
+Level 6 gets him to TSP 130... quite a difference to level 4.
+
+Maybe that can be the answer.
+
+--- 292157.3 | ? | 1/20/2018 8:27:05 PM ---
+First of all, the difference of 10 extra trainings per 10 seasons is between lvl.4 and lvl.6 trainer, 5 trainings for each level separately.
+
+Secondly, 10 trainings throughout the period lead to by far less than 10 pops. In fact, only at the ages 18 and 19 and only with specific trainings, such as 1 on 1 there is more or less 1 pop/week rate. The overall average rate is about a pop in 3 weeks or even less. So after spending about 10M on lvl 6 trainers for 10 seasons, the overall product gives you a player with just 3 TSP more than the same one trained by lvl. 4 trainers. Sure one can get even better player for this amount of money
+
+Last edited by ig at 1/20/2018 8:28:55 PM
+
+--- 292157.4 | ? | 1/20/2018 9:05:35 PM ---
+First, I never mentioned any "extra trainings".
+
+Second, I'm not trying to say that spending a huge money on high level trainers is a good decision economically. It is well known for a long time that the extra money spent on high level trainer (including higher salary) cannot be returned through slightly higher value of trained players.
+
+Still, some managers decide that those extra pops in the long run are important enough for them to be worth that money.
+
+Who can say they are wrong?
+
+--- 292157.5 | ? | 1/20/2018 9:28:41 PM ---
+I can
+
+There is no way that 3 extra pops of any player are worth 10M. I asume that many users (like myself till today) are not aware of the real impact of coach upgrade and spend their hardly-earned money improperly (if the above reflects the reality or close to it, of course). Just wanted to bring this issue to discussion.
+
+Last edited by ig at 1/20/2018 9:29:51 PM
+
+--- 292157.6 | ? | 1/21/2018 1:51:18 AM ---
+There is no way that 3 extra pops of any player are worth 10M. I asume that many users (like myself till today) are not aware of the real impact of coach upgrade and spend their hardly-earned money improperly (if the above reflects the reality or close to it, of course). Just wanted to bring this issue to discussion.
+
+All of my money is hardly earned
+
+--- 292157.7 | ? | 1/21/2018 10:18:31 AM ---
+People that buy level 6 or 7 trainers don't care about their money that much. They care about training the best players for them or their National Team. Even though I have trained NT players I mostly used level 4 and 5 trainers.(Level 5 when the trainees were younger) I care about my money :D You can train 140+ TSP players even with level 4 trainer if you train until 29-30 years old and the starting skills of the player are nice. But you could make him 150 TSP if you trained with level 6-7 trainer.
+
+--- 292157.8 | ? | 1/21/2018 1:07:38 PM ---
+If the difference between 4 level and 6 level trainer was the outcome of TSP 150 vs 140, I'd understand the effort. The problem is that it should be 143-144 vs 140
+
+--- 292157.9 | ? | 1/21/2018 1:16:05 PM ---
+If the difference between 4 level and 6 level trainer was the outcome of TSP 150 vs 140, I'd understand the effort. The problem is that it should be 143-144 vs 140.
+
+No.
+
+Last edited by Westri at 1/21/2018 1:32:03 PM
+
+--- 292157.10 | ? | 1/21/2018 1:49:22 PM ---
+Have u ever trained player, let's say with trainer lvl 4, to 140 TSP?
+
+Last edited by N-M at 1/21/2018 1:49:39 PM
+
+--- 292157.11 | ? | 1/21/2018 2:00:39 PM ---
+The problem is that it should be 143-144 vs 140
+
+Even with 3% difference per level, it should be around 8-9 skills.
+
+Visible skills, not counting the sublevels.
+
+--- 292157.13 | Manon | 1/21/2018 3:59:21 PM ---
+Everyone here seems to be forgetting a thing that applies to all scales here in BB. And that is that there's not a linear increase between all levels. It starts out big and then decreases the higher you get in the scale.
+So to say a 3% increase for every level would be a false statement.
+
+--- 292157.14 | ? | 1/21/2018 8:27:50 PM ---
+3% per level * 14 weeks/season * 10 seasons = 4.2 extra trainings overall throughout 10 training seasons per level. Or 8.4 extra trainings per 2 levels, which are worth 5 extra pops at most, considering all the ages in between (and only with optimal case, a 18 y.o. guy with 70 initial skills and ATG potential may turn into 155 after 10 seasons. 85 pops during 140 training weeks with lvl.7 trainer or 0.6 pops/training)
+
+Last edited by ig at 1/21/2018 8:39:31 PM
+
+--- 292157.15 | ? | 1/21/2018 8:56:22 PM ---
+So the difference between lvl6 and lvl7 coach is even less than 3%?
+
+--- 292157.16 | ? | 1/21/2018 9:00:23 PM ---
+Again you talk about some "extra trainings", not skills.
+
+But no need to complicate and speculate about "extra pops".
+
+If you assume 3% per level, that is 4,2 SP at 140 TSP. That's 4-5 pops (not some "extra trainings") per level. Wouldn't you agree?
+
+--- 292157.17 | ? | 1/21/2018 9:15:03 PM ---
+Not at all. Because you don't start training from 0. Talking about SP, to bring one to 140 TSP from lets say 65 initial SP it's 75 total pops, 3% of which are 2.25 extra ones per level.
+
+--- 292157.18 | ? | 1/21/2018 9:24:58 PM ---
+Ok, I see now what you mean.
+
+In that case, it's quite strange that the effect of higher level trainer is visible at all.
+
+--- 292157.19 | ? | 1/21/2018 9:39:00 PM ---
+All I hope is that CP is lying and the reality is closer to what you describe, or even more than that, because the prices justify about 10% extra training rate per level.
+
+--- 292157.20 | NO-15 (Слава Україні!) | 1/23/2018 8:49:50 AM ---
+Have u ever trained player, let's say with trainer lvl 4, to 140 TSP?
+
+that's interesting question without an answer B)
+
+--- 292157.21 | ? | 1/26/2018 11:50:26 AM ---
+Ok, I see now what you mean.
+
+In that case, it's quite strange that the effect of higher level trainer is visible at all.
+
+...just because it's not ;) The difference is that some managers use better the so called elastic effect in training than others and has nothing to do with 7th level coach. LA-igorb1977 did the math for you.
+
+Last edited by GM-Nik0 at 1/26/2018 12:13:18 PM
+
+--- 292157.22 | ? | 1/26/2018 12:19:13 PM ---
+Cool.
+
+If that's so, I guess I can switch to minimal level trainer then.
+
+--- 292157.23 | ? | 1/26/2018 12:25:20 PM ---
+You can switch to whatever you see best for your team ;)
+
+The difference between 1 and 5 level coach is 15% if my memory serves me right. You can add 6% more for 1 to 7. Those are the stats we all know - you can do with them whatever you want.

@@ -1,0 +1,242 @@
+# BB forum thread 295510 — "BuzzerBeater | BuzzerBeater Forums | Help - English > Training plans"
+# Fetched logged-in (plain HTTP, BbWebSession) on 2026-07-14; pages m=1,11.
+# 21 unique messages extracted (10 per page around each m).
+
+--- 295510.1 | Minimalus Treneris | 7/29/2018 7:59:45 PM ---
+Training simulator demo version: (295510.70)
+___________________________________________________________________
+
+Hello, I am interested in what training plans are you using, what training plans can you offer for every position?
+My training plans for every position:
+
+PG ir SG:
+1) 1 on 1 PG/SG or SF/PF to driving and dribling will be 13, (it creates elasticity effect for all upper skills)
+2) then train pressure to 13,
+3) and equally jump range, passing.
+4) Then again train 1 on 1 to driving and dribling will be 15 and then again turn around, etc. until potential will reach the limit...
+
+SF:
+1) 1 on 1 SF/PF to driving and dribling will be 13, (it creates elasticity effect for all upper skills)
+2) inside defense to 13, (it creates elasticity effect for all lower skills + outside defense)
+3) then train pressure to 13,
+4) inside shot to 13 (it creates elasticity effect for rebounding)
+5) and if you are not hurrying, everything else to 13.
+6) Then again 1 on 1 SF/PF to driving and dribling will be 13 (or more), then train pressure to 13 (or more), inside defense to 13 (or more), and then depends what kind of player do you want...
+
+PF:
+1) inside defense to 13, (it creates elasticity effect for inside shot, rebounding, shot blocking and jump shot)
+2) inside shot to 13, (it creates elasticity effect for rebounding and shot blocking)
+3) rebounding to 13. (it creates elasticity effect for shot blocking)
+4) 1 on 1 SF/PF to driving and dribling will be 13,
+5) Then anew depends what kind of player do you want, train something in bonus and then turn around inside shot, defense, rebounding...
+
+C :
+1) inside defense to 13, (it creates elasticity effect for inside shot, rebounding, shot blocking and jump shot)
+2) inside shot to 13, (it creates elasticity effect for rebounding and shot blocking)
+3) rebounding to 13 (it creates elasticity effect for shot blocking)
+4) shot blocking to 13.
+5) and if you want something of upper skills (jump shot, passing). Then turn around with 15 or 16.
+
+These are only training plans that I suggest, offer yours, criticize mine ;)
+
+___________________________________________________________________
+
+There are 7 (or more) coefficients which includes training:
+
+1. Training type - (295510.11)
+2. Age - (295510.6)
+3. Height - (295510.5)
+4. Elasticity effect - 1 or higher, in shorter words driving and Handling add elasticity effect to all upper skills, inside defense adds elasticity effect to all inside skills. But every skill have skills from which it gains elasticity effect if average of those skills is higher than skill that you train. Sorry for complicated explanation but elasticity effect is complicated thing
+5. Cross training (+gym) - ~0.93, 0.07 to the one skill that you don't train (but because of cross training, you will train).
+6. Potential - 1.00 if you haven't reached the potential cap, 0.33, if you have reached potential cap.
+7. Trainers (Trainer, Youth trainer) - (295510.13)
+
+Last edited by Minimalus Treneris at 7/23/2019 1:44:38 PM
+
+--- 295510.2 | ? | 7/30/2018 9:18:42 AM ---
+For me good players here are players who are more versatile they can be.So mostly I first train their secondary skills until they are younger.Because its a hard thing to train small players inside or tall players in outside skills.So my logic is its better to do it while they are younger.But I meet some managers who thinks its the same!!!I am not sure maybe they are right about it. :)
+
+Somebody know something about elastic effect,will high skills outside for example get negative elastic effect if inside skills are low?Or only inside skills influence inside skills and outside skills influence outside skills?
+
+For sure first I will train 1 on 1 on forwards or guards,then OD,then JR if I wish to train it for that player.And the last I will train PA.From my experience PA is trained well even when players are older 24,25,26 years old.Because have great elastic effect from HA.
+On inside skill for sure will do IS first and after that ID.Then RB and SB will get good elastic effect from them.
+Anyway from my experience though things to train are defenses.The hardest thing to train and they are most important!!!The hardest of hardest is to train opposite defense compared to player high.
+
+--- 295510.3 | ? | 7/30/2018 5:13:05 PM ---
+1) Just interesting fact that height do not affect jump shot, driving and passing but it means that low height cant add more training for these 3 ratings so this is good only for tall players.
+2) With your training method that you firstly train secondary skills ratings, skills always will rise approximately in similar speed (because when you train secondary skills they will be younger, when you train main skills they will be older) so it is always will be interesting to watch training sessions. But if you firstly wil train main skills and then secondary training speed will decrease as the age and because of height. But in sum, I think, it does not matter (sorry this is just my opinion:).
+3) I know that for example high dribling will add elasticity effect to inside shot and etc. but not that much how it add elasticity effect to upper skills so the sam ething I think is with anti-elasticity effect.
+4) Yeah, passing is the easiest training skill (it adds 0.6 passing when you train it (thiese numbers are without any other nuances) but the OD is not the hardest (it adds 0.5 which is same as Jump shot, dribling, inside shot and defense, rebounding and shot blocking), the hardest (of hardest will be to train this for 229 cm (7'6'') guy) is jump range (it adds 0.4 which is the same as driving but driving is training in a lot of others training types).
+5) The best way is to start from shot blocking because in sum it trains the most (0.8 in sum without nuances, inside defense - 0.65, inside shot (0.65 (if only sum lower skills - 0.55), rebounding 0.6). I fyou dont want good blocker the best way is to start from rebounding because in sum it trains the most if dont include upper skills and shot blocking (reb 0.6, inside defense and inside shot 0.55)
+I can be wrong, this is just my opinion and information from others, say your opinion ;)
+
+--- 295510.4 | ? | 7/31/2018 9:13:51 AM ---
+1.You are right high dont affect JS shooting.But it affect DR and PA in 0.7 coefficient for tallest players and 1.0 to shortest in outside skills and vice versa.Other skills are affected in range 0.4 to 1.0 compared to their high.According to some old Czech bb site where I seen this.
+2.Agree with you its probably the same.I think with my method is easier for training team to get useful players for team results earlier.
+4.Maybe you not understand me well what is on my mind about this.The defenses is hardest to train.Ofc is not hard to train OD to small players.But is very hard to train OD to very tall players its improve really slowly.Also its really slowly to train ID to your lowest players.I agree JR training is similarly very hard training for tall players but you very rarely will train that.While defense training is most crucial for every player and must be high,always one of the highest skills in final build of your players.JS,DR,HA and IS can be trained and must be trained with 1 on 1s training so it help it a lot.RB get a lot of ellastic effect from IS and ID so it go up faster later.So from my experience with training top prospects the dense training is the hardest things.
+5. SB will also get elastic effect later from ID skills.So it will get some bust too,similar like RB training.
+
+--- 295510.5 | ? | 7/31/2018 9:53:30 AM ---
+1) Jump shot, driving and passing dont belong to height. I know that page but that table is not correct. The same author later create excel program Coach parrot where he wrote correct table (press reply for the entire table):
+
+Height JS JR OD HA DR PA IS ID RB SB
+175 1 1.5 1.5 1.5 1 1 0.5 0.5 0.5 0.5
+178 1 1.45 1.45 1.45 1 1 0.55 0.55 0.55 0.55
+180 1 1.4 1.4 1.4 1 1 0.6 0.6 0.6 0.6
+183 1 1.35 1.35 1.35 1 1 0.65 0.65 0.65 0.65
+185 1 1.3 1.3 1.3 1 1 0.7 0.7 0.7 0.7
+188 1 1.25 1.25 1.25 1 1 0.75 0.75 0.75 0.75
+190 1 1.2 1.2 1.2 1 1 0.8 0.8 0.8 0.8
+193 1 1.15 1.15 1.15 1 1 0.85 0.85 0.85 0.85
+196 1 1.1 1.1 1.1 1 1 0.9 0.9 0.9 0.9
+198 1 1.05 1.05 1.05 1 1 0.95 0.95 0.95 0.95
+201 1 1 1 1 1 1 1 1 1 1
+203 1 0.95 0.95 0.95 1 1 1.05 1.05 1.05 1.05
+206 1 0.9 0.9 0.9 1 1 1.1 1.1 1.1 1.1
+208 1 0.85 0.85 0.85 1 1 1.15 1.15 1.15 1.15
+211 1 0.8 0.8 0.8 1 1 1.2 1.2 1.2 1.2
+213 1 0.75 0.75 0.75 1 1 1.25 1.25 1.25 1.25
+216 1 0.7 0.7 0.7 1 1 1.3 1.3 1.3 1.3
+218 1 0.65 0.65 0.65 1 1 1.35 1.35 1.35 1.35
+221 1 0.6 0.6 0.6 1 1 1.4 1.4 1.4 1.4
+224 1 0.55 0.55 0.55 1 1 1.45 1.45 1.45 1.45
+226 1 0.5 0.5 0.5 1 1 1.5 1.5 1.5 1.5
+229 1 0.45 0.45 0.45 1 1 1.55 1.55 1.55 1.55
+
+Last edited by Minimalus Treneris at 8/30/2018 11:48:56 PM
+
+--- 295510.6 | ? | 7/31/2018 9:56:00 AM ---
+2) Age table in that czech page also is not correct:
+Age
+18 1,00
+19 0,95
+20 0,88
+21 0,78
+22 0,7
+23 0,6
+24 0,51
+25 0,42
+26 0,35
+27 0,27
+28 0,21
+29 0,16
+30 0,11
+31 0,07
+32 0.05
+33 0.03
+34 0.02
+35 0.01
+36 0
+
+Last edited by Minimalus Treneris at 8/30/2018 11:49:34 PM
+
+--- 295510.7 | ? | 7/31/2018 10:11:43 AM ---
+4) I understand you, yeah defense is most important skill which is complicated to train high.
+5) The correct training table without any nuanses (age, coach assistant, etc.) (in czech bb page this also only approximately correct table):
+Inside shot (C): 0.5 inside shot, 0.1 jump shot, 0.05 inside defense (in sum it trains 0.65 skill).
+Inside defense (C): 0.5 inside defense, 0.1 shot blocking, 0.05 inside shot (in sum it trains 0.65 skill).
+Rebounding (PF/C): 0.5 rebounding, 0.05 inside shot, 0.05 inside defense (in sum it trains 0.6 skill).
+Shot blocking (C): 0.5 shot blocking, 0.2 inside defense, 0.1 rebounding (in sum it trains 0.8 skill)
+
+Yeah, you understand right but I mean that shot blocking in sum trains the most, so I thought that the best way to start training C is to train shot blocking ;)
+
+--- 295510.8 | Minimalus Treneris | 7/31/2018 9:51:46 PM ---
+I changed training plan for C - now firstly is training inside defense (because it creates elastic effect to 4 others skills), then inside shot (because it creates elastic effect for 2 skills), then shot blocking and rebounding (because they create elastic effect by 1 skill). Soon I will write everything that found out about trainings (it includes elasticity effect)...
+
+--- 295510.9 | ? | 8/1/2018 9:09:41 AM ---
+When I thinking about elastic effect again.If all skills influenced with elastic effects somewhat not only outside influence outside and inside influence inside.Then probably is the best to train one period inside skills and later switch to outside and mix them this way?Because this will give the best elastic effect.If we go only outside or inside first then elastic effect will be more negative how his skills advance.
+
+--- 295510.10 | ? | 8/1/2018 9:29:10 AM ---
+I found out a lot about elasticity effect but I have to translate it so it takes a lot of time to show you everything about elasticity effect... Maybe I will start to translate tomorow ;)
+OK, update 1:
+I changed training plan (and wrote explanations) because of elasticity effect.
+Do you have any questions about that?
+
+Last edited by Minimalus Treneris at 8/1/2018 10:20:48 PM
+
+--- 295510.11 | Minimalus Treneris | 8/30/2018 11:09:52 PM ---
+Training types Coeffs:
+
+Jump shot (PG/SG), (SG/SF): 0.5 JS, 0.1 JR, 0.05 Ha, 0.05 Dr. Sum 0.7
+Jump shot (SF/PF): 0.4 JS, 0.2 IS, 0.05 JR. Sum: 0.65
+Jump shot (Team): 0.22 JS, 0.04 JR, 0.02 Ha, 0.02 Dr. Sum: 0.3
+
+Outside shooting (SG): 0.4 JR, 0.2 JS, 0.05 Ha, 0.05 Dr. Sum: 0.7
+Outside shooting (PG/SG),(SG/SF): 0.3 Jr, 0.15 JS, 0.04 Ha, 0.04 Dr. Sum: 0.53
+Outside shooting (Team): 0.1 JR, 0.05 JS, 0.01 Ha, 0.01 Dr. Sum: 0.17
+
+Pressure (PG): 0.5 OD, 0.1 ID, 0.05 Ha, 0.05 Dr. Sum: 0.7
+Pressure (PG/SG): 0.38 OD, 0.08 ID, 0.04 Ha, 0.04 Dr. Sum: 0.54
+Pressure (PG/SG/SF): 0.2 OD, 0.04 ID, 0.02 Ha, 0.02 Dr. Sum: 0.28
+
+1 on 1 (PG/SG): 0.5 Dr, 0.4 Ha, 0.4 JS. Sum: 1.3
+1 on 1 (SF/PF): 0.5 Dr, 0.4 Ha, 0.2 JS, 0.2 IS. Sum: 1.3
+1 on 1 (Team): 0.16 Dr, 0.15 Ha, 0.09 JS, 0.09 IS. Sum: 0.49
+
+Ball Handling (PG): 0.5 Ha, 0.4 Dr, 0.1 OD. Sum: 1
+Ball Handling (PG/SG): 0.38 Ha, 0.3 Dr, 0.08 OD. Sum: 0.76
+Ball Handling (PG/SG/SF): 0.2 Ha, 0.16 Dr, 0.04 OD. Sum: 0.4
+
+Passing (PG): 0.6 Pa, 0.16 Ha, 0.16 Dr. Sum: 0.92
+Passing (PG/SG): 0.45 Pa, 0.12 Ha, 0.12 Dr. Sum: 0.69
+Passing (Team): 0.15 Pa, 0.04 Ha, 0.04 Dr. Sum: 0.23
+
+Inside scoring (C): 0.5 IS, 0.1 JS, 0.05 ID. Sum: 0.65
+Inside scoring (PF/C): 0.38 IS, 0.08 JS, 0.04 ID. Sum: 0.5
+Inside scoring (SF/PF/C): 0.2 IS, 0.04 JS, 0.02 ID. Sum: 0.26
+
+Inside defense (C): 0.5 ID, 0.10 SB, 0.05 IS. Sum: 0.65
+Inside defense (PF/C): 0.38 ID, 0.08 SB, 0.04 IS. Sum: 0.5
+Inside defense (SF/PF/C): 0.2 ID, 0.04 SB, 0.02 IS. Sum: 0.26
+
+Rebounding (PF/C): 0.5 Rb, 0.05 IS, 0.05 ID. Sum: 0.60
+Rebounding (team): 0.22 Rb, 0.02 IS, 0.02 ID. Sum: 0.26
+
+Shot blocking (C): 0.5 SB, 0.2 ID, 0.1 Reb. Sum: 0.8
+Shot blocking (PF/C): 0.38 SB, 0.15 ID, 0.08 Reb. Sum: 0.61
+Shot blocking (SF/PF/C): 0.2 SB, 0.08 ID, 0.04 Reb. Sum: 0.32
+
+Last edited by Minimalus Treneris at 1/25/2019 10:30:03 PM
+
+--- 295510.12 | ? | 8/30/2018 11:54:52 PM ---
+THANKS for this....It is very informative.
+
+--- 295510.13 | ? | 8/31/2018 12:05:47 AM ---
+Coach Assitant Coeff:
+
+1. minimal 0.88
+2. basic 0.91
+3. competent 0.94
+4. advanced 0.97
+5. superior 1
+6. exceptional 1.03
+7. world-renowned 1.06
+
+About Youth trainer I do not have info.
+
+--- 295510.14 | ? | 9/11/2018 7:19:42 PM ---
+Hey i was going thru reading up on some stuff....what does this table represent? How would i read this to determine?
+
+--- 295510.15 | ? | 9/18/2018 10:04:53 AM ---
+smth about elastic effect ?
+
+--- 295510.16 | ? | 10/24/2018 2:07:59 PM ---
+For your info to can compare.I have this results with a coach level 7.
+A 20 years old player got 14 pop ups.Two 26 years old players got 5 and 6 pop ups with him.
+
+I know about debate here on BB how much is worth to have a coach level 7 or not.So here some data which maybe somebody can compare with other coach levels.
+
+--- 295510.17 | ? | 10/24/2018 9:34:13 PM ---
+OK, thanks what type of training were you using? This info can also help to estimate approximately how skills is increasing by my training plan, so you can imagine how your player will look like after training. Good idea ;)
+
+--- 295510.18 | ? | 10/25/2018 11:08:25 AM ---
+I was used around third of season OD training,third of season PA training and third of season one on one forwards.
+
+--- 295510.19 | ? | 11/3/2018 11:23:47 PM ---
+What about outside defence?
+
+--- 295510.20 | ? | 11/3/2018 11:52:51 PM ---
+What do you mean?
+
+--- 295510.21 | ? | 11/4/2018 12:14:45 AM ---
+For example JS trains also JR, Ha. Dr., and I want to ask what else is trained by outside defenfing?
