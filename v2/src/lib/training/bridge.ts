@@ -81,16 +81,25 @@ const tsp = (s: Skills) => SKILL_KEYS.reduce((a, k) => a + s[k], 0);
 
 /** Per-week TSP band series for a BandChart: x=0 is the pre-plan starting point,
  *  x=i+1 is after week i. central tracks the bbscout model; low/high span all 5 models. */
+/** Present an internal sublevel value on the user's displayed scale.
+ *  Internal state assumes displayed N = sublevel N−0.5 (midpoint), so +0.5 maps back:
+ *  untrained skills keep their displayed value instead of appearing to drop by 0.5. */
+export function displayEquivalent(sublevel: number): number {
+  return sublevel + 0.5;
+}
+
+/** Per-week TSP band on the DISPLAYED-equivalent scale (week 0 = current displayed TSP). */
 export function bandSeries(result: EnsembleResult): Array<{ x: number; central: number; low: number; high: number }> {
   const central = result.byModel['bbscout'];
-  const startTsp = tsp(central.finalSkills) - tsp(central.totalGains);
+  const shift = 0.5 * SKILL_KEYS.length; // displayEquivalent applied to a 10-skill TSP
+  const startTsp = tsp(central.finalSkills) - tsp(central.totalGains) + shift;
   const points = [{ x: 0, central: startTsp, low: startTsp, high: startTsp }];
   const models = Object.values(result.byModel);
   for (let i = 0; i < central.weeks.length; i++) {
-    const tsps = models.map((m) => tsp(m.weeks[i].result.skillsAfter));
+    const tsps = models.map((m) => tsp(m.weeks[i].result.skillsAfter) + shift);
     points.push({
       x: i + 1,
-      central: tsp(central.weeks[i].result.skillsAfter),
+      central: tsp(central.weeks[i].result.skillsAfter) + shift,
       low: Math.min(...tsps),
       high: Math.max(...tsps),
     });

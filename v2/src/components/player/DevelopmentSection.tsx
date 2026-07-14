@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from 'react';
 import BandChart from '@/components/charts/BandChart';
 import { savePlan } from '@/app/players/[id]/actions';
 import { SKILLS } from '@/lib/constants';
-import { bandSeries, planToWeeks } from '@/lib/training/bridge';
+import { bandSeries, displayEquivalent, planToWeeks } from '@/lib/training/bridge';
 import { displayed, type PlayerState } from '@/lib/training/engine';
 import { ensembleProject } from '@/lib/training/ensemble';
 import { estimateSalary } from '@/lib/training/salary';
@@ -102,9 +102,9 @@ export default function DevelopmentSection({
                       <tr key={k} className="border-b border-neutral-900">
                         <td className="py-1 pr-3">{SKILL_NAME[dbKey] ?? dbKey}</td>
                         <td className="pr-3 text-right">{now ?? '–'}</td>
-                        <td className="pr-3 text-right">{result.central.finalSkills[k].toFixed(1)}</td>
+                        <td className="pr-3 text-right">{displayEquivalent(result.central.finalSkills[k]).toFixed(1)}</td>
                         <td className="pr-3 text-right text-neutral-500">
-                          [{result.band.low[k].toFixed(1)}..{result.band.high[k].toFixed(1)}]
+                          [{displayEquivalent(result.band.low[k]).toFixed(1)}..{displayEquivalent(result.band.high[k]).toFixed(1)}]
                         </td>
                         <td className="pr-3 text-right">{pops || '–'}</td>
                       </tr>
@@ -148,6 +148,7 @@ export default function DevelopmentSection({
           saving={saving}
           templates={templates}
           startAge={age}
+          endAge={result?.central.finalAge ?? null}
         />
         {saved && <p className="text-xs text-green-500 mt-2">Saved.</p>}
       </div>

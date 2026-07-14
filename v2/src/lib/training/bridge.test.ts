@@ -59,6 +59,8 @@ describe('bridge', () => {
     expect(series[0].x).toBe(0);
     expect(series[0].central).toBe(series[0].low);
     expect(series[0].central).toBe(series[0].high);
+    // displayed-equivalent scale: week 0 equals the player's displayed TSP (8+6+7+9+7+10+4+3+5+2)
+    expect(series[0].central).toBeCloseTo(61, 10);
     expect(series[3].x).toBe(3);
     expect(series[3].low).toBeLessThanOrEqual(series[3].central);
     expect(series[3].central).toBeLessThanOrEqual(series[3].high);

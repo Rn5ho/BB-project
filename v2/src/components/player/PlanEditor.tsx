@@ -12,19 +12,21 @@ export interface PlanValue {
 const WEEKS_PER_SEASON = 14; // BBSCOUT.weeksPerSeason — kept local to avoid pulling engine params into the UI
 
 export default function PlanEditor({
-  value, onChange, onSave, saving, templates, startAge,
+  value, onChange, onSave, saving, templates, startAge, endAge: endAgeExact,
 }: {
   value: PlanValue;
   onChange: (next: PlanValue) => void;
   onSave: () => void;
   saving: boolean;
   templates: PlanTemplate[];
-  /** Player's current age — used only for the rough end-age preview text. */
+  /** Player's current age — fallback for the rough end-age preview text. */
   startAge?: number | null;
+  /** Season-aware final age from the projection — preferred over the rough estimate. */
+  endAge?: number | null;
 }) {
   const totalWeeks = value.blocks.reduce((a, b) => a + b.weeks, 0);
   const seasons = totalWeeks / WEEKS_PER_SEASON;
-  const endAge = startAge != null ? Math.floor(startAge + seasons) : null;
+  const endAge = endAgeExact ?? (startAge != null ? Math.floor(startAge + seasons) : null);
 
   function updateBlock(i: number, patch: Partial<{ trainingId: number; weeks: number }>) {
     onChange({ ...value, blocks: value.blocks.map((b, idx) => (idx === i ? { ...b, ...patch } : b)) });
@@ -100,7 +102,7 @@ export default function PlanEditor({
 
       <p className="text-xs text-neutral-500">
         Total: {totalWeeks} week{totalWeeks === 1 ? '' : 's'} (~{seasons.toFixed(1)} seasons)
-        {endAge != null && ` · ends around age ${endAge}`}
+        {endAge != null && ` · ends at age ${endAge}`}
       </p>
 
       <button
