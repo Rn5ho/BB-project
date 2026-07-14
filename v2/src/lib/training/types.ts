@@ -79,6 +79,13 @@ export interface TrainingType {
   kind: 'skill' | 'stamina' | 'freethrow';
 }
 
+export type CrossTrainingSpec =
+  | { kind: 'none' }
+  /** Dev-specified (2026): each slot sends 10% of the primary skill's training amount to a
+   *  random skill (incl. ST/FT); gym adds extra slots. Modeled as expected value: total
+   *  scatter spread evenly over the 12 skills. */
+  | { kind: 'slot-scatter'; baseSlots: number; slotShare: number };
+
 export interface ModelParams {
   id: 'coach-parrot' | 'open-source-live' | 'bbscout' | 'bbscout-low' | 'bbscout-high';
   /** RateRow per skill-training id (1..31). Stamina/FT use stRate/ftRate. */
@@ -95,4 +102,10 @@ export interface ModelParams {
   cap: Param<CapSpec>;
   minutes: Param<MinutesSpec>;
   weeksPerSeason: Param<number>;
+  /** Gym-driven random cross-training (EV model). 'none' for models whose fitted rates
+   *  already average it in (CP/OSL). */
+  crossTraining: Param<CrossTrainingSpec>;
+  /** Training-court passive free-throw training, levels/week by court level 0-3,
+   *  independent of minutes and the weekly training slot. Empty record = not modeled. */
+  tcFreeThrow: Param<Record<number, number>>;
 }

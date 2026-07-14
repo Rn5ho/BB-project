@@ -24,6 +24,8 @@
   },
   "coachLevel": 5,
   "youthTrainerLevel": 6,
+  "gymLevel": 3,
+  "trainingCourtLevel": 2,
   "rawWeeks": [
     {
       "date": "1/2/2026",

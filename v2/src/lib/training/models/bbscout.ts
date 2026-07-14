@@ -84,6 +84,24 @@ export const BBSCOUT: ModelParams = {
     confidence: 'official',
   },
   weeksPerSeason: { value: 14, source: `${RESEARCH}/model-comparison.md (weeks/season)`, confidence: 'measured' },
+  crossTraining: {
+    // Dev spec (2026): slot = 10% of the primary skill's pre-elastic amount to a random
+    // skill incl. ST/FT; the gym adds 1-3 EXTRA slots. baseSlots is 0 here because the
+    // CP-fitted rates were measured on real teams and already average in the base
+    // slot's effects — only gym-added slots are modeled explicitly. EV validated on
+    // the owner's gym-3 trainees (~2-3 off-training pops per 10 weeks ≈ 3 x 0.1 x
+    // primary spread over 12 skills).
+    value: { kind: 'slot-scatter', baseSlots: 0, slotShare: 0.1 },
+    source: `${RESEARCH}/user-notes/dev-statements-2026.md §2 + calibration-cases/auto (gym-3 trainees)`,
+    confidence: 'measured',
+  },
+  tcFreeThrow: {
+    // In-Depth guide FT pop rates at age 18 (L3 ~6wks, L2 ~7wks, L1 ~11wks), validated:
+    // Tim Zorec (TC2) 2 FT pops/11wks; Dore Lovreković (TC3) 2 FT pops/10wks.
+    value: { 0: 0, 1: 1 / 11, 2: 1 / 7, 3: 1 / 6 },
+    source: `${RESEARCH}/user-notes/in-depth-guide-extraction.md + calibration-cases/auto`,
+    confidence: 'measured',
+  },
 };
 
 function variant(

@@ -15,7 +15,7 @@ interface ReplayCase {
   startSkills: number[]; // displayed, SKILL_KEYS order
   startAge: number; heightCm: number; potential: number;
   startStamina: number | null; startFreeThrow: number | null;
-  coachLevel: number; youthTrainerLevel: number;
+  coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number;
   weeks: ReplayWeek[];
   endSkills: Array<number | null>;
   unmodeledPopCount: number; // stamina/FT/experience pops (not scored)
@@ -30,7 +30,7 @@ function loadCase(file: string): ReplayCase {
       startSkills: SKILL_KEYS.map((k) => c.player.startSkillsDisplayed[k]),
       startAge: c.player.age, heightCm: c.player.heightCm, potential: c.player.potential,
       startStamina: c.player.startStamina ?? null, startFreeThrow: c.player.startFreeThrow ?? null,
-      coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel,
+      coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel, gymLevel: c.gymLevel ?? 0, trainingCourtLevel: c.trainingCourtLevel ?? 0,
       weeks: c.weeks.map((w: { date: string; trainingId: number; minutes: number; observedPops: Record<string, number> }) => ({
         date: w.date, trainingId: w.trainingId, minutes: w.minutes, observedPops: w.observedPops ?? {},
       })),
@@ -67,7 +67,7 @@ function loadCase(file: string): ReplayCase {
     startSkills: SKILL_KEYS.map((k) => c.player.startSkillsDisplayed[k] ?? 1),
     startAge, heightCm: c.player.heightCm, potential: c.player.potential ?? 8,
     startStamina: c.player.startStamina, startFreeThrow: c.player.startFreeThrow,
-    coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel,
+    coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel, gymLevel: c.gymLevel ?? 0, trainingCourtLevel: c.trainingCourtLevel ?? 0,
     weeks,
     endSkills: SKILL_KEYS.map((k) => c.endSkillsDisplayed?.[k] ?? null),
     unmodeledPopCount: unmodeled,
@@ -86,6 +86,7 @@ function replay(c: ReplayCase, model: ModelParams, verbose: boolean) {
     const r = weekStep(state, {
       trainingId: wk.trainingId, coachLevel: c.coachLevel,
       youthTrainerLevel: c.youthTrainerLevel, minutes: wk.minutes,
+      gymLevel: c.gymLevel, trainingCourtLevel: c.trainingCourtLevel,
     }, model);
     const predicted = SKILL_KEYS.filter((k) => r.pops[k]);
     const observed = Object.keys(wk.observedPops) as SkillKey[];

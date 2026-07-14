@@ -32,9 +32,19 @@ export async function savePlan(
     blocks: Array<{ trainingId: number; weeks: number }>;
     coachLevel: number;
     youthTrainerLevel: number;
+    gymLevel?: number;
+    trainingCourtLevel?: number;
   },
 ) {
   const { blocks, coachLevel, youthTrainerLevel } = data;
+  const gymLevel = data.gymLevel ?? 0;
+  const trainingCourtLevel = data.trainingCourtLevel ?? 0;
+  if (!Number.isInteger(gymLevel) || gymLevel < 0 || gymLevel > 3) {
+    throw new Error(`invalid gymLevel: ${gymLevel}`);
+  }
+  if (!Number.isInteger(trainingCourtLevel) || trainingCourtLevel < 0 || trainingCourtLevel > 3) {
+    throw new Error(`invalid trainingCourtLevel: ${trainingCourtLevel}`);
+  }
   if (!Number.isInteger(blocks.length) || blocks.length < 1 || blocks.length > 40) {
     throw new Error('plan must have 1-40 blocks');
   }
@@ -63,6 +73,8 @@ export async function savePlan(
     blocks,
     coachLevel,
     youthTrainerLevel,
+    gymLevel,
+    trainingCourtLevel,
     isActive: true,
   });
   revalidatePath(`/players/${playerId}`);

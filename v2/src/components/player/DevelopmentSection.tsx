@@ -30,6 +30,8 @@ export default function DevelopmentSection({
       blocks: value.blocks,
       coachLevel: value.coachLevel,
       youthTrainerLevel: value.youthTrainerLevel,
+      gymLevel: value.gymLevel,
+      trainingCourtLevel: value.trainingCourtLevel,
     });
   }
 

@@ -124,4 +124,6 @@ export const COACH_PARROT: ModelParams = {
   },
   minutes: { value: { kind: 'none' }, source: `${SRC}/model_formula.md (CP assumes full minutes)`, confidence: 'fitted' },
   weeksPerSeason: { value: 14, source: 'docs/research/training/model-comparison.md (weeks/season)', confidence: 'measured' },
+  crossTraining: { value: { kind: 'none' }, source: `${SRC}/model_formula.md (fitted rates already average base cross-training; gym/TC not modeled by CP)`, confidence: 'fitted' },
+  tcFreeThrow: { value: {}, source: `${SRC}/model_formula.md (TC not modeled by CP)`, confidence: 'fitted' },
 };

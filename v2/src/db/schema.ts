@@ -197,6 +197,8 @@ export const trainingPlans = pgTable('training_plans', {
   blocks: jsonb('blocks').notNull(), // PlanBlock[]: { trainingId: 1-33, weeks: >=1 }[]
   coachLevel: integer('coach_level').notNull().default(5),
   youthTrainerLevel: integer('youth_trainer_level').notNull().default(0),
+  gymLevel: integer('gym_level').notNull().default(0),
+  trainingCourtLevel: integer('training_court_level').notNull().default(0),
   isActive: boolean('is_active').notNull().default(true),
   planNotes: text('plan_notes'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),

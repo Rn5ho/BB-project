@@ -19,6 +19,8 @@ export interface WeekConfig {
   youthTrainerLevel?: number; // 0..7
   /** Weekly minutes at the training's qualifying positions. undefined = assume full. */
   minutes?: number;
+  gymLevel?: number; // 0..3 — extra cross-training slots
+  trainingCourtLevel?: number; // 0..3 — passive free-throw training
 }
 
 export interface WeekResult {
@@ -148,6 +150,7 @@ export function weekStep(player: PlayerState, config: WeekConfig, model: ModelPa
     const avgAll = SKILL_KEYS.reduce((a, k) => a + player.skills[k], 0) / SKILL_KEYS.length;
     const capSpec = model.cap.value;
     const capFactor = capSlowdownFactor(model, player);
+    let primaryCore = 0;
     for (const k of SKILL_KEYS) {
       const rate = row[k];
       if (!rate) continue;
@@ -164,7 +167,30 @@ export function weekStep(player: PlayerState, config: WeekConfig, model: ModelPa
       let g = (core + elastic.add) * minMult * capFactor;
       if (capSpec.kind === 'high-skill' && player.skills[k] >= capSpec.threshold) g *= capSpec.slowdown;
       gains[k] = g;
+      if (k === tt.primary) primaryCore = core * minMult * capFactor;
     }
+
+    // Gym cross-training scatter (EV): slots x slotShare of the primary skill's training
+    // amount, spread evenly over all 12 skills (dev spec: random skill per slot, incl.
+    // ST/FT; per-slot elastic on the landing skill is not modeled in the EV).
+    const xspec = model.crossTraining.value;
+    if (xspec.kind === 'slot-scatter' && primaryCore > 0) {
+      const slots = xspec.baseSlots + Math.max(0, Math.min(3, config.gymLevel ?? 0));
+      const perSkill = (slots * xspec.slotShare * primaryCore) / 12;
+      for (const k of SKILL_KEYS) gains[k] += perSkill;
+      staminaAfter += perSkill;
+      ftAfter += perSkill;
+    }
+  }
+
+  // Training-court passive free throws: independent of the weekly slot AND of minutes
+  // (observed: FT pops in 0-minute weeks). Mild age falloff per the In-Depth guide
+  // (18yo -> 30+yo rates ratio ~0.65).
+  const tcRates = model.tcFreeThrow.value;
+  const tcLevel = Math.max(0, Math.min(3, config.trainingCourtLevel ?? 0));
+  const tcRate = tcRates[tcLevel] ?? 0;
+  if (tcRate > 0) {
+    ftAfter += tcRate * Math.max(0.5, 1 - 0.0275 * (player.age - 18));
   }
 
   // Internal skills can exceed 20 (dev-confirmed: "22 HA helps more than 20 HA");

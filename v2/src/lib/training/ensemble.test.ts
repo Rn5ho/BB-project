@@ -10,7 +10,7 @@ describe('ensembleProject', () => {
     };
     const plan = Array.from({ length: 28 }, () => ({ trainingId: 15, coachLevel: 5 }));
     const r = ensembleProject(player, plan);
-    expect(Object.keys(r.byModel)).toHaveLength(5);
+    expect(Object.keys(r.byModel)).toHaveLength(7); // 5 models + 2 sublevel-bound runs
     expect(r.band.tspLow).toBeLessThanOrEqual(r.band.tspCentral);
     expect(r.band.tspHigh).toBeGreaterThanOrEqual(r.band.tspCentral);
     for (const k of SKILL_KEYS) {

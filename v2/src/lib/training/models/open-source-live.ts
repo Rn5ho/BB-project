@@ -127,4 +127,6 @@ export const OPEN_SOURCE_LIVE: ModelParams = {
   },
   minutes: { value: { kind: 'none' }, source: `${SRC}/API-MAP.md (no minutes effect observed)`, confidence: 'measured' },
   weeksPerSeason: { value: 14, source: 'docs/research/training/model-comparison.md (weeks/season)', confidence: 'measured' },
+  crossTraining: { value: { kind: 'none' }, source: `${SRC}/API-MAP.md (live model ignores gym/TC — verified no-ops)`, confidence: 'measured' },
+  tcFreeThrow: { value: {}, source: `${SRC}/API-MAP.md (live model ignores gym/TC — verified no-ops)`, confidence: 'measured' },
 };

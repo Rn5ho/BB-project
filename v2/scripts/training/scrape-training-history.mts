@@ -101,6 +101,8 @@ function parseHistory(html: string): WeekRow[] {
 
 const coach = Number(arg('coach', '5'));
 const yt = Number(arg('yt', '0'));
+const gym = Number(arg('gym', '0'));
+const tc = Number(arg('tc', '0'));
 const sql = neon(process.env.DATABASE_URL!);
 
 let playerIds: number[];
@@ -180,6 +182,8 @@ for (const pid of playerIds) {
     },
     coachLevel: coach,
     youthTrainerLevel: yt,
+    gymLevel: gym,
+    trainingCourtLevel: tc,
     rawWeeks: weeks,
     endSkillsDisplayed: snap
       ? Object.fromEntries(SKILL_KEYS.map((k) => [k, snap[KEY_TO_COL[k]]]))

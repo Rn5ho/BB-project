@@ -54,8 +54,9 @@ stages at score ≥ 8/9/10 + 2·pot → ×0.725 / ×0.45 / ×0.25 (replaces the 
 Implications: CP's top-skill malus and v1's deterministic redistribution are
 both wrong shapes. Correct EV model: `slots × 0.10 × mainGain`, spread across
 all 12 skills (uniform random incl. ST/FT), elastic applied per landing skill.
-Base slot count (without gym) still unknown — "doda dodatna mesta" implies ≥1
-base slot exists. NOT yet modeled (Phase B candidate; needs base-slot count).
+Base slot count (without gym) still unknown — its effects are averaged into the
+fitted rates. ADOPTED 2026-07-14 as EV: gym-added slots × 10% of primary spread
+over 12 skills; validated on the owner gym-3 trainees (~2-3 off-pops/10wks ✓).
 Also explains BuzzerIQ's training_court/gym no-op as a real gap.
 
 ## 3. Sub-threshold minutes: real data points (18–19yo)

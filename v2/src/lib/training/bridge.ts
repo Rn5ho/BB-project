@@ -67,11 +67,15 @@ export function eligibleTrainings(week: WeekMinutes, age: number): number[] {
 export function planToWeeks(
   blocks: Array<{ trainingId: number; weeks: number }>,
   coachLevel: number, youthTrainerLevel: number,
+  facilities?: { gymLevel?: number; trainingCourtLevel?: number },
 ): WeekConfig[] {
   const weeks: WeekConfig[] = [];
   for (const block of blocks) {
     for (let i = 0; i < block.weeks; i++) {
-      weeks.push({ trainingId: block.trainingId, coachLevel, youthTrainerLevel });
+      weeks.push({
+        trainingId: block.trainingId, coachLevel, youthTrainerLevel,
+        gymLevel: facilities?.gymLevel, trainingCourtLevel: facilities?.trainingCourtLevel,
+      });
     }
   }
   return weeks;

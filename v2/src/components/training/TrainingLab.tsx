@@ -48,12 +48,14 @@ export default function TrainingLab({
     [manual],
   );
 
-  async function handleSaveSelected(value: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number }) {
+  async function handleSaveSelected(value: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number }) {
     if (!selected) return;
     await savePlan(selected.bbPlayerId, {
       blocks: value.blocks,
       coachLevel: value.coachLevel,
       youthTrainerLevel: value.youthTrainerLevel,
+      gymLevel: value.gymLevel,
+      trainingCourtLevel: value.trainingCourtLevel,
     });
   }
 

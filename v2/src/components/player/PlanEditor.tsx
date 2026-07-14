@@ -8,6 +8,8 @@ export interface PlanValue {
   blocks: Array<{ trainingId: number; weeks: number }>;
   coachLevel: number;
   youthTrainerLevel: number;
+  gymLevel: number;
+  trainingCourtLevel: number;
 }
 
 const WEEKS_PER_SEASON = 14; // BBSCOUT.weeksPerSeason — kept local to avoid pulling engine params into the UI
@@ -99,6 +101,26 @@ export default function PlanEditor({
             className="rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-sm"
           >
             {[0, 1, 2, 3, 4, 5, 6, 7].map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </label>
+        <label className="flex items-center gap-1.5 text-sm" title="Extra cross-training slots — random skill gains each week">
+          Gym
+          <select
+            value={value.gymLevel}
+            onChange={(e) => onChange({ ...value, gymLevel: Number(e.target.value) })}
+            className="rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-sm"
+          >
+            {[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </label>
+        <label className="flex items-center gap-1.5 text-sm" title="Passive free-throw training every week, no training slot needed">
+          Training court
+          <select
+            value={value.trainingCourtLevel}
+            onChange={(e) => onChange({ ...value, trainingCourtLevel: Number(e.target.value) })}
+            className="rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-sm"
+          >
+            {[0, 1, 2, 3].map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </label>
       </div>

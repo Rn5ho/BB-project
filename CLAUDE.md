@@ -89,6 +89,21 @@ server action). Bridge helpers (snapshot→PlayerState at displayed−0.5, `elig
 hold their displayed value): `src/lib/training/bridge.ts`. Gotcha: use `toLocaleString('en-US')`
 in client components (server/client locale hydration mismatch).
 
+**Facilities + calibration shipped 2026-07-14 (late)** — Gym cross-training scatter
+(EV: gym-added slots × 10% of primary spread over 12 skills incl. ST/FT; dev-specified)
+and training-court passive FT (L1/2/3 ≈ 1/11, 1/7, 1/6 lvl/wk at 18, minutes-independent)
+in the engine + plan editor + `training_plans.gym_level/training_court_level` (migration
+0007). Sublevel uncertainty in the ensemble band (`sublevel-low/high` runs at displayed
+−0.99/−0.01 — displayed ints hide ~1 level of unknowable variance, per owner).
+Own-team ground truth: `npm run training:scrape-history -- --team N --coach C --yt Y
+--gym G --tc T [--switch-team]` scrapes traininghistory.aspx (own players only;
+--switch-team = second-team context via home.aspx lbSwitchTeams postback) into
+`docs/research/training/calibration-cases/auto/`; `npm run training:replay <dir|file>`
+scores models against observed pops. Current fit (7 trainees, 98 pops): bbscout MAE
+0.41 displayed levels, 61% final skills exact, pop recall 45% — beats CP (0.61/50%) and
+BuzzerIQ-OSL (0.64/47%); minutes gating vindicated (0-minute trainee: bbscout 10/10 exact,
+CP/OSL 12 phantom pops).
+
 **Training lab tab shipped 2026-07-14** — `/training` (nav: Training): pick a tracked
 full-skill player (`?player=ID`, saves plans via the same server action) or "Build a player"
 (manual age/height/potential + 12 skills) → `ProjectionPanel` (extracted from

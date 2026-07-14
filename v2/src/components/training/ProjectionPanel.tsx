@@ -26,24 +26,29 @@ export default function ProjectionPanel({
   potential: number | null;
   age: number | null;
   startWeekOfSeason: number;
-  initialPlan?: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number } | null;
+  initialPlan?: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number; gymLevel?: number; trainingCourtLevel?: number } | null;
   templates: PlanTemplate[];
   /** When provided, the Save button appears and calls this. When omitted, Save is hidden. */
   onSave?: (value: PlanValue) => Promise<void>;
 }) {
   const [plan, setPlan] = useState<PlanValue>(() => {
     if (initialPlan) {
-      return { blocks: initialPlan.blocks, coachLevel: initialPlan.coachLevel, youthTrainerLevel: initialPlan.youthTrainerLevel };
+      return {
+        blocks: initialPlan.blocks, coachLevel: initialPlan.coachLevel,
+        youthTrainerLevel: initialPlan.youthTrainerLevel,
+        gymLevel: initialPlan.gymLevel ?? 0, trainingCourtLevel: initialPlan.trainingCourtLevel ?? 0,
+      };
     }
     const first = templates[0];
-    return { blocks: first ? first.blocks.map((b) => ({ ...b })) : [], coachLevel: 5, youthTrainerLevel: 0 };
+    return { blocks: first ? first.blocks.map((b) => ({ ...b })) : [], coachLevel: 5, youthTrainerLevel: 0, gymLevel: 0, trainingCourtLevel: 0 };
   });
   const [saving, startSaving] = useTransition();
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
   const weekConfigs = useMemo(
-    () => planToWeeks(plan.blocks, plan.coachLevel, plan.youthTrainerLevel),
+    () => planToWeeks(plan.blocks, plan.coachLevel, plan.youthTrainerLevel,
+      { gymLevel: plan.gymLevel, trainingCourtLevel: plan.trainingCourtLevel }),
     [plan],
   );
   const result = useMemo(() => {

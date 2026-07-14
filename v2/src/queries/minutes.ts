@@ -41,7 +41,9 @@ export async function getPlayerWeeklyMinutes(playerId: number, weeks?: number): 
 export interface PlanRow {
   id: number; playerId: number; name: string;
   blocks: Array<{ trainingId: number; weeks: number }>;
-  coachLevel: number; youthTrainerLevel: number; planNotes: string | null; updatedAt: Date;
+  coachLevel: number; youthTrainerLevel: number;
+  gymLevel: number; trainingCourtLevel: number;
+  planNotes: string | null; updatedAt: Date;
 }
 
 export async function getActivePlan(playerId: number): Promise<PlanRow | null> {
@@ -56,6 +58,8 @@ export async function getActivePlan(playerId: number): Promise<PlanRow | null> {
     blocks: row.blocks as Array<{ trainingId: number; weeks: number }>,
     coachLevel: row.coachLevel,
     youthTrainerLevel: row.youthTrainerLevel,
+    gymLevel: row.gymLevel,
+    trainingCourtLevel: row.trainingCourtLevel,
     planNotes: row.planNotes,
     updatedAt: row.updatedAt,
   };

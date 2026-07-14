@@ -55,6 +55,23 @@ describe('bbscout parameters', () => {
     expect(r.gains.id).toBeCloseTo(0.5 * 0.42 * 0.95 * 1.03 + (19 - 10) * 0.02, 10);
   });
 
+  it('gym cross-training scatter: gym 3 adds 3 slots x 10% of primary, spread over 12 skills', () => {
+    const base = weekStep(flat7(), { trainingId: 12, coachLevel: 5 }, BBSCOUT);
+    const gym = weekStep(flat7(), { trainingId: 12, coachLevel: 5, gymLevel: 3 }, BBSCOUT);
+    const primaryCore = base.gains.ha; // flat skills: no elastic add, ha not max -> core == gain
+    const perSkill = (3 * 0.1 * primaryCore) / 12;
+    expect(gym.gains.ha).toBeCloseTo(base.gains.ha + perSkill, 10);
+    expect(gym.gains.sb).toBeCloseTo(perSkill, 10); // untouched skill gets only scatter
+    expect(gym.ftAfter - base.ftAfter).toBeCloseTo(perSkill, 10);
+  });
+
+  it('training court passive FT: level 2 ≈ 1/7 lvl/week at 18, even in a 0-minute week', () => {
+    const p = { ...flat7(), ftSkill: 5 };
+    const r = weekStep(p, { trainingId: 12, coachLevel: 5, minutes: 0, trainingCourtLevel: 2 }, BBSCOUT);
+    expect(r.gains.ha).toBe(0); // no minutes, no skill training
+    expect(r.ftAfter).toBeCloseTo(5 + 1 / 7, 10); // TC unaffected by minutes
+  });
+
   it('internal skills grow past 20 (displayed clamps at 20)', () => {
     const p = { ...flat7(), skills: skillsFromArray([7, 7, 7, 19.9, 7, 7, 7, 7, 7, 7]), potential: 11 };
     const r = weekStep(p, { trainingId: 12, coachLevel: 5 }, BBSCOUT);
