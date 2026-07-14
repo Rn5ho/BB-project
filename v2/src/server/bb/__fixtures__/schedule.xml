@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bbapi version='1'>
+  <schedule teamid='222222' season='40'>
+    <match id='111111001' type='league.rs' start='2026-06-20T18:00:00Z'>
+      <homeTeam id='222222'><teamName>Testers</teamName></homeTeam>
+      <awayTeam id='333333'><teamName>Rivals</teamName></awayTeam>
+    </match>
+    <match id='111111002' type='cup' start='2026-06-23T18:00:00Z'>
+      <homeTeam id='444444'><teamName>Cuppers</teamName></homeTeam>
+      <awayTeam id='222222'><teamName>Testers</teamName></awayTeam>
+    </match>
+    <match id='111111003' type='friendly' start='2026-06-26T18:00:00Z'>
+      <homeTeam id='222222'><teamName>Testers</teamName></homeTeam>
+      <awayTeam id='555555'><teamName>Sparring</teamName></awayTeam>
+    </match>
+    <match id='111111004' type='bbm' start='2026-06-27T18:00:00Z'>
+      <homeTeam id='222222'><teamName>Testers</teamName></homeTeam>
+      <awayTeam id='666666'><teamName>BBM Foes</teamName></awayTeam>
+    </match>
+    <match id='111111005' type='league.rs' start='2099-01-01T18:00:00Z'>
+      <homeTeam id='333333'><teamName>Rivals</teamName></homeTeam>
+      <awayTeam id='222222'><teamName>Testers</teamName></awayTeam>
+    </match>
+  </schedule>
+</bbapi>

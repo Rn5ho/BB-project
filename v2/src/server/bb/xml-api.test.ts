@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { parseSeasonsXml, parseCountriesXml, parseTeamInfoXml } from './xml-api';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import {
+  parseSeasonsXml, parseCountriesXml, parseTeamInfoXml,
+  parseScheduleXml, parseBoxscoreXml, BoxscoreNotAvailableError,
+} from './xml-api';
+
+const fx = (name: string) =>
+  readFileSync(path.join(__dirname, '__fixtures__', name), 'utf8');
 
 const seasonsXml = `<?xml version='1.0'?><bbapi version='1'><seasons retrieved='x'>
   <season id='71'><start>2026-01-20T14:23:23Z</start><finish>2026-04-29T12:44:39Z</finish></season>
@@ -50,5 +58,33 @@ describe('parseTeamInfoXml', () => {
     expect(t.teamId).toBe(99);
     expect(t.name).toBeNull();
     expect(t.ownerAlias).toBeNull();
+  });
+});
+
+describe('parseScheduleXml', () => {
+  it('parses matches with id, type, teams, start time', () => {
+    const ms = parseScheduleXml(fx('schedule.xml'));
+    expect(ms).toHaveLength(5);
+    expect(ms[0]).toMatchObject({ matchId: 111111001, type: 'league.rs', homeTeamId: 222222, awayTeamId: 333333 });
+    expect(ms[0].startTime.toISOString()).toBe('2026-06-20T18:00:00.000Z');
+  });
+  it('throws with XML head when nothing parses', () => {
+    expect(() => parseScheduleXml('<bbapi><error message="NotAuthorized"/></bbapi>')).toThrow(/No matches parsed|NotAuthorized/);
+  });
+});
+
+describe('parseBoxscoreXml', () => {
+  it('extracts per-player position minutes from both teams (real 2010 capture)', () => {
+    const b = parseBoxscoreXml(fx('boxscore.xml'));
+    expect(b.matchId).toBe(10000);
+    expect(b.type).toBe('nt.roundrobin');
+    const p = b.players.find((x) => x.playerId === 9671213);
+    expect(p).toMatchObject({ minPg: 0, minSg: 39, minSf: 0, minPf: 0, minC: 0 });
+    expect(p!.teamId).toBe(1059);
+    expect(b.players.length).toBeGreaterThan(10); // both rosters present
+  });
+  it('throws BoxscoreNotAvailableError on error XML', () => {
+    expect(() => parseBoxscoreXml("<bbapi version='1'><error message='BoxscoreNotAvailable'/></bbapi>"))
+      .toThrow(BoxscoreNotAvailableError);
   });
 });

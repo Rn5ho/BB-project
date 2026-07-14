@@ -98,3 +98,140 @@ export async function fetchTeamInfo(teamIds: number[]): Promise<BbTeamInfo[]> {
     return results;
   });
 }
+
+export interface BbScheduleMatch {
+  matchId: number; homeTeamId: number | null; awayTeamId: number | null;
+  type: string; startTime: Date;
+}
+
+export function parseScheduleXml(xml: string): BbScheduleMatch[] {
+  const err = xml.match(/<error[^>]*message='([^']+)'/) ?? xml.match(/<error[^>]*message="([^"]+)"/);
+  if (err) throw new Error(`schedule.aspx error: ${err[1]}`);
+  const blocks = [...xml.matchAll(/<match\s([^>]*)>([\s\S]*?)<\/match>/g)];
+  const out: BbScheduleMatch[] = [];
+  for (const b of blocks) {
+    const attrs = b[1]; const body = b[2];
+    const id = attrs.match(/id='(\d+)'/)?.[1];
+    const type = attrs.match(/type='([^']+)'/)?.[1] ?? 'unknown';
+    const start = attrs.match(/start='([^']+)'/)?.[1]
+      ?? body.match(/<startTime>([^<]+)<\/startTime>/)?.[1];
+    if (!id || !start) continue;
+    const home = body.match(/<homeTeam id='(\d+)'/)?.[1];
+    const away = body.match(/<awayTeam id='(\d+)'/)?.[1];
+    out.push({
+      matchId: Number(id), type,
+      homeTeamId: home ? Number(home) : null,
+      awayTeamId: away ? Number(away) : null,
+      startTime: new Date(start),
+    });
+  }
+  if (out.length === 0) throw new Error(`No matches parsed. XML head: ${xml.slice(0, 300)}`);
+  return out;
+}
+
+export class BoxscoreNotAvailableError extends Error {}
+
+export interface BbBoxscorePlayerMinutes {
+  playerId: number; teamId: number;
+  minPg: number; minSg: number; minSf: number; minPf: number; minC: number;
+  isStarter: boolean | null;
+}
+
+export interface BbBoxscore {
+  matchId: number; type: string; startTime: Date | null;
+  homeTeamId: number | null; awayTeamId: number | null;
+  players: BbBoxscorePlayerMinutes[];
+}
+
+export function parseBoxscoreXml(xml: string): BbBoxscore {
+  const err = xml.match(/<error[^>]*message='([^']+)'/) ?? xml.match(/<error[^>]*message="([^"]+)"/);
+  if (err) {
+    if (/BoxscoreNotAvailable|UnknownMatchID/i.test(err[1])) throw new BoxscoreNotAvailableError(err[1]);
+    throw new Error(`boxscore.aspx error: ${err[1]}`);
+  }
+  const matchAttr = xml.match(/<match id='(\d+)'[^>]*type='([^']+)'/);
+  if (!matchAttr) throw new Error(`No match element. XML head: ${xml.slice(0, 300)}`);
+  const startTime = xml.match(/<startTime>([^<]+)<\/startTime>/)?.[1] ?? null;
+
+  const players: BbBoxscorePlayerMinutes[] = [];
+  let homeTeamId: number | null = null;
+  let awayTeamId: number | null = null;
+  for (const side of ['homeTeam', 'awayTeam'] as const) {
+    const block = xml.match(new RegExp(`<${side} id='(\\d+)'>([\\s\\S]*?)</${side}>`));
+    if (!block) continue;
+    const teamId = Number(block[1]);
+    if (side === 'homeTeam') homeTeamId = teamId; else awayTeamId = teamId;
+    for (const pm of block[2].matchAll(/<player id='(\d+)'>([\s\S]*?)<\/player>/g)) {
+      const body = pm[2];
+      const min = (pos: string) => Number(body.match(new RegExp(`<${pos}>(\\d+)</${pos}>`))?.[1] ?? 0);
+      const starter = body.match(/<isStarter>([^<]+)<\/isStarter>/)?.[1];
+      players.push({
+        playerId: Number(pm[1]), teamId,
+        minPg: min('PG'), minSg: min('SG'), minSf: min('SF'), minPf: min('PF'), minC: min('C'),
+        isStarter: starter == null ? null : /true/i.test(starter),
+      });
+    }
+  }
+  return {
+    matchId: Number(matchAttr[1]), type: matchAttr[2],
+    startTime: startTime ? new Date(startTime) : null,
+    homeTeamId, awayTeamId, players,
+  };
+}
+
+export async function fetchSchedule(teamId: number, season?: number): Promise<BbScheduleMatch[]> {
+  return withSession(async (cookie) => {
+    const url = `${BASE}/schedule.aspx?teamid=${teamId}${season ? `&season=${season}` : ''}`;
+    const xml = await (await fetch(url, { headers: { Cookie: cookie } })).text();
+    return parseScheduleXml(xml);
+  });
+}
+
+/** Fetch many boxscores in ONE session, 150 ms pacing. null for unavailable/failed ids. */
+export async function fetchBoxscores(
+  matchIds: number[],
+  onEach?: (b: BbBoxscore | null, id: number) => void,
+): Promise<Array<BbBoxscore | null>> {
+  if (matchIds.length === 0) return [];
+  return withSession(async (cookie) => {
+    const results: Array<BbBoxscore | null> = [];
+    for (let i = 0; i < matchIds.length; i++) {
+      if (i > 0) await new Promise((r) => setTimeout(r, 150));
+      const id = matchIds[i];
+      try {
+        const xml = await (
+          await fetch(`${BASE}/boxscore.aspx?matchid=${id}`, { headers: { Cookie: cookie } })
+        ).text();
+        const b = parseBoxscoreXml(xml);
+        results.push(b); onEach?.(b, id);
+      } catch (err) {
+        if (!(err instanceof BoxscoreNotAvailableError)) console.warn(`boxscore ${id} failed:`, err);
+        results.push(null); onEach?.(null, id);
+      }
+    }
+    return results;
+  });
+}
+
+/** Fetch schedules for many clubs in ONE session, 150 ms pacing. null for failed teams. */
+export async function fetchSchedules(
+  teamIds: number[], season?: number,
+): Promise<Array<{ teamId: number; matches: BbScheduleMatch[] | null }>> {
+  if (teamIds.length === 0) return [];
+  return withSession(async (cookie) => {
+    const out: Array<{ teamId: number; matches: BbScheduleMatch[] | null }> = [];
+    for (let i = 0; i < teamIds.length; i++) {
+      if (i > 0) await new Promise((r) => setTimeout(r, 150));
+      const tid = teamIds[i];
+      try {
+        const url = `${BASE}/schedule.aspx?teamid=${tid}${season ? `&season=${season}` : ''}`;
+        const xml = await (await fetch(url, { headers: { Cookie: cookie } })).text();
+        out.push({ teamId: tid, matches: parseScheduleXml(xml) });
+      } catch (err) {
+        console.warn(`schedule ${tid} failed:`, err);
+        out.push({ teamId: tid, matches: null });
+      }
+    }
+    return out;
+  });
+}
