@@ -146,6 +146,8 @@ export const teams = pgTable('teams', {
   name: text('name'),
   ownerAlias: text('owner_alias'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  scheduleSyncedAt: timestamp('schedule_synced_at', { withTimezone: true }),
+  scheduleSyncedSeason: integer('schedule_synced_season'),
 });
 
 export const archetypes = pgTable('archetypes', {
@@ -157,3 +159,45 @@ export const archetypes = pgTable('archetypes', {
   hidden: boolean('hidden').notNull().default(false),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [uniqueIndex('uq_archetypes_key').on(t.key)]);
+
+export const matches = pgTable('matches', {
+  matchId: integer('match_id').primaryKey(),
+  homeTeamId: integer('home_team_id'),
+  awayTeamId: integer('away_team_id'),
+  matchType: text('match_type').notNull(),
+  startTime: timestamp('start_time', { withTimezone: true }).notNull(),
+  season: integer('season'),
+  seasonWeek: integer('season_week'),
+  boxscoreFetchedAt: timestamp('boxscore_fetched_at', { withTimezone: true }),
+  boxscoreError: text('boxscore_error'),
+}, (t) => [
+  index('idx_matches_pending').on(t.boxscoreFetchedAt),
+  index('idx_matches_start').on(t.startTime.desc()),
+  index('idx_matches_teams').on(t.homeTeamId, t.awayTeamId),
+]);
+
+export const playerMatchMinutes = pgTable('player_match_minutes', {
+  matchId: integer('match_id').notNull().references(() => matches.matchId, { onDelete: 'cascade' }),
+  playerId: integer('player_id').notNull().references(() => players.bbPlayerId, { onDelete: 'cascade' }),
+  minPg: integer('min_pg').notNull().default(0),
+  minSg: integer('min_sg').notNull().default(0),
+  minSf: integer('min_sf').notNull().default(0),
+  minPf: integer('min_pf').notNull().default(0),
+  minC: integer('min_c').notNull().default(0),
+  isStarter: boolean('is_starter'),
+}, (t) => [
+  primaryKey({ columns: [t.matchId, t.playerId] }),
+  index('idx_pmm_player').on(t.playerId),
+]);
+
+export const trainingPlans = pgTable('training_plans', {
+  id: serial('id').primaryKey(),
+  playerId: integer('player_id').notNull().references(() => players.bbPlayerId, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  blocks: jsonb('blocks').notNull(), // PlanBlock[]: { trainingId: 1-33, weeks: >=1 }[]
+  coachLevel: integer('coach_level').notNull().default(5),
+  youthTrainerLevel: integer('youth_trainer_level').notNull().default(0),
+  isActive: boolean('is_active').notNull().default(true),
+  planNotes: text('plan_notes'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [index('idx_training_plans_player').on(t.playerId)]);
