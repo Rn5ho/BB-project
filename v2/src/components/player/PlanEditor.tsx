@@ -60,7 +60,7 @@ export default function PlanEditor({
               onChange={(e) => updateBlock(i, { trainingId: Number(e.target.value) })}
               className="flex-1 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm"
             >
-              {TRAINING_CATALOG.map((tt) => <option key={tt.id} value={tt.id}>{tt.name}</option>)}
+              {TRAINING_CATALOG.map((tt) => <option key={tt.id} value={tt.id}>{tt.label}</option>)}
             </select>
             <input
               type="number" min={1} max={140} value={b.weeks}

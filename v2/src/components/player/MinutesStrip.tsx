@@ -93,7 +93,7 @@ export default function MinutesStrip({ weeks, age }: { weeks: WeekMinutes[]; age
         {chipIds.length > 0 ? (
           chipIds.map((id) => (
             <span key={id} className="text-xs rounded px-2 py-0.5 bg-amber-900/30 text-amber-300">
-              {getTrainingType(id).name}
+              {getTrainingType(id).label}
             </span>
           ))
         ) : (

@@ -18,6 +18,15 @@ describe('training catalog', () => {
     expect(getTrainingType(33)).toMatchObject({ name: 'Free Throw', kind: 'freethrow', primary: null });
   });
 
+  it('carries in-game labels (BB "Choose Training" dropdown names)', () => {
+    expect(getTrainingType(15).label).toBe('One on One (PG/SG)');
+    expect(getTrainingType(16).label).toBe('One on One (SF/PF)');
+    expect(getTrainingType(5).label).toBe('Outside Shooting (SG)');
+    expect(getTrainingType(9).label).toBe('Outside Defense (PG)');
+    expect(getTrainingType(12).label).toBe('Ball Handling (PG)');
+    for (const tt of TRAINING_CATALOG) expect(tt.label.length).toBeGreaterThan(0);
+  });
+
   it('round-trips skills arrays in canonical order', () => {
     const s = skillsFromArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     expect(s.js).toBe(1);

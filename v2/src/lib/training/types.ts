@@ -72,7 +72,8 @@ export interface HeightTable {
 
 export interface TrainingType {
   id: number; // 1..33, BuzzerIQ/BB dropdown order
-  name: string;
+  name: string; // technical key used by research sources ("DR for 12")
+  label: string; // in-game training name shown in UI ("One on One (PG/SG)")
   primary: SkillKey | null; // null for stamina/FT
   positions: Position[]; // qualifying positions for the minutes requirement
   kind: 'skill' | 'stamina' | 'freethrow';
