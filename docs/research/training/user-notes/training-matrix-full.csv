@@ -1,0 +1,96 @@
+training,positions,JS,JR,OD,HA,DR,PA,IS,ID,RB,SB,total_listed
+Pressure,PG,0,0,430,60,40,0,0,80,0,0,610
+Pressure,SG,0,0,387,54,36,0,0,72,0,0,549
+Pressure,SF,0,0,344,48,32,0,0,64,0,0,488
+Pressure,PF,0,0,301,42,28,0,0,56,0,0,427
+Pressure,C,0,0,258,36,24,0,0,48,0,0,366
+Pressure,PG/SG,0,0,310,40,0,0,0,50,0,0,400
+Pressure,SG/SF,0,0,279,36,0,0,0,45,0,0,360
+Pressure,SF/PF,0,0,248,32,0,0,0,40,0,0,320
+Pressure,PF/C,0,0,217,28,0,0,0,35,0,0,280
+Pressure,PG/SG/SF,0,0,120,0,0,0,0,20,0,0,140
+Pressure,SG/SF/PF,0,0,108,0,0,0,0,18,0,0,126
+Pressure,SF/PF/C,0,0,96,0,0,0,0,16,0,0,112
+Shot Blocking,C,30,0,0,0,0,0,0,190,80,680,980
+Shot Blocking,PF,27,0,0,0,0,0,0,171,72,612,882
+Shot Blocking,SF,24,0,0,0,0,0,0,152,64,544,784
+Shot Blocking,SG,21,0,0,0,0,0,0,133,56,476,686
+Shot Blocking,PG,18,0,0,0,0,0,0,114,48,408,588
+Shot Blocking,C/PF,0,0,0,0,0,0,0,100,60,420,580
+Shot Blocking,PF/SF,0,0,0,0,0,0,0,90,54,378,522
+Shot Blocking,SF/SG,0,0,0,0,0,0,0,80,48,336,464
+Shot Blocking,SG/PG,0,0,0,0,0,0,0,70,42,294,406
+Shot Blocking,C/PF/SF,0,0,0,0,0,0,0,0,0,290,290
+Shot Blocking,PF/SF/SG,0,0,0,0,0,0,0,0,0,261,261
+Shot Blocking,SF/SG/PG,0,0,0,0,0,0,0,0,0,232,232
+Inside Defense,C,0,0,0,0,0,0,50,550,0,140,740
+Inside Defense,PF,0,0,0,0,0,0,45,495,0,126,666
+Inside Defense,SF,0,0,0,0,0,0,40,440,0,112,592
+Inside Defense,SG,0,0,0,0,0,0,35,385,0,98,518
+Inside Defense,PG,0,0,0,0,0,0,30,330,0,84,444
+Inside Defense,C/PF,0,0,0,0,0,0,50,400,0,110,560
+Inside Defense,PF/SF,0,0,0,0,0,0,45,360,0,99,504
+Inside Defense,SF/SG,0,0,0,0,0,0,40,320,0,88,448
+Inside Defense,SG/PG,0,0,0,0,0,0,35,280,0,77,392
+Inside Defense,C/PF/SF,0,0,0,0,0,0,50,280,0,60,390
+Inside Defense,PF/SF/SG,0,0,0,0,0,0,45,252,0,54,351
+Inside Defense,SF/SG/PG,0,0,0,0,0,0,40,224,0,48,312
+Rebounding,C/PF,0,0,0,0,0,0,0,50,560,0,610
+Rebounding,PF/SF,0,0,0,0,0,0,0,45,504,0,549
+Rebounding,SF/SG,0,0,0,0,0,0,0,40,448,0,488
+Rebounding,SG/PG,0,0,0,0,0,0,0,35,392,0,427
+Rebounding,Team,0,0,0,0,0,0,0,40,260,0,300
+Inside Scoring,C,130,0,0,0,0,0,560,50,0,0,740
+Inside Scoring,PF,117,0,0,0,0,0,504,45,0,0,666
+Inside Scoring,SF,104,0,0,0,0,0,448,40,0,0,592
+Inside Scoring,SG,91,0,0,0,0,0,392,35,0,0,518
+Inside Scoring,PG,78,0,0,0,0,0,336,30,0,0,444
+Inside Scoring,C/PF,100,0,0,0,0,0,410,0,0,0,510
+Inside Scoring,PF/SF,90,0,0,0,0,0,369,0,0,0,459
+Inside Scoring,SF/SG,80,0,0,0,0,0,328,0,0,0,408
+Inside Scoring,SG/PG,70,0,0,0,0,0,287,0,0,0,357
+Inside Scoring,C/PF/SF,120,0,0,0,0,0,330,40,0,0,490
+Inside Scoring,PF/SF/SG,108,0,0,0,0,0,297,36,0,0,441
+Inside Scoring,SF/SG/PG,96,0,0,0,0,0,264,32,0,0,392
+One on One,PG/SG,390,0,0,430,510,0,0,0,0,0,1330
+One on One,SG/SF,351,0,0,387,459,0,0,0,0,0,1197
+One on One,SF/PF,210,0,0,410,560,0,180,0,0,0,1360
+One on One,PF/C,189,0,0,369,504,0,162,0,0,0,1224
+One on One,Team,50,0,0,270,400,0,0,0,0,0,720
+Outside Shooting,SG,150,450,0,20,60,0,0,0,0,0,680
+Outside Shooting,PG,135,405,0,18,54,0,0,0,0,0,612
+Outside Shooting,SF,122,365,0,16,49,0,0,0,0,0,551
+Outside Shooting,PF,108,324,0,14,43,0,0,0,0,0,490
+Outside Shooting,C,95,284,0,13,38,0,0,0,0,0,428
+Outside Shooting,SG/PG,220,310,0,0,0,0,0,0,0,0,530
+Outside Shooting,SG/SF,210,260,0,0,0,0,0,0,0,0,470
+Outside Shooting,SF/PF,189,234,0,0,0,0,0,0,0,0,423
+Outside Shooting,PF/C,168,208,0,0,0,0,0,0,0,0,376
+Outside Shooting,Team,150,290,0,0,0,0,0,0,0,0,440
+Jump Shot,PG/SG,470,140,0,60,50,0,0,0,0,0,720
+Jump Shot,SF/PF,320,60,0,0,0,0,200,0,0,0,580
+Jump Shot,SG/SF,440,130,0,50,70,0,0,0,0,0,690
+Jump Shot,PF/C,396,117,0,45,63,0,0,0,0,0,621
+Jump Shot,Team,180,0,0,0,0,0,0,0,0,0,180
+Ball Handling,PG,0,0,100,600,350,0,0,0,0,0,1050
+Ball Handling,SG,0,0,90,540,315,0,0,0,0,0,945
+Ball Handling,SF,0,0,80,480,280,0,0,0,0,0,840
+Ball Handling,PF,0,0,70,420,245,0,0,0,0,0,735
+Ball Handling,C,0,0,60,360,210,0,0,0,0,0,630
+Ball Handling,PG/SG,0,0,70,370,240,0,0,0,0,0,680
+Ball Handling,SG/SF,0,0,63,333,216,0,0,0,0,0,612
+Ball Handling,SF/PF,0,0,56,296,192,0,0,0,0,0,544
+Ball Handling,PF/C,0,0,49,259,168,0,0,0,0,0,476
+Ball Handling,PG/SG/SF,0,0,130,60,140,10,0,0,0,0,340
+Ball Handling,SG/SF/PF,0,0,117,54,126,9,0,0,0,0,306
+Ball Handling,SF/PF/C,0,0,104,48,112,8,0,0,0,0,272
+Passing,PG,0,0,0,180,190,720,0,0,0,0,1090
+Passing,SG,0,0,0,162,171,648,0,0,0,0,981
+Passing,SF,0,0,0,144,152,576,0,0,0,0,872
+Passing,PF,0,0,0,126,133,504,0,0,0,0,763
+Passing,C,0,0,0,108,114,432,0,0,0,0,654
+Passing,PG/SG,0,0,0,130,90,510,0,0,0,0,730
+Passing,SG/SF,0,0,0,117,81,459,0,0,0,0,657
+Passing,SF/PF,0,0,0,104,72,408,0,0,0,0,584
+Passing,PF/C,0,0,0,91,63,357,0,0,0,0,511
+Passing,Team,0,0,0,20,10,310,0,0,0,0,340
