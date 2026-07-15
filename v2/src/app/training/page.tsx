@@ -60,7 +60,12 @@ export default async function TrainingPage({
           playerState: anchoredState,
           skillsDb: profile.skills,
           initialPlan: activePlan
-            ? { blocks: activePlan.blocks, coachLevel: activePlan.coachLevel, youthTrainerLevel: activePlan.youthTrainerLevel }
+            ? {
+                blocks: activePlan.blocks, coachLevel: activePlan.coachLevel,
+                youthTrainerLevel: activePlan.youthTrainerLevel,
+                gymLevel: activePlan.gymLevel, trainingCourtLevel: activePlan.trainingCourtLevel,
+                horizon: activePlan.horizon,
+              }
             : null,
           sublevelBounds,
         };

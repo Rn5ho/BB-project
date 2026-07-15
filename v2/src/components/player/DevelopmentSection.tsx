@@ -34,6 +34,7 @@ export default function DevelopmentSection({
       youthTrainerLevel: value.youthTrainerLevel,
       gymLevel: value.gymLevel,
       trainingCourtLevel: value.trainingCourtLevel,
+      horizon: value.horizon,
     });
   }
 

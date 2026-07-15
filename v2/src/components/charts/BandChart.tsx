@@ -6,11 +6,14 @@ export interface BandPoint { x: number; central: number; low: number; high: numb
 
 export default function BandChart({
   points, height = 180, formatY, xLabel,
+  markers,
 }: {
   points: BandPoint[];
   height?: number;
   formatY?: (v: number) => string;
   xLabel?: (x: number) => string;
+  /** Vertical dashed reference lines (e.g. season boundaries), positioned on the x scale. */
+  markers?: Array<{ x: number; label: string }>;
 }) {
   if (points.length === 0) return <p className="text-sm text-neutral-500">No projection yet.</p>;
 
@@ -57,6 +60,16 @@ export default function BandChart({
         {areaPath && <path d={areaPath} fill="#f59e0b22" stroke="none" />}
         <path d={centralLine} fill="none" stroke="#f59e0b" strokeWidth="1.5" />
       </g>
+      {markers?.map((m, i) => {
+        const x = sx(m.x);
+        if (!Number.isFinite(x) || x < 0 || x > innerW) return null;
+        return (
+          <g key={i} transform={`translate(${pad},${pad / 2})`}>
+            <line x1={x} x2={x} y1={0} y2={innerH} stroke="#525252" strokeDasharray="3,3" />
+            <text x={x + 3} y={9} fontSize="9" fill="#a3a3a3">{m.label}</text>
+          </g>
+        );
+      })}
       {xLabel && (
         <g>
           {points.map((p, i) => (i % labelEvery === 0 ? (

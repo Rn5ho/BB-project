@@ -8,6 +8,7 @@ import { SKILLS } from '@/lib/constants';
 import { bandSeries, displayEquivalent, planToWeeks } from '@/lib/training/bridge';
 import { displayed, type PlayerState } from '@/lib/training/engine';
 import { ensembleProject, type SublevelBounds } from '@/lib/training/ensemble';
+import { horizonWeeks, normalizePlan, type SeasonPoint } from '@/lib/training/horizon';
 import { estimateSalary } from '@/lib/training/salary';
 import type { PlanTemplate } from '@/lib/training/templates';
 import { SKILL_DB_NAMES, SKILL_KEYS, type Skills } from '@/lib/training/types';
@@ -26,37 +27,49 @@ export default function ProjectionPanel({
   potential: number | null;
   age: number | null;
   startWeekOfSeason: number;
-  initialPlan?: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number; gymLevel?: number; trainingCourtLevel?: number } | null;
+  initialPlan?: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number; gymLevel?: number; trainingCourtLevel?: number; horizon?: { age: number; week: number } | null } | null;
   templates: PlanTemplate[];
   /** When provided, the Save button appears and calls this. When omitted, Save is hidden. */
   onSave?: (value: PlanValue) => Promise<void>;
   sublevelBounds?: SublevelBounds;
 }) {
+  const now: SeasonPoint | null = age != null ? { age: Math.floor(age), week: startWeekOfSeason } : null;
   const [plan, setPlan] = useState<PlanValue>(() => {
     if (initialPlan) {
-      return {
-        blocks: initialPlan.blocks, coachLevel: initialPlan.coachLevel,
+      return normalizePlan({
+        blocks: initialPlan.blocks.map((b) => ({ ...b })), coachLevel: initialPlan.coachLevel,
         youthTrainerLevel: initialPlan.youthTrainerLevel,
         gymLevel: initialPlan.gymLevel ?? 0, trainingCourtLevel: initialPlan.trainingCourtLevel ?? 0,
-      };
+        horizon: initialPlan.horizon ?? null,
+      }, now);
     }
     const first = templates[0];
-    return { blocks: first ? first.blocks.map((b) => ({ ...b })) : [], coachLevel: 5, youthTrainerLevel: 0, gymLevel: 0, trainingCourtLevel: 0 };
+    return { blocks: first ? first.blocks.map((b) => ({ ...b })) : [], coachLevel: 5, youthTrainerLevel: 0, gymLevel: 0, trainingCourtLevel: 0, horizon: null };
   });
   const [saving, startSaving] = useTransition();
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  const weekConfigs = useMemo(
-    () => planToWeeks(plan.blocks, plan.coachLevel, plan.youthTrainerLevel,
-      { gymLevel: plan.gymLevel, trainingCourtLevel: plan.trainingCourtLevel }),
-    [plan],
-  );
+  const horizonLen = plan.horizon && now ? horizonWeeks(now, plan.horizon) : null;
+  const weekConfigs = useMemo(() => {
+    const all = planToWeeks(plan.blocks, plan.coachLevel, plan.youthTrainerLevel,
+      { gymLevel: plan.gymLevel, trainingCourtLevel: plan.trainingCourtLevel });
+    return horizonLen != null ? all.slice(0, horizonLen) : all;
+  }, [plan, horizonLen]);
   const result = useMemo(() => {
     if (weekConfigs.length === 0) return null;
     return ensembleProject(playerState, weekConfigs, { startWeekOfSeason, sublevelBounds });
   }, [playerState, weekConfigs, startWeekOfSeason, sublevelBounds]);
   const points = useMemo(() => (result ? bandSeries(result) : []), [result]);
+  const markers = useMemo(() => {
+    if (!result) return [];
+    const ms: Array<{ x: number; label: string }> = [];
+    for (let i = 0; i < result.central.weeks.length; i++) {
+      const w = result.central.weeks[i];
+      if (w.seasonWeek === 14) ms.push({ x: i + 1, label: `age ${w.age + 1}` });
+    }
+    return ms;
+  }, [result]);
 
   function handleChange(next: PlanValue) {
     setPlan(next);
@@ -88,7 +101,7 @@ export default function ProjectionPanel({
         <h3 className="text-sm font-medium text-neutral-300 mb-2">Projected TSP</h3>
         {result ? (
           <>
-            <BandChart points={points} xLabel={(x) => `wk ${x}`} />
+            <BandChart points={points} xLabel={(x) => `wk ${x}`} markers={markers} />
             <div className="overflow-x-auto">
               <table className="w-full text-sm mt-3">
                 <thead className="text-left text-neutral-400 border-b border-neutral-800">
@@ -153,6 +166,7 @@ export default function ProjectionPanel({
           startAge={age}
           endAge={result?.central.finalAge ?? null}
           hideSave={!onSave}
+          currentSeasonWeek={startWeekOfSeason}
         />
         {onSave && saved && <p className="text-xs text-green-500 mt-2">Saved.</p>}
         {onSave && saveError && <p className="text-xs text-red-400 mt-2">Could not save: {saveError}</p>}

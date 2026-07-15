@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { savePlan } from '@/app/players/[id]/actions';
 import ProjectionPanel from '@/components/training/ProjectionPanel';
 import ManualPlayerForm, { DEFAULT_MANUAL_PLAYER, type ManualPlayer } from '@/components/training/ManualPlayerForm';
+import type { PlanValue } from '@/components/player/PlanEditor';
 import { playerStateFromSnapshot } from '@/lib/training/bridge';
 import type { PlayerState } from '@/lib/training/engine';
 import type { SublevelBounds } from '@/lib/training/ensemble';
@@ -20,7 +21,7 @@ export interface SelectedPlayer {
   bestPosition: string | null;
   playerState: PlayerState;
   skillsDb: Record<string, number | null>;
-  initialPlan: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number } | null;
+  initialPlan: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number; gymLevel?: number; trainingCourtLevel?: number; horizon?: { age: number; week: number } | null } | null;
   sublevelBounds?: SublevelBounds;
 }
 
@@ -50,7 +51,7 @@ export default function TrainingLab({
     [manual],
   );
 
-  async function handleSaveSelected(value: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number }) {
+  async function handleSaveSelected(value: PlanValue) {
     if (!selected) return;
     await savePlan(selected.bbPlayerId, {
       blocks: value.blocks,
@@ -58,6 +59,7 @@ export default function TrainingLab({
       youthTrainerLevel: value.youthTrainerLevel,
       gymLevel: value.gymLevel,
       trainingCourtLevel: value.trainingCourtLevel,
+      horizon: value.horizon,
     });
   }
 
@@ -133,7 +135,7 @@ export default function TrainingLab({
             skillsDb={manual.skills}
             potential={manual.potential}
             age={manual.age}
-            startWeekOfSeason={1}
+            startWeekOfSeason={startWeekOfSeason}
             templates={templates}
           />
         </div>
