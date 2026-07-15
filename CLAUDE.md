@@ -138,6 +138,27 @@ template (neutral staff coach 5/YT 5), gap-sorted for outreach. Board math in
 1,027 pops, 196 club windows, 63 high + 42 medium confidence inferences; 115 exact-date
 own-scrape anchors.
 
+**Training horizons + reverse planner shipped 2026-07-15** — (A) Plans can target an
+(age, season-week) horizon: `src/lib/training/horizon.ts` (absWeek grid; convention: the
+CURRENT season week counts as UPCOMING — first plan week trains at the current week,
+matching `project(startWeekOfSeason)`); PlanEditor picker (presets bounded at entering
+age 22 via `MAX_HORIZON_AGE`) + auto-derived last block (`fitBlocksToHorizon`/
+`normalizePlan`); `training_plans.horizon_age/horizon_week` (migration 0009) make saved
+plans self-updating — ProjectionPanel re-derives the fitted blocks from TODAY's week at
+render time (`fitted` memo) and saves/projects those, so editor display always matches
+the projection; band chart shows dashed age-up markers. (B) Reverse planner
+`src/lib/training/optimize.ts`: beam search (width 128, switch penalty 0.02, dedup on
+rounded skills+last-training) over weekly skill-training choices stepped with the real
+`weekStep`/BBSCOUT; lexicographic objective = weighted shortfall (priorities 3/1/0.4) →
+weighted hit-earliness → TSP → fewer switches; τ(d) = d−1+1e-6 matches ceil display.
+TargetBuildPanel (inside ProjectionPanel — player page + training lab): explicit-targets
+model (`targets` holds only user-raised skills; missing key follows current — live skill
+edits can't fabricate targets), results carry an input fingerprint and hide with a
+"re-run" hint when any input changes. Known: `board.ts weeksToEndOfAge21` still uses the
+old one-week convention (align in a follow-up); optimizer TSP tier is weak under beam
+pruning (documented in optimize.ts). Spec:
+`docs/superpowers/specs/2026-07-15-training-horizons-reverse-planner-design.md`.
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 

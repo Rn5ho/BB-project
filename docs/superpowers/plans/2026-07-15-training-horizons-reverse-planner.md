@@ -1785,3 +1785,26 @@ Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
   min 1); optimizer excludes stamina/FT actions; TSP tier weak under pruning (documented);
   TargetBuildPanel keys its state off first render (same pre-existing behavior as
   ProjectionPanel's plan state — no new regression).
+
+---
+
+## Post-review fixes (2026-07-15, adversarial review wave — commit 5242c2c)
+
+The last self-review bullet above ("no new regression") was wrong: mount-frozen state IS a
+regression for components whose inputs the user live-edits (training-lab manual mode).
+4 root causes confirmed by 3/3 verifiers each; all fixed:
+1. **TargetBuildPanel targets frozen at mount** → replaced full-record `targets` with an
+   explicit-targets model (`Partial<Record<SkillKey, number>>`; missing key = follows
+   current). Lowering a manual skill can no longer fabricate a phantom target.
+2. **Stale optimize results survived input changes** (−Infinity verdicts, plans for a
+   different player) → results carry a JSON fingerprint of every input the search reads;
+   a result renders only while the fingerprint still matches, else an "Inputs changed —
+   press Optimize to refresh" hint shows.
+3. **Plan blocks not re-normalized when (age, week) changed** → ProjectionPanel derives
+   `fitted = normalizePlan(plan, now)` at render time (memo) and uses it for the
+   projection, the PlanEditor display, TargetBuildPanel staff, and Save.
+4. **end-season preset emitted age-23 horizons** savePlan rejects → `horizonPresets`
+   filters targets past `MAX_HORIZON_AGE = 22` (new export).
+Do not reuse Task 5/6's TargetBuildPanel or ProjectionPanel code blocks without these fixes.
+Refuted (do not "fix"): beam-dedup arbiter and evaluatePlan pre-met-target findings —
+3/3 verifiers each confirmed intended/unreachable.
