@@ -203,3 +203,32 @@ export const trainingPlans = pgTable('training_plans', {
   planNotes: text('plan_notes'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [index('idx_training_plans_player').on(t.playerId)]);
+
+export const skillPops = pgTable('skill_pops', {
+  id: serial('id').primaryKey(),
+  playerId: integer('player_id').notNull().references(() => players.bbPlayerId, { onDelete: 'cascade' }),
+  skill: text('skill').notNull(), // 'js'|'jr'|'od'|'ha'|'dr'|'pa'|'is'|'id'|'rb'|'sb'|'st'|'ft'
+  toDisplayed: integer('to_displayed').notNull(),
+  delta: integer('delta').notNull(), // displayed change over the window; negative = drop
+  windowStart: timestamp('window_start', { withTimezone: true }).notNull(),
+  windowEnd: timestamp('window_end', { withTimezone: true }).notNull(),
+  windowWeeks: integer('window_weeks').notNull(),
+  source: text('source', { enum: ['snapshots', 'own-scrape'] }).notNull().default('snapshots'),
+}, (t) => [
+  index('idx_skill_pops_player').on(t.playerId),
+  uniqueIndex('uq_skill_pops').on(t.playerId, t.skill, t.windowEnd, t.source),
+]);
+
+export const trainingObservations = pgTable('training_observations', {
+  id: serial('id').primaryKey(),
+  teamId: integer('team_id').notNull(),
+  windowStart: timestamp('window_start', { withTimezone: true }).notNull(),
+  windowEnd: timestamp('window_end', { withTimezone: true }).notNull(),
+  inferredTrainingId: integer('inferred_training_id'), // null = no usable signal
+  confidence: text('confidence', { enum: ['high', 'medium', 'low'] }).notNull(),
+  evidence: jsonb('evidence').notNull(), // { popCount, playerCount, explainedFrac, scores, playerIds }
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [
+  index('idx_training_obs_team').on(t.teamId, t.windowEnd.desc()),
+  uniqueIndex('uq_training_obs').on(t.teamId, t.windowStart, t.windowEnd),
+]);
