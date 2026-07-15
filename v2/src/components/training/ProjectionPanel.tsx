@@ -4,6 +4,7 @@ import { useMemo, useState, useTransition } from 'react';
 import BandChart from '@/components/charts/BandChart';
 import CapBar from '@/components/player/CapBar';
 import PlanEditor, { type PlanValue } from '@/components/player/PlanEditor';
+import TargetBuildPanel from '@/components/training/TargetBuildPanel';
 import { SKILLS } from '@/lib/constants';
 import { bandSeries, displayEquivalent, planToWeeks } from '@/lib/training/bridge';
 import { displayed, type PlayerState } from '@/lib/training/engine';
@@ -154,6 +155,22 @@ export default function ProjectionPanel({
           <CapBar skills={projectedDbSkills ?? skillsDb} potential={potential} />
         </div>
       </div>
+
+      {now && (
+        <TargetBuildPanel
+          playerState={playerState}
+          skillsDb={skillsDb}
+          currentAge={now.age}
+          startWeekOfSeason={startWeekOfSeason}
+          defaultHorizon={plan.horizon}
+          staff={{
+            coachLevel: plan.coachLevel, youthTrainerLevel: plan.youthTrainerLevel,
+            gymLevel: plan.gymLevel, trainingCourtLevel: plan.trainingCourtLevel,
+          }}
+          onUsePlan={(blocks, horizon) =>
+            handleChange(normalizePlan({ ...plan, blocks, horizon }, now))}
+        />
+      )}
 
       <div>
         <h3 className="text-sm font-medium text-neutral-300 mb-2">Training plan</h3>
