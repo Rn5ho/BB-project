@@ -43,6 +43,7 @@ export interface PlanRow {
   blocks: Array<{ trainingId: number; weeks: number }>;
   coachLevel: number; youthTrainerLevel: number;
   gymLevel: number; trainingCourtLevel: number;
+  horizon: { age: number; week: number } | null;
   planNotes: string | null; updatedAt: Date;
 }
 
@@ -60,6 +61,9 @@ export async function getActivePlan(playerId: number): Promise<PlanRow | null> {
     youthTrainerLevel: row.youthTrainerLevel,
     gymLevel: row.gymLevel,
     trainingCourtLevel: row.trainingCourtLevel,
+    horizon: row.horizonAge != null && row.horizonWeek != null
+      ? { age: row.horizonAge, week: row.horizonWeek }
+      : null,
     planNotes: row.planNotes,
     updatedAt: row.updatedAt,
   };

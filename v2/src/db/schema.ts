@@ -199,6 +199,10 @@ export const trainingPlans = pgTable('training_plans', {
   youthTrainerLevel: integer('youth_trainer_level').notNull().default(0),
   gymLevel: integer('gym_level').notNull().default(0),
   trainingCourtLevel: integer('training_court_level').notNull().default(0),
+  // Horizon target: plan runs until the player ENTERS this (age, season-week).
+  // Both null = custom plan (raw week counts, pre-horizon behavior).
+  horizonAge: integer('horizon_age'),
+  horizonWeek: integer('horizon_week'),
   isActive: boolean('is_active').notNull().default(true),
   planNotes: text('plan_notes'),
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),

@@ -34,11 +34,14 @@ export async function savePlan(
     youthTrainerLevel: number;
     gymLevel?: number;
     trainingCourtLevel?: number;
+    /** Horizon target: plan runs until the player enters this (age, week). null = custom. */
+    horizon?: { age: number; week: number } | null;
   },
 ) {
   const { blocks, coachLevel, youthTrainerLevel } = data;
   const gymLevel = data.gymLevel ?? 0;
   const trainingCourtLevel = data.trainingCourtLevel ?? 0;
+  const horizon = data.horizon ?? null;
   if (!Number.isInteger(gymLevel) || gymLevel < 0 || gymLevel > 3) {
     throw new Error(`invalid gymLevel: ${gymLevel}`);
   }
@@ -53,7 +56,8 @@ export async function savePlan(
     if (!Number.isInteger(b.trainingId) || b.trainingId < 1 || b.trainingId > 33) {
       throw new Error(`invalid trainingId: ${b.trainingId}`);
     }
-    if (!Number.isInteger(b.weeks) || b.weeks < 1 || b.weeks > 140) {
+    // weeks 0 is legal: a horizon-derived last block can be exactly filled by earlier blocks.
+    if (!Number.isInteger(b.weeks) || b.weeks < 0 || b.weeks > 140) {
       throw new Error(`invalid weeks: ${b.weeks}`);
     }
     totalWeeks += b.weeks;
@@ -65,6 +69,14 @@ export async function savePlan(
   if (!Number.isInteger(youthTrainerLevel) || youthTrainerLevel < 0 || youthTrainerLevel > 7) {
     throw new Error(`invalid youthTrainerLevel: ${youthTrainerLevel}`);
   }
+  if (horizon != null) {
+    if (!Number.isInteger(horizon.age) || horizon.age < 19 || horizon.age > 22) {
+      throw new Error(`invalid horizon age: ${horizon.age}`);
+    }
+    if (!Number.isInteger(horizon.week) || horizon.week < 1 || horizon.week > 14) {
+      throw new Error(`invalid horizon week: ${horizon.week}`);
+    }
+  }
 
   await db.update(trainingPlans).set({ isActive: false }).where(eq(trainingPlans.playerId, playerId));
   await db.insert(trainingPlans).values({
@@ -75,6 +87,8 @@ export async function savePlan(
     youthTrainerLevel,
     gymLevel,
     trainingCourtLevel,
+    horizonAge: horizon?.age ?? null,
+    horizonWeek: horizon?.week ?? null,
     isActive: true,
   });
   revalidatePath(`/players/${playerId}`);
