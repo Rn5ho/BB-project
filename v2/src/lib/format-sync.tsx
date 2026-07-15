@@ -106,6 +106,18 @@ export function formatSyncResult(
     return <span>{parts.join(' · ') || '—'}</span>;
   }
 
+  if (jobType === 'inference') {
+    const pops = n('popsDetected');
+    const windows = n('observationWindows');
+    const high = n('inferredHigh');
+    const medium = n('inferredMedium');
+    const parts: string[] = [];
+    parts.push(`${pops} pop${pops !== 1 ? 's' : ''}`);
+    parts.push(`${windows} club window${windows !== 1 ? 's' : ''}`);
+    if (high + medium > 0) parts.push(`${high} high · ${medium} medium`);
+    return <span>{parts.join(' · ')}</span>;
+  }
+
   // Unknown job type — compact JSON fallback
   return <span>{JSON.stringify(counts ?? {})}</span>;
 }

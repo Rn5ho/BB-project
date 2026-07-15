@@ -7,6 +7,7 @@ import { runPlayersSync } from '@/server/sync/players';
 import { runSeasonsSync } from '@/server/sync/seasons';
 import { runMarketSweep } from '@/server/sync/market';
 import { runMinutesSync } from '@/server/sync/minutes';
+import { runTrainingInference } from '@/server/sync/inference';
 
 export async function addTrackedCountry(countryId: number, name: string) {
   await db.insert(trackedCountries).values({ countryId, name }).onConflictDoNothing();
@@ -23,12 +24,13 @@ export async function toggleStar(id: number, starred: boolean) {
   revalidatePath('/settings');
 }
 
-export async function syncNow(job: 'players' | 'seasons' | 'market' | 'minutes') {
+export async function syncNow(job: 'players' | 'seasons' | 'market' | 'minutes' | 'inference') {
   try {
     const counts =
       job === 'players' ? await runPlayersSync()
       : job === 'market' ? await runMarketSweep()
       : job === 'minutes' ? await runMinutesSync({}, 'manual')
+      : job === 'inference' ? await runTrainingInference('manual')
       : await runSeasonsSync();
     revalidatePath('/settings');
     return { ok: true as const, counts };

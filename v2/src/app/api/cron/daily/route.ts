@@ -4,13 +4,15 @@ import { runPlayersSync } from '@/server/sync/players';
 import { runMarketSweep } from '@/server/sync/market';
 import { runMinutesSync } from '@/server/sync/minutes';
 import { refreshTeams } from '@/server/sync/teams';
+import { runTrainingInference } from '@/server/sync/inference';
 
 export const maxDuration = 300;
 export const dynamic = 'force-dynamic';
 
 /**
  * Daily dispatcher: seasons every run; market every run (incremental, stopsEarly);
- * minutes every run (incremental, batch-limited); players weekly (Mondays UTC) or forced.
+ * minutes every run (incremental, batch-limited); players weekly (Mondays UTC) or forced;
+ * inference every run (DB-only, rebuilds pops + club-training observations from snapshots + minutes).
  * ?force=players  → forces player sync; market always runs (no special branch needed)
  * ?force=market   → no-op branch; market already runs unconditionally
  * ?force=minutes  → larger minutes batch (clubBatch 200, matchBatch 800)
@@ -33,6 +35,12 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.error('minutes sync failed (non-fatal):', err);
     results.minutes = { error: String(err) };
+  }
+  try {
+    results.inference = await runTrainingInference('cron');
+  } catch (err) {
+    console.error('training inference failed (non-fatal):', err);
+    results.inference = { error: String(err) };
   }
   if (new Date().getUTCDay() === 1 || force === 'players' || force === 'all') {
     results.players = await runPlayersSync('cron');

@@ -6,7 +6,7 @@ import { syncNow } from '@/app/settings/actions';
 import { formatStartedAt, formatSyncResult, type SyncCounts } from '@/lib/format-sync';
 import { formatCensusResult, type CensusTotals } from '@/lib/format-census';
 
-type SyncJob = 'seasons' | 'players' | 'market' | 'minutes';
+type SyncJob = 'seasons' | 'players' | 'market' | 'minutes' | 'inference';
 
 export interface JobLastRun {
   startedAtIso: string;
@@ -50,6 +50,13 @@ const JOBS: { job: SyncJob; title: string; chip: string; description: string }[]
     chip: 'cron: daily',
     description:
       "Pulls each tracked club's finished matches and per-position minutes from BB boxscores.",
+  },
+  {
+    job: 'inference',
+    title: 'Training inference',
+    chip: 'cron: daily',
+    description:
+      'Rebuilds observed skill pops and per-club inferred training from snapshots + match minutes. DB-only — no BB calls; feeds the Planner board.',
   },
 ];
 
