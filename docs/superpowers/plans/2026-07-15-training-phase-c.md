@@ -1174,16 +1174,35 @@ In `src/app/training/page.tsx`, inside the `if (fullSkills && …)` block, after
 
 with imports `applyAnchors, boundsFromAnchors` from `@/lib/training/bridge`, `getPopAnchors` from `@/queries/training`, `SKILL_KEYS, type SkillKey` from `@/lib/training/types`. Set `playerState: anchoredState` and add `sublevelBounds` to the `selected` object; extend `SelectedPlayer` in `src/components/training/TrainingLab.tsx` with `sublevelBounds?: SublevelBounds` and have `TrainingLab` pass it to its `<ProjectionPanel …>` for the DB-player branch (manual builds pass nothing).
 
-- [ ] **Step 6: Verify**
+- [ ] **Step 6: Ensemble-bounds integration test**
+
+Append to `src/lib/training/ensemble.test.ts` (match its existing import style — it already imports `ensembleProject` and a player fixture; reuse them):
+
+```ts
+it('sublevelBounds narrow the band vs the default ±0.49 runs', () => {
+  const plan = Array.from({ length: 4 }, () => ({ trainingId: 15, coachLevel: 5 }));
+  const loose = ensembleProject(player, plan);
+  const tight = ensembleProject(player, plan, {
+    sublevelBounds: Object.fromEntries(SKILL_KEYS.map((k) => [k, {
+      low: player.skills[k] - 0.1, high: player.skills[k] + 0.1,
+    }])),
+  });
+  expect(tight.band.tspHigh - tight.band.tspLow).toBeLessThan(loose.band.tspHigh - loose.band.tspLow);
+});
+```
+
+(`player` = the file's existing PlayerState fixture; add `SKILL_KEYS` to the imports from `./types` if missing.)
+
+- [ ] **Step 7: Verify**
 
 Run: `npm test` — all green.
 Run: `npm run build` — compiles clean.
 Optionally run the `verify` skill's launch recipe and eyeball a player page with a recent census pop: the band chart's early weeks should be visibly narrower than before for popped skills.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 8: Commit**
 
 ```bash
-git add src/queries/training.ts src/components/training/ProjectionPanel.tsx src/components/training/TrainingLab.tsx src/components/player/DevelopmentSection.tsx src/app/players/[id]/page.tsx src/app/training/page.tsx
+git add src/queries/training.ts src/components/training/ProjectionPanel.tsx src/components/training/TrainingLab.tsx src/components/player/DevelopmentSection.tsx src/app/players/[id]/page.tsx src/app/training/page.tsx src/lib/training/ensemble.test.ts
 git commit -m "feat(v2): pop anchors tighten projection bands on player page + training lab"
 ```
 
