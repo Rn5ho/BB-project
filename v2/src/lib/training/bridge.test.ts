@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bandSeries, eligibleTrainings, fullTrainingMinutes, minutesAtPositions, planToWeeks, playerStateFromSnapshot } from './bridge';
+import { applyAnchors, bandSeries, boundsFromAnchors, eligibleTrainings, fullTrainingMinutes, minutesAtPositions, planToWeeks, playerStateFromSnapshot } from './bridge';
 import { ensembleProject } from './ensemble';
 
 const wk = (m: Partial<Record<'minPg'|'minSg'|'minSf'|'minPf'|'minC', number>>) => ({
@@ -64,5 +64,21 @@ describe('bridge', () => {
     expect(series[3].x).toBe(3);
     expect(series[3].low).toBeLessThanOrEqual(series[3].central);
     expect(series[3].central).toBeLessThanOrEqual(series[3].high);
+  });
+});
+
+describe('boundsFromAnchors / applyAnchors', () => {
+  const asOf = new Date('2026-07-15T00:00:00Z');
+  it('returns only informative bounds and centers the state on them', () => {
+    const anchors = [
+      { skill: 'js' as const, toDisplayed: 8, windowStart: new Date('2026-07-14T00:00:00Z'), windowEnd: new Date('2026-07-14T00:00:00Z') },
+    ];
+    const bounds = boundsFromAnchors({ jump_shot: 8, driving: 10 }, anchors, asOf);
+    expect(bounds.js).toBeDefined();
+    expect(bounds.dr).toBeUndefined();
+    const state = playerStateFromSnapshot({ skills: { jump_shot: 8, driving: 10 }, age: 18, heightCm: 190, potential: 8 });
+    const anchored = applyAnchors(state, bounds);
+    expect(anchored.skills.js).toBeLessThan(state.skills.js); // pulled toward the fresh crossing
+    expect(anchored.skills.dr).toBe(state.skills.dr);
   });
 });

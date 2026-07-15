@@ -2,7 +2,8 @@ import { project, type PlayerState, type Projection, type ProjectOptions, type W
 import { BBSCOUT, BBSCOUT_HIGH, BBSCOUT_LOW } from './models/bbscout';
 import { COACH_PARROT } from './models/coach-parrot';
 import { OPEN_SOURCE_LIVE } from './models/open-source-live';
-import { SKILL_KEYS, type ModelParams, type Skills } from './types';
+import type { SublevelBound } from './sublevels';
+import { SKILL_KEYS, type ModelParams, type SkillKey, type Skills } from './types';
 
 export const ENSEMBLE_MODELS: ModelParams[] = [
   BBSCOUT, COACH_PARROT, OPEN_SOURCE_LIVE, BBSCOUT_LOW, BBSCOUT_HIGH,
@@ -14,27 +15,30 @@ export interface EnsembleResult {
   band: { low: Skills; high: Skills; tspLow: number; tspHigh: number; tspCentral: number };
 }
 
-const tsp = (s: Skills) => SKILL_KEYS.reduce((a, k) => a + s[k], 0);
+export type SublevelBounds = Partial<Record<SkillKey, SublevelBound>>;
 
-/** Shift every starting skill by delta sublevels (clamped ≥ 0.01). */
-function shiftSkills(player: PlayerState, delta: number): PlayerState {
-  const skills = { ...player.skills };
-  for (const k of SKILL_KEYS) skills[k] = Math.max(0.01, skills[k] + delta);
-  return { ...player, skills };
-}
+const tsp = (s: Skills) => SKILL_KEYS.reduce((a, k) => a + s[k], 0);
 
 export function ensembleProject(
   player: PlayerState,
   plan: WeekConfig[],
-  opts?: ProjectOptions,
+  opts?: ProjectOptions & { sublevelBounds?: SublevelBounds },
 ): EnsembleResult {
   const byModel: Record<string, Projection> = {};
   for (const m of ENSEMBLE_MODELS) byModel[m.id] = project(player, plan, m, opts);
   // Displayed integers hide sublevels: a shown "7" is really 6.01–7.00. The engine
   // assumes the midpoint; these two runs bound the projection by the unknowable
-  // starting sublevels (the dominant uncertainty on short horizons).
-  byModel['sublevel-low'] = project(shiftSkills(player, -0.49), plan, BBSCOUT, opts);
-  byModel['sublevel-high'] = project(shiftSkills(player, +0.49), plan, BBSCOUT, opts);
+  // starting sublevels. Observed pops (sublevelBounds) tighten individual skills.
+  const boundState = (pick: 'low' | 'high', fallback: number): PlayerState => {
+    const skills = { ...player.skills };
+    for (const k of SKILL_KEYS) {
+      const b = opts?.sublevelBounds?.[k];
+      skills[k] = b ? b[pick] : Math.max(0.01, skills[k] + fallback);
+    }
+    return { ...player, skills };
+  };
+  byModel['sublevel-low'] = project(boundState('low', -0.49), plan, BBSCOUT, opts);
+  byModel['sublevel-high'] = project(boundState('high', +0.49), plan, BBSCOUT, opts);
   const central = byModel['bbscout'];
   const finals = Object.values(byModel).map((p) => p.finalSkills);
   const low = Object.fromEntries(

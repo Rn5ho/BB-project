@@ -1,7 +1,8 @@
 import { getTrainingType, TRAINING_CATALOG } from './catalog';
-import type { EnsembleResult } from './ensemble'; // type-only import is fine (no IO)
+import type { EnsembleResult, SublevelBounds } from './ensemble'; // type-only import is fine (no IO)
 import type { PlayerState, WeekConfig } from './engine';
 import { BBSCOUT } from './models/bbscout';
+import { sublevelBound, type PopAnchor } from './sublevels';
 import { SKILL_DB_NAMES, SKILL_KEYS, type Position, type Skills } from './types';
 import type { WeekMinutes } from '@/queries/minutes'; // type-only import is fine (no IO)
 
@@ -109,4 +110,32 @@ export function bandSeries(result: EnsembleResult): Array<{ x: number; central: 
     });
   }
   return points;
+}
+
+/** Per-skill sublevel bounds from observed pop anchors. Only entries that actually
+ *  tighten the default band are returned, keyed by engine skill key. */
+export function boundsFromAnchors(
+  skillsDb: Partial<Record<string, number | null>>,
+  anchors: PopAnchor[],
+  asOf: Date,
+): SublevelBounds {
+  const bySkill = new Map(anchors.map((a) => [a.skill, a]));
+  const bounds: SublevelBounds = {};
+  for (const k of SKILL_KEYS) {
+    const displayedVal = skillsDb[SKILL_DB_NAMES[k]];
+    if (displayedVal == null) continue;
+    const b = sublevelBound(displayedVal, bySkill.get(k) ?? null, asOf);
+    if (b.high < displayedVal - 0.011) bounds[k] = b; // informative only
+  }
+  return bounds;
+}
+
+/** Center a player state on the anchored bounds (midpoint per bounded skill). */
+export function applyAnchors(state: PlayerState, bounds: SublevelBounds): PlayerState {
+  const skills = { ...state.skills };
+  for (const k of SKILL_KEYS) {
+    const b = bounds[k];
+    if (b) skills[k] = (b.low + b.high) / 2;
+  }
+  return { ...state, skills };
 }
