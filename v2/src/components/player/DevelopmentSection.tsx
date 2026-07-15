@@ -3,12 +3,13 @@
 import { savePlan } from '@/app/players/[id]/actions';
 import ProjectionPanel from '@/components/training/ProjectionPanel';
 import type { PlayerState } from '@/lib/training/engine';
+import type { SublevelBounds } from '@/lib/training/ensemble'; // type-only import is fine (no IO)
 import type { PlanTemplate } from '@/lib/training/templates';
 import type { PlanRow, WeekMinutes } from '@/queries/minutes'; // type-only import is fine (no IO)
 import type { PlanValue } from './PlanEditor';
 
 export default function DevelopmentSection({
-  playerId, playerState, startWeekOfSeason, weeks, age, initialPlan, templates, skillsDb, potential,
+  playerId, playerState, startWeekOfSeason, weeks, age, initialPlan, templates, skillsDb, potential, sublevelBounds,
 }: {
   playerId: number;
   playerState: PlayerState;
@@ -19,6 +20,7 @@ export default function DevelopmentSection({
   templates: PlanTemplate[];
   skillsDb: Record<string, number | null>;
   potential: number | null;
+  sublevelBounds?: SublevelBounds;
 }) {
   // `weeks` (per-position minutes history) isn't used by the projection panel today —
   // kept in the prop list because the player page already fetches and passes it.
@@ -45,6 +47,7 @@ export default function DevelopmentSection({
       initialPlan={initialPlan}
       templates={templates}
       onSave={handleSave}
+      sublevelBounds={sublevelBounds}
     />
   );
 }

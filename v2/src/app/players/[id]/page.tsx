@@ -6,7 +6,10 @@ import { getPotentialColor, POTENTIAL_LEVELS } from '@/lib/constants';
 import { skillSeries, dmiSeries, salarySeries, positionTimeline, currentProfile } from '@/lib/series';
 import { getEffectiveArchetypes } from '@/queries/archetypes';
 import { getActivePlan, getPlayerWeeklyMinutes } from '@/queries/minutes';
-import { playerStateFromSnapshot } from '@/lib/training/bridge';
+import { applyAnchors, boundsFromAnchors, playerStateFromSnapshot } from '@/lib/training/bridge';
+import { getPopAnchors, type PopAnchorRow } from '@/queries/training';
+import type { PopAnchor } from '@/lib/training/sublevels';
+import { SKILL_KEYS, type SkillKey } from '@/lib/training/types';
 import { PLAN_TEMPLATES } from '@/lib/training/templates';
 import { seasonWeekOf } from '@/server/sync/minutes';
 import SkillProgression from '@/components/player/SkillProgression';
@@ -44,10 +47,11 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const dmi = dmiSeries(snaps).map((p) => ({ x: p.x.getTime(), y: p.y }));
   const salary = salarySeries(snaps).map((p) => ({ x: p.x.getTime(), y: p.y }));
 
-  const [weeklyMinutes, activePlan, [seasonRow]] = await Promise.all([
+  const [weeklyMinutes, activePlan, [seasonRow], popAnchors] = await Promise.all([
     getPlayerWeeklyMinutes(player.bbPlayerId),
     getActivePlan(player.bbPlayerId),
     db.select().from(seasons).where(eq(seasons.id, detail.seasonNow)),
+    getPopAnchors(player.bbPlayerId),
   ]);
   const startWeekOfSeason = seasonRow ? Math.min(14, Math.max(1, seasonWeekOf(new Date(), seasonRow.start))) : 1;
   const fullSkills = profile.skills && Object.values(profile.skills).filter((v) => v != null).length >= 10;
@@ -58,6 +62,13 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
         stamina: profile.skills.stamina, freeThrow: profile.skills.free_throw,
       })
     : null;
+
+  const asOf = new Date();
+  const anchors: PopAnchor[] = popAnchors
+    .filter((a): a is PopAnchorRow & { skill: SkillKey } => (SKILL_KEYS as readonly string[]).includes(a.skill))
+    .map((a) => ({ skill: a.skill, toDisplayed: a.toDisplayed, windowStart: a.windowStart, windowEnd: a.windowEnd }));
+  const sublevelBounds = playerState && profile.skills ? boundsFromAnchors(profile.skills, anchors, asOf) : {};
+  const anchoredState = playerState ? applyAnchors(playerState, sublevelBounds) : null;
 
   return (
     <main className="p-6 max-w-5xl">
@@ -87,10 +98,10 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
 
       <section className="mt-6">
         <h2 className="font-medium mb-2">Development</h2>
-        {playerState ? (
+        {anchoredState ? (
           <DevelopmentSection
             playerId={player.bbPlayerId}
-            playerState={playerState}
+            playerState={anchoredState}
             startWeekOfSeason={startWeekOfSeason}
             weeks={weeklyMinutes}
             age={player.ageNow}
@@ -98,6 +109,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             templates={PLAN_TEMPLATES}
             skillsDb={profile.skills ?? {}}
             potential={profile.potential ?? player.potential}
+            sublevelBounds={sublevelBounds}
           />
         ) : (
           <p className="text-sm text-neutral-500">Needs a full-skill snapshot (census or API) to project development.</p>

@@ -7,6 +7,7 @@ import ProjectionPanel from '@/components/training/ProjectionPanel';
 import ManualPlayerForm, { DEFAULT_MANUAL_PLAYER, type ManualPlayer } from '@/components/training/ManualPlayerForm';
 import { playerStateFromSnapshot } from '@/lib/training/bridge';
 import type { PlayerState } from '@/lib/training/engine';
+import type { SublevelBounds } from '@/lib/training/ensemble';
 import type { PlanTemplate } from '@/lib/training/templates';
 import type { ProjectablePlayer } from '@/queries/training';
 
@@ -20,6 +21,7 @@ export interface SelectedPlayer {
   playerState: PlayerState;
   skillsDb: Record<string, number | null>;
   initialPlan: { blocks: Array<{ trainingId: number; weeks: number }>; coachLevel: number; youthTrainerLevel: number } | null;
+  sublevelBounds?: SublevelBounds;
 }
 
 type Mode = 'database' | 'manual';
@@ -114,6 +116,7 @@ export default function TrainingLab({
                 initialPlan={selected.initialPlan}
                 templates={templates}
                 onSave={handleSaveSelected}
+                sublevelBounds={selected.sublevelBounds}
               />
             </div>
           ) : (

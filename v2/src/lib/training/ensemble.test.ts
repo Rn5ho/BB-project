@@ -3,11 +3,12 @@ import { ensembleProject } from './ensemble';
 import { skillsFromArray, SKILL_KEYS } from './types';
 
 describe('ensembleProject', () => {
+  const player = {
+    skills: skillsFromArray([7, 7, 7, 7, 7, 7, 7, 7, 7, 7]),
+    age: 18, heightCm: 196, potential: 8,
+  };
+
   it('returns bbscout as central and a band that contains it', () => {
-    const player = {
-      skills: skillsFromArray([7, 7, 7, 7, 7, 7, 7, 7, 7, 7]),
-      age: 18, heightCm: 196, potential: 8,
-    };
     const plan = Array.from({ length: 28 }, () => ({ trainingId: 15, coachLevel: 5 }));
     const r = ensembleProject(player, plan);
     expect(Object.keys(r.byModel)).toHaveLength(7); // 5 models + 2 sublevel-bound runs
@@ -19,5 +20,16 @@ describe('ensembleProject', () => {
     }
     // a 28-week DR-heavy plan must show real spread between models
     expect(r.band.tspHigh - r.band.tspLow).toBeGreaterThan(1);
+  });
+
+  it('sublevelBounds narrow the band vs the default ±0.49 runs', () => {
+    const plan = Array.from({ length: 4 }, () => ({ trainingId: 15, coachLevel: 5 }));
+    const loose = ensembleProject(player, plan);
+    const tight = ensembleProject(player, plan, {
+      sublevelBounds: Object.fromEntries(SKILL_KEYS.map((k) => [k, {
+        low: player.skills[k] - 0.1, high: player.skills[k] + 0.1,
+      }])),
+    });
+    expect(tight.band.tspHigh - tight.band.tspLow).toBeLessThan(loose.band.tspHigh - loose.band.tspLow);
   });
 });

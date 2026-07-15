@@ -7,7 +7,7 @@ import PlanEditor, { type PlanValue } from '@/components/player/PlanEditor';
 import { SKILLS } from '@/lib/constants';
 import { bandSeries, displayEquivalent, planToWeeks } from '@/lib/training/bridge';
 import { displayed, type PlayerState } from '@/lib/training/engine';
-import { ensembleProject } from '@/lib/training/ensemble';
+import { ensembleProject, type SublevelBounds } from '@/lib/training/ensemble';
 import { estimateSalary } from '@/lib/training/salary';
 import type { PlanTemplate } from '@/lib/training/templates';
 import { SKILL_DB_NAMES, SKILL_KEYS, type Skills } from '@/lib/training/types';
@@ -19,7 +19,7 @@ function toDbDisplayed(s: Skills): Record<string, number | null> {
 }
 
 export default function ProjectionPanel({
-  playerState, skillsDb, potential, age, startWeekOfSeason, initialPlan, templates, onSave,
+  playerState, skillsDb, potential, age, startWeekOfSeason, initialPlan, templates, onSave, sublevelBounds,
 }: {
   playerState: PlayerState;
   skillsDb: Record<string, number | null>;
@@ -30,6 +30,7 @@ export default function ProjectionPanel({
   templates: PlanTemplate[];
   /** When provided, the Save button appears and calls this. When omitted, Save is hidden. */
   onSave?: (value: PlanValue) => Promise<void>;
+  sublevelBounds?: SublevelBounds;
 }) {
   const [plan, setPlan] = useState<PlanValue>(() => {
     if (initialPlan) {
@@ -53,8 +54,8 @@ export default function ProjectionPanel({
   );
   const result = useMemo(() => {
     if (weekConfigs.length === 0) return null;
-    return ensembleProject(playerState, weekConfigs, { startWeekOfSeason });
-  }, [playerState, weekConfigs, startWeekOfSeason]);
+    return ensembleProject(playerState, weekConfigs, { startWeekOfSeason, sublevelBounds });
+  }, [playerState, weekConfigs, startWeekOfSeason, sublevelBounds]);
   const points = useMemo(() => (result ? bandSeries(result) : []), [result]);
 
   function handleChange(next: PlanValue) {

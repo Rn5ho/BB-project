@@ -1,12 +1,13 @@
 import { eq } from 'drizzle-orm';
 import { db, seasons } from '@/db';
 import { getPlayerDetail } from '@/queries/player-detail';
-import { getProjectablePlayers } from '@/queries/training';
+import { getPopAnchors, getProjectablePlayers } from '@/queries/training';
 import { getCurrentSeasonId } from '@/queries/players';
 import { getActivePlan } from '@/queries/minutes';
 import { currentProfile } from '@/lib/series';
-import { playerStateFromSnapshot } from '@/lib/training/bridge';
+import { applyAnchors, boundsFromAnchors, playerStateFromSnapshot } from '@/lib/training/bridge';
 import { PLAN_TEMPLATES } from '@/lib/training/templates';
+import { SKILL_KEYS, type SkillKey } from '@/lib/training/types';
 import { seasonWeekOf } from '@/server/sync/minutes';
 import TrainingLab, { type SelectedPlayer } from '@/components/training/TrainingLab';
 
@@ -42,6 +43,12 @@ export default async function TrainingPage({
           stamina: profile.skills.stamina,
           freeThrow: profile.skills.free_throw,
         });
+        const popAnchors = await getPopAnchors(playerId);
+        const anchors = popAnchors
+          .filter((a): a is typeof a & { skill: SkillKey } => (SKILL_KEYS as readonly string[]).includes(a.skill))
+          .map((a) => ({ skill: a.skill as SkillKey, toDisplayed: a.toDisplayed, windowStart: a.windowStart, windowEnd: a.windowEnd }));
+        const sublevelBounds = boundsFromAnchors(profile.skills, anchors, new Date());
+        const anchoredState = applyAnchors(playerState, sublevelBounds);
         const activePlan = await getActivePlan(playerId);
         selected = {
           bbPlayerId: playerId,
@@ -50,11 +57,12 @@ export default async function TrainingPage({
           heightCm: detail.player.heightCm,
           potential: profile.potential ?? detail.player.potential,
           bestPosition: detail.player.bestPosition,
-          playerState,
+          playerState: anchoredState,
           skillsDb: profile.skills,
           initialPlan: activePlan
             ? { blocks: activePlan.blocks, coachLevel: activePlan.coachLevel, youthTrainerLevel: activePlan.youthTrainerLevel }
             : null,
+          sublevelBounds,
         };
       }
     }
