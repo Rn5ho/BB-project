@@ -1,4 +1,4 @@
-import { asc, isNotNull, sql } from 'drizzle-orm';
+import { asc, eq, isNotNull, sql } from 'drizzle-orm';
 import { db, players, seasons, skillPops, snapshots, syncLog, trainingObservations } from '@/db';
 import { playerStateFromSnapshot } from '@/lib/training/bridge';
 import { inferClubTraining, type PlayerWindowEvidence } from '@/lib/training/infer';
@@ -142,11 +142,7 @@ export async function runTrainingInference(trigger: string): Promise<InferenceSy
       }
     }
 
-    // 3. Rebuild skill_pops (snapshots source only — own-scrape rows persist).
-    await db.execute(sql`delete from skill_pops where source = 'snapshots'`);
-    for (const chunk of chunks(popRows, 500)) await db.insert(skillPops).values(chunk);
-
-    // 4. Infer per club-window group and rebuild training_observations.
+    // 3. Infer per club-window group and build training_observations rows.
     const counts: InferenceSyncResult = {
       playersScanned: snapsByPlayer.size, popsDetected: popRows.length,
       observationWindows: 0, inferredHigh: 0, inferredMedium: 0, inferredLow: 0,
@@ -173,8 +169,15 @@ export async function runTrainingInference(trigger: string): Promise<InferenceSy
         else counts.inferredLow++;
       }
     }
-    await db.execute(sql`delete from training_observations`);
-    for (const chunk of chunks(obsRows, 200)) await db.insert(trainingObservations).values(chunk);
+    // 4. Atomically rebuild skill_pops (snapshots source only — own-scrape rows persist)
+    // and training_observations in a single batch, so a crash/timeout never leaves either
+    // table wiped without its replacement.
+    await db.batch([
+      db.delete(skillPops).where(eq(skillPops.source, 'snapshots')),
+      ...chunks(popRows, 500).map((c) => db.insert(skillPops).values(c)),
+      db.delete(trainingObservations),
+      ...chunks(obsRows, 200).map((c) => db.insert(trainingObservations).values(c)),
+    ] as [any, ...any[]]);
 
     await db.update(syncLog).set({ finishedAt: new Date(), ok: true, counts }).where(sql`id = ${logRow.id}`);
     return counts;

@@ -15,9 +15,9 @@ describe('sublevelBound', () => {
     expect(b.low).toBeCloseTo(7.01, 5);
     expect(b.high).toBeCloseTo(7.01, 5);
   });
-  it('pop two weeks ago: band grows by MAX_WEEKLY_GAIN per week', () => {
-    const b = sublevelBound(8, anchor({}), d('2026-07-15T00:00:00Z'));
-    expect(b.high).toBeCloseTo(7.01 + 2 * MAX_WEEKLY_GAIN, 5);
+  it('pop three days ago: band grows by MAX_WEEKLY_GAIN per week since windowStart', () => {
+    const b = sublevelBound(8, anchor({}), d('2026-07-04T00:00:00Z'));
+    expect(b.high).toBeCloseTo(7.01 + (3 / 7) * MAX_WEEKLY_GAIN, 5);
   });
   it('stale pop: falls back to the full band', () => {
     const b = sublevelBound(8, anchor({ windowStart: d('2026-01-01T00:00:00Z') }), d('2026-07-15T00:00:00Z'));

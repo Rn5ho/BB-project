@@ -31,7 +31,8 @@ export interface BoardRow {
   inferredLabel: string | null;          // in-game label of the inferred training
   inferredConfidence: 'high' | 'medium' | 'low' | null;
   inferredAsOfIso: string | null;
-  avgMinutes: number | null;             // avg weekly minutes at the inferred training's positions
+  avgMinutes: number | null;             // avg weekly minutes at the inferred training's positions;
+                                          // null = no boxscore data (projection assumes full minutes)
   tspNow: number | null;
   benchmarkDelta: number | null;         // vs NT track at current age/week
   tsp21Current: number | null;           // 12-skill display-equivalent at end of age-21 season
@@ -76,9 +77,10 @@ export function computeBoardRow(input: BoardPlayerInput): BoardRow {
   let avgMinutes: number | null = null;
   if (tid != null) {
     const mins = input.recentWeeks.map((w) => minutesAtPositions(w, tid));
-    avgMinutes = mins.length > 0 ? Math.round(mins.reduce((a, b) => a + b, 0) / mins.length) : 0;
+    avgMinutes = mins.length > 0 ? Math.round(mins.reduce((a, b) => a + b, 0) / mins.length) : null;
     const plan: WeekConfig[] = Array.from({ length: horizon }, () => ({
-      trainingId: tid, coachLevel: BOARD_COACH_LEVEL, youthTrainerLevel: BOARD_YOUTH_TRAINER, minutes: avgMinutes ?? 0,
+      trainingId: tid, coachLevel: BOARD_COACH_LEVEL, youthTrainerLevel: BOARD_YOUTH_TRAINER,
+      ...(avgMinutes != null ? { minutes: avgMinutes } : {}),
     }));
     tsp21Current = tsp12(input.state, horizon > 0 ? project(input.state, plan, BBSCOUT, projOpts) : null);
   }

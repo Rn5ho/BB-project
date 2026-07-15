@@ -9,8 +9,11 @@ export interface PopAnchor {
 
 export interface SublevelBound { low: number; high: number } // engine scale, within (d−1, d)
 
-/** Max plausible single-skill accumulation, levels/week (BBSCOUT_HIGH primary-rate ballpark). */
-export const MAX_WEEKLY_GAIN = 0.30;
+/** Upper envelope of one skill's weekly gain: BBSCOUT_HIGH primary rates (0.575–0.69)
+ *  with typical height (≤1.3) and staff multipliers. Pathological stacks (175cm + YT7 +
+ *  coach 7 + big elastic) can exceed this — per-skill model-derived caps are the
+ *  principled upgrade. */
+export const MAX_WEEKLY_GAIN = 0.90;
 
 const WEEK_MS = 7 * 86_400_000;
 

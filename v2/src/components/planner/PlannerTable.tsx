@@ -108,7 +108,7 @@ export default function PlannerTable({ rows, currentSeasonWeek }: { rows: BoardR
               {header('potential', 'Pot')}
               <th className="pr-3">Club</th>
               <th className="pr-3">Club training</th>
-              {header('avgMinutes', 'Min/wk', 'Avg weekly minutes at the inferred training’s positions (last 4 observed weeks)')}
+              {header('avgMinutes', 'Min/wk', 'Avg weekly minutes at the inferred training’s positions (last 4 observed weeks); – = no boxscore data (projection assumes full minutes)')}
               {header('tspNow', 'TSP')}
               {header('benchmarkDelta', 'vs BM', 'TSP vs the NT-track benchmark for this age + season week')}
               {header('tsp21Current', 'TSP@21 now', 'Projected 12-skill TSP at end of age 21 if the club keeps its inferred training + current minutes')}
@@ -137,7 +137,7 @@ export default function PlannerTable({ rows, currentSeasonWeek }: { rows: BoardR
                   </td>
                   <td className="pr-3 whitespace-nowrap">
                     {r.inferredLabel != null ? (
-                      <span>
+                      <span title={r.inferredAsOfIso ? `observation window ended ${r.inferredAsOfIso.slice(0, 10)}` : undefined}>
                         {r.inferredLabel}{' '}
                         <span className={`text-xs ${CONF_COLOR[r.inferredConfidence ?? 'low']}`}>({r.inferredConfidence})</span>
                       </span>

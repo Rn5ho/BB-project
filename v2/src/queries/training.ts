@@ -45,14 +45,16 @@ export interface PopAnchorRow {
   windowEnd: Date;
 }
 
-/** Most recent positive pop per skill, preferring narrower windows on ties
- *  (own-scrape exact dates beat wide census windows ending the same day). */
+/** Best anchor per skill = the one with the LATEST window_start (narrower window on ties).
+ *  sublevelBound's upper bound grows from window_start only, so exact-date own-scrape rows
+ *  (window_start = pop date) beat any snapshot window bracketing the same pop, and a newer
+ *  pop always beats an older one. */
 export async function getPopAnchors(playerId: number): Promise<PopAnchorRow[]> {
   const result = await db.execute(sql`
     select distinct on (skill) skill, to_displayed, window_start, window_end
     from skill_pops
     where player_id = ${playerId} and delta > 0
-    order by skill, window_end desc, (window_end - window_start) asc
+    order by skill, window_start desc, (window_end - window_start) asc
   `);
   return (result.rows as Record<string, unknown>[]).map((r) => ({
     skill: String(r.skill),

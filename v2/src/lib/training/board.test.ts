@@ -47,4 +47,11 @@ describe('computeBoardRow', () => {
     const row = computeBoardRow({ ...base, age: 21, currentSeasonWeek: 14, state: { ...base.state, age: 21 } });
     expect(row.tsp21Optimal).toBeCloseTo(row.tsp21Current!, 5);
   });
+
+  it('empty recentWeeks -> null avgMinutes and full-minutes current projection', () => {
+    const lowMinutes = computeBoardRow({ ...base, recentWeeks: base.recentWeeks.map((w) => ({ ...w, minPg: 5, minSg: 5 })) });
+    const noData = computeBoardRow({ ...base, recentWeeks: [] });
+    expect(noData.avgMinutes).toBeNull();
+    expect(noData.tsp21Current!).toBeGreaterThan(lowMinutes.tsp21Current!);
+  });
 });

@@ -1965,3 +1965,20 @@ git commit -m "docs: Phase C shipped record + recalibration loop; drop leftover 
 - **Spec coverage:** Phase C = "inference flywheel + cohort board (+ observations feeding calibration; recalibration loop documented)". Inference: Tasks 2, 4, 5. Cohort board: Tasks 9–11. Observations→calibration + loop doc: Tasks 8, 12. Memory's Phase C extras: pop-anchored sublevels (Tasks 6–8), TSP benchmarks (Task 3). The spec's `training_observations` was per player-week; reality (light api snapshots) forces per-club-window — documented in Task 5 and CLAUDE.md addendum.
 - **Type consistency:** `PopEvent` (T2) consumed by T4/T5; `PlayerWindowEvidence`/`InferenceResult` (T4) by T5; `SublevelBound`/`PopAnchor` (T6) by T7/T10; `BoardPlayerInput`/`BoardRow` (T9) by T10/T11; `WeekMinutes` reused from `@/queries/minutes` everywhere.
 - **Known simplifications (documented, deliberate):** inference assumes coach 5 and one training over the whole window (clubs switching mid-window blur into 'low' confidence); `predictedGain` uses window-start state without week-by-week evolution; ST/FT weeks not inferable; board staff assumptions neutralize staff quality out of the gap.
+
+---
+
+## Erratum (2026-07-15, post final review)
+
+Three plan-level bugs were found by the final whole-branch review and fixed after Task 12
+(the implementation had transcribed the plan faithfully — these were design errors):
+1. Anchor selection ordered by `window_end desc`, which always preferred wide bracketing
+   snapshot windows over exact-date own-scrape anchors (tie-break unreachable). Fixed:
+   order by `window_start desc` — band tightness depends only on window_start.
+2. `MAX_WEEKLY_GAIN = 0.30` was below bbscout's own trained-primary weekly gains (~0.65);
+   anchored bands could exclude the true trajectory. Fixed: 0.90 (upper envelope).
+3. `computeBoardRow` treated MISSING minutes data as ZERO minutes (opposite of infer.ts's
+   assume-full convention), letting data-gap artifacts dominate the /planner gap sort.
+   Fixed: empty recentWeeks → null avgMinutes → engine assumes full minutes.
+Also hardened: inference job rebuild is now a single atomic db.batch transaction.
+Do not reuse the plan's Task 6/7/9/10 code blocks without these corrections.

@@ -51,14 +51,14 @@ export async function getPlannerData(): Promise<PlannerData> {
         sum(pmm.min_pf)::int as min_pf, sum(pmm.min_c)::int as min_c, count(*)::int as games
       from player_match_minutes pmm
       join matches m using (match_id)
-      where m.season = ${season} and m.season_week is not null and m.season_week >= ${currentSeasonWeek - 4}
+      where m.season = ${season} and m.season_week is not null and m.season_week >= ${currentSeasonWeek - 3}
       group by 1, 2, 3
     `),
     db.execute(sql`
       select distinct on (player_id, skill) player_id, skill, to_displayed, window_start, window_end
       from skill_pops
       where delta > 0
-      order by player_id, skill, window_end desc, (window_end - window_start) asc
+      order by player_id, skill, window_start desc, (window_end - window_start) asc
     `),
   ]);
 
