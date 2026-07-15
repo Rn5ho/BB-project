@@ -316,7 +316,7 @@ git commit -m "feat(v2): NT-track TSP benchmarks (thread 323477)"
 - Consumes: `weekStep`, `PlayerState` from `./engine`; `minutesAtPositions` from `./bridge`; `TRAINING_CATALOG`, `getTrainingType` from `./catalog`; `BBSCOUT` from `./models/bbscout`; `PopEvent` from `./pops`; `WeekMinutes` type from `@/queries/minutes`.
 - Produces: `PlayerWindowEvidence`, `InferenceResult`, `inferClubTraining(evidence: PlayerWindowEvidence[]): InferenceResult`. Task 5 calls this per club-window group.
 
-Scoring model (spec §4: "simple scoring first — which eligible training best explains the pops under bbscout rates"): for each skill-kind training type, predicted gain per popped skill = sum of `weekStep` gains over the window's minutes-weeks (coach level 5 assumed — ×1.00 neutral), scaled to full window length when minutes coverage is partial; score = Σ min(predicted, observed delta). ST/FT pops are excluded (gym scatter + training court pop them independently of the weekly slot). Confidence needs a margin over the best training with a *different primary skill* (same-primary position variants trivially near-tie).
+Scoring model (spec §4: "simple scoring first — which eligible training best explains the pops under bbscout rates"): for each skill-kind training type, predict per-skill gains = sum of `weekStep` gains over the window's minutes-weeks (coach level 5 assumed — ×1.00 neutral), scaled to full window length when minutes coverage is partial. A training "explains" the window when it predicts the pops that happened AND does not predict pops that didn't: `score = explained − 0.5·contradiction`, where `explained = Σ_popped min(predicted, observed delta)` and `contradiction = Σ_non-popped max(0, predicted − 1.0)` (a non-popped displayed integer can hide up to ~1 level of sublevel gain — predictions beyond that contradict the observation; dropped skills are excluded from both sums). Without the contradiction term, one pop saturates `min(pred, delta)` for every training whose secondary rate reaches the delta and ties get broken by catalog order. ST/FT pops are excluded (gym scatter + training court pop them independently of the weekly slot). Confidence needs a margin over the best training with a *different primary skill* (same-primary position variants trivially near-tie). Per-skill deltas are summed per skill across a player's pop events before scoring.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -408,7 +408,7 @@ import { minutesAtPositions } from './bridge';
 import { getTrainingType, TRAINING_CATALOG } from './catalog';
 import { weekStep, type PlayerState } from './engine';
 import { BBSCOUT } from './models/bbscout';
-import { SKILL_KEYS, type SkillKey } from './types';
+import { SKILL_KEYS, type SkillKey, type Skills } from './types';
 import type { PopEvent } from './pops';
 import type { WeekMinutes } from '@/queries/minutes';
 
@@ -432,62 +432,85 @@ export interface InferenceResult {
 /** 'superior' = ×1.00 — neutral assumption for clubs whose staff we can't see. */
 const ASSUMED_COACH_LEVEL = 5;
 
+/** A non-popped displayed integer can hide up to ~1 level of sublevel gain; predicted
+ *  gains beyond that on a skill that did NOT pop contradict the observation. */
+const CONTRADICTION_TOLERANCE = 1.0;
+const CONTRADICTION_WEIGHT = 0.5;
+
 const isRateSkill = (s: string): s is SkillKey => (SKILL_KEYS as readonly string[]).includes(s);
 
-/** Predicted total gain on `skill` if the club ran training `tid` for the whole window. */
-function predictedGain(ev: PlayerWindowEvidence, tid: number, skill: SkillKey): number {
+/** Predicted per-skill gains if the club ran training `tid` for the whole window. */
+function predictedGains(ev: PlayerWindowEvidence, tid: number): Skills {
+  const total = Object.fromEntries(SKILL_KEYS.map((k) => [k, 0])) as Skills;
   if (ev.weeks.length === 0) {
     // No minutes data: rate signal only, assume full minutes.
     const r = weekStep(ev.state, { trainingId: tid, coachLevel: ASSUMED_COACH_LEVEL }, BBSCOUT);
-    return r.gains[skill] * ev.windowWeeks;
+    for (const k of SKILL_KEYS) total[k] = r.gains[k] * ev.windowWeeks;
+    return total;
   }
-  let total = 0;
   for (const w of ev.weeks) {
     const minutes = minutesAtPositions(w, tid);
     const r = weekStep(ev.state, { trainingId: tid, coachLevel: ASSUMED_COACH_LEVEL, minutes }, BBSCOUT);
-    total += r.gains[skill];
+    for (const k of SKILL_KEYS) total[k] += r.gains[k];
   }
   // Weeks without boxscore coverage: extrapolate from the observed weeks' average.
-  return total * (ev.windowWeeks / ev.weeks.length);
+  const scale = ev.windowWeeks / ev.weeks.length;
+  for (const k of SKILL_KEYS) total[k] *= scale;
+  return total;
 }
 
 /** Which single weekly training best explains a club-window's pooled pops.
+ *  A training must both predict the pops that happened (explained, capped at the
+ *  observed delta) and NOT predict pops that didn't happen (contradiction penalty) —
+ *  without the penalty, one pop saturates min(pred, delta) for every training whose
+ *  secondary rates reach the delta and ties fall to catalog order.
  *  ST/FT pops are excluded (training court + gym scatter pop them regardless of the slot),
  *  which also means Team Stamina / Team Free Throws weeks are not inferable — by design. */
 export function inferClubTraining(evidence: PlayerWindowEvidence[]): InferenceResult {
-  const rated = evidence.map((ev) => ({
-    ev,
-    pops: ev.pops.filter((p) => p.delta > 0 && isRateSkill(p.skill)),
-  }));
-  const popCount = rated.reduce((a, r) => a + r.pops.reduce((b, p) => b + p.delta, 0), 0);
+  const rated = evidence.map((ev) => {
+    const popped = new Map<SkillKey, number>();
+    const dropped = new Set<SkillKey>();
+    for (const p of ev.pops) {
+      if (!isRateSkill(p.skill)) continue;
+      if (p.delta > 0) popped.set(p.skill, (popped.get(p.skill) ?? 0) + p.delta);
+      else dropped.add(p.skill);
+    }
+    return { ev, popped, dropped };
+  });
+  const popCount = rated.reduce((a, r) => a + [...r.popped.values()].reduce((b, d) => b + d, 0), 0);
   const playerCount = evidence.length;
   if (popCount === 0) {
     return { inferredTrainingId: null, confidence: 'low', scores: [], popCount, playerCount, explainedFrac: null };
   }
 
-  const scores: Array<{ trainingId: number; score: number }> = [];
+  const full: Array<{ trainingId: number; score: number; explained: number }> = [];
   for (const tt of TRAINING_CATALOG) {
     if (tt.kind !== 'skill') continue;
-    let score = 0;
-    for (const { ev, pops } of rated) {
-      for (const p of pops) {
-        score += Math.min(predictedGain(ev, tt.id, p.skill as SkillKey), p.delta);
+    let explained = 0;
+    let contradiction = 0;
+    for (const { ev, popped, dropped } of rated) {
+      const gains = predictedGains(ev, tt.id);
+      for (const k of SKILL_KEYS) {
+        const delta = popped.get(k);
+        if (delta !== undefined) explained += Math.min(gains[k], delta);
+        else if (!dropped.has(k)) contradiction += Math.max(0, gains[k] - CONTRADICTION_TOLERANCE);
       }
     }
-    scores.push({ trainingId: tt.id, score });
+    full.push({ trainingId: tt.id, score: explained - CONTRADICTION_WEIGHT * contradiction, explained });
   }
-  scores.sort((a, b) => b.score - a.score);
+  full.sort((a, b) => b.score - a.score);
+  const scores = full.slice(0, 5).map(({ trainingId, score }) => ({ trainingId, score }));
 
-  const top = scores[0];
+  const top = full[0];
   if (!top || top.score <= 0) {
-    return { inferredTrainingId: null, confidence: 'low', scores: scores.slice(0, 5), popCount, playerCount, explainedFrac: 0 };
+    return { inferredTrainingId: null, confidence: 'low', scores, popCount, playerCount, explainedFrac: 0 };
   }
   // Margin vs the best training with a DIFFERENT primary skill; same-primary
   // position variants score near-identically and shouldn't dilute confidence.
   const topPrimary = getTrainingType(top.trainingId).primary;
-  const rival = scores.find((s) => getTrainingType(s.trainingId).primary !== topPrimary);
+  const rival = full.find((s) => getTrainingType(s.trainingId).primary !== topPrimary);
   const margin = rival && rival.score > 0 ? top.score / rival.score : Infinity;
-  const explainedFrac = top.score / popCount;
+  const explainedFrac = top.explained / popCount;
 
   // Tunable thresholds (engineering judgment; revisit against own-team ground truth).
   const confidence: InferenceResult['confidence'] =
@@ -495,7 +518,7 @@ export function inferClubTraining(evidence: PlayerWindowEvidence[]): InferenceRe
     : popCount >= 2 && margin >= 1.2 ? 'medium'
     : 'low';
 
-  return { inferredTrainingId: top.trainingId, confidence, scores: scores.slice(0, 5), popCount, playerCount, explainedFrac };
+  return { inferredTrainingId: top.trainingId, confidence, scores, popCount, playerCount, explainedFrac };
 }
 ```
 
