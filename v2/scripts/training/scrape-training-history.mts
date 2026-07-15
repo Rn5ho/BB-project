@@ -99,10 +99,41 @@ function parseHistory(html: string): WeekRow[] {
   return rows;
 }
 
+function parseUsDate(s: string): Date {
+  const [m, d, y] = s.split('/').map(Number);
+  return new Date(Date.UTC(y, m - 1, d));
+}
+
+// skill_pops.skill uses the same short keys as the snapshot-derived ('snapshots' source)
+// pop rows (see src/lib/training/pops.ts PopSkill) — 'st'/'ft', not the scraper's own
+// 'stamina'/'free_throw' internal names.
+const POP_KEY_TO_DB: Record<string, string> = { stamina: 'st', free_throw: 'ft' };
+
+/** Persist exact-date pops (and drops) as maximally tight anchors for Task 6/7 inference. */
+async function upsertScrapedPops(playerId: number, weeks: WeekRow[]): Promise<number> {
+  let n = 0;
+  for (const w of weeks) {
+    for (const p of w.pops) {
+      if (!p.key) continue; // unmapped skill name — skip rather than write a bad row
+      const skillKey = POP_KEY_TO_DB[p.key] ?? p.key;
+      const at = parseUsDate(w.date).toISOString();
+      await sql`
+        insert into skill_pops (player_id, skill, to_displayed, delta, window_start, window_end, window_weeks, source)
+        values (${playerId}, ${skillKey}, ${p.to}, ${p.to - p.from}, ${at}, ${at}, 1, 'own-scrape')
+        on conflict (player_id, skill, window_end, source)
+        do update set to_displayed = excluded.to_displayed, delta = excluded.delta
+      `;
+      n++;
+    }
+  }
+  return n;
+}
+
 const coach = Number(arg('coach', '5'));
 const yt = Number(arg('yt', '0'));
 const gym = Number(arg('gym', '0'));
 const tc = Number(arg('tc', '0'));
+const noDb = process.argv.includes('--no-db');
 const sql = neon(process.env.DATABASE_URL!);
 
 let playerIds: number[];
@@ -194,4 +225,9 @@ for (const pid of playerIds) {
   const popCount = weeks.reduce((a, w) => a + w.pops.length, 0);
   const unmapped = weeks.filter((w) => w.label !== 'AGE' && w.trainingId == null).map((w) => `${w.label}|${w.positions}`);
   console.log(`${pid} ${p?.name}: ${weeks.length} rows, ${popCount} pops -> ${file}${unmapped.length ? ` | UNMAPPED: ${[...new Set(unmapped)].join(', ')}` : ''}`);
+
+  if (!noDb) {
+    const n = await upsertScrapedPops(pid, weeks);
+    console.log(`  ↳ ${n} pops upserted to skill_pops`);
+  }
 }
