@@ -1982,3 +1982,26 @@ Three plan-level bugs were found by the final whole-branch review and fixed afte
    Fixed: empty recentWeeks → null avgMinutes → engine assumes full minutes.
 Also hardened: inference job rebuild is now a single atomic db.batch transaction.
 Do not reuse the plan's Task 6/7/9/10 code blocks without these corrections.
+
+## Post-review backlog (final-review triage, 2026-07-15 — none block prod)
+
+- **Inference / observations**: guard against v1-migrated owner-less snapshot pairs attributing
+  historical windows to a player's CURRENT club (require `cur.ownerTeamId` or a freshness cutoff);
+  observation selection takes newest window per club regardless of quality — a fresh 1-pop
+  low/null window shadows an older high-confidence one (consider `(inferred_training_id is not
+  null) desc` or recency-weighted pick); confidence margin needs an absolute floor (margin=∞ when
+  all different-primary rivals score ≤0 can promote a barely-positive top to 'high') — fold into
+  the ground-truth threshold recalibration; detectPops skips same-day pairs, permanently dropping
+  a pop that lands between two same-day captures (merge same-day pairs into the neighbor window).
+- **Sublevels**: MAX_WEEKLY_GAIN=0.90 is a coarse global envelope — per-skill model-derived caps
+  (bbscout-high rate × height × staff for THAT skill) are the principled upgrade.
+- **Board/planner**: tsp12's +0.5 display-equivalent assumes d−0.5 midpoints, so anchored skills
+  (near d−0.99) read up to ~0.5/skill low at short horizons (gap unaffected); weeksToEndOfAge21
+  vs project() has a one-week horizon-boundary convention mismatch (~0.3–0.5 TSP over 55 weeks,
+  mostly cancels in gap) — decide the convention deliberately; minutes lookback goes empty in
+  season weeks 1–2 (benign post full-minutes fallback; real fix = cross-boundary lookback);
+  potential=null coerced to 0 renders fake 'Pot 0' + drops player at minPot≥1 — make nullable.
+- **UI**: sortable `<th>` keyboard access/aria-sort; club-cell truncate is a no-op on `<td>`
+  (needs inline-block wrapper); minPot accepts typed negatives (harmless).
+- **Housekeeping**: verify the implementer-reported pre-existing `npx tsc --noEmit` error in
+  `src/lib/table.test.ts` (predates Phase C; vitest+next build both green regardless).
