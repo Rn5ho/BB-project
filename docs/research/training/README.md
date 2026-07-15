@@ -110,3 +110,20 @@ least-squares fits of that data) → BuzzerIQ (aggregates CoachParrot + Sergiu).
 Agreement between these sources is NOT independent confirmation. The data is
 2009–2013 era; post-2013 game rebalances are the biggest systematic risk —
 mitigate via our own observed-pops calibration (see design spec).
+
+## Recalibration loop (Phase C, 2026-07-15)
+
+Ground truth accumulates in two places:
+1. `skill_pops` source='own-scrape' — exact-date pops from `npm run training:scrape-history`
+   (own clubs only; re-run periodically before BB's training history rolls off).
+2. `training_observations` — per-club inferred training from pooled snapshot-window pops +
+   minutes. CAUTION: inferred WITH bbscout rates — do not feed observations back into rate
+   fitting blindly (circularity). Safe calibration subset: windows where the eligible set
+   is unambiguous (confidence 'high' with a dominant margin) — the *identity* of the
+   training is then minutes-constrained, and the observed pop count vs predicted pop count
+   on that training is a fair error signal.
+
+Loop: scrape-history → `npm run training:replay` scores models on exact-date cases →
+adjust bbscout params → `npm run training:infer` rebuilds observations → /planner
+confidence mix shifts. Weekly DMI-based pop timing (invertible DMI formula, gated
+FINDINGS.md) remains the Phase C+ upgrade for non-owned prospects.

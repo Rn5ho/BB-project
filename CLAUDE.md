@@ -44,7 +44,7 @@ Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.as
 
 **Known limitation**: per-snapshot `bestPosition` not stored yet — position timeline displays one segment (future enhancement).
 
-All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 4.5 worker, 5 detail).
+All v2 phases complete (1 foundation, 2 sync, 3 market, 4 census, 4.5 worker, 5 detail) + training phases A, B, C.
 
 **2026-07-13 UX batch shipped** — three features (specs + plans in `docs/superpowers/`):
 1. **Settings rework**: `/settings` is three cards (tracked countries / data sync / sync log). Data sync card has one row per job (seasons/players/market/census) with schedule chip, plain-language description, live "last run" line (per-job `limit(1)` queries on `sync_log`), and Sync now buttons (census row links to `/census`). Census runs table removed from settings; its newest-run per-item breakdown moved to `/census`. Formatters shared in `src/lib/format-sync.tsx` + `src/lib/format-census.ts`.
@@ -113,6 +113,30 @@ DevelopmentSection: band chart, projection table, cap bars, plan editor; Save hi
 Joey Ka's exact DMI/GS/salary formulas + BB-Justin cap-ladder confirmation in
 `docs/research/training/forum-research/gated/` (FINDINGS.md = digest; rhyminsimon sheet
 permanently lost, 410).
+
+**Training Phase C shipped 2026-07-15** — Inference flywheel + `/planner` cohort board.
+Tables: `skill_pops` (displayed-level changes between consecutive full snapshots; source
+'snapshots' rebuilt each run, 'own-scrape' exact-date rows persist — written by
+training:scrape-history) and `training_observations` (per club-window inferred training +
+confidence; full rebuild each run). Job: `runTrainingInference` in
+`src/server/sync/inference.ts` — DB-only (no BB calls), daily in `/api/cron/daily`, manual
+row on /settings, local run `npm run training:infer`. Key design: BB clubs pick ONE
+training/week, so pops pool across a club's tracked players; weekly api snapshots are
+LIGHT (no skills), so pops come from census/market/manual windows (multi-week). Scoring:
+`inferClubTraining` (`src/lib/training/infer.ts`) — score = explained − 0.5·contradiction
+(explained = Σ min(predicted bbscout gain over the window's minutes, observed delta);
+contradiction = predicted gains >1 level on non-popped skills); confidence from pop count +
+margin vs best different-primary rival; ST/FT pops excluded (gym/TC pop them independently).
+Pop-anchored sublevels: `sublevels.ts` + `boundsFromAnchors`/`applyAnchors` in bridge —
+a pop observed at a known date pins that skill near x.0, tightening the ensemble band
+(`ensembleProject` accepts per-skill `sublevelBounds`); wired into player page + training
+lab. `/planner` (nav: Planner): all Slovene 18–21 full-skill prospects — inferred club
+training, avg minutes, TSP vs NT-track benchmark (`benchmarks.ts`, thread 323477:
+18:55/19:70/20:83/21:100), projected TSP@end-of-21 under current vs best archetype
+template (neutral staff coach 5/YT 5), gap-sorted for outreach. Board math in
+`src/lib/training/board.ts` (pure), data in `src/queries/planner.ts`. First live run:
+1,027 pops, 196 club windows, 63 high + 42 medium confidence inferences; 115 exact-date
+own-scrape anchors.
 
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).

@@ -17,6 +17,11 @@
 > both halves live (weekly position-minutes in DB + engine to explain pops), plus a
 > new opportunity this spec didn't foresee: pop-anchored sublevel tracking from
 > scraped/observed pop dates.
+>
+> **Phase C shipped 2026-07-15:** inference flywheel (`skill_pops` + per-club
+> `training_observations`, daily DB-only job), pop-anchored sublevel bounds in the
+> ensemble, NT-track TSP benchmarks, and the `/planner` cohort board (product 2).
+> Remaining: coach handoff (3), reverse planner (4), ceiling evaluator (5) — Phase D.
 
 ## Problem
 
