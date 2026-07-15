@@ -16,7 +16,7 @@ function fmt(v: number | null, digits = 0): string {
 
 function signed(v: number | null): { text: string; cls: string } {
   if (v == null) return { text: '–', cls: 'text-neutral-500' };
-  const r = Math.round(v);
+  const r = Math.sign(v) * Math.round(Math.abs(v));
   if (r > 0) return { text: `+${r}`, cls: 'text-green-400' };
   if (r < 0) return { text: `${r}`, cls: 'text-red-400' };
   return { text: '0', cls: 'text-neutral-400' };
@@ -130,7 +130,7 @@ export default function PlannerTable({ rows, currentSeasonWeek }: { rows: BoardR
                   <td className="pr-3" style={{ color: getPotentialColor(r.potential) }}>{r.potential}</td>
                   <td className="pr-3 whitespace-nowrap max-w-40 truncate">
                     {r.ownerTeamId != null ? (
-                      <a href={`https://buzzerbeater.com/team/${r.ownerTeamId}/overview.aspx`} target="_blank" className="text-neutral-400 hover:text-amber-400">
+                      <a href={`https://buzzerbeater.com/team/${r.ownerTeamId}/overview.aspx`} target="_blank" rel="noopener noreferrer" className="text-neutral-400 hover:text-amber-400">
                         {r.ownerTeamName ?? r.ownerTeamId}
                       </a>
                     ) : <span className="text-neutral-600">–</span>}
