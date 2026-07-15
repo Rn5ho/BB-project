@@ -39,34 +39,54 @@ export default function TargetBuildPanel({
     [skillsDb],
   );
   const [open, setOpen] = useState(false);
-  const [targets, setTargets] = useState<Record<SkillKey, number>>(() => ({ ...current }));
+  /** Explicit targets only — a missing key means "not targeted" (the input follows the
+   *  current skill), so live-editing the player's skills can't fabricate targets. */
+  const [targets, setTargets] = useState<Partial<Record<SkillKey, number>>>({});
   const [priority, setPriority] = useState<Record<SkillKey, TargetPriority>>(
     () => Object.fromEntries(SKILL_KEYS.map((k) => [k, 'normal'])) as Record<SkillKey, TargetPriority>,
   );
   const [horizon, setHorizon] = useState<SeasonPoint>(defaultHorizon ?? { age: 22, week: 1 });
-  const [result, setResult] = useState<OptimizeResult | null>(null);
+  const [run, setRun] = useState<{ fingerprint: string; result: OptimizeResult } | null>(null);
   const [busy, setBusy] = useState(false);
 
   const now: SeasonPoint = { age: currentAge, week: startWeekOfSeason };
   const H = horizonWeeks(now, horizon);
-  const targeted = SKILL_KEYS.filter((k) => targets[k] > current[k]);
+  const targeted = SKILL_KEYS.filter((k) => (targets[k] ?? current[k]) > current[k]);
+
+  // Everything the search reads. A result renders only while this still matches the
+  // fingerprint it ran with — editing skills, staff, targets or the deadline hides it.
+  const fingerprint = JSON.stringify([current, targets, priority, horizon, staff, currentAge, startWeekOfSeason]);
+  const result = run != null && run.fingerprint === fingerprint ? run.result : null;
+  const stale = run != null && result == null;
+
+  function setTarget(k: SkillKey, n: number) {
+    setTargets((t) => {
+      const next = { ...t };
+      if (n > current[k]) next[k] = n;
+      else delete next[k]; // at/below current = not a target
+      return next;
+    });
+  }
 
   function runOptimize() {
     setBusy(true);
-    setResult(null);
+    const fp = fingerprint;
+    const specs: SkillTarget[] = targeted.map((k) => ({
+      skill: k, displayed: targets[k] ?? current[k], priority: priority[k],
+    }));
     // setTimeout lets the busy state paint before the synchronous search runs.
     setTimeout(() => {
-      const specs: SkillTarget[] = targeted.map((k) => ({
-        skill: k, displayed: targets[k], priority: priority[k],
-      }));
-      setResult(optimizePlan(playerState, specs, {
-        horizonWeeks: H,
-        startWeekOfSeason,
-        coachLevel: staff.coachLevel,
-        youthTrainerLevel: staff.youthTrainerLevel,
-        gymLevel: staff.gymLevel,
-        trainingCourtLevel: staff.trainingCourtLevel,
-      }));
+      setRun({
+        fingerprint: fp,
+        result: optimizePlan(playerState, specs, {
+          horizonWeeks: H,
+          startWeekOfSeason,
+          coachLevel: staff.coachLevel,
+          youthTrainerLevel: staff.youthTrainerLevel,
+          gymLevel: staff.gymLevel,
+          trainingCourtLevel: staff.trainingCourtLevel,
+        }),
+      });
       setBusy(false);
     }, 20);
   }
@@ -74,6 +94,7 @@ export default function TargetBuildPanel({
   function verdict(c: PlanCandidate): string {
     if (c.reachable) {
       const weeks = targeted.map((k) => c.hitWeek[k]).filter((w): w is number => w != null);
+      if (weeks.length === 0) return 'All targets already reached.';
       const at = fromAbsWeek(absWeek(now) + Math.max(...weeks));
       return `Build reachable by age ${at.age} wk ${at.week}`;
     }
@@ -104,21 +125,21 @@ export default function TargetBuildPanel({
 
           <div className="grid gap-1.5 sm:grid-cols-2">
             {SKILL_KEYS.map((k) => {
-              const isTargeted = targets[k] > current[k];
+              const isTargeted = (targets[k] ?? current[k]) > current[k];
               return (
                 <div key={k} className="flex items-center gap-2 text-sm">
                   <span className="w-24 shrink-0 text-neutral-400">{SKILL_NAME[SKILL_DB_NAMES[k]] ?? k}</span>
                   <span className="w-6 text-right text-neutral-500">{current[k]}</span>
                   <span className="text-neutral-600">→</span>
                   <BoundedNumberInput
-                    value={targets[k]} min={1} max={20}
-                    onCommit={(n) => { setTargets((t) => ({ ...t, [k]: n })); setResult(null); }}
+                    value={targets[k] ?? current[k]} min={1} max={20}
+                    onCommit={(n) => setTarget(k, n)}
                     className={`w-14 rounded border px-2 py-1 text-sm ${isTargeted ? 'border-amber-700 bg-neutral-900' : 'border-neutral-700 bg-neutral-900'}`}
                   />
                   {isTargeted && (
                     <select
                       value={priority[k]}
-                      onChange={(e) => { setPriority((p) => ({ ...p, [k]: e.target.value as TargetPriority })); setResult(null); }}
+                      onChange={(e) => setPriority((p) => ({ ...p, [k]: e.target.value as TargetPriority }))}
                       className="rounded border border-neutral-700 bg-neutral-900 px-1.5 py-1 text-xs"
                     >
                       {PRIORITIES.map((p) => <option key={p.value} value={p.value}>{p.label}</option>)}
@@ -133,7 +154,7 @@ export default function TargetBuildPanel({
             <span className="text-sm text-neutral-400">Deadline</span>
             <HorizonPicker
               value={horizon}
-              onChange={(h) => { if (h) { setHorizon(h); setResult(null); } }}
+              onChange={(h) => { if (h) setHorizon(h); }}
               currentAge={currentAge}
               required
             />
@@ -148,6 +169,10 @@ export default function TargetBuildPanel({
             {targeted.length === 0 && <span className="text-xs text-neutral-500">set at least one target above its current level</span>}
             {H === 0 && <span className="text-xs text-amber-500">deadline is in the past</span>}
           </div>
+
+          {stale && !busy && (
+            <p className="text-xs text-neutral-500">Inputs changed since the last run — press Optimize to refresh.</p>
+          )}
 
           {result && !result.best && (
             <p className="text-sm text-neutral-500">Nothing to optimize — every target is already reached.</p>
@@ -180,7 +205,7 @@ export default function TargetBuildPanel({
                         <tr key={k} className="border-b border-neutral-900">
                           <td className="py-1 pr-3">{SKILL_NAME[SKILL_DB_NAMES[k]] ?? k}</td>
                           <td className="pr-3 text-right">{current[k]}</td>
-                          <td className="pr-3 text-right">{targets[k]}</td>
+                          <td className="pr-3 text-right">{targets[k] ?? current[k]}</td>
                           <td className="pr-3 text-xs text-neutral-400">{priority[k]}</td>
                           <td className="pr-3 text-right">{displayed(best.finalSkills[k])}</td>
                           <td className="pr-3">

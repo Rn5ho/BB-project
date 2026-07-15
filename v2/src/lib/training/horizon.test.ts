@@ -41,6 +41,12 @@ describe('horizonPresets', () => {
     expect(ps.find((p) => p.key === 'end-21')?.target).toEqual({ age: 22, week: 1 });
     expect(ps.find((p) => p.key === 'end-season')?.target).toEqual({ age: 20, week: 1 });
   });
+  it('omits presets past the age-22 bound (no out-of-range save targets)', () => {
+    const ps = horizonPresets(22);
+    expect(ps.find((p) => p.key === 'end-season')).toBeUndefined();
+    expect(ps.map((p) => p.key)).toEqual(['start-21', 'end-21']);
+    for (const p of horizonPresets(21)) expect(p.target.age).toBeLessThanOrEqual(22);
+  });
 });
 
 describe('fitBlocksToHorizon', () => {

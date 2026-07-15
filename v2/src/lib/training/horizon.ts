@@ -36,14 +36,19 @@ export interface HorizonPreset {
   target: SeasonPoint;
 }
 
+/** Horizon targets are bounded at entering age 22 (savePlan validates the same range). */
+export const MAX_HORIZON_AGE = 22;
+
 /** Quick presets for the picker. A preset may lie in the past for an old player —
- *  horizonWeeks clamps to 0 and the UI explains. */
+ *  horizonWeeks clamps to 0 and the UI explains. Presets whose target would exceed
+ *  MAX_HORIZON_AGE (e.g. "end of this season" for a 22-year-old) are omitted so the
+ *  picker never offers a value the save validation rejects. */
 export function horizonPresets(currentAge: number): HorizonPreset[] {
   return [
     { key: 'start-21', name: 'Start of age-21 season', target: { age: 21, week: 1 } },
     { key: 'end-21', name: 'End of U-21 (age-21 complete)', target: { age: 22, week: 1 } },
     { key: 'end-season', name: 'End of this season', target: { age: currentAge + 1, week: 1 } },
-  ];
+  ].filter((p) => p.target.age <= MAX_HORIZON_AGE);
 }
 
 /** Replace the LAST block's weeks with whatever remains of the horizon.

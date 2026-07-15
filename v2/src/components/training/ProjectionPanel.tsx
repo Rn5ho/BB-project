@@ -51,12 +51,19 @@ export default function ProjectionPanel({
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
 
-  const horizonLen = plan.horizon && now ? horizonWeeks(now, plan.horizon) : null;
+  // Re-derive the horizon-fitted blocks from the CURRENT (age, week) on every render —
+  // plan state may hold blocks normalized against an older `now` (e.g. after editing a
+  // manual player's age), and the editor display must match what the projection runs.
+  const fitted = useMemo(
+    () => normalizePlan(plan, age != null ? { age: Math.floor(age), week: startWeekOfSeason } : null),
+    [plan, age, startWeekOfSeason],
+  );
+  const horizonLen = fitted.horizon && now ? horizonWeeks(now, fitted.horizon) : null;
   const weekConfigs = useMemo(() => {
-    const all = planToWeeks(plan.blocks, plan.coachLevel, plan.youthTrainerLevel,
-      { gymLevel: plan.gymLevel, trainingCourtLevel: plan.trainingCourtLevel });
+    const all = planToWeeks(fitted.blocks, fitted.coachLevel, fitted.youthTrainerLevel,
+      { gymLevel: fitted.gymLevel, trainingCourtLevel: fitted.trainingCourtLevel });
     return horizonLen != null ? all.slice(0, horizonLen) : all;
-  }, [plan, horizonLen]);
+  }, [fitted, horizonLen]);
   const result = useMemo(() => {
     if (weekConfigs.length === 0) return null;
     return ensembleProject(playerState, weekConfigs, { startWeekOfSeason, sublevelBounds });
@@ -84,7 +91,7 @@ export default function ProjectionPanel({
     setSaveError(null);
     startSaving(async () => {
       try {
-        await onSave(plan);
+        await onSave(fitted);
         setSaved(true);
       } catch (err) {
         setSaveError(err instanceof Error ? err.message : 'Save failed');
@@ -162,20 +169,20 @@ export default function ProjectionPanel({
           skillsDb={skillsDb}
           currentAge={now.age}
           startWeekOfSeason={startWeekOfSeason}
-          defaultHorizon={plan.horizon}
+          defaultHorizon={fitted.horizon}
           staff={{
-            coachLevel: plan.coachLevel, youthTrainerLevel: plan.youthTrainerLevel,
-            gymLevel: plan.gymLevel, trainingCourtLevel: plan.trainingCourtLevel,
+            coachLevel: fitted.coachLevel, youthTrainerLevel: fitted.youthTrainerLevel,
+            gymLevel: fitted.gymLevel, trainingCourtLevel: fitted.trainingCourtLevel,
           }}
           onUsePlan={(blocks, horizon) =>
-            handleChange(normalizePlan({ ...plan, blocks, horizon }, now))}
+            handleChange(normalizePlan({ ...fitted, blocks, horizon }, now))}
         />
       )}
 
       <div>
         <h3 className="text-sm font-medium text-neutral-300 mb-2">Training plan</h3>
         <PlanEditor
-          value={plan}
+          value={fitted}
           onChange={handleChange}
           onSave={handleSave}
           saving={saving}
