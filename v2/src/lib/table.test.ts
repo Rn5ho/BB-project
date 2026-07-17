@@ -35,6 +35,14 @@ function makePlayer(overrides: Partial<PlayerListRow> = {}): PlayerListRow {
     hasFullSkills: false,
     skillDeltas: null,
     tspDelta: null,
+    scoutedThisSeason: false,
+    onMarketUntil: null,
+    lastListedPrice: null,
+    isRookie: false,
+    firstSeenAt: null,
+    ownerTeamId: null,
+    ownerTeamName: null,
+    ownerManager: null,
     ...overrides,
   };
 }
