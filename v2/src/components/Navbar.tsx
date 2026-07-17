@@ -8,6 +8,7 @@ const LINKS = [
   { href: '/world', label: 'World' },
   { href: '/training', label: 'Training' },
   { href: '/planner', label: 'Planner' },
+  { href: '/scorecard', label: 'Scorecard' },
   { href: '/archetypes', label: 'Archetypes' },
   { href: '/census', label: 'Census' },
   { href: '/settings', label: 'Settings' },

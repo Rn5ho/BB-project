@@ -236,3 +236,36 @@ export const trainingObservations = pgTable('training_observations', {
   index('idx_training_obs_team').on(t.teamId, t.windowEnd.desc()),
   uniqueIndex('uq_training_obs').on(t.teamId, t.windowStart, t.windowEnd),
 ]);
+
+// Self-trainer (weekly own-team model scoring). Single-row config like review_marks:
+// the own club whose traininghistory pages we scrape + the staff levels the model
+// replays with. switch_team = the club is the account's SECOND team (home.aspx toggle).
+export const selfTrainerConfig = pgTable('self_trainer_config', {
+  id: serial('id').primaryKey(),
+  teamId: integer('team_id').notNull(),
+  switchTeam: boolean('switch_team').notNull().default(false),
+  coachLevel: integer('coach_level').notNull().default(5),
+  youthTrainerLevel: integer('youth_trainer_level').notNull().default(0),
+  gymLevel: integer('gym_level').notNull().default(0),
+  trainingCourtLevel: integer('training_court_level').notNull().default(0),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+// One row per model per self-trainer run: replay of every own-team player's full
+// visible training history vs observed pops. Trend across run_at = model drift.
+export const modelScorecards = pgTable('model_scorecards', {
+  id: serial('id').primaryKey(),
+  runAt: timestamp('run_at', { withTimezone: true }).notNull(),
+  modelId: text('model_id').notNull(),
+  popHits: integer('pop_hits').notNull(),
+  popMisses: integer('pop_misses').notNull(),
+  falseAlarms: integer('false_alarms').notNull(),
+  endAbsErr: integer('end_abs_err').notNull(),  // Σ |displayed error| over scored end skills
+  endCount: integer('end_count').notNull(),
+  endExact: integer('end_exact').notNull(),
+  playerCount: integer('player_count').notNull(),
+  weekCount: integer('week_count').notNull(),
+  details: jsonb('details').notNull(), // per-player: { playerId, name, weeks, hits, misses, falseAlarms, endAbsErr, endExact, endCount }
+}, (t) => [
+  index('idx_model_scorecards_model').on(t.modelId, t.runAt.desc()),
+]);

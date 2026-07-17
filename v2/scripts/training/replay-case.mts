@@ -1,25 +1,14 @@
 // Replay real observed training cases through each model and score pop predictions.
 // Usage: npx tsx scripts/training/replay-case.mts <case.json | directory-of-cases>
 // Accepts both hand-written cases (weeks[]) and scrape-training-history output (rawWeeks[]).
+// Replay/scoring logic lives in src/lib/training/replay.ts (shared with the self-trainer job).
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
-import { weekStep, displayed, type PlayerState } from '../../src/lib/training/engine';
+import { replayCase, caseFromScrapedHistory, type ReplayCase } from '../../src/lib/training/replay';
 import { BBSCOUT, BBSCOUT_HIGH, BBSCOUT_LOW } from '../../src/lib/training/models/bbscout';
 import { COACH_PARROT } from '../../src/lib/training/models/coach-parrot';
 import { OPEN_SOURCE_LIVE } from '../../src/lib/training/models/open-source-live';
-import { SKILL_KEYS, skillsFromArray, type ModelParams, type SkillKey } from '../../src/lib/training/types';
-
-interface ReplayWeek { date: string; trainingId: number; minutes: number | undefined; observedPops: Partial<Record<SkillKey, number>>; ageAfterThis?: number }
-interface ReplayCase {
-  label: string;
-  startSkills: number[]; // displayed, SKILL_KEYS order
-  startAge: number; heightCm: number; potential: number;
-  startStamina: number | null; startFreeThrow: number | null;
-  coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number;
-  weeks: ReplayWeek[];
-  endSkills: Array<number | null>;
-  unmodeledPopCount: number; // stamina/FT/experience pops (not scored)
-}
+import { SKILL_KEYS, type ModelParams } from '../../src/lib/training/types';
 
 function loadCase(file: string): ReplayCase {
   const c = JSON.parse(readFileSync(file, 'utf8'));
@@ -39,76 +28,18 @@ function loadCase(file: string): ReplayCase {
     };
   }
   // scraped format (rawWeeks, chronological)
-  const raw = c.rawWeeks as Array<{ date: string; label: string; trainingId: number | null; minutes: number | null; pops: Array<{ key: string | null; to: number }>; ageEvent?: string }>;
-  const firstAgeEvent = raw.find((w) => w.ageEvent);
-  let age = firstAgeEvent
-    ? Number(firstAgeEvent.ageEvent!.match(/(\d+)/)?.[1]) - 1
-    : (c.player.age ?? 18);
-  const weeks: ReplayWeek[] = [];
-  let unmodeled = 0;
-  for (const w of raw) {
-    if (w.ageEvent) {
-      const n = Number(w.ageEvent.match(/(\d+)/)?.[1]);
-      if (Number.isFinite(n)) age = n;
-      if (weeks.length > 0) weeks[weeks.length - 1].ageAfterThis = age;
-      continue;
-    }
-    if (w.trainingId == null) continue;
-    const observedPops: Partial<Record<SkillKey, number>> = {};
-    for (const p of w.pops) {
-      if (p.key && (SKILL_KEYS as readonly string[]).includes(p.key)) observedPops[p.key as SkillKey] = p.to;
-      else unmodeled++;
-    }
-    weeks.push({ date: w.date, trainingId: w.trainingId, minutes: w.minutes ?? undefined, observedPops });
-  }
-  const startAge = firstAgeEvent ? Number(firstAgeEvent.ageEvent!.match(/(\d+)/)?.[1]) - 1 : (c.player.age ?? 18);
-  return {
+  return caseFromScrapedHistory({
     label: c.label,
-    startSkills: SKILL_KEYS.map((k) => c.player.startSkillsDisplayed[k] ?? 1),
-    startAge, heightCm: c.player.heightCm, potential: c.player.potential ?? 8,
-    startStamina: c.player.startStamina, startFreeThrow: c.player.startFreeThrow,
-    coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel, gymLevel: c.gymLevel ?? 0, trainingCourtLevel: c.trainingCourtLevel ?? 0,
-    weeks,
-    endSkills: SKILL_KEYS.map((k) => c.endSkillsDisplayed?.[k] ?? null),
-    unmodeledPopCount: unmodeled,
-  };
-}
-
-function replay(c: ReplayCase, model: ModelParams, verbose: boolean) {
-  let state: PlayerState = {
-    skills: skillsFromArray(c.startSkills.map((v) => Math.max(0.5, v - 0.5))),
-    age: c.startAge, heightCm: c.heightCm, potential: c.potential,
-    ftSkill: (c.startFreeThrow ?? 1) - 0.5,
-    staminaSkill: (c.startStamina ?? 1) - 0.5,
-  };
-  let hits = 0, misses = 0, falseAlarms = 0;
-  for (const wk of c.weeks) {
-    const r = weekStep(state, {
-      trainingId: wk.trainingId, coachLevel: c.coachLevel,
-      youthTrainerLevel: c.youthTrainerLevel, minutes: wk.minutes,
-      gymLevel: c.gymLevel, trainingCourtLevel: c.trainingCourtLevel,
-    }, model);
-    const predicted = SKILL_KEYS.filter((k) => r.pops[k]);
-    const observed = Object.keys(wk.observedPops) as SkillKey[];
-    for (const k of observed) {
-      if (predicted.includes(k)) hits++;
-      else { misses++; if (verbose) console.log(`  ${wk.date}: observed ${k} pop MISSED (${state.skills[k].toFixed(2)}→${r.skillsAfter[k].toFixed(2)})`); }
-    }
-    for (const k of predicted) {
-      if (!observed.includes(k)) { falseAlarms++; if (verbose) console.log(`  ${wk.date}: predicted ${k} pop NOT observed (→${r.skillsAfter[k].toFixed(2)})`); }
-    }
-    state = { ...state, skills: r.skillsAfter, ftSkill: r.ftAfter, staminaSkill: r.staminaAfter, age: wk.ageAfterThis ?? state.age };
-  }
-  let endAbsErr = 0, endCount = 0, endExact = 0;
-  SKILL_KEYS.forEach((k, i) => {
-    const want = c.endSkills[i];
-    if (want == null) return;
-    const got = displayed(state.skills[k]);
-    endAbsErr += Math.abs(got - want);
-    endCount++;
-    if (got === want) endExact++;
+    rawWeeks: c.rawWeeks,
+    heightCm: c.player.heightCm,
+    potential: c.player.potential ?? null,
+    snapshotAge: c.player.age ?? null,
+    endSkills: c.endSkillsDisplayed ?? {},
+    endStamina: c.player.startStamina ?? null,
+    endFreeThrow: c.player.startFreeThrow ?? null,
+    coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel,
+    gymLevel: c.gymLevel ?? 0, trainingCourtLevel: c.trainingCourtLevel ?? 0,
   });
-  return { hits, misses, falseAlarms, endAbsErr, endCount, endExact };
 }
 
 const target = process.argv[2];
@@ -128,7 +59,14 @@ for (const file of files) {
   console.log(`${c.weeks.length} weeks, ${observedTotal} scored pops (+${c.unmodeledPopCount} unmodeled ST/FT/XP), coach ${c.coachLevel}, yt ${c.youthTrainerLevel}, start age ${c.startAge}`);
   for (const m of models) {
     if (verbose) console.log(`--- ${m.id} ---`);
-    const r = replay(c, m, verbose);
+    const r = replayCase(c, m);
+    if (verbose) {
+      for (const e of r.events) {
+        console.log(e.kind === 'miss'
+          ? `  ${e.date}: observed ${e.skill} pop MISSED (${e.detail})`
+          : `  ${e.date}: predicted ${e.skill} pop NOT observed (${e.detail})`);
+      }
+    }
     const t = (totals[m.id] ??= { hits: 0, misses: 0, fa: 0, err: 0, n: 0, exact: 0 });
     t.hits += r.hits; t.misses += r.misses; t.fa += r.falseAlarms; t.err += r.endAbsErr; t.n += r.endCount; t.exact += r.endExact;
     console.log(`${m.id.padEnd(18)} pops ${r.hits}/${r.hits + r.misses} hit, ${r.falseAlarms} false alarms | final skills: ${r.endExact}/${r.endCount} exact, total |err| ${r.endAbsErr}`);

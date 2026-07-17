@@ -159,6 +159,18 @@ old one-week convention (align in a follow-up); optimizer TSP tier is weak under
 pruning (documented in optimize.ts). Spec:
 `docs/superpowers/specs/2026-07-15-training-horizons-reverse-planner-design.md`.
 
+**Self-trainer shipped 2026-07-17** — automated weekly own-team calibration loop:
+`runSelfTrainer` (`src/server/sync/self-trainer.ts`) scrapes traininghistory.aspx for
+players owned by the configured club (single-row `self_trainer_config`: team + coach/YT/
+gym/TC, editable on `/scorecard`), upserts exact-date 'own-scrape' pops, replays each
+player's history through the 5-model panel (shared `src/lib/training/replay.ts` +
+`src/server/bb/training-history.ts` — extracted from the CLIs, behavior-identical) and
+writes per-model `model_scorecards` rows (migration 0010). `/scorecard` page: config,
+Run now, MAE + pop-recall trend, latest-run breakdown. Cron: Hetzner btcedge crontab
+Friday **11:30 UTC** (after BB's ~12:20 Berlin Friday training update) →
+`/api/cron/self-trainer` (CRON_SECRET, maxDuration 300). Plan doc:
+`docs/superpowers/plans/2026-07-17-self-trainer.md`.
+
 **Inference guards shipped 2026-07-17** — four Phase C backlog fixes: club evidence
 requires the window-end snapshot's own `ownerTeamId` (v1 owner-less windows: pops only,
 no club attribution); same-day (< 12h) capture runs merged before pop pairing
