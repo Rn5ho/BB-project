@@ -60,6 +60,19 @@ describe('inferClubTraining', () => {
     expect(pooled.popCount).toBe(3);
   });
 
+  it('keeps near-zero-minutes noise at low confidence (margin denominator floor)', () => {
+    // 1 PG minute across the whole window: every training predicts ~ε gains, so all
+    // scores are tiny (probed: top 0.014, best rival 0.003). Pre-floor, margin was a
+    // ratio of epsilons (≈4.7) and this promoted to 'medium' on no real evidence.
+    const r = inferClubTraining([{
+      playerId: 1, state: guardState, windowWeeks: 1,
+      pops: [{ skill: 'od', toDisplayed: 8, delta: 2, windowStart: new Date(0), windowEnd: new Date(0), windowWeeks: 1 }],
+      weeks: [week({ minPg: 1 })],
+    }]);
+    expect(getTrainingType(r.inferredTrainingId!).primary).toBe('od'); // best guess still returned…
+    expect(r.confidence).toBe('low');                                  // …but not trusted
+  });
+
   it('handles players with no minutes rows (falls back to assumed-full minutes)', () => {
     const r = inferClubTraining([{
       playerId: 1, state: bigState, windowWeeks: 4,

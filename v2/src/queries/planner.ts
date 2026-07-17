@@ -41,9 +41,15 @@ export async function getPlannerData(): Promise<PlannerData> {
         and p.archived = false and p.height_cm is not null
     `),
     db.execute(sql`
+      -- Per club: newest USABLE observation (inferred training at high/medium confidence);
+      -- low/null windows only when nothing usable exists. Plain newest-first let a fresh
+      -- 1-pop low/null window shadow an older high-confidence one; recency still decides
+      -- among usable windows so a genuine training switch surfaces once re-inferred.
       select distinct on (team_id) team_id, window_end, inferred_training_id, confidence
       from training_observations
-      order by team_id, window_end desc
+      order by team_id,
+        (inferred_training_id is not null and confidence in ('high', 'medium')) desc,
+        window_end desc
     `),
     db.execute(sql`
       select pmm.player_id, m.season, m.season_week,

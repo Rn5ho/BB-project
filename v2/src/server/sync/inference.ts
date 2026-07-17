@@ -54,6 +54,34 @@ const chunks = <T>(arr: T[], n: number): T[][] => {
   return out;
 };
 
+const SKILL_COLS = [
+  'jumpShot', 'jumpRange', 'outsideDef', 'handling', 'driving', 'passing',
+  'insideShot', 'insideDef', 'rebounding', 'shotBlocking', 'stamina', 'freeThrow',
+] as const;
+
+/** Collapse runs of same-day (< 12h apart) captures into one row — last capture wins,
+ *  per-field last non-null. Mirrors pops.collapseSameDaySnaps at the row level: without
+ *  it, a pop landing between two same-day captures was dropped forever (the same-day
+ *  pair carries no window, and the next pair starts from the already-popped value). */
+function collapseSameDayRows(snaps: SnapRow[]): SnapRow[] {
+  const out: SnapRow[] = [];
+  for (const s of snaps) {
+    const last = out[out.length - 1];
+    if (last && (s.capturedAt.getTime() - last.capturedAt.getTime()) / 86_400_000 < 0.5) {
+      const merged = { ...s };
+      const fill = merged as Record<(typeof SKILL_COLS)[number], number | null>;
+      for (const k of SKILL_COLS) if (fill[k] == null && last[k] != null) fill[k] = last[k];
+      merged.ownerTeamId ??= last.ownerTeamId;
+      merged.potential ??= last.potential;
+      merged.age ??= last.age;
+      out[out.length - 1] = merged;
+    } else {
+      out.push(s);
+    }
+  }
+  return out;
+}
+
 export async function runTrainingInference(trigger: string): Promise<InferenceSyncResult> {
   const [logRow] = await db.insert(syncLog).values({ jobType: 'inference', trigger }).returning({ id: syncLog.id });
   try {
@@ -106,8 +134,9 @@ export async function runTrainingInference(trigger: string): Promise<InferenceSy
     // groupKey = teamId|startDate|endDate (date-only: census captures spread over ~an hour)
     const groups = new Map<string, { teamId: number; evidence: PlayerWindowEvidence[]; starts: Date[]; ends: Date[] }>();
 
-    for (const [playerId, snaps] of snapsByPlayer) {
+    for (const [playerId, rawSnaps] of snapsByPlayer) {
       const player = playerById.get(playerId);
+      const snaps = collapseSameDayRows(rawSnaps);
       for (let i = 1; i < snaps.length; i++) {
         const prev = snaps[i - 1];
         const cur = snaps[i];
@@ -119,8 +148,11 @@ export async function runTrainingInference(trigger: string): Promise<InferenceSy
             source: 'snapshots',
           });
         }
-        // Club evidence: needs a stable owner across the window + known height.
-        const teamId = cur.ownerTeamId ?? player?.ownerTeamId ?? null;
+        // Club evidence: needs an owner RECORDED ON the window's end snapshot + known
+        // height. No fallback to the player's current club — v1-migrated snapshots carry
+        // no owner, and falling back attributed historical windows to wherever the player
+        // plays TODAY. Owner-less windows still count for pops, just not club attribution.
+        const teamId = cur.ownerTeamId ?? null;
         if (teamId == null || player?.heightCm == null) continue;
         if (prev.ownerTeamId != null && prev.ownerTeamId !== teamId) continue;
         const days = (cur.capturedAt.getTime() - prev.capturedAt.getTime()) / 86_400_000;

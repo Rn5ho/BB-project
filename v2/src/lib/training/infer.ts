@@ -31,6 +31,13 @@ const ASSUMED_COACH_LEVEL = 5;
 const CONTRADICTION_TOLERANCE = 1.0;
 const CONTRADICTION_WEIGHT = 0.5;
 
+/** Margin denominator floor. When every different-primary rival scores ≤ 0 the raw
+ *  ratio is ∞, which promoted a barely-positive top score straight to 'high'. Flooring
+ *  the denominator keeps margins finite: high (margin ≥ 1.5) then implies top.score
+ *  ≥ 0.75 explained levels even with no positive rival. (Engineering judgment —
+ *  fold into the ground-truth threshold recalibration.) */
+const RIVAL_SCORE_FLOOR = 0.5;
+
 const isRateSkill = (s: string): s is SkillKey => (SKILL_KEYS as readonly string[]).includes(s);
 
 /** Predicted per-skill gains if the club ran training `tid` for the whole window. */
@@ -103,7 +110,7 @@ export function inferClubTraining(evidence: PlayerWindowEvidence[]): InferenceRe
   // position variants score near-identically and shouldn't dilute confidence.
   const topPrimary = getTrainingType(top.trainingId).primary;
   const rival = full.find((s) => getTrainingType(s.trainingId).primary !== topPrimary);
-  const margin = rival && rival.score > 0 ? top.score / rival.score : Infinity;
+  const margin = top.score / Math.max(rival?.score ?? 0, RIVAL_SCORE_FLOOR);
   const explainedFrac = top.explained / popCount;
 
   // Tunable thresholds (engineering judgment; revisit against own-team ground truth).

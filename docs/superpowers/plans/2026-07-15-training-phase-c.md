@@ -2005,3 +2005,31 @@ Do not reuse the plan's Task 6/7/9/10 code blocks without these corrections.
   (needs inline-block wrapper); minPot accepts typed negatives (harmless).
 - **Housekeeping**: verify the implementer-reported pre-existing `npx tsc --noEmit` error in
   `src/lib/table.test.ts` (predates Phase C; vitest+next build both green regardless).
+
+## Backlog progress (2026-07-17)
+
+**Inference / observations — all four guards shipped**:
+- Owner guard: club evidence now requires `cur.ownerTeamId` recorded on the window-end
+  snapshot; no fallback to the player's current club. Owner-less (v1-legacy) windows still
+  produce pops, just no club attribution. (census + market snapshots both record owner.)
+- Same-day merge: same-day (< 12h) capture runs are collapsed before pairing — last
+  timestamp wins, per-skill last non-null — via `collapseSameDaySnaps` in pops.ts (applied
+  inside detectPops) and a row-level mirror `collapseSameDayRows` in sync/inference.ts, so
+  a pop landing between two same-day captures folds into the surrounding window instead of
+  vanishing.
+- Margin floor: `RIVAL_SCORE_FLOOR = 0.5` in infer.ts — the margin denominator is floored,
+  so all-rivals-≤0 no longer yields ∞, and epsilon-score windows (near-zero minutes) stay
+  'low' (regression test: 1 PG minute, probed top 0.014 / rival 0.003, was promoted to
+  'medium'). Exact value is engineering judgment — fold into ground-truth recalibration.
+- Observation pick: the planner query now takes the newest USABLE observation per club
+  (`inferred_training_id` non-null AND confidence high/medium), falling back to low/null
+  rows only when nothing usable exists. Recency still decides among usable windows so a
+  genuine training switch surfaces once re-inferred at medium+.
+
+**Housekeeping — resolved**: the `tsc --noEmit` error was real (table.test.ts fixture
+missing seven newer PlayerListRow fields — scoutedThisSeason through ownerManager); fixed,
+`tsc --noEmit` now clean.
+
+Still open: Sublevels per-skill caps; Board/planner (tsp12 midpoint bias, weeksToEndOfAge21
+convention, weeks 1–2 minutes lookback, potential=null); UI (th a11y, club-cell truncate,
+minPot negatives).

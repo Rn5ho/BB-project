@@ -159,6 +159,16 @@ old one-week convention (align in a follow-up); optimizer TSP tier is weak under
 pruning (documented in optimize.ts). Spec:
 `docs/superpowers/specs/2026-07-15-training-horizons-reverse-planner-design.md`.
 
+**Inference guards shipped 2026-07-17** — four Phase C backlog fixes: club evidence
+requires the window-end snapshot's own `ownerTeamId` (v1 owner-less windows: pops only,
+no club attribution); same-day (< 12h) capture runs merged before pop pairing
+(`collapseSameDaySnaps` in pops.ts + row-level mirror in sync/inference.ts) so a pop
+between two same-day captures folds into the surrounding window; inference margin
+denominator floored (`RIVAL_SCORE_FLOOR = 0.5`) so ∞/epsilon margins can't promote
+noise past 'low'; planner picks the newest USABLE observation per club (non-null
+training at high/medium, else fallback). Remaining backlog: tail of
+`docs/superpowers/plans/2026-07-15-training-phase-c.md`.
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 

@@ -17,10 +17,32 @@ export interface PopEvent {
   windowWeeks: number; // max(1, round(days / 7))
 }
 
-/** Displayed-level changes between consecutive full snapshots. Same-day pairs
- *  (< 12h apart) carry no training window and are skipped. */
-export function detectPops(snaps: FullSnap[]): PopEvent[] {
+const SAME_DAY_DAYS = 0.5;
+
+/** Collapse runs of captures < 12h apart into one snapshot: the run's last timestamp,
+ *  per-skill last non-null value. Same-day pairs carry no training window of their own,
+ *  but skipping them outright permanently dropped any pop that landed BETWEEN two
+ *  same-day captures — merging folds that change into the surrounding windows instead. */
+export function collapseSameDaySnaps(snaps: FullSnap[]): FullSnap[] {
   const sorted = [...snaps].sort((a, b) => a.capturedAt.getTime() - b.capturedAt.getTime());
+  const out: FullSnap[] = [];
+  for (const s of sorted) {
+    const last = out[out.length - 1];
+    if (last && (s.capturedAt.getTime() - last.capturedAt.getTime()) / 86_400_000 < SAME_DAY_DAYS) {
+      const skills = { ...last.skills };
+      for (const k of POP_SKILLS) if (s.skills[k] != null) skills[k] = s.skills[k];
+      out[out.length - 1] = { capturedAt: s.capturedAt, skills };
+    } else {
+      out.push({ capturedAt: s.capturedAt, skills: { ...s.skills } });
+    }
+  }
+  return out;
+}
+
+/** Displayed-level changes between consecutive full snapshots. Same-day runs are
+ *  merged first (see collapseSameDaySnaps), so windows always span ≥ 12h. */
+export function detectPops(snaps: FullSnap[]): PopEvent[] {
+  const sorted = collapseSameDaySnaps(snaps);
   const events: PopEvent[] = [];
   for (let i = 1; i < sorted.length; i++) {
     const prev = sorted[i - 1];
