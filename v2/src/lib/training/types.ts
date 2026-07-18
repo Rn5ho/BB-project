@@ -87,7 +87,7 @@ export type CrossTrainingSpec =
   | { kind: 'slot-scatter'; baseSlots: number; slotShare: number };
 
 export interface ModelParams {
-  id: 'coach-parrot' | 'open-source-live' | 'bbscout' | 'bbscout-low' | 'bbscout-high';
+  id: 'coach-parrot' | 'open-source-live' | 'bbscout' | 'bbscout-low' | 'bbscout-high' | 'bbscout-ha-flat';
   /** RateRow per skill-training id (1..31). Stamina/FT use stRate/ftRate. */
   rates: Param<Record<number, RateRow>>;
   stRate: Param<number>; // stamina levels/week, no multipliers

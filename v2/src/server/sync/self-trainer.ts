@@ -4,7 +4,7 @@ import { BbWebSession, collectHiddenFields } from '@/server/bb/web-session';
 import { parseTrainingHistory, parseUsDate } from '@/server/bb/training-history';
 import { parseStaffLevels, parseInfrastructure } from '@/server/bb/team-pages';
 import { caseFromScrapedHistory, replayCase, type ReplayScore } from '@/lib/training/replay';
-import { BBSCOUT, BBSCOUT_HIGH, BBSCOUT_LOW } from '@/lib/training/models/bbscout';
+import { BBSCOUT, BBSCOUT_HA_FLAT, BBSCOUT_HIGH, BBSCOUT_LOW } from '@/lib/training/models/bbscout';
 import { COACH_PARROT } from '@/lib/training/models/coach-parrot';
 import { OPEN_SOURCE_LIVE } from '@/lib/training/models/open-source-live';
 import type { ModelParams } from '@/lib/training/types';
@@ -19,8 +19,9 @@ export interface SelfTrainerResult {
   staff: { coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number; source: 'scraped' | 'stored' };
 }
 
-/** Same panel the replay CLI scores — bbscout + both provenance models + the band edges. */
-const MODELS: ModelParams[] = [BBSCOUT, COACH_PARROT, OPEN_SOURCE_LIVE, BBSCOUT_LOW, BBSCOUT_HIGH];
+/** The replay CLI's panel (bbscout + provenance models + band edges) plus the open
+ *  HA-height hypothesis variant (see BBSCOUT_HA_FLAT) so Friday runs arbitrate it. */
+const MODELS: ModelParams[] = [BBSCOUT, COACH_PARROT, OPEN_SOURCE_LIVE, BBSCOUT_LOW, BBSCOUT_HIGH, BBSCOUT_HA_FLAT];
 
 // skill_pops.skill short keys for the two non-rate skills (see pops.ts PopSkill)
 const POP_KEY_TO_DB: Record<string, string> = { stamina: 'st', free_throw: 'ft' };

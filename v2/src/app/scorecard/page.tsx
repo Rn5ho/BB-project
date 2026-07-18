@@ -16,6 +16,7 @@ const MODEL_COLORS: Record<string, string> = {
   'open-source-live': '#fbbf24',
   'bbscout-low': '#525252',
   'bbscout-high': '#a3a3a3',
+  'bbscout-ha-flat': '#c084fc',
 };
 
 interface PlayerDetail {

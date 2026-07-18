@@ -85,3 +85,22 @@ HA 0.50/DR 0.38 (file: DR 0.5/HA 0.4 — primary swapped); JS-for-12 JS 0.52
 (file 0.6); IS-for-5 JS 0.13/IS 0.525/ID 0.10 (file 0.1/0.5/0.05); height
 table differs at 175 and 201 cm (e.g. DR ×0.95, IS ×1.05 at 201). The live
 API responses in `probes/` are the ground truth for this model.
+
+## 2026-07-18 deployed-drift sweep (probes 33-42)
+
+Trigger: anonymous community pastes (YkDVRdJJ/2DHDx0uG, see
+user-notes/community-paste-2026-07.md) contained 13 rate cells matching neither the
+GitHub file nor prior probes. All 13 confirmed as CURRENT deployed behavior:
+
+- id 15 "1v1 (PG/SG)": js 0.35, dr 0.45, ha 0.38 (probe 33; file had 0.4/0.5/0.4)
+- id 16 "1v1 (SF/PF)": js 0.18, dr 0.45, ha 0.38, is 0.19 (probe 34)
+- id 2 "JS (SF/PF)": js 0.35 (probe 35; file 0.4)
+- id 13 "HA (PG/SG)": od 0.075, dr 0.0375, ha 0.045 (probe 36 — replaces the file's
+  anomalous {dr 0.375, ha 0.03}; still internally absurd: primary below the 3-pos row)
+- id 14 "HA (PG/SG/SF)": ha 0.25 (probe 37; file 0.16)
+- Heights: HA flat 1.0 at 185/216 (probes 38/39); DR ×0.95 at 185/201/216 (33-39,
+  generalized flat); IS 0.70@178 (42), 0.83@185 (40); IS@201 stays 1.05.
+- JS re-based: the ×1.04@201 reading from probes 01/05 retired — probe 40 shows JS gains
+  are raw base (0.13 at 185cm for IS-C), so bases are 0.52 (id 1) / 0.13 (id 21), JS flat.
+
+open-source-live.ts updated accordingly (rates ids 1/2/13/14/15/16/21, height ha/dr/is/js).

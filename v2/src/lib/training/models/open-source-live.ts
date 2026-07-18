@@ -10,27 +10,30 @@ const SRC = 'docs/research/training/buzzeriq';
 // Probe-corrected rows (confidence: measured) are called out inline; all others are
 // transcribed verbatim from sergiu-logic.js `trainingEffects`.
 export const OSL_RATES: Record<number, RateRow> = {
-  // probe-corrected (measured; observed at h=200/201 after backing out live height mults
-  // DR x0.95, IS x1.05, JS x1.04 — probes 01/05):
-  1: { js: 0.5, jr: 0.2, dr: 0.05, ha: 0.05 }, // "JS (PG/SG)" — probe JS-for-12: JS 0.52 = 0.5x1.04
-  12: { od: 0.1, ha: 0.5, dr: 0.4 }, // "HA (PG)" — probe HA-for-1: ha/dr primary swapped vs file
-  21: { js: 0.125, is: 0.5, id: 0.1 }, // "IS (C)" — probe IS-for-5: IS 0.525=0.5x1.05, JS 0.13~=0.125x1.04
+  // probe-corrected (measured). 2026-07-18 probes 33-42 (run against the live API after a
+  // community transcription surfaced — user-notes/community-paste-2026-07.md) showed the
+  // deployed model moved past the GitHub file on several rows, and re-based JS: the old
+  // "JS x1.04 at 201cm" reading (probes 01/05) was an artifact of assuming base 0.5/0.125 —
+  // probe 40 (IS-for-5 at 185cm: JS gain 0.13) proves bases are 0.52/0.13 with JS height flat.
+  1: { js: 0.52, jr: 0.2, dr: 0.05, ha: 0.05 }, // "JS (PG/SG)" — probe 06: JS 0.52 raw
+  12: { od: 0.1, ha: 0.5, dr: 0.4 }, // "HA (PG)" — probes 01/38/39: ha/dr primary swapped vs file, ha flat across heights
+  21: { js: 0.13, is: 0.5, id: 0.1 }, // "IS (C)" — probes 05/40/42: IS 0.5 (x1.05@201), JS 0.13 flat
   24: { is: 0.1, id: 0.5, sb: 0.1 }, // "ID (C)" — probe ID-for-5: IS 0.105 = 0.1x1.05
+  2: { js: 0.35, jr: 0.15, is: 0.25 }, // "JS (SF/PF)" — probe 35 (was 0.4 in file)
+  13: { od: 0.075, dr: 0.0375, ha: 0.045 }, // "HA (PG/SG)" — probe 36; deployed replaced the file's {dr 0.375, ha 0.03} with this (still bizarre: primary ha 0.045 below the 3-pos row)
+  14: { od: 0.04, dr: 0.2, ha: 0.25 }, // "HA (PG/SG/SF)" — probe 37 (file had ha 0.16)
+  15: { js: 0.35, dr: 0.45, ha: 0.38 }, // "1v1 (PG/SG)" — probe 33 (file: 0.4/0.5/0.4)
+  16: { js: 0.18, dr: 0.45, ha: 0.38, is: 0.19 }, // "1v1 (SF/PF)" — probe 34 (file: 0.2/0.5/0.4/0.2)
   // remaining rows verbatim from sergiu-logic.js trainingEffects:
-  2: { js: 0.4, jr: 0.15, is: 0.25 }, // "JS (SF/PF)"
   3: { js: 0.5, jr: 0.1, dr: 0.05, ha: 0.05 }, // "JS (SG/SF)"
   4: { js: 0.22, jr: 0.04, dr: 0.02, ha: 0.02 }, // "JS (team)"
-  5: { js: 0.2, jr: 0.4, dr: 0.05, ha: 0.05 }, // "JR (SG)"
+  5: { js: 0.2, jr: 0.4, dr: 0.05, ha: 0.05 }, // "JR (SG)" — js/jr flat confirmed by probe 41 @185
   6: { js: 0.15, jr: 0.3, dr: 0.0375, ha: 0.0375 }, // "JR (PG)"
   7: { js: 0.15, jr: 0.3, dr: 0.0375, ha: 0.0375 }, // "JR (SG/SF)"
   8: { js: 0.05, jr: 0.1, dr: 0.0125, ha: 0.0125 }, // "JR (team)"
   9: { od: 0.5, dr: 0.05, ha: 0.05, id: 0.1 }, // "OD (PG)"
   10: { od: 0.375, dr: 0.0375, ha: 0.0375, id: 0.075 }, // "OD (PG/SG)"
   11: { od: 0.2, dr: 0.02, ha: 0.02, id: 0.04 }, // "OD(PG/SG/SF)"
-  13: { od: 0.075, dr: 0.375, ha: 0.03 }, // "HA (PG/SG)"
-  14: { od: 0.04, dr: 0.2, ha: 0.16 }, // "HA (PG/SG/SF)"
-  15: { js: 0.4, dr: 0.5, ha: 0.4 }, // "1v1 (PG/SG)"
-  16: { js: 0.2, dr: 0.5, ha: 0.4, is: 0.2 }, // "1v1 (SF/PF)"
   17: { js: 0.088, dr: 0.176, ha: 0.22, is: 0.088 }, // "1v1 (team)"
   18: { dr: 0.16, ha: 0.16, pa: 0.6 }, // "PA (PG)"
   19: { dr: 0.12, ha: 0.12, pa: 0.45 }, // "PA (PG/SG)"
@@ -62,21 +65,23 @@ export const OSL_COACH: Record<number, number> = {
 // probe-observed cell corrections noted inline below. Unprobed cells keep file values.
 function oslHeightTable(): HeightTable {
   const bySkill: Record<SkillKey, number[]> = {
-    // JS flat 1.0 in the file EXCEPT probe 01/05 (JS-for-12, IS-for-5) observed JS x1.04 at 201cm.
-    js: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.04, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    // JS flat 1.0 — probes 40/41 (JS gains 0.13/0.2 raw at 185cm) retired the old
+    // "x1.04 at 201cm" reading; bases carry the full value (see OSL_RATES header).
+    js: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     jr: [1.5, 1.45, 1.4, 1.35, 1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45],
     od: [1.5, 1.45, 1.4, 1.35, 1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45],
+    // HA flat measured at 185/216cm (probes 38/39) — no longer file-only.
     ha: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    // DR flat 1.0 in the file EXCEPT probe 01/04 (HA-for-1) observed DR x0.95 at 201cm.
-    dr: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.95, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    // DR x0.95 measured at 185/201/216cm (probes 33/34/36/37/38/39) — generalized flat.
+    dr: [0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95],
     // PA rising per file, with file's own 198cm quirk (1.1), EXCEPT probe 06 (PA-for-1)
     // observed PA x1.0 at 201cm (file has 1.2 there — not deployed).
     pa: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1.1, 1, 1.3, 1.4, 1.4, 1.5, 1.5, 1.5, 1.7, 2, 2, 2, 2],
-    // IS rising per file EXCEPT probe 05 (IS-for-5) observed IS x1.05 at 201cm (file: 1.0)
-    // and probe 24-h175-IS5 observed IS x0.65 at 175cm (file: 0.5).
-    is: [0.65, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.05, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55],
-    // ID rising per file EXCEPT probe 24-h175-IS5 observed ID x0.5 at 175cm (file already 0.5
-    // — no change needed there, kept verbatim; noted for completeness).
+    // IS low-end curve: 0.65@175 (probe 24), 0.70@178 (probe 42), 0.83@185 (probe 40),
+    // 1.05@201 (probes 05/34/35). Unprobed 180-198 cells take the community-transcription
+    // values (user-notes/community-paste-2026-07.md), which matched every probed point.
+    is: [0.65, 0.7, 0.75, 0.78, 0.83, 0.85, 0.88, 0.93, 0.95, 0.97, 1.05, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55],
+    // ID rising per file; 0.55@178 and 0.70@185 confirmed by probes 42/40 (id secondary).
     id: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55],
     rb: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55],
     sb: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55],
@@ -107,11 +112,11 @@ export const OSL_ELASTIC_PAIRS: Array<{ trained: SkillKey; other: SkillKey; coef
 
 export const OPEN_SOURCE_LIVE: ModelParams = {
   id: 'open-source-live',
-  rates: { value: OSL_RATES, source: `${SRC}/sergiu-logic.js (trainingEffects, probe-corrected)`, confidence: 'measured' },
+  rates: { value: OSL_RATES, source: `${SRC}/sergiu-logic.js (trainingEffects) + probes 33-37 (2026-07-18 deployed-drift sweep)`, confidence: 'measured' },
   stRate: { value: 0, source: `${SRC}/API-MAP.md (live API no-op)`, confidence: 'measured' },
   ftRate: { value: 0, source: `${SRC}/API-MAP.md (live API no-op)`, confidence: 'measured' },
   age: { value: OSL_AGE, source: `${SRC}/sergiu-logic.js (getAgeCoefficient) + API-MAP.md probe 23-age21`, confidence: 'measured' },
-  height: { value: oslHeightTable(), source: `${SRC}/sergiu-logic.js (heightMultipliers) + API-MAP.md probes 01/04/05/06, 24-h175-IS5`, confidence: 'estimate' },
+  height: { value: oslHeightTable(), source: `${SRC}/sergiu-logic.js (heightMultipliers) + probes 01/04/05/06, 24-h175-IS5, 33-42 (HA/DR/IS multi-height, 2026-07-18)`, confidence: 'measured' },
   coach: { value: OSL_COACH, source: `${SRC}/sergiu-logic.js (implied CoachParrot-equivalent coach table) + API-MAP.md probes 12-coach{1,2,3,4,6,7} (exact match at every level)`, confidence: 'measured' },
   youthTrainer: { value: { perLevel: 0 }, source: `${SRC}/API-MAP.md (no youth trainer effect observed)`, confidence: 'measured' },
   elastic: {

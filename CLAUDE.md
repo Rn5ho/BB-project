@@ -159,6 +159,18 @@ old one-week convention (align in a follow-up); optimizer TSP tier is weak under
 pruning (documented in optimize.ts). Spec:
 `docs/superpowers/specs/2026-07-15-training-horizons-reverse-planner-design.md`.
 
+**Community-paste investigation 2026-07-18** — two anonymous pastes (training rates +
+height multipliers) resolved via three-way diff + 10 fresh live probes as a transcription
+of the CURRENTLY DEPLOYED buzzeriq.com open_source model, which has drifted past its
+GitHub source. `open-source-live` updated to the probed deployed values (1v1/JS-SF-PF/HA
+rows, HA-flat + DR-0.95 + IS-low-end height columns, JS re-based — the old ×1.04@201
+reading was an artifact). bbscout UNCHANGED (lineage ≠ independent evidence; HA-flat
+weakly favored at ≤185cm only, p≈0.31, tall datapoint against, BBMark 2022 dev quote
+against). New weekly-scorecard variant `bbscout-ha-flat` arbitrates the HA question from
+Friday runs. Full story + open era-conflict (JS→JR towing 2x?) + census-corpus test plan:
+`docs/research/training/user-notes/community-paste-2026-07.md`; comparison script:
+`v2/scripts/training/compare-community-2026.mts`; probes 33-42 in buzzeriq/probes/.
+
 **Self-trainer shipped 2026-07-17** — automated weekly own-team calibration loop:
 `runSelfTrainer` (`src/server/sync/self-trainer.ts`) scrapes traininghistory.aspx for
 players owned by the configured club (single-row `self_trainer_config`: team + coach/YT/

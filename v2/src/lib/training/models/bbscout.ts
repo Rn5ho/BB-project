@@ -124,3 +124,17 @@ function variant(
 // Stage slowdowns spread across the dev-quoted ranges (70-75% / 40-50% / 25%).
 export const BBSCOUT_LOW: ModelParams = variant('bbscout-low', 0.85, [0.7, 0.4, 0.25], 0);
 export const BBSCOUT_HIGH: ModelParams = variant('bbscout-high', 1.15, [0.75, 0.5, 0.25], 0.05);
+
+// Hypothesis variant on the weekly self-trainer scorecard: HA NOT height-scaled.
+// The deployed BuzzerIQ model holds HA flat (probes 38/39) and the 2026-07 calibration
+// replay weakly preferred it at <=185cm (4 cells, p~0.31, tall datapoint against) —
+// while CP's fit and BBMark's 2022 dev quote say HA IS height-scaled. The Friday runs
+// arbitrate. Full story: docs/research/training/user-notes/community-paste-2026-07.md.
+export const BBSCOUT_HA_FLAT: ModelParams = (() => {
+  const v = structuredClone(BBSCOUT);
+  v.id = 'bbscout-ha-flat';
+  const table = cpHeightTable(1.0);
+  table.bySkill.ha = table.bySkill.ha.map(() => 1);
+  v.height = { ...v.height, value: table, source: `${v.height.source} (ha column flattened)`, confidence: 'estimate' };
+  return v;
+})();
