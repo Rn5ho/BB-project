@@ -29,6 +29,7 @@ const { detectPops } = await import('../../src/lib/training/pops');
 const { weekStep } = await import('../../src/lib/training/engine');
 const { BBSCOUT, BBSCOUT_HA_FLAT } = await import('../../src/lib/training/models/bbscout');
 const { SKILL_KEYS } = await import('../../src/lib/training/types');
+const { getTrainingType } = await import('../../src/lib/training/catalog');
 type PlayerWindowEvidence = import('../../src/lib/training/infer').PlayerWindowEvidence;
 type FullSnap = import('../../src/lib/training/pops').FullSnap;
 type PopEvent = import('../../src/lib/training/pops').PopEvent;
@@ -183,6 +184,23 @@ for (const [playerId, rawSnaps] of snapsByPlayer) {
   }
 }
 console.log(`corpus: ${snapsByPlayer.size} players, ${groups.size} club-windows`);
+
+// Coverage context: how the corpus distributes over inferred trainings.
+{
+  const dist = new Map<string, { high: number; medium: number; low: number }>();
+  for (const group of groups.values()) {
+    const r = inferClubTraining(group.evidence);
+    if (r.popCount === 0) continue;
+    const label = r.inferredTrainingId == null ? '(none)' : getTrainingType(r.inferredTrainingId).label;
+    const e = dist.get(label) ?? { high: 0, medium: 0, low: 0 };
+    e[r.confidence]++;
+    dist.set(label, e);
+  }
+  console.log('inferred-training distribution (high/med/low):');
+  for (const [label, e] of [...dist.entries()].sort((a, b) => (b[1].high + b[1].medium) - (a[1].high + a[1].medium))) {
+    console.log(`  ${label.padEnd(30)} ${e.high}/${e.medium}/${e.low}`);
+  }
+}
 
 // ─── tests ───────────────────────────────────────────────────────────────────
 interface Test {
