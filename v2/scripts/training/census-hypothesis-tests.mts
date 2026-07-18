@@ -18,18 +18,24 @@
 //   npx tsx scripts/training/census-hypothesis-tests.mts
 import { config } from 'dotenv';
 config({ path: '.env.local' });
-import { asc, isNotNull } from 'drizzle-orm';
-import { db, players, seasons, snapshots } from '../../src/db';
-import { sql } from 'drizzle-orm';
-import { playerStateFromSnapshot } from '../../src/lib/training/bridge';
-import { inferClubTraining, type PlayerWindowEvidence } from '../../src/lib/training/infer';
-import { detectPops, type FullSnap, type PopEvent } from '../../src/lib/training/pops';
-import { minutesAtPositions } from '../../src/lib/training/bridge';
-import { weekStep, type PlayerState } from '../../src/lib/training/engine';
-import { BBSCOUT, BBSCOUT_HA_FLAT } from '../../src/lib/training/models/bbscout';
-import { getTrainingType } from '../../src/lib/training/catalog';
-import { SKILL_KEYS, type ModelParams, type SkillKey } from '../../src/lib/training/types';
-import type { WeekMinutes } from '../../src/queries/minutes';
+
+// Dynamic imports AFTER dotenv (repo convention for box-run scripts): static imports
+// hoist above config(), and src/db reads DATABASE_URL at module scope.
+const { asc, isNotNull, sql } = await import('drizzle-orm');
+const { db, players, seasons, snapshots } = await import('../../src/db/index');
+const { playerStateFromSnapshot, minutesAtPositions } = await import('../../src/lib/training/bridge');
+const { inferClubTraining } = await import('../../src/lib/training/infer');
+const { detectPops } = await import('../../src/lib/training/pops');
+const { weekStep } = await import('../../src/lib/training/engine');
+const { BBSCOUT, BBSCOUT_HA_FLAT } = await import('../../src/lib/training/models/bbscout');
+const { SKILL_KEYS } = await import('../../src/lib/training/types');
+type PlayerWindowEvidence = import('../../src/lib/training/infer').PlayerWindowEvidence;
+type FullSnap = import('../../src/lib/training/pops').FullSnap;
+type PopEvent = import('../../src/lib/training/pops').PopEvent;
+type PlayerState = import('../../src/lib/training/engine').PlayerState;
+type ModelParams = import('../../src/lib/training/types').ModelParams;
+type SkillKey = import('../../src/lib/training/types').SkillKey;
+type WeekMinutes = import('../../src/queries/minutes').WeekMinutes;
 
 type SnapRow = typeof snapshots.$inferSelect;
 const WEEK_MS = 7 * 86_400_000;
