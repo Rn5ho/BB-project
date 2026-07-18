@@ -73,7 +73,7 @@ export default async function ScorecardPage() {
       </p>
 
       <Card title="Own club & staff"
-        blurb="The club whose players are scored, and the staff the models replay with. Update this whenever you change coach, gym, or training court.">
+        blurb="The club whose players are scored. Coach, youth trainer, gym, and training court are re-scraped from the game (staff.aspx + arena.aspx) at every run — the levels below are the stored fallback and refresh automatically after each run.">
         <ConfigForm initial={{
           teamId: cfg?.teamId ?? null, switchTeam: cfg?.switchTeam ?? false,
           coachLevel: cfg?.coachLevel ?? 5, youthTrainerLevel: cfg?.youthTrainerLevel ?? 0,

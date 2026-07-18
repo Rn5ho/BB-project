@@ -165,8 +165,11 @@ players owned by the configured club (single-row `self_trainer_config`: team + c
 gym/TC, editable on `/scorecard`), upserts exact-date 'own-scrape' pops, replays each
 player's history through the 5-model panel (shared `src/lib/training/replay.ts` +
 `src/server/bb/training-history.ts` — extracted from the CLIs, behavior-identical) and
-writes per-model `model_scorecards` rows (migration 0010). `/scorecard` page: config,
-Run now, MAE + pop-recall trend, latest-run breakdown. Cron: Hetzner btcedge crontab
+writes per-model `model_scorecards` rows (migration 0010). Staff + facilities are
+AUTO-SYNCED each run from `staff.aspx`/`arena.aspx` (`src/server/bb/team-pages.ts` —
+staff level = `lblStaffSkillLevelDisplay` title attr, gym/TC = inline `var lvlGym`/
+`var lvlTC`; stored config is bootstrap/fallback, only team id is required).
+`/scorecard` page: config, Run now, MAE + pop-recall trend, latest-run breakdown. Cron: Hetzner btcedge crontab
 Friday **11:30 UTC** (after BB's ~12:20 Berlin Friday training update) →
 `/api/cron/self-trainer` (CRON_SECRET, maxDuration 300). Plan doc:
 `docs/superpowers/plans/2026-07-17-self-trainer.md`.

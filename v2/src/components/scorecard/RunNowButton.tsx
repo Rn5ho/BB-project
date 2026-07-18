@@ -21,7 +21,8 @@ export default function RunNowButton({ configured }: { configured: boolean }) {
       {result && (
         <span className={`text-xs ${result.ok ? 'text-emerald-400' : 'text-red-400'}`}>
           {result.ok
-            ? `Done — ${result.counts.playersScored} players scored, ${result.counts.popsUpserted} pops anchored, ${result.counts.playersSkipped} skipped.`
+            ? `Done — ${result.counts.playersScored} players scored, ${result.counts.popsUpserted} pops anchored, ${result.counts.playersSkipped} skipped. ` +
+              `Staff (${result.counts.staff.source}): coach ${result.counts.staff.coachLevel} · YT ${result.counts.staff.youthTrainerLevel} · gym ${result.counts.staff.gymLevel} · TC ${result.counts.staff.trainingCourtLevel}.`
             : result.error}
         </span>
       )}

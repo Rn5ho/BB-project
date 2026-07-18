@@ -2,6 +2,7 @@ import { and, desc, eq, isNotNull } from 'drizzle-orm';
 import { db, modelScorecards, players, selfTrainerConfig, skillPops, snapshots, syncLog } from '@/db';
 import { BbWebSession, collectHiddenFields } from '@/server/bb/web-session';
 import { parseTrainingHistory, parseUsDate } from '@/server/bb/training-history';
+import { parseStaffLevels, parseInfrastructure } from '@/server/bb/team-pages';
 import { caseFromScrapedHistory, replayCase, type ReplayScore } from '@/lib/training/replay';
 import { BBSCOUT, BBSCOUT_HIGH, BBSCOUT_LOW } from '@/lib/training/models/bbscout';
 import { COACH_PARROT } from '@/lib/training/models/coach-parrot';
@@ -14,6 +15,8 @@ export interface SelfTrainerResult {
   popsUpserted: number;
   weekCount: number; // training weeks scored (same for every model)
   scorecardRows: number;
+  /** Levels used this run — scraped from staff.aspx/arena.aspx, stored config as fallback. */
+  staff: { coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number; source: 'scraped' | 'stored' };
 }
 
 /** Same panel the replay CLI scores — bbscout + both provenance models + the band edges. */
@@ -61,7 +64,38 @@ export async function runSelfTrainer(trigger: string): Promise<SelfTrainerResult
       });
     }
 
-    const counts: SelfTrainerResult = { playersScored: 0, playersSkipped: 0, popsUpserted: 0, weekCount: 0, scorecardRows: 0 };
+    // Auto-sync staff + facilities from the game (staff.aspx / arena.aspx) so the
+    // replay always uses this week's real levels; the stored config is the fallback
+    // when a page fails to parse. Successful reads are written back to the config row.
+    let staff: SelfTrainerResult['staff'] = {
+      coachLevel: cfg.coachLevel, youthTrainerLevel: cfg.youthTrainerLevel,
+      gymLevel: cfg.gymLevel, trainingCourtLevel: cfg.trainingCourtLevel,
+      source: 'stored',
+    };
+    try {
+      const levels = parseStaffLevels(await session.get(`/team/${cfg.teamId}/staff.aspx`));
+      const infra = parseInfrastructure(await session.get(`/team/${cfg.teamId}/arena.aspx`));
+      if (levels.trainer != null && infra.gym != null) {
+        staff = {
+          coachLevel: levels.trainer,
+          youthTrainerLevel: levels.youthTrainer ?? 0, // no youth trainer employed = 0
+          gymLevel: infra.gym,
+          trainingCourtLevel: infra.trainingCourt ?? 0,
+          source: 'scraped' as const,
+        };
+        await db.update(selfTrainerConfig).set({
+          coachLevel: staff.coachLevel, youthTrainerLevel: staff.youthTrainerLevel,
+          gymLevel: staff.gymLevel, trainingCourtLevel: staff.trainingCourtLevel,
+          updatedAt: new Date(),
+        }).where(eq(selfTrainerConfig.id, cfg.id));
+      } else {
+        console.error('self-trainer: staff/arena parse incomplete — falling back to stored config', { levels, infra });
+      }
+    } catch (err) {
+      console.error('self-trainer: staff/arena scrape failed — falling back to stored config:', err);
+    }
+
+    const counts: SelfTrainerResult = { playersScored: 0, playersSkipped: 0, popsUpserted: 0, weekCount: 0, scorecardRows: 0, staff };
     const totals = new Map<string, { score: Omit<ReplayScore, 'events'>; details: PlayerDetail[] }>(
       MODELS.map((m) => [m.id, { score: { hits: 0, misses: 0, falseAlarms: 0, endAbsErr: 0, endCount: 0, endExact: 0 }, details: [] }]),
     );
@@ -109,8 +143,8 @@ export async function runSelfTrainer(trigger: string): Promise<SelfTrainerResult
           rb: snap.rebounding, sb: snap.shotBlocking,
         },
         endStamina: snap.stamina, endFreeThrow: snap.freeThrow,
-        coachLevel: cfg.coachLevel, youthTrainerLevel: cfg.youthTrainerLevel,
-        gymLevel: cfg.gymLevel, trainingCourtLevel: cfg.trainingCourtLevel,
+        coachLevel: staff.coachLevel, youthTrainerLevel: staff.youthTrainerLevel,
+        gymLevel: staff.gymLevel, trainingCourtLevel: staff.trainingCourtLevel,
       });
       if (replayable.weeks.length === 0) { counts.playersSkipped++; continue; }
 

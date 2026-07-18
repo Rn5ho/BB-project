@@ -1,0 +1,23 @@
+<html>
+<head>
+<script type="text/javascript">
+  jQuery(divid).css('display','none');
+  // teamInfrastructure stuff
+  var totalInfraCost = 0;
+  var lvlGym = 3;
+  var lvlTC = 2;
+  var lvlHR = 0;
+  var lvlTVR = 0;
+  var lvlMS = 3;
+  function LevelUp(selector) {
+    var oldLevel = parseInt($j('.lvlIndicator').eq(selector).text().charAt(0));
+  }
+</script>
+</head>
+<body>
+  <button data-balloon-length="small" data-balloon='Gym' data-balloon-pos="up" class="menuImage" id="btnTIG" onclick="append(this,'/images/ArenaDesign/gym.svg'); return false;" style="background: url('/images/ArenaDesign/gym.svg') no-repeat"></button>
+  <span class="lvlIndicator">3 / 3</span>
+  <button data-balloon-length="small" data-balloon='Training Court' data-balloon-pos="up" class="menuImage" id="btnTITC" onclick="append(this,'/images/ArenaDesign/trainingCourt.svg'); return false;" style="background: url('/images/ArenaDesign/trainingCourt.svg') no-repeat"></button>
+  <span class="lvlIndicator">2 / 3</span>
+</body>
+</html>

@@ -46,14 +46,28 @@ Latest run card (per-model table + per-player bbscout breakdown linking to playe
 **Schedule.** Hetzner (btcedge crontab): Friday 11:30 UTC — 12:30 Berlin in winter,
 13:30 in summer, always after the ~12:20 Berlin training update, no DST tricks.
 
+## Staff auto-sync (added 2026-07-18)
+
+`src/server/bb/team-pages.ts` (fixtures from live team pages): `parseStaffLevels`
+reads staff.aspx — each role name ("Trainer", "Youth Trainer", "Doctor", "PR-Manager",
+"Sports Psychologist") precedes a `lblStaffSkillLevelDisplay_N` span whose **title
+attribute is the numeric level**; "Youth Trainer" must precede "Trainer" in the
+alternation. `parseInfrastructure` reads arena.aspx — the levels are inline JS vars
+(`var lvlGym = 3; var lvlTC = 2;`). Each run scrapes both pages for the configured
+club, uses the live levels for the replay, and writes them back to
+`self_trainer_config`; parse failure falls back to the stored row (non-fatal, logged).
+Result counts carry `staff: {…, source: 'scraped'|'stored'}` and the /scorecard Run-now
+line shows which was used. Manual config entry is now bootstrap/fallback only — the
+required field is the team id.
+
 ## Notes / limitations
 
 - The models replay the FULL visible history each run (not just the new week): sublevel
   state must thread from the backtracked start, and full-history aggregates make runs
   comparable; cost is trivial (pure TS).
-- Staff levels are a single current snapshot — a mid-history coach change makes older
-  weeks replay with today's coach. Acceptable for trend purposes; a dated staff-history
-  table is the upgrade if it ever matters.
-- Config must exist before the first run (job errors with a pointer to /scorecard).
+- Staff auto-sync captures THIS week's levels; older history weeks still replay with the
+  current levels — a dated staff-history table is the upgrade if it ever matters.
+- Config row (team id) must exist before the first run (job errors with a pointer to
+  /scorecard).
 - traininghistory.aspx shows a bounded window of weeks; very long histories age out of
   the page and out of scoring.
