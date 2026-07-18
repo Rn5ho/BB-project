@@ -71,13 +71,38 @@ Adversarial review of these numbers (stats agent, 2026-07-18):
   the census/market pop corpus (~1,027 pops, 196 windows; circularity-safe subset per
   README recalibration loop).
 
-## Recommended next steps (not yet done)
+## Census-corpus tests (run 2026-07-18 — inconclusive, coverage-limited)
 
-1. Census-corpus discrimination tests: JR-doubling (largest covered difference), is↔id
-   doubling, HA at ≥206cm, IS at ≤183cm.
-2. Own-club schedule design: HA (PG) weeks across the height range and IS weeks for the
-   shortest trainee would fill the exact coverage holes the calibration set has (0 direct
-   HA-drill weeks; no short-inside data). The self-trainer picks these up automatically.
+`v2/scripts/training/census-hypothesis-tests.mts` (run on the Hetzner box against Neon):
+rebuilds the inference evidence with current code, restricts to confidence-filtered
+windows per the recalibration-loop protocol, and compares observed pops on each
+contested skill vs expected pops under both hypotheses (uniform-sublevel prior:
+E[pops] = predicted gain).
+
+Corpus 2026-07-18: 2,926 players, 412 club-windows — but only ~15 windows survive the
+high/medium confidence bar under the post-guard inference (the 2026-07-17 owner guard +
+margin floor correctly pruned the noise that had inflated Phase C's 63+42 count), and
+they concentrate on drills where the hypotheses agree (top coverage: 1v1 SF/PF ×4,
+PA PG ×2). Contested-cell results, all n=1-class:
+
+- JS→JR towing (ids 1/2, ≥medium): observed 1 JR pop vs expected 3.1 (bbscout) / 4.4
+  (doubled) — observed sits BELOW both; with the selection bias running TOWARD the
+  doubled hypothesis, a faint point against doubling, but a single window.
+- IS(C)→ID (≥medium): observed 1 vs 0.2 / 0.5 — above both, nearer doubled.
+- ID(C)→IS (high): observed 1 vs 0.5 / 0.9 — nearer doubled.
+- HA ≥206cm and IS ≤183cm: zero qualifying player-windows. No coverage.
+
+Verdict: the corpus cannot arbitrate the contested cells **yet**. It grows automatically
+(daily market sweep, census runs, minutes sync) — re-run the script as windows accumulate.
+The owner's own club cannot supply the missing drills (fixed U-21 regime), so corpus
+growth is the only evidence channel for these cells.
+
+## Recommended next steps
+
+1. Re-run `census-hypothesis-tests.mts` periodically (e.g. monthly) as the corpus grows;
+   the JR-towing cell has the best odds of reaching useful n first (JS drills are common).
+2. `bbscout-ha-flat` on the weekly self-trainer scorecard arbitrates the HA question from
+   the own-team side (1v1 drills carry HA secondaries even under the fixed regime).
 3. Re-run the full model panel (CP/OSL included) on the current case set before quoting
    README benchmark figures — the stats agent showed the recorded bbscout-low numbers do
    not reproduce on today's cases (0.457 MAE, not 0.35 — the 0.35 was the live 4-player
