@@ -41,9 +41,38 @@ export async function getCurrentSeasonId(): Promise<number> {
   return pickCurrentSeason(rows, new Date());
 }
 
+export interface CaptureSweep {
+  day: string;   // UTC day, YYYY-MM-DD
+  count: number; // full-skill snapshots of Slovenian players captured that day
+}
+
+/** Days on which a meaningful batch of Slovenian full-skill captures landed (census sweeps,
+ *  market waves, backfills) — the natural baseline choices for the "progress since" picker.
+ *  Days with fewer than 5 captures are noise (individual market listings) and omitted. */
+export async function listCaptureSweeps(): Promise<CaptureSweep[]> {
+  const result = await db.execute(sql`
+    select to_char(s.captured_at at time zone 'UTC', 'YYYY-MM-DD') as day, count(*) as n
+    from snapshots s
+    join players p on p.bb_player_id = s.player_id
+    where s.jump_shot is not null
+      and (p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))
+    group by 1
+    having count(*) >= 5
+    order by 1 desc
+    limit 12
+  `);
+  return (result.rows as Record<string, unknown>[]).map((r) => ({
+    day: r.day as string,
+    count: Number(r.n),
+  }));
+}
+
 export type PlayerScope = 'slovenia' | 'world';
 
-export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> {
+export async function listPlayers(
+  scope: PlayerScope,
+  opts?: { baselineAt?: Date },
+): Promise<PlayerListRow[]> {
   // Slovenia can appear as country_id 66, v1's 'Slovenia', or BB's local name 'Slovenija'
   // (market-discovered players with an unmatched flag keep country_id null + 'Slovenija').
   const slovene = sql`(p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))`;
@@ -51,12 +80,13 @@ export async function listPlayers(scope: PlayerScope): Promise<PlayerListRow[]> 
   const where = scope === 'slovenia' ? sql`where ${slovene}` : sql`where ${notSlovene}`;
   const season = await getCurrentSeasonId();
 
-  // "Progress since last review" baseline. Epoch default keeps a single SQL shape:
-  // it matches no snapshots, so baselines (and therefore deltas) stay null.
-  const mark = scope === 'slovenia'
+  // Progress baseline: an explicit override (the "progress since" picker) wins; otherwise
+  // the review mark. Epoch default keeps a single SQL shape: it matches no snapshots, so
+  // baselines (and therefore deltas) stay null.
+  const mark = scope === 'slovenia' && !opts?.baselineAt
     ? (await db.select().from(reviewMarks).where(eq(reviewMarks.scope, 'slovenia')).limit(1))[0] ?? null
     : null;
-  const markedAt = mark?.markedAt ?? new Date(0);
+  const markedAt = opts?.baselineAt ?? mark?.markedAt ?? new Date(0);
 
   const result = await db.execute(sql`
     with latest as (

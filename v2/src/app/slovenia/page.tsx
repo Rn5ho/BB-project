@@ -1,4 +1,4 @@
-import { listPlayers } from '@/queries/players';
+import { listPlayers, listCaptureSweeps } from '@/queries/players';
 import { getEffectiveArchetypes } from '@/queries/archetypes';
 import { matchingArchetypes } from '@/lib/archetypes/evaluate';
 import PlayerTable from '@/components/PlayerTable';
@@ -15,11 +15,22 @@ function coverage(rows: Awaited<ReturnType<typeof listPlayers>>, minPot: number)
   return { done, total: pool.length, pct };
 }
 
-export default async function SloveniaPage() {
-  const [rows, archetypes, markRows] = await Promise.all([
-    listPlayers('slovenia'),
+export default async function SloveniaPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ since?: string }>;
+}) {
+  // ?since=YYYY-MM-DD pins the progress baseline to the end of that UTC day (so the day's
+  // own captures ARE the baseline); no param falls back to the review mark.
+  const { since: sinceParam } = await searchParams;
+  const since = sinceParam && /^\d{4}-\d{2}-\d{2}$/.test(sinceParam) ? sinceParam : null;
+  const baselineAt = since ? new Date(`${since}T23:59:59.999Z`) : undefined;
+
+  const [rows, archetypes, markRows, sweeps] = await Promise.all([
+    listPlayers('slovenia', { baselineAt }),
     getEffectiveArchetypes(),
     db.select().from(reviewMarks).where(eq(reviewMarks.scope, 'slovenia')).limit(1),
+    listCaptureSweeps(),
   ]);
   const markedAtIso = markRows[0]?.markedAt.toISOString() ?? null;
   const cov = coverage(rows, 7);
@@ -43,7 +54,7 @@ export default async function SloveniaPage() {
         <span className="text-neutral-400">{covAll.done}/{covAll.total} of all 18–21 ({covAll.pct}%)</span>
         {cov.total - cov.done > 0 && <span className="text-neutral-400"> · {cov.total - cov.done} relevant still to scout</span>}
       </p>
-      <ReviewBar markedAtIso={markedAtIso} />
+      <ReviewBar markedAtIso={markedAtIso} sweeps={sweeps} since={since} />
       <PlayerTable rows={rows} variant="slovenia" defaultShowSkills archetypeMatches={archetypeMatches} archetypeNames={archetypeNames} />
     </main>
   );
