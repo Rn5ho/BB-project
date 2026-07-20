@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { selectCandidates, freeSlots, type CandidateRow } from './candidates';
 
 const rows: CandidateRow[] = [
-  { bbPlayerId: 1, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: new Date('2026-01-01'), potential: null, salary: null, heightCm: null },
-  { bbPlayerId: 2, ageNow: 22, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: null, heightCm: null },        // too old
-  { bbPlayerId: 3, ageNow: 18, hasFreshFullThisSeason: true, oldestCapture: new Date('2026-07-01'), potential: null, salary: null, heightCm: null }, // already fresh
-  { bbPlayerId: 4, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: new Date('2025-01-01'), potential: null, salary: null, heightCm: null },
-  { bbPlayerId: 5, ageNow: null, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: null, heightCm: null },       // unknown age excluded
+  { bbPlayerId: 1, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: new Date('2026-01-01'), potential: null, salary: null, heightCm: null, tsp: null },
+  { bbPlayerId: 2, ageNow: 22, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: null, heightCm: null, tsp: null },        // too old
+  { bbPlayerId: 3, ageNow: 18, hasFreshFullThisSeason: true, oldestCapture: new Date('2026-07-01'), potential: null, salary: null, heightCm: null, tsp: null }, // already fresh
+  { bbPlayerId: 4, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: new Date('2025-01-01'), potential: null, salary: null, heightCm: null, tsp: null },
+  { bbPlayerId: 5, ageNow: null, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: null, heightCm: null, tsp: null },       // unknown age excluded
 ];
 
 describe('selectCandidates (default)', () => {
@@ -30,10 +30,10 @@ describe('freeSlots', () => {
 // ─── Filter tests ─────────────────────────────────────────────────────────────
 
 const filterRows: CandidateRow[] = [
-  { bbPlayerId: 10, ageNow: 19, hasFreshFullThisSeason: false, oldestCapture: null, potential: 9, salary: 20000, heightCm: 195 },
-  { bbPlayerId: 11, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: null, potential: 6, salary: 50000, heightCm: 180 },
-  { bbPlayerId: 12, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: 15000, heightCm: 210 },
-  { bbPlayerId: 13, ageNow: 18, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: null, heightCm: null },
+  { bbPlayerId: 10, ageNow: 19, hasFreshFullThisSeason: false, oldestCapture: null, potential: 9, salary: 20000, heightCm: 195, tsp: null },
+  { bbPlayerId: 11, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: null, potential: 6, salary: 50000, heightCm: 180, tsp: null },
+  { bbPlayerId: 12, ageNow: 21, hasFreshFullThisSeason: false, oldestCapture: null, potential: null, salary: 15000, heightCm: 210, tsp: null },
+  { bbPlayerId: 13, ageNow: 18, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: null, heightCm: null, tsp: null },
 ];
 
 describe('minPotential filter', () => {
@@ -123,6 +123,55 @@ describe('age override', () => {
   it('minAge only widens lower bound', () => {
     const out = selectCandidates(filterRows, { minAge: 20 });
     expect(out.map((r) => r.bbPlayerId).sort()).toEqual([11, 12]);
+  });
+});
+
+// benchmarkTsp week 1: 18→55, 19→70, 20→83, 21→100
+const tspRows: CandidateRow[] = [
+  { bbPlayerId: 20, ageNow: 19, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: 20000, heightCm: 195, tsp: 72 },
+  { bbPlayerId: 21, ageNow: 19, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: 20000, heightCm: 195, tsp: 60 },
+  { bbPlayerId: 22, ageNow: 20, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: 20000, heightCm: 195, tsp: 83 },
+  { bbPlayerId: 23, ageNow: 22, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: 20000, heightCm: 195, tsp: 120 }, // off NT-track ages
+  { bbPlayerId: 24, ageNow: 19, hasFreshFullThisSeason: false, oldestCapture: null, potential: 8, salary: 20000, heightCm: 195, tsp: null }, // never captured
+];
+
+describe('minTsp filter', () => {
+  it('excludes rows below threshold', () => {
+    const out = selectCandidates(tspRows, { minTsp: 70 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([20, 22]);
+  });
+  it('null-TSP EXCLUDED when minTsp is set', () => {
+    const out = selectCandidates(tspRows, { minTsp: 1 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(24);
+  });
+  it('null-TSP INCLUDED when minTsp is unset', () => {
+    const out = selectCandidates(tspRows, {});
+    expect(out.map((r) => r.bbPlayerId)).toContain(24);
+  });
+});
+
+describe('ntTrackSlack filter', () => {
+  it('slack 0 keeps only at/above the age benchmark', () => {
+    // 19yo bench 70 (week 1): tsp 72 passes, 60 fails; 20yo bench 83: tsp 83 passes
+    const out = selectCandidates(tspRows, { ntTrackSlack: 0 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([20, 22]);
+  });
+  it('slack widens the band below the benchmark', () => {
+    const out = selectCandidates(tspRows, { ntTrackSlack: 10 });
+    expect(out.map((r) => r.bbPlayerId).sort()).toEqual([20, 21, 22]);
+  });
+  it('seasonWeek interpolates the benchmark upward within the season', () => {
+    // 19yo at week 8: bench = 70 + 13*(7/14) = 76.5 → tsp 72 now fails at slack 0
+    const out = selectCandidates(tspRows, { ntTrackSlack: 0, seasonWeek: 8 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(20);
+  });
+  it('null-TSP fails when the filter is set', () => {
+    const out = selectCandidates(tspRows, { ntTrackSlack: 100 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(24);
+  });
+  it('ages without a benchmark fail when the filter is set', () => {
+    const out = selectCandidates(tspRows, { maxAge: 22, ntTrackSlack: 100 });
+    expect(out.map((r) => r.bbPlayerId)).not.toContain(23);
   });
 });
 

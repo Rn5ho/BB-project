@@ -23,6 +23,8 @@ const opts = {
   maxSalary: val('--max-salary') ? Number(val('--max-salary')) : undefined,
   minHeight: val('--min-height') ? Number(val('--min-height')) : undefined,
   maxHeight: val('--max-height') ? Number(val('--max-height')) : undefined,
+  minTsp: val('--min-tsp') ? Number(val('--min-tsp')) : undefined,
+  ntTrackSlack: val('--nt-track-slack') ? Number(val('--nt-track-slack')) : undefined,
 };
 console.log('census options:', JSON.stringify(opts));
 const res = await runCensus(opts);

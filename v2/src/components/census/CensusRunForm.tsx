@@ -1,7 +1,8 @@
 'use client';
 
 import { useTransition, useState } from 'react';
-import { enqueueCensus, type EnqueueOpts } from '@/app/census/actions';
+import { enqueueCensus, previewCensus, type EnqueueOpts, type PreviewResult } from '@/app/census/actions';
+import CensusPreview from './CensusPreview';
 
 function NumInput({
   label,
@@ -28,40 +29,57 @@ function NumInput({
   );
 }
 
+function parseOpts(fd: FormData): EnqueueOpts {
+  function getNum(key: string): number | undefined {
+    const v = fd.get(key);
+    if (v === null || v === '') return undefined;
+    const n = Number(v);
+    return isNaN(n) ? undefined : n;
+  }
+  return {
+    minAge: getNum('minAge'),
+    maxAge: getNum('maxAge'),
+    minPotential: getNum('minPotential'),
+    maxPotential: getNum('maxPotential'),
+    minSalary: getNum('minSalary'),
+    maxSalary: getNum('maxSalary'),
+    minHeight: getNum('minHeight'),
+    maxHeight: getNum('maxHeight'),
+    minTsp: getNum('minTsp'),
+    ntTrackSlack: getNum('ntTrackSlack'),
+    all: fd.get('all') === 'on',
+    clearRoster: fd.get('clearRoster') === 'on',
+  };
+}
+
 export default function CensusRunForm() {
   const [pending, startTransition] = useTransition();
+  const [previewing, startPreview] = useTransition();
   const [result, setResult] = useState<
     { ok: true; runId: number } | { ok: false; error: string } | null
   >(null);
+  const [preview, setPreview] = useState<PreviewResult | { ok: false; error: string } | null>(null);
+  const [previewedClearRoster, setPreviewedClearRoster] = useState(false);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-
-    function getNum(key: string): number | undefined {
-      const v = fd.get(key);
-      if (v === null || v === '') return undefined;
-      const n = Number(v);
-      return isNaN(n) ? undefined : n;
-    }
-
-    const opts: EnqueueOpts = {
-      minAge: getNum('minAge'),
-      maxAge: getNum('maxAge'),
-      minPotential: getNum('minPotential'),
-      maxPotential: getNum('maxPotential'),
-      minSalary: getNum('minSalary'),
-      maxSalary: getNum('maxSalary'),
-      minHeight: getNum('minHeight'),
-      maxHeight: getNum('maxHeight'),
-      clearRoster: fd.get('clearRoster') === 'on',
-    };
-
+    const opts = parseOpts(fd);
     const offseasonConfirm = (fd.get('offseasonConfirm') as string) ?? '';
-
     startTransition(async () => {
       const res = await enqueueCensus(opts, offseasonConfirm);
       setResult(res);
+    });
+  }
+
+  function handlePreview(e: React.MouseEvent<HTMLButtonElement>) {
+    const form = e.currentTarget.form;
+    if (!form) return;
+    const opts = parseOpts(new FormData(form));
+    setPreviewedClearRoster(opts.clearRoster === true);
+    startPreview(async () => {
+      const res = await previewCensus(opts);
+      setPreview(res);
     });
   }
 
@@ -88,8 +106,21 @@ export default function CensusRunForm() {
           <NumInput label="Max salary" name="maxSalary" placeholder="e.g. 500000" />
           <NumInput label="Min height (cm)" name="minHeight" placeholder="e.g. 185" />
           <NumInput label="Max height (cm)" name="maxHeight" placeholder="e.g. 220" />
+          <NumInput label="Min TSP" name="minTsp" placeholder="e.g. 70" />
+          <NumInput label="NT-track slack" name="ntTrackSlack" placeholder="e.g. 15" />
         </div>
+        <p className="text-xs text-neutral-500">
+          NT-track slack keeps only players whose TSP is at most N points below the NT-track
+          benchmark for their age (0 = at/above the benchmark). Players without a known TSP fail
+          both TSP filters.
+        </p>
       </fieldset>
+
+      {/* Re-census checkbox */}
+      <label className="flex items-center gap-2 text-sm text-neutral-300">
+        <input type="checkbox" name="all" className="h-4 w-4 accent-amber-400" />
+        Re-census players already captured this season (refresh stale skills)
+      </label>
 
       {/* Clear roster checkbox */}
       <label className="flex items-center gap-2 text-sm text-neutral-300">
@@ -100,6 +131,20 @@ export default function CensusRunForm() {
         />
         Clear roster (18 slots) — dismiss current roster before recruiting candidates
       </label>
+
+      {/* Preview */}
+      <div className="space-y-3">
+        <button
+          type="button"
+          onClick={handlePreview}
+          disabled={previewing}
+          className="rounded border border-neutral-600 px-4 py-2 text-sm font-medium text-neutral-200 hover:border-neutral-400 disabled:opacity-50"
+        >
+          {previewing ? 'Previewing…' : 'Preview candidates'}
+        </button>
+        {preview?.ok === true && <CensusPreview preview={preview} clearRoster={previewedClearRoster} />}
+        {preview?.ok === false && <p className="text-sm text-red-400">{preview.error}</p>}
+      </div>
 
       {/* OFFSEASON confirm */}
       <label className="flex flex-col gap-1 text-sm text-neutral-300">

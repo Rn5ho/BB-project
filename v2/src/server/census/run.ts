@@ -1,10 +1,11 @@
-import { db, players, snapshots, censusRuns, censusItems } from '@/db';
+import { db, snapshots, censusRuns, censusItems } from '@/db';
 import { NtBrowser } from '@/server/bb/nt-browser';
 import type { ParsedCard } from '@/server/bb/card-parser';
 import { getCurrentSeasonId } from '@/queries/players';
-import { selectCandidates, freeSlots, type CandidateRow } from './candidates';
+import { selectCandidates, freeSlots } from './candidates';
+import { loadCandidateRows, currentSeasonWeek } from './candidate-rows';
 import { utcDayKey } from '@/server/sync/players';
-import { sql, and, eq, gte, inArray } from 'drizzle-orm';
+import { and, eq, gte, inArray } from 'drizzle-orm';
 
 export interface CensusOpts {
   all?: boolean;
@@ -26,6 +27,8 @@ export interface CensusOpts {
   maxSalary?: number;
   minHeight?: number;
   maxHeight?: number;
+  minTsp?: number;
+  ntTrackSlack?: number;
 }
 const PAUSE = 1500;
 
@@ -48,6 +51,7 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log, existi
 
   // 1. build candidate rows from DB (season-aware age + this-season freshness + stalest date)
   const rows = await loadCandidateRows(season);
+  const seasonWeek = await currentSeasonWeek(season);
   const filters = {
     all: opts.all,
     max: opts.max,
@@ -59,13 +63,33 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log, existi
     maxSalary: opts.maxSalary,
     minHeight: opts.minHeight,
     maxHeight: opts.maxHeight,
+    minTsp: opts.minTsp,
+    ntTrackSlack: opts.ntTrackSlack,
   };
-  const candidates = selectCandidates(rows, filters);
-  log(`Season ${season}: ${candidates.length} candidates selected (of ${rows.length} Slovenian 18-21).`);
+  const candidates = selectCandidates(rows, { ...filters, seasonWeek });
+  log(`Season ${season} week ${seasonWeek}: ${candidates.length} candidates selected (of ${rows.length} Slovenian 18-21).`);
 
   if (opts.countOnly) {
     log(`${candidates.length} candidates match these filters.`);
     return { runId: -1, captured: 0, failed: 0 };
+  }
+
+  // 0 candidates on a fresh run: finish cleanly without touching the browser or roster.
+  // (A resume must still proceed — its work list is the run's pending census_items, not candidates.)
+  if (!opts.dryRun && !opts.resumeRunId && candidates.length === 0) {
+    const runTotals = { captured: 0, failed: 0, filters, candidateCount: 0 };
+    let runId: number;
+    if (existingRunId) {
+      const [row] = await db.select().from(censusRuns).where(eq(censusRuns.id, existingRunId));
+      const prevTotals = (row?.totals ?? {}) as Record<string, unknown>;
+      await db.update(censusRuns).set({ status: 'finished', finishedAt: new Date(), totals: { ...prevTotals, ...runTotals } }).where(eq(censusRuns.id, existingRunId));
+      runId = existingRunId;
+    } else {
+      const [r] = await db.insert(censusRuns).values({ status: 'finished', finishedAt: new Date(), totals: runTotals }).returning({ id: censusRuns.id });
+      runId = r.id;
+    }
+    log(`Census #${runId} finished: 0 candidates matched the filters — no roster actions taken.`);
+    return { runId, captured: 0, failed: 0 };
   }
 
   // 2. launch browser, login + protected roster
@@ -243,43 +267,4 @@ async function saveCensusSnapshots(cards: ParsedCard[], season: number): Promise
     tsp: c.tsp, ownerTeamId: c.ownerTeamId, ownerTeamName: c.ownerTeamName,
   })));
   return cards.length;
-}
-
-async function loadCandidateRows(season: number): Promise<CandidateRow[]> {
-  // Slovenian players + season-aware age from latest snapshot + fresh-full-this-season flag + oldest capture
-  // Also pulls potential, salary from the latest snapshot, and height_cm from the players table.
-  const result = await db.execute(sql`
-    with latest as (
-      select distinct on (player_id) player_id, age, season, potential, salary from snapshots order by player_id, captured_at desc
-    ),
-    fresh as (
-      select distinct player_id from snapshots
-      where jump_shot is not null and season = ${season} and source in ('census','market','manual')
-    ),
-    oldest as (
-      select player_id, min(captured_at) as oldest_capture from snapshots where jump_shot is not null group by player_id
-    )
-    select p.bb_player_id, l.age as snap_age, l.season as snap_season,
-           (f.player_id is not null) as fresh_full, o.oldest_capture,
-           l.potential, l.salary, p.height_cm
-    from players p
-    left join latest l on l.player_id = p.bb_player_id
-    left join fresh f on f.player_id = p.bb_player_id
-    left join oldest o on o.player_id = p.bb_player_id
-    where p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija')
-  `);
-  return (result.rows as Record<string, unknown>[]).map((r) => {
-    const snapAge = r.snap_age as number | null;
-    const snapSeason = r.snap_season as number | null;
-    const ageNow = snapAge == null || snapSeason == null ? null : snapAge + (season - snapSeason);
-    return {
-      bbPlayerId: r.bb_player_id as number,
-      ageNow,
-      hasFreshFullThisSeason: r.fresh_full === true || r.fresh_full === 't' || r.fresh_full === 'true',
-      oldestCapture: r.oldest_capture ? new Date(r.oldest_capture as string) : null,
-      potential: r.potential != null ? Number(r.potential) : null,
-      salary: r.salary != null ? Number(r.salary) : null,
-      heightCm: r.height_cm != null ? Number(r.height_cm) : null,
-    };
-  });
 }

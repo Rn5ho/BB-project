@@ -37,6 +37,8 @@ function toCensusOpts(o: Record<string, unknown>): CensusOpts {
     maxSalary: num(o.maxSalary),
     minHeight: num(o.minHeight),
     maxHeight: num(o.maxHeight),
+    minTsp: num(o.minTsp),
+    ntTrackSlack: num(o.ntTrackSlack),
   };
 }
 

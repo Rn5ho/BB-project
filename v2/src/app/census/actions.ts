@@ -2,6 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { db, censusRuns } from '@/db';
+import { getCurrentSeasonId } from '@/queries/players';
+import { benchmarkTsp } from '@/lib/training/benchmarks';
+import { selectCandidates } from '@/server/census/candidates';
+import { loadCandidateRows, currentSeasonWeek, lastKnownRoster } from '@/server/census/candidate-rows';
 
 export interface EnqueueOpts {
   minAge?: number;
@@ -12,6 +16,8 @@ export interface EnqueueOpts {
   maxSalary?: number;
   minHeight?: number;
   maxHeight?: number;
+  minTsp?: number;
+  ntTrackSlack?: number;
   all?: boolean;
   clearRoster?: boolean;
 }
@@ -34,6 +40,72 @@ export async function enqueueCensus(
       .returning({ id: censusRuns.id });
     revalidatePath('/census');
     return { ok: true, runId: row.id };
+  } catch (e) {
+    return { ok: false, error: String(e) };
+  }
+}
+
+export interface PreviewCandidate {
+  bbPlayerId: number;
+  name: string | null;
+  ageNow: number | null;
+  potential: number | null;
+  salary: number | null;
+  heightCm: number | null;
+  tsp: number | null;
+  /** TSP minus the NT-track benchmark for the player's age at the current week (+ = ahead). */
+  benchDelta: number | null;
+  lastFullCapture: string | null;
+  /** On the last known NT roster → protected: skipped by the run unless "Clear roster" is used. */
+  rostered: boolean;
+}
+
+export interface PreviewResult {
+  ok: true;
+  season: number;
+  seasonWeek: number;
+  totalSlovenian: number;
+  rosteredCount: number;
+  candidates: PreviewCandidate[];
+}
+
+/** DB-only preview of which players the given filters would census. No browser, no roster
+ *  actions — safe to call freely while tuning filters. */
+export async function previewCensus(
+  opts: EnqueueOpts,
+): Promise<PreviewResult | { ok: false; error: string }> {
+  try {
+    const season = await getCurrentSeasonId();
+    const [rows, seasonWeek, roster] = await Promise.all([
+      loadCandidateRows(season),
+      currentSeasonWeek(season),
+      lastKnownRoster(),
+    ]);
+    const selected = selectCandidates(rows, { ...opts, seasonWeek });
+    const rosterSet = new Set(roster);
+    const candidates = selected.map((r) => ({
+      bbPlayerId: r.bbPlayerId,
+      name: r.name,
+      ageNow: r.ageNow,
+      potential: r.potential,
+      salary: r.salary,
+      heightCm: r.heightCm,
+      tsp: r.tsp,
+      benchDelta:
+        r.tsp != null && r.ageNow != null && benchmarkTsp(r.ageNow, seasonWeek) != null
+          ? Math.round((r.tsp - benchmarkTsp(r.ageNow, seasonWeek)!) * 10) / 10
+          : null,
+      lastFullCapture: r.lastFullCapture ? r.lastFullCapture.toISOString() : null,
+      rostered: rosterSet.has(r.bbPlayerId),
+    }));
+    return {
+      ok: true,
+      season,
+      seasonWeek,
+      totalSlovenian: rows.length,
+      rosteredCount: candidates.filter((c) => c.rostered).length,
+      candidates,
+    };
   } catch (e) {
     return { ok: false, error: String(e) };
   }
