@@ -1,6 +1,7 @@
 import type { Param } from './types';
 
-/** NT-track season-START 12-skill TSP by age, thread 323477 (2024).
+/** NT-track season-START TSP by age, thread 323477 (2024). TSP is BB's 10-rate-skill
+ *  sum — it NEVER includes stamina or free throw (matches the stored snapshots.tsp column).
  *  Ages 18–21 measured (21 = midpoint of the stated 95–105 range);
  *  22 is a slope extrapolation used only to interpolate inside age-21 seasons. */
 export const TSP_BENCHMARKS: Param<Record<number, number>> = {

@@ -30,11 +30,11 @@ export async function loadCandidateRows(season: number): Promise<CandidateDetail
       select player_id, min(captured_at) as oldest_capture from snapshots where jump_shot is not null group by player_id
     ),
     latest_full as (
-      -- 12-skill TSP to match the NT-track benchmarks; the stored tsp column is BB's page
-      -- value, which excludes stamina + free throw (10-skill) — fallback only.
+      -- TSP = BB's 10-rate-skill sum (never stamina/FT). Stored tsp is that value as
+      -- parsed off the page; compute the same sum when it's missing.
       select distinct on (player_id) player_id, captured_at as last_full_capture,
-             coalesce(jump_shot + jump_range + outside_def + handling + driving + passing
-                    + inside_shot + inside_def + rebounding + shot_blocking + stamina + free_throw, tsp) as tsp
+             coalesce(tsp, jump_shot + jump_range + outside_def + handling + driving + passing
+                    + inside_shot + inside_def + rebounding + shot_blocking) as tsp
       from snapshots where jump_shot is not null
       order by player_id, captured_at desc
     )

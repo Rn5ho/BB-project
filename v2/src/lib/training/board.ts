@@ -17,7 +17,7 @@ export interface BoardPlayerInput {
   age: number; heightCm: number; potential: number;
   state: PlayerState;            // anchored midpoint sublevels
   displayedSkills: number[];     // 10 rate skills in SKILL_KEYS order (for cap score)
-  tspNow: number | null;         // stored 12-skill displayed TSP
+  tspNow: number | null;         // BB displayed TSP (10 rate skills — never stamina/FT)
   ownerTeamId: number | null; ownerTeamName: string | null;
   inferred: { trainingId: number | null; confidence: 'high' | 'medium' | 'low'; windowEndIso: string } | null;
   recentWeeks: WeekMinutes[];    // last ≤4 observed season-weeks
@@ -35,7 +35,7 @@ export interface BoardRow {
                                           // null = no boxscore data (projection assumes full minutes)
   tspNow: number | null;
   benchmarkDelta: number | null;         // vs NT track at current age/week
-  tsp21Current: number | null;           // 12-skill display-equivalent at end of age-21 season
+  tsp21Current: number | null;           // 10-skill display-equivalent at end of age-21 season
   tsp21Optimal: number;
   optimalTemplateKey: string;
   gap: number | null;                    // tsp21Optimal − tsp21Current
@@ -47,15 +47,13 @@ export function weeksToEndOfAge21(age: number, currentSeasonWeek: number): numbe
   return Math.max(0, (14 - currentSeasonWeek) + (21 - age) * 14);
 }
 
-/** 12-skill display-equivalent TSP after a projection (or of the start state at zero horizon). */
-function tsp12(state: PlayerState, proj: Projection | null): number {
+/** 10-skill display-equivalent TSP after a projection (or of the start state at zero
+ *  horizon). BB convention: TSP never includes stamina or free throw. */
+function tsp10(state: PlayerState, proj: Projection | null): number {
   if (proj === null || proj.weeks.length === 0) {
-    const rate = SKILL_KEYS.reduce((a, k) => a + state.skills[k] + 0.5, 0);
-    return rate + (state.ftSkill ?? 1) + 0.5 + (state.staminaSkill ?? 1) + 0.5;
+    return SKILL_KEYS.reduce((a, k) => a + state.skills[k] + 0.5, 0);
   }
-  const last = proj.weeks[proj.weeks.length - 1].result;
-  const rate = SKILL_KEYS.reduce((a, k) => a + proj.finalSkills[k] + 0.5, 0);
-  return rate + last.ftAfter + 0.5 + last.staminaAfter + 0.5;
+  return SKILL_KEYS.reduce((a, k) => a + proj.finalSkills[k] + 0.5, 0);
 }
 
 /** Expand template blocks to exactly `horizon` weeks, repeating the last block's training. */
@@ -82,7 +80,7 @@ export function computeBoardRow(input: BoardPlayerInput): BoardRow {
       trainingId: tid, coachLevel: BOARD_COACH_LEVEL, youthTrainerLevel: BOARD_YOUTH_TRAINER,
       ...(avgMinutes != null ? { minutes: avgMinutes } : {}),
     }));
-    tsp21Current = tsp12(input.state, horizon > 0 ? project(input.state, plan, BBSCOUT, projOpts) : null);
+    tsp21Current = tsp10(input.state, horizon > 0 ? project(input.state, plan, BBSCOUT, projOpts) : null);
   }
 
   // Optimal path: best archetype template at full minutes.
@@ -91,7 +89,7 @@ export function computeBoardRow(input: BoardPlayerInput): BoardRow {
     const plan: WeekConfig[] = templateWeeks(t.blocks, horizon).map((id) => ({
       trainingId: id, coachLevel: BOARD_COACH_LEVEL, youthTrainerLevel: BOARD_YOUTH_TRAINER,
     }));
-    const v = tsp12(input.state, horizon > 0 ? project(input.state, plan, BBSCOUT, projOpts) : null);
+    const v = tsp10(input.state, horizon > 0 ? project(input.state, plan, BBSCOUT, projOpts) : null);
     if (v > best.tsp) best = { tsp: v, key: t.key };
   }
 

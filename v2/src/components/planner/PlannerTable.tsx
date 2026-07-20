@@ -111,7 +111,7 @@ export default function PlannerTable({ rows, currentSeasonWeek }: { rows: BoardR
               {header('avgMinutes', 'Min/wk', 'Avg weekly minutes at the inferred training’s positions (last 4 observed weeks); – = no boxscore data (projection assumes full minutes)')}
               {header('tspNow', 'TSP')}
               {header('benchmarkDelta', 'vs BM', 'TSP vs the NT-track benchmark for this age + season week')}
-              {header('tsp21Current', 'TSP@21 now', 'Projected 12-skill TSP at end of age 21 if the club keeps its inferred training + current minutes')}
+              {header('tsp21Current', 'TSP@21 now', 'Projected TSP at end of age 21 if the club keeps its inferred training + current minutes')}
               {header('tsp21Optimal', 'TSP@21 opt', 'Projected TSP at end of age 21 under the best archetype template at full minutes')}
               {header('gap', 'Gap', 'Optimal − current: how much development is being left on the table')}
               {header('capUsedPct', 'Cap', 'Potential-cap usage (weighted-sum score / soft cap)')}
