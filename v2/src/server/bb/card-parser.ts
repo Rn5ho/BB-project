@@ -77,6 +77,14 @@ export function parseResultsTotal(html: string): number {
   return Number(m[1]);
 }
 
+/** Level from a nomenclature link's numeric title attr. BB renders the TOP tier of a
+ *  nomenclature as "N+" (e.g. potential "10+" = all-time great = 11, verified live
+ *  2026-07-21) — a trailing '+' means one above N. */
+function titleLevel(block: string, label: string): number | null {
+  const m = block.match(new RegExp(`${label}:\\s*<a[^>]*title="(\\d+)(\\+?)"`));
+  return m ? Number(m[1]) + (m[2] ? 1 : 0) : null;
+}
+
 export function parsePlayerCards(html: string): ParsedCard[] {
   // Split on the player-details anchors; each segment up to the next anchor is one card.
   const anchors = [...html.matchAll(/<a id="cphContent_[A-Za-z0-9]+_(?:hlPlayerDetails|HyperLink1)_\d+" href="[^"]*\/player\/(\d+)\/overview\.aspx">([\s\S]*?)<\/a>/g)];
@@ -91,8 +99,8 @@ export function parsePlayerCards(html: string): ParsedCard[] {
 
     const skills: Record<string, number> = {};
     for (const [label, key] of SKILL_LABELS) {
-      const m = block.match(new RegExp(`${label}:\\s*<a[^>]*title="(\\d+)"`));
-      if (m) skills[key] = Number(m[1]);
+      const v = titleLevel(block, label);
+      if (v != null) skills[key] = v;
     }
 
     const positionLong = prefix.match(/>\s*(Point Guard|Shooting Guard|Small Forward|Power Forward|Center)\s*</)?.[1] ?? null;
@@ -109,10 +117,10 @@ export function parsePlayerCards(html: string): ParsedCard[] {
       position: positionLong ? POSITION_LONG[positionLong] : null,
       age: block.match(/Age:\s*(\d+)/) ? Number(block.match(/Age:\s*(\d+)/)![1]) : null,
       heightCm: block.match(/(\d{3})\s*cm/) ? Number(block.match(/(\d{3})\s*cm/)![1]) : null,
-      potential: block.match(/Potential:\s*<a[^>]*title="(\d+)"/) ? Number(block.match(/Potential:\s*<a[^>]*title="(\d+)"/)![1]) : null,
-      gameShape: block.match(/Game Shape:\s*<a[^>]*title="(\d+)"/) ? Number(block.match(/Game Shape:\s*<a[^>]*title="(\d+)"/)![1]) : null,
+      potential: titleLevel(block, 'Potential'),
+      gameShape: titleLevel(block, 'Game Shape'),
       salary: money(block.match(/Weekly salary:\s*\$([\s\d&nbsp;]+)/)?.[1]),
-      experience: block.match(/Experience:\s*<a[^>]*title="(\d+)"/) ? Number(block.match(/Experience:\s*<a[^>]*title="(\d+)"/)![1]) : null,
+      experience: titleLevel(block, 'Experience'),
       skills,
       tsp: block.match(/TSP:\s*<b>(\d+)<\/b>/) ? Number(block.match(/TSP:\s*<b>(\d+)<\/b>/)![1]) : null,
       isRookie: /Rookie/.test(block),

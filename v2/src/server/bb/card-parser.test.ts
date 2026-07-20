@@ -102,3 +102,23 @@ describe('parsePlayerCards — NT roster page (Repeater1 markup)', () => {
     expect(c.price).toBeNull();
   });
 });
+
+describe('parsePlayerCards — top-tier "N+" nomenclature titles', () => {
+  // BB renders the top tier of a nomenclature as "N+" in the title attr (verified live:
+  // all-time great potential = title="10+"). A synthetic card exercises the convention.
+  const card = `
+    <a id="cphContent_rptListedPlayers_hlPlayerDetails_0" href="/player/999/overview.aspx">Top Tier</a>
+    Age: 18
+    Potential: <a id="x" class="lev17" title="10+" href="/community/rules.aspx?nav=Nomenclature#Potential">all-time great</a>
+    Game Shape: <a id="x" title="7" href="#">strong</a>
+    Jump Shot: <a id="x" title="19+" href="#">legendary</a>
+    Handling: <a id="x" title="12" href="#">sensational</a>
+  `;
+  const [c] = parsePlayerCards(card);
+  it('potential "10+" → 11 (all-time great)', () => expect(c.potential).toBe(11));
+  it('skill "19+" → 20 (legendary)', () => expect(c.skills.jump_shot).toBe(20));
+  it('plain numeric titles unchanged', () => {
+    expect(c.gameShape).toBe(7);
+    expect(c.skills.handling).toBe(12);
+  });
+});
