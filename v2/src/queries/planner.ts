@@ -32,7 +32,11 @@ export async function getPlannerData(): Promise<PlannerData> {
         order by player_id, captured_at desc
       )
       select p.bb_player_id, p.name, p.height_cm, p.owner_team_id, p.owner_team_name,
-        f.age as snap_age, f.season as snap_season, f.potential, f.tsp,
+        f.age as snap_age, f.season as snap_season, f.potential,
+        -- 12-skill TSP (board benchmarks are 12-skill); the stored tsp column is BB's page
+        -- value, which excludes stamina + free throw — fallback only.
+        coalesce(f.jump_shot + f.jump_range + f.outside_def + f.handling + f.driving + f.passing
+               + f.inside_shot + f.inside_def + f.rebounding + f.shot_blocking + f.stamina + f.free_throw, f.tsp) as tsp,
         f.jump_shot, f.jump_range, f.outside_def, f.handling, f.driving, f.passing,
         f.inside_shot, f.inside_def, f.rebounding, f.shot_blocking, f.stamina, f.free_throw
       from players p
