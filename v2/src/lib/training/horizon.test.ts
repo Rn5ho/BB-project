@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   absWeek, blockBoundaries, fitBlocksToHorizon, fromAbsWeek, horizonPresets, horizonWeeks,
-  normalizePlan,
+  normalizePlan, trimBlocksToHorizon,
 } from './horizon';
 
 describe('horizonWeeks', () => {
@@ -122,5 +122,29 @@ describe('normalizePlan', () => {
       blocks: [{ trainingId: 15, weeks: 4 }], horizon: { age: 21, week: 1 }, coachLevel: 6,
     };
     expect(normalizePlan(plan, now).coachLevel).toBe(6);
+  });
+});
+
+describe('trimBlocksToHorizon', () => {
+  const blocks = [
+    { trainingId: 15, weeks: 21 },
+    { trainingId: 9, weeks: 10 },
+    { trainingId: 1, weeks: 8 },
+  ];
+  it('keeps whole blocks, truncates the crossing one, drops the rest', () => {
+    expect(trimBlocksToHorizon(blocks, 25)).toEqual([
+      { trainingId: 15, weeks: 21 },
+      { trainingId: 9, weeks: 4 },
+    ]);
+  });
+  it('short horizon truncates the first block', () => {
+    expect(trimBlocksToHorizon(blocks, 5)).toEqual([{ trainingId: 15, weeks: 5 }]);
+  });
+  it('horizon beyond the plan keeps all blocks unchanged', () => {
+    expect(trimBlocksToHorizon(blocks, 99)).toEqual(blocks);
+  });
+  it('zero horizon and empty blocks yield empty', () => {
+    expect(trimBlocksToHorizon(blocks, 0)).toEqual([]);
+    expect(trimBlocksToHorizon([], 10)).toEqual([]);
   });
 });

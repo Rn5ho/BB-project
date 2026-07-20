@@ -110,6 +110,8 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             skillsDb={profile.skills ?? {}}
             potential={profile.potential ?? player.potential}
             sublevelBounds={sublevelBounds}
+            archetypes={archetypes}
+            evalPlayer={evalPlayer}
           />
         ) : (
           <p className="text-sm text-neutral-500">Needs a full-skill snapshot (census or API) to project development.</p>

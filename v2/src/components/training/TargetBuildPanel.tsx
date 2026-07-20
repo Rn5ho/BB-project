@@ -4,6 +4,9 @@ import { useMemo, useState } from 'react';
 import BoundedNumberInput from '@/components/training/BoundedNumberInput';
 import HorizonPicker from '@/components/training/HorizonPicker';
 import { SKILLS } from '@/lib/constants';
+import { evaluateArchetype } from '@/lib/archetypes/evaluate';
+import { archetypeTargets } from '@/lib/archetypes/targets';
+import type { EffectiveArchetype, EvalPlayer } from '@/lib/archetypes/types';
 import { getTrainingType } from '@/lib/training/catalog';
 import { displayed, type PlayerState } from '@/lib/training/engine';
 import { absWeek, fromAbsWeek, horizonWeeks, type SeasonPoint } from '@/lib/training/horizon';
@@ -23,6 +26,7 @@ function blocksSummary(c: PlanCandidate): string {
 
 export default function TargetBuildPanel({
   playerState, skillsDb, currentAge, startWeekOfSeason, defaultHorizon, staff, onUsePlan,
+  archetypes, evalPlayer,
 }: {
   playerState: PlayerState;
   skillsDb: Record<string, number | null>;
@@ -31,6 +35,10 @@ export default function TargetBuildPanel({
   defaultHorizon: SeasonPoint | null;
   staff: { coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number };
   onUsePlan: (blocks: Array<{ trainingId: number; weeks: number }>, horizon: SeasonPoint) => void;
+  /** When provided, the panel proposes targets from the best-matching archetype's age-21
+   *  build on first open and auto-runs the search; a selector allows switching archetype. */
+  archetypes?: EffectiveArchetype[];
+  evalPlayer?: EvalPlayer | null;
 }) {
   const current = useMemo(
     () => Object.fromEntries(
@@ -48,14 +56,31 @@ export default function TargetBuildPanel({
   const [horizon, setHorizon] = useState<SeasonPoint>(defaultHorizon ?? { age: 22, week: 1 });
   const [run, setRun] = useState<{ fingerprint: string; result: OptimizeResult } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [archetypeId, setArchetypeId] = useState<string>('');
+  const [proposed, setProposed] = useState(false); // first-open auto-proposal done
 
   const now: SeasonPoint = { age: currentAge, week: startWeekOfSeason };
   const H = horizonWeeks(now, horizon);
   const targeted = SKILL_KEYS.filter((k) => (targets[k] ?? current[k]) > current[k]);
 
+  // Archetypes ranked by fit: matches first, then fewest failing conditions.
+  const ranked = useMemo(() => {
+    if (!archetypes || archetypes.length === 0) return [];
+    const rows = archetypes.map((a) => {
+      const r = evalPlayer ? evaluateArchetype(evalPlayer, a) : null;
+      return { a, matches: r?.matches ?? false, fails: r ? r.checks.filter((c) => !c.pass).length : 99 };
+    });
+    return rows.sort((x, y) =>
+      Number(y.matches) - Number(x.matches) || x.fails - y.fails || x.a.name.localeCompare(y.a.name));
+  }, [archetypes, evalPlayer]);
+
+  const fingerprintFor = (
+    t: Partial<Record<SkillKey, number>>, p: Record<SkillKey, TargetPriority>, h: SeasonPoint,
+  ) => JSON.stringify([current, t, p, h, staff, currentAge, startWeekOfSeason]);
+
   // Everything the search reads. A result renders only while this still matches the
   // fingerprint it ran with — editing skills, staff, targets or the deadline hides it.
-  const fingerprint = JSON.stringify([current, targets, priority, horizon, staff, currentAge, startWeekOfSeason]);
+  const fingerprint = fingerprintFor(targets, priority, horizon);
   const result = run != null && run.fingerprint === fingerprint ? run.result : null;
   const stale = run != null && result == null;
 
@@ -68,18 +93,23 @@ export default function TargetBuildPanel({
     });
   }
 
-  function runOptimize() {
+  function runOptimizeWith(
+    t: Partial<Record<SkillKey, number>>, p: Record<SkillKey, TargetPriority>, h: SeasonPoint,
+  ) {
+    const keys = SKILL_KEYS.filter((k) => (t[k] ?? current[k]) > current[k]);
+    const hWeeks = horizonWeeks(now, h);
+    if (keys.length === 0 || hWeeks === 0) return;
     setBusy(true);
-    const fp = fingerprint;
-    const specs: SkillTarget[] = targeted.map((k) => ({
-      skill: k, displayed: targets[k] ?? current[k], priority: priority[k],
+    const fp = fingerprintFor(t, p, h);
+    const specs: SkillTarget[] = keys.map((k) => ({
+      skill: k, displayed: t[k] ?? current[k], priority: p[k],
     }));
     // setTimeout lets the busy state paint before the synchronous search runs.
     setTimeout(() => {
       setRun({
         fingerprint: fp,
         result: optimizePlan(playerState, specs, {
-          horizonWeeks: H,
+          horizonWeeks: hWeeks,
           startWeekOfSeason,
           coachLevel: staff.coachLevel,
           youthTrainerLevel: staff.youthTrainerLevel,
@@ -89,6 +119,44 @@ export default function TargetBuildPanel({
       });
       setBusy(false);
     }, 20);
+  }
+
+  function runOptimize() {
+    runOptimizeWith(targets, priority, horizon);
+  }
+
+  /** Load an archetype's age-21 build as targets (skills already at target are left
+   *  untargeted) and immediately propose a plan for it. */
+  function applyArchetype(id: string) {
+    setArchetypeId(id);
+    const entry = ranked.find((r) => r.a.id === id);
+    if (!entry) return;
+    const raw = archetypeTargets(entry.a);
+    const t: Partial<Record<SkillKey, number>> = {};
+    for (const k of SKILL_KEYS) {
+      const v = raw[k];
+      if (v != null && v > current[k]) t[k] = v;
+    }
+    const p = Object.fromEntries(SKILL_KEYS.map((k) => [k, 'normal'])) as Record<SkillKey, TargetPriority>;
+    setTargets(t);
+    setPriority(p);
+    runOptimizeWith(t, p, horizon);
+  }
+
+  function handleToggleOpen() {
+    const opening = !open;
+    setOpen(opening);
+    // First open with no targets yet: propose from the best-fitting archetype.
+    if (opening && !proposed && targeted.length === 0 && ranked.length > 0) {
+      setProposed(true);
+      applyArchetype(ranked[0].a.id);
+    }
+  }
+
+  function handleHorizonChange(h: SeasonPoint | null) {
+    if (!h) return;
+    setHorizon(h);
+    if (targeted.length > 0) runOptimizeWith(targets, priority, h); // re-propose for the new deadline
   }
 
   function verdict(c: PlanCandidate): string {
@@ -109,7 +177,7 @@ export default function TargetBuildPanel({
   return (
     <div className="rounded border border-neutral-800 p-3">
       <button
-        onClick={() => setOpen(!open)}
+        onClick={handleToggleOpen}
         className="flex w-full items-center justify-between text-sm font-medium text-neutral-300"
       >
         <span>Target build (reverse planner)</span>
@@ -118,6 +186,27 @@ export default function TargetBuildPanel({
 
       {open && (
         <div className="mt-3 space-y-4">
+          {ranked.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm text-neutral-400">Archetype</span>
+              <select
+                value={archetypeId}
+                onChange={(e) => { if (e.target.value) applyArchetype(e.target.value); }}
+                className="rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm"
+              >
+                {archetypeId === '' && <option value="">Pick an archetype…</option>}
+                {ranked.map(({ a, matches, fails }) => (
+                  <option key={a.id} value={a.id}>
+                    {a.name}{matches ? ' ✓' : fails < 99 ? ` (${fails} short)` : ''}
+                  </option>
+                ))}
+              </select>
+              <span className="text-xs text-neutral-500">
+                loads its age-21 build as targets and proposes a plan
+              </span>
+            </div>
+          )}
+
           <p className="text-xs text-neutral-500">
             Raise the skills you care about; untouched skills are ignored. The search assumes
             full minutes and your current staff/facility settings.
@@ -154,7 +243,7 @@ export default function TargetBuildPanel({
             <span className="text-sm text-neutral-400">Deadline</span>
             <HorizonPicker
               value={horizon}
-              onChange={(h) => { if (h) setHorizon(h); }}
+              onChange={handleHorizonChange}
               currentAge={currentAge}
               required
             />

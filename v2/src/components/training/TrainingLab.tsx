@@ -11,6 +11,8 @@ import type { PlayerState } from '@/lib/training/engine';
 import type { SublevelBounds } from '@/lib/training/ensemble';
 import type { PlanTemplate } from '@/lib/training/templates';
 import type { ProjectablePlayer } from '@/queries/training';
+import type { EffectiveArchetype, EvalPlayer } from '@/lib/archetypes/types';
+import { SKILL_DB_NAMES, SKILL_KEYS } from '@/lib/training/types';
 
 export interface SelectedPlayer {
   bbPlayerId: number;
@@ -27,13 +29,24 @@ export interface SelectedPlayer {
 
 type Mode = 'database' | 'manual';
 
+function tsp10(skills: Record<string, number | null>): number | null {
+  let sum = 0;
+  for (const k of SKILL_KEYS) {
+    const v = skills[SKILL_DB_NAMES[k]];
+    if (v == null) return null;
+    sum += v;
+  }
+  return sum;
+}
+
 export default function TrainingLab({
-  players, selected, startWeekOfSeason, templates,
+  players, selected, startWeekOfSeason, templates, archetypes,
 }: {
   players: ProjectablePlayer[];
   selected: SelectedPlayer | null;
   startWeekOfSeason: number;
   templates: PlanTemplate[];
+  archetypes?: EffectiveArchetype[];
 }) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>(selected ? 'database' : 'manual');
@@ -50,6 +63,15 @@ export default function TrainingLab({
     }),
     [manual],
   );
+
+  const selectedEval: EvalPlayer | null = selected ? {
+    ageNow: selected.age, skills: selected.skillsDb, potential: selected.potential,
+    heightCm: selected.heightCm, tsp: tsp10(selected.skillsDb), bestPosition: selected.bestPosition,
+  } : null;
+  const manualEval: EvalPlayer = {
+    ageNow: manual.age, skills: manual.skills, potential: manual.potential,
+    heightCm: manual.heightCm, tsp: tsp10(manual.skills), bestPosition: null,
+  };
 
   async function handleSaveSelected(value: PlanValue) {
     if (!selected) return;
@@ -119,6 +141,8 @@ export default function TrainingLab({
                 templates={templates}
                 onSave={handleSaveSelected}
                 sublevelBounds={selected.sublevelBounds}
+                archetypes={archetypes}
+                evalPlayer={selectedEval}
               />
             </div>
           ) : (
@@ -137,6 +161,8 @@ export default function TrainingLab({
             age={manual.age}
             startWeekOfSeason={startWeekOfSeason}
             templates={templates}
+            archetypes={archetypes}
+            evalPlayer={manualEval}
           />
         </div>
       )}

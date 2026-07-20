@@ -9,7 +9,8 @@ import { SKILLS } from '@/lib/constants';
 import { bandSeries, displayEquivalent, planToWeeks } from '@/lib/training/bridge';
 import { displayed, type PlayerState } from '@/lib/training/engine';
 import { ensembleProject, type SublevelBounds } from '@/lib/training/ensemble';
-import { horizonWeeks, normalizePlan, type SeasonPoint } from '@/lib/training/horizon';
+import { MAX_HORIZON_AGE, horizonWeeks, normalizePlan, trimBlocksToHorizon, type SeasonPoint } from '@/lib/training/horizon';
+import type { EffectiveArchetype, EvalPlayer } from '@/lib/archetypes/types';
 import { estimateSalary } from '@/lib/training/salary';
 import type { PlanTemplate } from '@/lib/training/templates';
 import { SKILL_DB_NAMES, SKILL_KEYS, type Skills } from '@/lib/training/types';
@@ -22,6 +23,7 @@ function toDbDisplayed(s: Skills): Record<string, number | null> {
 
 export default function ProjectionPanel({
   playerState, skillsDb, potential, age, startWeekOfSeason, initialPlan, templates, onSave, sublevelBounds,
+  archetypes, evalPlayer,
 }: {
   playerState: PlayerState;
   skillsDb: Record<string, number | null>;
@@ -33,6 +35,9 @@ export default function ProjectionPanel({
   /** When provided, the Save button appears and calls this. When omitted, Save is hidden. */
   onSave?: (value: PlanValue) => Promise<void>;
   sublevelBounds?: SublevelBounds;
+  /** Forwarded to the reverse planner: enables archetype-driven plan proposals. */
+  archetypes?: EffectiveArchetype[];
+  evalPlayer?: EvalPlayer | null;
 }) {
   const now: SeasonPoint | null = age != null ? { age: Math.floor(age), week: startWeekOfSeason } : null;
   const [plan, setPlan] = useState<PlanValue>(() => {
@@ -44,8 +49,18 @@ export default function ProjectionPanel({
         horizon: initialPlan.horizon ?? null,
       }, now);
     }
+    // No saved plan: default to the end-of-U-21 horizon (age-aware — an 18yo gets ~4
+    // seasons, a 20yo gets what's left) with the template trimmed to fit, instead of a
+    // fixed-length template that overruns U-21 for most players.
     const first = templates[0];
-    return { blocks: first ? first.blocks.map((b) => ({ ...b })) : [], coachLevel: 5, youthTrainerLevel: 0, gymLevel: 0, trainingCourtLevel: 0, horizon: null };
+    let blocks = first ? first.blocks.map((b) => ({ ...b })) : [];
+    const seedHorizon: SeasonPoint | null =
+      now && now.age < MAX_HORIZON_AGE ? { age: MAX_HORIZON_AGE, week: 1 } : null;
+    if (seedHorizon && now) blocks = trimBlocksToHorizon(blocks, horizonWeeks(now, seedHorizon));
+    return normalizePlan(
+      { blocks, coachLevel: 5, youthTrainerLevel: 0, gymLevel: 0, trainingCourtLevel: 0, horizon: seedHorizon },
+      now,
+    );
   });
   const [saving, startSaving] = useTransition();
   const [saved, setSaved] = useState(false);
@@ -169,6 +184,8 @@ export default function ProjectionPanel({
           skillsDb={skillsDb}
           currentAge={now.age}
           startWeekOfSeason={startWeekOfSeason}
+          archetypes={archetypes}
+          evalPlayer={evalPlayer}
           defaultHorizon={fitted.horizon}
           staff={{
             coachLevel: fitted.coachLevel, youthTrainerLevel: fitted.youthTrainerLevel,

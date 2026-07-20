@@ -7,9 +7,11 @@ import type { SublevelBounds } from '@/lib/training/ensemble'; // type-only impo
 import type { PlanTemplate } from '@/lib/training/templates';
 import type { PlanRow, WeekMinutes } from '@/queries/minutes'; // type-only import is fine (no IO)
 import type { PlanValue } from './PlanEditor';
+import type { EffectiveArchetype, EvalPlayer } from '@/lib/archetypes/types';
 
 export default function DevelopmentSection({
   playerId, playerState, startWeekOfSeason, weeks, age, initialPlan, templates, skillsDb, potential, sublevelBounds,
+  archetypes, evalPlayer,
 }: {
   playerId: number;
   playerState: PlayerState;
@@ -21,6 +23,8 @@ export default function DevelopmentSection({
   skillsDb: Record<string, number | null>;
   potential: number | null;
   sublevelBounds?: SublevelBounds;
+  archetypes?: EffectiveArchetype[];
+  evalPlayer?: EvalPlayer | null;
 }) {
   // `weeks` (per-position minutes history) isn't used by the projection panel today —
   // kept in the prop list because the player page already fetches and passes it.
@@ -49,6 +53,8 @@ export default function DevelopmentSection({
       templates={templates}
       onSave={handleSave}
       sublevelBounds={sublevelBounds}
+      archetypes={archetypes}
+      evalPlayer={evalPlayer}
     />
   );
 }

@@ -161,6 +161,18 @@ old one-week convention (align in a follow-up); optimizer TSP tier is weak under
 pruning (documented in optimize.ts). Spec:
 `docs/superpowers/specs/2026-07-15-training-horizons-reverse-planner-design.md`.
 
+**Smart plan defaults + archetype proposals (2026-07-20)** — unsaved plans no longer seed
+the raw first template with no horizon (which overran U-21 for everyone): ProjectionPanel
+seeds horizon = end of U-21 (`MAX_HORIZON_AGE`, age-aware) with the template trimmed via
+`trimBlocksToHorizon` (horizon.ts — unlike fitBlocksToHorizon it never leaves earlier
+blocks overshooting). TargetBuildPanel takes `archetypes` + `evalPlayer` (wired on player
+page + both training-lab modes): on first open it picks the best-fitting archetype
+(matches first, then fewest failing checks), loads its **age-21 tier** '>=' rate-skill
+thresholds as targets (`src/lib/archetypes/targets.ts`; '<=', ST/FT and attribute rules
+are constraints, not targets; skills already at target stay untargeted) and auto-runs the
+beam search — switching archetype or deadline re-runs automatically. Deadline picker
+unchanged (start-of-21 / end-of-U21 / custom age·week).
+
 **Community-paste investigation 2026-07-18** — two anonymous pastes (training rates +
 height multipliers) resolved via three-way diff + 10 fresh live probes as a transcription
 of the CURRENTLY DEPLOYED buzzeriq.com open_source model, which has drifted past its

@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { db, seasons } from '@/db';
 import { getPlayerDetail } from '@/queries/player-detail';
+import { getEffectiveArchetypes } from '@/queries/archetypes';
 import { getPopAnchors, getProjectablePlayers } from '@/queries/training';
 import { getCurrentSeasonId } from '@/queries/players';
 import { getActivePlan } from '@/queries/minutes';
@@ -20,9 +21,10 @@ export default async function TrainingPage({
 }) {
   const { player: playerParam } = await searchParams;
 
-  const [players, seasonNow] = await Promise.all([
+  const [players, seasonNow, archetypes] = await Promise.all([
     getProjectablePlayers(),
     getCurrentSeasonId(),
+    getEffectiveArchetypes(),
   ]);
   const [seasonRow] = await db.select().from(seasons).where(eq(seasons.id, seasonNow));
   const startWeekOfSeason = seasonRow ? Math.min(14, Math.max(1, seasonWeekOf(new Date(), seasonRow.start))) : 1;
@@ -84,6 +86,7 @@ export default async function TrainingPage({
         selected={selected}
         startWeekOfSeason={startWeekOfSeason}
         templates={PLAN_TEMPLATES}
+        archetypes={archetypes}
       />
     </main>
   );

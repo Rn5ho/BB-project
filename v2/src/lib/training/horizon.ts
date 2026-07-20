@@ -66,6 +66,21 @@ export function fitBlocksToHorizon(
   };
 }
 
+/** Cut blocks down to at most `horizon` weeks: whole blocks kept, the crossing block
+ *  truncated, everything after dropped. Unlike fitBlocksToHorizon this never leaves
+ *  earlier blocks overshooting — use it to SEED a plan that fits the horizon. */
+export function trimBlocksToHorizon(blocks: PlanBlock[], horizon: number): PlanBlock[] {
+  const out: PlanBlock[] = [];
+  let used = 0;
+  for (const b of blocks) {
+    if (used >= horizon) break;
+    const weeks = Math.min(b.weeks, horizon - used);
+    out.push({ trainingId: b.trainingId, weeks });
+    used += weeks;
+  }
+  return out;
+}
+
 /** Per-block (age, week) positions walked from `now`. `end` is the point ENTERED
  *  after the block's last week (exclusive end = start of whatever follows). */
 export function blockBoundaries(
