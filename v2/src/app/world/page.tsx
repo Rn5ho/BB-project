@@ -4,6 +4,14 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
+function chipClass(active: boolean): string {
+  return `rounded border px-2 py-0.5 ${
+    active
+      ? 'border-amber-500 text-amber-400 bg-amber-500/10'
+      : 'border-neutral-700 text-neutral-400 hover:text-white hover:border-neutral-500'
+  }`;
+}
+
 export default async function WorldPage({ searchParams }: { searchParams: Promise<{ country?: string }> }) {
   const { country } = await searchParams;
   const all = await listPlayers('world');
@@ -12,15 +20,17 @@ export default async function WorldPage({ searchParams }: { searchParams: Promis
   return (
     <main className="p-6">
       <h1 className="text-lg font-semibold mb-1">World — tracked players</h1>
-      <div className="flex flex-wrap gap-2 mb-4 text-sm">
-        <Link href="/world" className={!country ? 'text-amber-500' : 'text-neutral-400'}>All</Link>
+      <div className="flex flex-wrap items-center gap-1.5 mb-4 text-sm">
+        <span className="text-neutral-500 mr-1">Country:</span>
+        <Link href="/world" className={chipClass(!country)}>All</Link>
         {countries.map((c) => (
           <Link
             key={c}
-            href={`/world?country=${encodeURIComponent(c)}`}
-            className={country === c ? 'text-amber-500' : 'text-neutral-400 hover:text-white'}
+            href={country === c ? '/world' : `/world?country=${encodeURIComponent(c)}`}
+            title={country === c ? 'Clear country filter' : `Show only ${c}`}
+            className={chipClass(country === c)}
           >
-            {c}
+            {c}{country === c ? ' ✕' : ''}
           </Link>
         ))}
       </div>
