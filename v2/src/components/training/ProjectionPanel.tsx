@@ -116,6 +116,13 @@ export default function ProjectionPanel({
 
   const salaryNow = estimateSalary(playerState.skills).salary;
   const salaryProjected = result ? estimateSalary(result.central.finalSkills).salary : null;
+  // TSP = 10-rate-skill sum (never stamina/FT). Now = displayed levels; projected = display equivalents.
+  const tspNow = SKILL_KEYS.every((k) => skillsDb[SKILL_DB_NAMES[k]] != null)
+    ? SKILL_KEYS.reduce((sum, k) => sum + (skillsDb[SKILL_DB_NAMES[k]] as number), 0)
+    : null;
+  const tspProjected = result
+    ? SKILL_KEYS.reduce((sum, k) => sum + displayEquivalent(result.central.finalSkills[k]), 0)
+    : null;
   const projectedDbSkills = result ? toDbDisplayed(result.central.finalSkills) : null;
 
   return (
@@ -157,6 +164,8 @@ export default function ProjectionPanel({
               </table>
             </div>
             <div className="flex flex-wrap gap-x-6 gap-y-1 mt-3 text-sm text-neutral-400">
+              <span>TSP now: {tspNow ?? '–'}</span>
+              <span>TSP projected: {tspProjected != null ? tspProjected.toFixed(1) : '–'}</span>
               <span>Salary now: {salaryNow != null ? `$${salaryNow.toLocaleString('en-US')}` : '–'}</span>
               <span>Salary projected: {salaryProjected != null ? `$${salaryProjected.toLocaleString('en-US')}` : '–'}</span>
               <span>Final age: {result.central.finalAge}</span>
