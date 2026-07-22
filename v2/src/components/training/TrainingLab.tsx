@@ -153,13 +153,13 @@ export default function TrainingLab({
 
       {mode === 'manual' && (
         <div className="space-y-6">
-          <ManualPlayerForm value={manual} onChange={setManual} />
+          <ManualPlayerForm value={manual} onChange={setManual} currentWeek={startWeekOfSeason} />
           <ProjectionPanel
             playerState={manualPlayerState}
             skillsDb={manual.skills}
             potential={manual.potential}
             age={manual.age}
-            startWeekOfSeason={startWeekOfSeason}
+            startWeekOfSeason={manual.week}
             templates={templates}
             archetypes={archetypes}
             evalPlayer={manualEval}

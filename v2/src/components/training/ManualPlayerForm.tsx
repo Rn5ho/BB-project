@@ -6,6 +6,8 @@ import BoundedNumberInput from './BoundedNumberInput';
 
 export interface ManualPlayer {
   age: number;
+  /** Season week (1–14) the projection starts from; 1 = fresh player at season start. */
+  week: number;
   heightCm: number;
   potential: number;
   skills: Record<string, number>;
@@ -13,6 +15,7 @@ export interface ManualPlayer {
 
 export const DEFAULT_MANUAL_PLAYER: ManualPlayer = {
   age: 18,
+  week: 1,
   heightCm: 196,
   potential: 8,
   skills: Object.fromEntries(SKILLS.map((s) => [s.dbKey, 7])) as Record<string, number>,
@@ -26,10 +29,12 @@ function heightLabel(cm: number): string {
 
 /** Age/height/potential + a 12-skill grid for building a hypothetical player from scratch. */
 export default function ManualPlayerForm({
-  value, onChange,
+  value, onChange, currentWeek,
 }: {
   value: ManualPlayer;
   onChange: (next: ManualPlayer) => void;
+  /** The real current season week — shown as a hint next to the week input. */
+  currentWeek?: number;
 }) {
   return (
     <div className="space-y-4">
@@ -39,6 +44,14 @@ export default function ManualPlayerForm({
           <BoundedNumberInput
             value={value.age} min={18} max={35}
             onCommit={(n) => onChange({ ...value, age: n })}
+            className="w-20 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm text-white"
+          />
+        </label>
+        <label className="flex flex-col gap-0.5 text-xs text-neutral-400" title="Week of the season the projection starts from. Use 1 for a hypothetical fresh player at season start; set the current week to mirror a real player.">
+          Season week{currentWeek != null ? ` (now: ${currentWeek})` : ''}
+          <BoundedNumberInput
+            value={value.week} min={1} max={14}
+            onCommit={(n) => onChange({ ...value, week: n })}
             className="w-20 rounded border border-neutral-700 bg-neutral-900 px-2 py-1 text-sm text-white"
           />
         </label>
