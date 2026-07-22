@@ -108,7 +108,9 @@ CP/OSL 12 phantom pops).
 
 **Training lab tab shipped 2026-07-14** — `/training` (nav: Training): pick a tracked
 full-skill player (`?player=ID`, saves plans via the same server action) or "Build a player"
-(manual age/height/potential + 12 skills) → `ProjectionPanel` (extracted from
+(manual age/height/potential + 12 skills; since 2026-07-22 also a Season week input, default
+1 = fresh draftee at season start — it overrides `startWeekOfSeason` in manual mode only, so
+hypothetical builds are no longer pinned to the real current week) → `ProjectionPanel` (extracted from
 DevelopmentSection: band chart, projection table, cap bars, plan editor; Save hidden without
 `onSave`). Query: `getProjectablePlayers()`. Catalog carries in-game `label`s ("One on One
 (PG/SG)") alongside research keys ("DR for 12"). Gated-forum mining (logged-in BbWebSession):
