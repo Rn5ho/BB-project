@@ -22,6 +22,25 @@ export interface EnqueueOpts {
   clearRoster?: boolean;
 }
 
+/**
+ * Nudge the Hetzner worker to claim the row now. Best-effort: if the box is
+ * unreachable the worker's safety poll picks the run up on its next pass.
+ */
+async function wakeWorker(): Promise<void> {
+  const url = process.env.CENSUS_WAKE_URL;
+  const secret = process.env.CENSUS_WAKE_SECRET;
+  if (!url || !secret) return;
+  try {
+    await fetch(url, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${secret}` },
+      signal: AbortSignal.timeout(5000),
+    });
+  } catch (e) {
+    console.warn('[census] wake failed; safety poll will pick the run up:', e);
+  }
+}
+
 export async function enqueueCensus(
   opts: EnqueueOpts,
   offseasonConfirm: string,
@@ -38,6 +57,7 @@ export async function enqueueCensus(
       .insert(censusRuns)
       .values({ status: 'requested', totals: { opts: { ...opts, confirmed: true } } })
       .returning({ id: censusRuns.id });
+    await wakeWorker();
     revalidatePath('/census');
     return { ok: true, runId: row.id };
   } catch (e) {
