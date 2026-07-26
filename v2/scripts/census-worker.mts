@@ -22,9 +22,15 @@ type CensusOpts = import('../src/server/census/run').CensusOpts;
 
 /** Set while the loop is sleeping; calling it ends the sleep early. */
 let interruptSleep: (() => void) | null = null;
+/** A wake that arrived while the loop wasn't sleeping — don't lose it. */
+let pendingWake = false;
 let lastWake = 0;
 
 function sleep(ms: number): Promise<void> {
+  if (pendingWake) {
+    pendingWake = false;
+    return Promise.resolve();
+  }
   return new Promise<void>((resolve) => {
     const timer = setTimeout(() => {
       interruptSleep = null;
@@ -111,7 +117,10 @@ if (WAKE_SECRET) {
     if (now - lastWake < WAKE_DEBOUNCE_MS) return;
     lastWake = now;
     console.log('[worker] wake received');
-    interruptSleep?.();
+    // Mid-run or mid-claim there is no sleep to interrupt; flag it so the loop
+    // skips its next sleep instead of idling for the full safety interval.
+    if (interruptSleep) interruptSleep();
+    else pendingWake = true;
   }).listen(WAKE_PORT, () => console.log(`[worker] wake endpoint listening on :${WAKE_PORT}`));
 } else {
   console.warn('[worker] CENSUS_WAKE_SECRET unset — no wake endpoint; queued runs wait for the safety poll');
