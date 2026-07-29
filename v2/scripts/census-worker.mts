@@ -7,9 +7,11 @@ import { createServer } from 'node:http';
  * Safety net only. The dashboard pings /wake on enqueue, so a queued run starts
  * immediately and this interval never has to be short. It MUST stay well above
  * Neon's scale-to-zero threshold (~5 min idle): a 30 s poll kept the compute
- * awake 24/7 and burned the whole monthly CU allowance on empty claim queries.
+ * awake 24/7 and burned the whole monthly CU allowance on empty claim queries,
+ * and even the 30 min poll cost ~30 CU-hrs/month in wake-ups (each poll keeps
+ * the compute up ~5 min). Worst case a wake is lost, a queued run waits a day.
  */
-const POLL_MS = Number(process.env.CENSUS_POLL_MS ?? 1_800_000);
+const POLL_MS = Number(process.env.CENSUS_POLL_MS ?? 86_400_000);
 const WAKE_PORT = Number(process.env.CENSUS_WAKE_PORT ?? 8791);
 const WAKE_SECRET = process.env.CENSUS_WAKE_SECRET;
 /** Ignore wakes arriving faster than this so a leaked token can't hammer Neon. */
