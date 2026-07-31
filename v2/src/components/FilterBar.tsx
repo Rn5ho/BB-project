@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { POSITIONS, POTENTIAL_LEVELS, SKILLS, type SkillDbKey } from '@/lib/constants';
 import { DEFAULT_FILTER, isFilterDefault, countActiveSkillMins, type FilterState } from '@/lib/table';
 
@@ -22,6 +22,14 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
   // Local string state for age inputs so clearing doesn't snap to 0
   const [ageMinStr, setAgeMinStr] = useState<string>(String(filter.ageMin));
   const [ageMaxStr, setAgeMaxStr] = useState<string>(String(filter.ageMax));
+
+  // Re-sync the strings when the committed filter changes outside this component
+  // (localStorage hydration in PlayerTable, reset) — otherwise the inputs display
+  // stale values while a different range is actually applied.
+  useEffect(() => {
+    setAgeMinStr(String(filter.ageMin));
+    setAgeMaxStr(String(filter.ageMax));
+  }, [filter.ageMin, filter.ageMax]);
   const isDirty = !isFilterDefault(filter);
 
   function set<K extends keyof FilterState>(key: K, value: FilterState[K]) {
