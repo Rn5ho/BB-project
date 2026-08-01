@@ -78,14 +78,16 @@ export async function listPlayers(
   const slovene = sql`(p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))`;
   const notSlovene = sql`(p.country_id is distinct from 66 and (p.nationality is null or p.nationality not in ('Slovenia', 'Slovenija')))`;
   const where = scope === 'slovenia' ? sql`where ${slovene}` : sql`where ${notSlovene}`;
-  const season = await getCurrentSeasonId();
 
   // Progress baseline: an explicit override (the "progress since" picker) wins; otherwise
   // the review mark. Epoch default keeps a single SQL shape: it matches no snapshots, so
   // baselines (and therefore deltas) stay null.
-  const mark = scope === 'slovenia' && !opts?.baselineAt
-    ? (await db.select().from(reviewMarks).where(eq(reviewMarks.scope, 'slovenia')).limit(1))[0] ?? null
-    : null;
+  const [season, mark] = await Promise.all([
+    getCurrentSeasonId(),
+    scope === 'slovenia' && !opts?.baselineAt
+      ? db.select().from(reviewMarks).where(eq(reviewMarks.scope, 'slovenia')).limit(1).then((r) => r[0] ?? null)
+      : Promise.resolve(null),
+  ]);
   const markedAt = opts?.baselineAt ?? mark?.markedAt ?? new Date(0);
 
   const result = await db.execute(sql`

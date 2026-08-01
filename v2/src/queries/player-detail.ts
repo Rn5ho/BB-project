@@ -19,12 +19,14 @@ export interface PlayerDetail {
 }
 
 export async function getPlayerDetail(bbPlayerId: number): Promise<PlayerDetail | null> {
-  const [p] = await db.select().from(players).where(eq(players.bbPlayerId, bbPlayerId));
+  const [[p], seasonNow, rawSnaps, noteRows, tagRows] = await Promise.all([
+    db.select().from(players).where(eq(players.bbPlayerId, bbPlayerId)),
+    getCurrentSeasonId(),
+    db.select().from(snapshots).where(eq(snapshots.playerId, bbPlayerId)).orderBy(snapshots.capturedAt),
+    db.select().from(notes).where(eq(notes.playerId, bbPlayerId)).orderBy(desc(notes.createdAt)),
+    db.select().from(tags).where(eq(tags.playerId, bbPlayerId)),
+  ]);
   if (!p) return null;
-  const seasonNow = await getCurrentSeasonId();
-  const rawSnaps = await db.select().from(snapshots).where(eq(snapshots.playerId, bbPlayerId)).orderBy(snapshots.capturedAt);
-  const noteRows = await db.select().from(notes).where(eq(notes.playerId, bbPlayerId)).orderBy(desc(notes.createdAt));
-  const tagRows = await db.select().from(tags).where(eq(tags.playerId, bbPlayerId));
 
   const snapsData: Snap[] = rawSnaps.map((s) => {
     const skills = {} as Record<SkillKey, number | null>;
