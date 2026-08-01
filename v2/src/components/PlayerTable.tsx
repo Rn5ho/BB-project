@@ -27,6 +27,11 @@ const STORAGE_KEY: Record<Variant, string> = {
 
 const NEW_CHIP_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 
+// Rows rendered before the "Show all" escape hatch. The world list is thousands of
+// rows (~25 cells each); rendering them all makes initial paint and every
+// filter/sort interaction sluggish, while sorting puts the relevant rows on top.
+const RENDER_CAP = 300;
+
 // ─── localStorage sanitizers ─────────────────────────────────────────────────
 
 function sanitizeFilter(raw: Partial<FilterState>): Partial<FilterState> {
@@ -89,6 +94,7 @@ export default function PlayerTable({
   const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
   const [sort, setSort] = useState<SortState>(DEFAULT_SORT[variant]);
   const [showSkills, setShowSkills] = useState<boolean>(defaultShowSkills);
+  const [showAll, setShowAll] = useState(false); // per-visit, deliberately not persisted
   const [hydrated, setHydrated] = useState(false);
 
   // Load from localStorage after mount (hydration-safe)
@@ -140,6 +146,7 @@ export default function PlayerTable({
     ? filtered.filter((p) => (archetypeMatches[p.bbPlayerId] ?? []).includes(filter.archetype))
     : filtered;
   const sorted = sortRows(archetypeFiltered, sort);
+  const visible = showAll ? sorted : sorted.slice(0, RENDER_CAP);
 
   return (
     <div>
@@ -188,7 +195,7 @@ export default function PlayerTable({
             </tr>
           </thead>
           <tbody>
-            {sorted.map((p) => (
+            {visible.map((p) => (
               <tr key={p.bbPlayerId} className="border-b border-neutral-900 hover:bg-neutral-900/50">
                 <td className="py-1.5 pr-3 whitespace-nowrap">
                   <Link
@@ -271,6 +278,17 @@ export default function PlayerTable({
             )}
           </tbody>
         </table>
+        {!showAll && sorted.length > RENDER_CAP && (
+          <div className="py-3 text-center text-sm text-neutral-400">
+            Showing first {RENDER_CAP} of {sorted.length.toLocaleString()} rows ·{' '}
+            <button
+              onClick={() => setShowAll(true)}
+              className="text-amber-500 hover:underline cursor-pointer"
+            >
+              Show all
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
