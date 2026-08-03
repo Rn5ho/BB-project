@@ -9,7 +9,7 @@ BB Scout is being rebuilt as v2. Design spec: `docs/superpowers/specs/2026-07-10
 
 **Phase 2 (Layer 1 automation) shipped 2026-07-10** — Daily Vercel cron `/api/cron/daily` (CRON_SECRET-protected, excluded from auth proxy). Jobs: seasons sync daily; players sync Mondays or on `?force=players`. Sync jobs in `v2/src/server/{bb,sync}/`. Settings page tracks countries, sync log, manual sync. Pages scope by `country_id` (66 = Slovenia) not nationality text. Slovenia page shows full ~820-player 18–21 universe (weekly refresh). Snapshot dedup: one 'api' snapshot per player per UTC day (delete+bulk-reinsert on same-day re-sync).
 
-**Phase 3 (Market sweep) shipped 2026-07-10** — Daily market sweep in `/api/cron/daily` runs every day after seasons. Scope: ages 18–21, potential ≥6, all countries, newest-first with 30h staleness stop-condition, MAX_PAGES 90 (configurable via MARKET_MAX_PAGES env override). Core modules: `src/server/bb/web-session.ts` (plain-HTTP buzzerbeater.com login — reused by Phase 4 census) and `src/server/bb/card-parser.ts` (fixture-tested). BB scraping gotchas: dates use BACKSLASH separators "7\10\2026", flag images identified by `id` containing `nationalFlag`, numeric skill values in `title` attributes. Market snapshots carry full skills + `starting_price` / `auction_ends_at` / `is_rookie_listing`. World page shows on-market/rookie chips. Settings has "Sync market now" button. Environment: `BB_WEB_PASSWORD` required (+ optional `BB_WEB_USERNAME`, falls back to `BB_API_USERNAME`) added to Vercel + `.env.local`. Cron route `maxDuration: 300`. Known minor: ~2.4% of market nationalities don't match the countries catalog (BB flag names like "Hellas" vs catalog) — future alias table.
+**Phase 3 (Market sweep) shipped 2026-07-10** *(scheduling + search shape superseded 2026-08-03 — see "Market flood fix" below; parser/session modules unchanged)* — Daily market sweep in `/api/cron/daily` runs every day after seasons. Scope: ages 18–21, potential ≥6, all countries, newest-first with 30h staleness stop-condition, MAX_PAGES 90 (configurable via MARKET_MAX_PAGES env override). Core modules: `src/server/bb/web-session.ts` (plain-HTTP buzzerbeater.com login — reused by Phase 4 census) and `src/server/bb/card-parser.ts` (fixture-tested). BB scraping gotchas: dates use BACKSLASH separators "7\10\2026", flag images identified by `id` containing `nationalFlag`, numeric skill values in `title` attributes. Market snapshots carry full skills + `starting_price` / `auction_ends_at` / `is_rookie_listing`. World page shows on-market/rookie chips. Settings has "Sync market now" button. Environment: `BB_WEB_PASSWORD` required (+ optional `BB_WEB_USERNAME`, falls back to `BB_API_USERNAME`) added to Vercel + `.env.local`. Cron route `maxDuration: 300`. Known minor: ~2.4% of market nationalities don't match the countries catalog (BB flag names like "Hellas" vs catalog) — future alias table.
 
 **Phase 4 (Census CLI) shipped 2026-07-10** — Local CLI `npm run census` (from `v2/`) cycles every Slovenian 18–21 candidate through the U-21 NT roster in batches of ≤18: recruit → scrape full skills → dismiss → save `census` snapshots. NOT a Vercel job (performs write actions on the real NT account and runs for many minutes). Single-player live round-trip verified 2026-07-10.
 
@@ -30,6 +30,43 @@ Source `census` snapshots; NT team 1066; roster page `/country/66/jnt/players.as
 - **Daily cron moved to Hetzner, then fully local (2026-08-03)**: `/home/btcedge/bb-scout/bb-daily-cron.sh` in btcedge's crontab (06:00 UTC) runs BOTH jobs directly on the box via tsx — `MARKET_MAX_PAGES=100 npx tsx scripts/market-sweep.mts` (one search per age 18/19/20/21 so each stays under BB's 1000-result search cap, newest-first with staleness early-stop; oldest-first recovery pass if a single age band still exhausts the window) then `npx tsx scripts/daily-sync.mts` (seasons/minutes/inference; players+teams Mondays or `--force-players`). A second crontab entry runs market-sweep alone at 18:00 UTC while the season-end flood keeps both passes at BB's 1000-result cap (2000+ active listings; listings between the two windows can otherwise expire unseen between daily sweeps). The Vercel `/api/cron/daily` route still exists (with `?skip=market`) for manual/backup use, but grew past its 300 s `maxDuration` as the DB grew — 504s on Jul 20/27 and Aug 3 meant whole days of missed market capture. Vercel cron removed from `vercel.json` — Hetzner is the single scheduler.
 - **Testing**: To enqueue without UI, insert directly: `insert into census_runs (status, totals) values ('requested', '{"opts":{"all":true,"minPotential":9,"max":1,"confirmed":true}}');`
 - **Fallback**: Desktop `v2/census.bat` launcher still works for running census from the user's PC.
+
+**Market flood fix + daily sync fully on Hetzner (2026-08-03)** — Investigation started from
+high-potential 21yo Hellas listings missing from the dashboard. Two stacked root causes:
+1. **Vercel 504s**: `/api/cron/daily` exceeded its 300 s `maxDuration` on Jul 20, Jul 27 and
+   Aug 3 (whole days of lost market capture). Even with market removed the route still 504s —
+   minutes+inference have outgrown the limit as the DB grew. All scheduled work now runs on
+   Hetzner via tsx (see the cron bullet above); the Vercel route remains manual/backup only
+   (`?skip=market` skips the sweep there).
+2. **BB's transfer search caps results at 1000.** The old single 18–21 search hit the cap
+   during the season-end flood (~1,700+ active pot≥6 listings) and, sorted newest-first,
+   silently lost every older still-active listing — 7 of 8 listed Hellas stars were beyond
+   the window. Fix: `runMarketSweep` gained `minAge`/`maxAge`/`oldestFirst` opts;
+   `scripts/market-sweep.mts` sweeps **each age separately** (18/19/20/21 — verified totals
+   387/511/380/444, all far under the cap, all reaching the staleness early-stop = full
+   coverage), with an oldest-first recovery pass per band if one ever exhausts the window.
+- New scripts (run from `v2/` with tsx; both log JSON counts): `scripts/market-sweep.mts`
+  (per-age two-pass market) and `scripts/daily-sync.mts` (seasons/minutes/inference;
+  players+teams on Mondays UTC or `--force-players`). Older phase notes saying jobs "run
+  daily in `/api/cron/daily`" now mean "run daily via these scripts"; the route calls the
+  same sync functions.
+- **TEMPORARY: 18:00 UTC crontab entry** runs market-sweep a second time while the season-end
+  flood lasts (belt-and-braces against >1000 listings/day per band). Remove it once the new
+  season starts and `bb-market-sweep.log` shows small per-band totals again.
+- **Write-safety audit (2026-08-03)**: the census (`NtBrowser` recruit/dismiss) is the ONLY
+  code path that writes to BB. Market sweep, daily-sync and self-trainer are read-only —
+  their only POSTs are search/pagination/`lbSwitchTeams` navigation postbacks. Census is
+  triple-gated (dashboard-only enqueue, typed OFFSEASON confirm, worker never sets
+  `confirmed`). Note: an enqueued census can start up to 24 h late via the worker's safety
+  poll if the wake ping is lost — don't enqueue one within ~2 days of a season start.
+  Known cosmetic: `census_runs` #9/#10 stuck at status 'running' since Jul 10 (crashed runs;
+  inert — the worker only claims 'requested' rows).
+- **Ops gotchas**: run long jobs detached (`nohup ... &`) — an SSH drop killed a daily-sync
+  mid-run; logs live at `/home/btcedge/bb-cron.log` (06:00 run) and
+  `/home/btcedge/bb-market-sweep.log` (18:00 run); if `git pull` on the box fails with
+  "insufficient permission for .git/objects", fix with `chown -R btcedge:btcedge
+  /home/btcedge/bb-scout`. Cost impact of the moves: sync bursts total ~0.4–0.6 Neon
+  CU-hr/day (~$1.5–2/mo) — the scheduled load now lives on the flat-rate Hetzner box.
 
 **Phase 5.5 (Owner team/manager column + DMI fix) shipped 2026-07-11** — Player tables now display the owner TEAM name (links to BB team page) and owner MANAGER alias. New `teams` table (`team_id` pk, `name`, `owner_alias`, `updated_at`) populated via `teaminfo.aspx` API. Backfill: `npm run backfill:teams` (fetches distinct `players.owner_team_id`, ~865 teams). Daily cron calls `refreshTeams()` (in `src/server/sync/teams.ts`) after player sync to refresh >7 days old entries. Parsers/fetch: `parseTeamInfoXml`, `fetchTeamInfo` in `src/server/bb/xml-api.ts`. **DMI fix**: Census + market snapshots lack DMI (only `api` snapshots have it); players query previously read DMI from newest snapshot (often census with null DMI → showed "–"). Fixed with `latest_dmi` CTE in `src/queries/players.ts` reading DMI from most recent snapshot with non-null DMI. PlayerListRow gained `ownerTeamId`, `ownerTeamName`, `ownerManager`.
 
