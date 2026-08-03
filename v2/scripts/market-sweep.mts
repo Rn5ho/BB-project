@@ -10,6 +10,13 @@ config({ path: '.env.local' });
  * in the rare case a single age band still exhausts the 1000-result window.
  */
 const { runMarketSweep } = await import('../src/server/sync/market');
+const { runSeasonsSync } = await import('../src/server/sync/seasons');
+
+// Seasons FIRST, always: snapshots are stamped with the current season id, and derived
+// age = snap_age + (current_season - snap_season). Sweeping with a stale season id on
+// rollover day would stamp post-rollover ages with the pre-rollover season, skewing
+// every swept player's derived age +1 until their next capture.
+console.log(JSON.stringify({ seasons: await runSeasonsSync('cron') }));
 
 const AGES = [18, 19, 20, 21];
 for (const age of AGES) {
