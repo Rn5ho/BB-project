@@ -36,7 +36,7 @@ export interface MarketSweepCounts {
   hitPageCap: boolean;
 }
 
-export async function runMarketSweep(opts: { fullSweep?: boolean; oldestFirst?: boolean } = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
+export async function runMarketSweep(opts: { fullSweep?: boolean; oldestFirst?: boolean; minAge?: number; maxAge?: number } = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
   const [logRow] = await db.insert(syncLog).values({ jobType: 'market', trigger }).returning({ id: syncLog.id });
   try {
     const session = new BbWebSession();
@@ -45,8 +45,8 @@ export async function runMarketSweep(opts: { fullSweep?: boolean; oldestFirst?: 
     // search
     const formPage = await session.get('/manage/transferlist.aspx');
     const fields = collectFormFields(formPage);
-    fields['ctl00$cphContent$tbMinAge'] = MIN_AGE;
-    fields['ctl00$cphContent$tbMaxAge'] = MAX_AGE;
+    fields['ctl00$cphContent$tbMinAge'] = opts.minAge != null ? String(opts.minAge) : MIN_AGE;
+    fields['ctl00$cphContent$tbMaxAge'] = opts.maxAge != null ? String(opts.maxAge) : MAX_AGE;
     fields['ctl00$cphContent$ddlPotentialMin'] = MIN_POTENTIAL;
     fields['ctl00$cphContent$ddlsortBy'] = opts.oldestFirst ? SORT_OLDEST_FIRST : SORT_NEWEST_FIRST;
     let page = await session.post('/manage/transferlist.aspx', {
