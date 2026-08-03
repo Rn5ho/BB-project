@@ -41,6 +41,29 @@ async function wakeWorker(): Promise<void> {
   }
 }
 
+/**
+ * Explicit wake with feedback — the dashboard "Wake worker now" button. Covers the case
+ * where an enqueue's best-effort ping was lost (box unreachable at that moment): without
+ * it, a 'requested' run waits for the worker's daily safety poll.
+ */
+export async function wakeWorkerNow(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const url = process.env.CENSUS_WAKE_URL;
+  const secret = process.env.CENSUS_WAKE_SECRET;
+  if (!url || !secret) return { ok: false, error: 'CENSUS_WAKE_URL / CENSUS_WAKE_SECRET not configured' };
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${secret}` },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) return { ok: false, error: `wake endpoint returned ${res.status}` };
+    revalidatePath('/census');
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: String(e) };
+  }
+}
+
 export async function enqueueCensus(
   opts: EnqueueOpts,
   offseasonConfirm: string,

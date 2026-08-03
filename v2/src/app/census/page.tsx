@@ -2,6 +2,7 @@ import { db, censusRuns, censusItems } from '@/db';
 import { desc, eq } from 'drizzle-orm';
 import CensusRunForm from '@/components/census/CensusRunForm';
 import CensusLivePoller from '@/components/census/CensusLivePoller';
+import WakeWorkerButton from '@/components/census/WakeWorkerButton';
 import { formatCensusFilters, formatCensusResult, type CensusTotals } from '@/lib/format-census';
 
 export const dynamic = 'force-dynamic';
@@ -43,8 +44,9 @@ export default async function CensusPage() {
       <section>
         <h1 className="text-lg font-semibold mb-1">Queue census</h1>
         <p className="text-sm text-neutral-500 mb-5">
-          Enqueues a census run for the Hetzner worker to pick up. The worker polls the database
-          every ~30 s, claims the request, and runs it with Playwright on the server.
+          Enqueues a census run for the Hetzner worker to pick up. Queueing pings the worker to
+          claim the request immediately and run it with Playwright on the server; if the ping is
+          lost, the worker&rsquo;s daily safety poll (or the Wake button below) picks it up.
         </p>
         <CensusRunForm />
       </section>
@@ -53,7 +55,15 @@ export default async function CensusPage() {
         <div className="flex items-center gap-3 mb-3">
           <h2 className="font-medium">Recent census runs</h2>
           {hasActiveRun && <CensusLivePoller />}
+          <WakeWorkerButton />
         </div>
+        {runs.some((r) => r.status === 'requested') && (
+          <p className="mb-3 text-xs text-neutral-500">
+            A run is sitting at &ldquo;requested&rdquo; — the worker&rsquo;s automatic wake ping may
+            have been lost. &ldquo;Wake worker now&rdquo; makes it claim the run immediately
+            (otherwise the daily safety poll picks it up).
+          </p>
+        )}
 
         <table className="w-full text-sm">
           <thead className="text-left text-neutral-400 border-b border-neutral-800">
