@@ -17,6 +17,8 @@ export const dynamic = 'force-dynamic';
  * ?force=market   → no-op branch; market already runs unconditionally
  * ?force=minutes  → larger minutes batch (clubBatch 200, matchBatch 800)
  * ?force=all      → forces player sync (market already runs)
+ * ?skip=market    → skip the market sweep (the Hetzner cron runs it locally via
+ *                   scripts/market-sweep.mts — no Vercel time limit, two-pass flood recovery)
  */
 export async function GET(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
@@ -24,9 +26,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
   }
   const force = req.nextUrl.searchParams.get('force'); // 'players' | 'market' | 'minutes' | 'all'
+  const skip = req.nextUrl.searchParams.get('skip'); // 'market'
   const results: Record<string, unknown> = {};
   results.seasons = await runSeasonsSync('cron');
-  results.market = await runMarketSweep({}, 'cron'); // incremental daily
+  if (skip !== 'market') {
+    results.market = await runMarketSweep({}, 'cron'); // incremental daily
+  }
   const minutesOpts = force === 'minutes'
     ? { clubBatch: 200, matchBatch: 800 }
     : { clubBatch: 100, matchBatch: 400 };

@@ -11,6 +11,7 @@ const MIN_AGE = '18';
 const MAX_AGE = '21';
 const MIN_POTENTIAL = '6'; // allstar; below is NT-irrelevant (spec §6)
 const SORT_NEWEST_FIRST = '2'; // "Auction Time Reversed" — fixed 72h auctions ⇒ newest listings end last
+const SORT_OLDEST_FIRST = '1'; // "Auction Time" — ending soonest first; reaches listings pushed past BB's 1000-result cap in a season-end flood
 const STALE_AFTER_HOURS = 30; // seen by yesterday's sweep
 const MAX_PAGES = Number(process.env.MARKET_MAX_PAGES ?? 90);
 
@@ -35,7 +36,7 @@ export interface MarketSweepCounts {
   hitPageCap: boolean;
 }
 
-export async function runMarketSweep(opts: { fullSweep?: boolean } = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
+export async function runMarketSweep(opts: { fullSweep?: boolean; oldestFirst?: boolean } = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
   const [logRow] = await db.insert(syncLog).values({ jobType: 'market', trigger }).returning({ id: syncLog.id });
   try {
     const session = new BbWebSession();
@@ -47,7 +48,7 @@ export async function runMarketSweep(opts: { fullSweep?: boolean } = {}, trigger
     fields['ctl00$cphContent$tbMinAge'] = MIN_AGE;
     fields['ctl00$cphContent$tbMaxAge'] = MAX_AGE;
     fields['ctl00$cphContent$ddlPotentialMin'] = MIN_POTENTIAL;
-    fields['ctl00$cphContent$ddlsortBy'] = SORT_NEWEST_FIRST;
+    fields['ctl00$cphContent$ddlsortBy'] = opts.oldestFirst ? SORT_OLDEST_FIRST : SORT_NEWEST_FIRST;
     let page = await session.post('/manage/transferlist.aspx', {
       ...collectHiddenFields(formPage),
       ...fields,
@@ -71,7 +72,8 @@ export async function runMarketSweep(opts: { fullSweep?: boolean } = {}, trigger
 
       const reachedEnd = counts.pagesRead * 10 >= totalListed || cards.length === 0;
       if (reachedEnd) break;
-      if (!opts.fullSweep && pageIsStale(cards, asOf, STALE_AFTER_HOURS)) {
+      // Oldest-first pages start maximally stale by definition — the staleness stop only makes sense newest-first.
+      if (!opts.fullSweep && !opts.oldestFirst && pageIsStale(cards, asOf, STALE_AFTER_HOURS)) {
         staleStreak++;
         if (staleStreak >= 2) { counts.stoppedEarly = true; break; } // 1 overlap page after the first stale one
       } else {
