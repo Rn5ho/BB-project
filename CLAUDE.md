@@ -68,6 +68,32 @@ high-potential 21yo Hellas listings missing from the dashboard. Two stacked root
   /home/btcedge/bb-scout`. Cost impact of the moves: sync bursts total ~0.4–0.6 Neon
   CU-hr/day (~$1.5–2/mo) — the scheduled load now lives on the flat-rate Hetzner box.
 
+**Season-72→73 rollover prep + draft intake census (2026-08-03 evening)** —
+- **Rookie age mechanics (important at every season boundary)**: derived age everywhere is
+  `snap_age + (current_season − snap_season)` — there is NO stored age and nothing to
+  migrate at rollover; existing players +1 automatically when the seasons sync sees the
+  flip. BUT new draftees appear BEFORE the official rollover already showing their
+  new-season age (rookies don't +1 at the rollover following their draft), so any rookie
+  snapshot stamped with the old season derives +1 too old after the flip until a
+  post-rollover snapshot restamps them. **Standing action: after each rollover run
+  `npx tsx scripts/daily-sync.mts --force-players` on the box** (or wait for Monday's
+  cron) to restamp the universe with the new season id.
+- Related fix: `market-sweep.mts` now runs the seasons sync FIRST (before any sweeping) so
+  rollover-day market snapshots can't pair post-rollover ages with the pre-rollover season.
+- **Draft intake**: BB's Players API picked up the new Slovenian draft class the same day
+  the intake appeared in-game (836 → 1,457 players 18–21; +621 new). A forced players sync
+  pulls them in; the census preview only sees players already in the DB, so force the sync
+  before queueing an intake census.
+- **Census #21 (intake census, pre-rollover by user's choice)**: 365 candidates (18–19,
+  pot ≥6, clear-roster) → 362 captured / 3 failed in ~48 min; 16-man roster auto-restored.
+  Rookie snapshots carry season 72 → their derived ages read +1 after the flip until the
+  post-rollover players sync (see standing action above); captured skills stay valid.
+- **Wake button**: the enqueue→worker wake ping from Vercel can get lost (run #21 sat at
+  'requested'). `/census` now has a "Wake worker now" button (`wakeWorkerNow` server
+  action — same endpoint, but with user-visible success/error) plus a hint whenever a run
+  is stuck at 'requested'. Manual fallback from the box: POST `localhost:8791/wake` with
+  `CENSUS_WAKE_SECRET` from `v2/.env.local`.
+
 **Phase 5.5 (Owner team/manager column + DMI fix) shipped 2026-07-11** — Player tables now display the owner TEAM name (links to BB team page) and owner MANAGER alias. New `teams` table (`team_id` pk, `name`, `owner_alias`, `updated_at`) populated via `teaminfo.aspx` API. Backfill: `npm run backfill:teams` (fetches distinct `players.owner_team_id`, ~865 teams). Daily cron calls `refreshTeams()` (in `src/server/sync/teams.ts`) after player sync to refresh >7 days old entries. Parsers/fetch: `parseTeamInfoXml`, `fetchTeamInfo` in `src/server/bb/xml-api.ts`. **DMI fix**: Census + market snapshots lack DMI (only `api` snapshots have it); players query previously read DMI from newest snapshot (often census with null DMI → showed "–"). Fixed with `latest_dmi` CTE in `src/queries/players.ts` reading DMI from most recent snapshot with non-null DMI. PlayerListRow gained `ownerTeamId`, `ownerTeamName`, `ownerManager`.
 
 **Phase 5 (Player detail page) shipped 2026-07-10** — New `/players/[id]` route shows comprehensive player skill progression and history. Core components:
