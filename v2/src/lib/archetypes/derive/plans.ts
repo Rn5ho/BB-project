@@ -34,6 +34,9 @@ export interface ClusterPlanResult {
   failingChecks: Array<{ field: string; op: string; threshold: number | string; actual: number | string | null }>;
   finishingDeltas: Partial<Record<SkillKey, number>>;
   weeklyPopRate: number;
+  /** Worst-case floor: same plan, forward-simulated from worst hidden sublevels (displayed
+   *  −0.99) under degraded minutes. Present only when `opts.stress` was requested. */
+  stressed?: { reachableEntering21: boolean; enteringTsp: number };
 }
 
 const DB_TO_KEY = new Map(SKILL_KEYS.map((k) => [SKILL_DB_NAMES[k], k]));
@@ -51,11 +54,18 @@ export function targetsFor(a: DefaultArchetype, floor: DefenseFloor): SkillTarge
   return targets;
 }
 
-function toState(d: DrafteeProfile): PlayerState {
+/** Displayed skills mean anything in (d−1, d] (BB rounds UP); `offset` picks where in that
+ *  band to start. offset 0.5 = midpoint (ceiling assumption); offset 0.99 = worst case
+ *  (floor assumption, just above the pop boundary into the next-lower display). */
+function toStateAt(d: DrafteeProfile, offset: number): PlayerState {
   const skills = Object.fromEntries(
-    SKILL_KEYS.map((k) => [k, Math.max(0.5, d.skills[k] - 0.5)]),
+    SKILL_KEYS.map((k) => [k, Math.max(0.5, d.skills[k] - offset)]),
   ) as Record<SkillKey, number>;
   return { skills, age: 18, heightCm: d.heightCm, potential: d.potential, ftSkill: 0.5, staminaSkill: 4.5 };
+}
+
+function toState(d: DrafteeProfile): PlayerState {
+  return toStateAt(d, 0.5);
 }
 
 /** Displayed skills at the state ENTERING each age, from a projection started at age 18 wk 1. */
@@ -72,6 +82,7 @@ function stateEntering(proj: Projection, age: 19 | 20 | 21): Record<SkillKey, nu
 export function planForCluster(
   archetype: DefaultArchetype, floor: DefenseFloor,
   draftees: DrafteeProfile[], scenario: StaffScenario,
+  opts?: { stress?: { minutes: number } },
 ): ClusterPlanResult {
   const targets = targetsFor(archetype, floor);
   const p50 = draftees.find((d) => d.label === 'p50') ?? draftees[0];
@@ -130,6 +141,22 @@ export function planForCluster(
     rules: archetype.rules, source: 'default',
   });
 
+  // Stress floor (worst-start, degraded minutes): evaluates the SAME plan under adversity —
+  // no re-run of the beam search. Worst hidden sublevels (displayed −0.99) for every draftee,
+  // degraded minutes on every week, judged against the WORST draftee (p25).
+  let stressed: ClusterPlanResult['stressed'];
+  if (opts?.stress) {
+    const stressedWeekCfgs = weekCfgs.map((w) => ({ ...w, minutes: opts.stress!.minutes }));
+    const stressedProjections = draftees.map((d) =>
+      project(toStateAt(d, 0.99), stressedWeekCfgs, BBSCOUT, { startWeekOfSeason: 1 }));
+    const p25 = draftees.find((d) => d.label === 'p25') ?? draftees[0];
+    const proj25 = stressedProjections[draftees.indexOf(p25)] ?? stressedProjections[0];
+    const entering21Stressed = stateEntering(proj25, 21);
+    const reachableEntering21 = targets.every((t) => entering21Stressed[t.skill] >= t.displayed);
+    const enteringTsp = SKILL_KEYS.reduce((a, k) => a + entering21Stressed[k], 0);
+    stressed = { reachableEntering21, enteringTsp };
+  }
+
   return {
     scenario: scenario.name,
     candidate: best,
@@ -141,5 +168,6 @@ export function planForCluster(
       .map(({ field, op, threshold, actual }) => ({ field: String(field), op, threshold, actual })),
     finishingDeltas,
     weeklyPopRate: proj50.weeks.length ? proj50.popCount / proj50.weeks.length : 0,
+    stressed,
   };
 }

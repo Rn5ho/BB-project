@@ -5,6 +5,10 @@
 //                   npm run training:archetypes -- --plans --coach 6 --yt 6 [--gym 1] [--tc 1]
 //                     -- adds a THIRD "custom" staff scenario next to neutral (5/5) and elite
 //                     (7/7/gym2/tc2), same as picking staff levels in the training planner.
+//                   npm run training:archetypes -- --plans --stress [--coach 6 --yt 6 ...]
+//                     -- --stress adds a worst-start/degraded-minutes feasibility FLOOR next to
+//                     each scenario's ceiling (same plan, forward-simulated from worst hidden
+//                     sublevels under degraded minutes); only meaningful together with --plans.
 // Read-only: SELECT statements only. Report goes to docs/research/market-archetypes/REPORT.md.
 import { config } from 'dotenv';
 config({ path: '.env.local' });
@@ -22,7 +26,11 @@ const SIL_MIN = 0.12; // silhouette runs structurally low in 10-dim shape space;
 const JACCARD_MIN = 0.6;
 const SEED = 72;
 const DRAFTEE_TOP_SHARE = 0.25; // draftee profiles model the recruit-worthy top slice by starting TSP
+const STRESS_MINUTES = 38; // ~80% effective minutes (bbscout full band: 44 at <=19, 47 at 20+)
 const PLANS = process.argv.includes('--plans');
+// Worst-start/degraded-minutes feasibility floor next to each scenario's ceiling. Only
+// meaningful together with --plans (planForCluster is only called under PLANS).
+const STRESS = process.argv.includes('--stress');
 // Optional custom staff levels (--coach/--yt/--gym/--tc): appended as a third scenario so the
 // report shows feasibility under what the owner can actually request from clubs.
 function argNum(name: string): number | undefined {
@@ -375,7 +383,10 @@ if (belowGate.length) {
 // archetypes' rules, Slovenia gap analysis. Kept as one block so neutralTiersByKey stays in
 // scope for the Slovenia section appended here later. ----
 const neutralTiersByKey = new Map<string, ClusterPlanResult['tiers']>();
-const planSummaries: Array<{ key: string; scenario: string; reachable: boolean; fullRule: boolean }> = [];
+const planSummaries: Array<{
+  key: string; scenario: string; reachable: boolean; fullRule: boolean;
+  stressedReachable: boolean | null;
+}> = [];
 // Scenarios for this run: the fixed neutral/elite bracket + an optional CLI-provided custom
 // scenario (--coach/--yt/--gym/--tc), same knobs as the training planner UI.
 const scenarios = CUSTOM_STAFF
@@ -390,6 +401,14 @@ if (PLANS) {
   lines.push('season is a finishing phase. Feasibility shown under: ' + scenarios
     .map((s) => `${s.name} (coach ${s.coachLevel}/YT ${s.youthTrainerLevel}/gym ${s.gymLevel}/TC ${s.trainingCourtLevel})`)
     .join(' · ') + '.');
+  if (STRESS) {
+    lines.push('Ceiling vs floor: REACHABLE/NOT above is the CEILING — full minutes and midpoint');
+    lines.push('starting sublevels (a displayed skill of d assumed to sit at internal d−0.5). The');
+    lines.push('"stress floor" line adds the FLOOR — the same plan, forward-simulated from the worst');
+    lines.push(`hidden sublevels (d−0.99; BB rounds displayed skills UP) under degraded minutes`);
+    lines.push(`(${STRESS_MINUTES}/wk) for the worst (p25) draftee. A real player's outcome lives`);
+    lines.push('somewhere between the two.');
+  }
   lines.push('Week 14 is a normal training week but has fewer games (no 3-game week), so minutes are');
   lines.push('scarcer: narrow 1-2-position trainings may miss full effective minutes that week, and clubs');
   lines.push('commonly schedule multi-position trainings (e.g. Jump Shot, Rebounding) instead. Our');
@@ -411,19 +430,24 @@ if (PLANS) {
       const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members);
       lines.push('', `### Path to ${c.derived.archetype.name}`, '');
       // Run planForCluster ONCE per scenario per cluster; results[0] is neutral (scenarios[0]).
-      const results = scenarios.map((s) => planForCluster(c.derived.archetype, floor, draftees, s));
+      const results = scenarios.map((s) => planForCluster(c.derived.archetype, floor, draftees, s,
+        STRESS ? { stress: { minutes: STRESS_MINUTES } } : undefined));
       for (let i = 0; i < scenarios.length; i++) {
         const scenario = scenarios[i];
         const r = results[i];
         const blockStr = r.blocks.map((b) => `${getTrainingType(b.trainingId).label}×${b.weeks}`).join(' → ');
-        lines.push(`**${scenario.name}**: ${r.feasibleEntering21 ? 'REACHABLE entering 21' : 'NOT reachable entering 21'} · full-rule end check ${r.fullRuleMatch ? 'PASS' : `FAIL (${r.failingChecks.map((f) => `${f.field} ${f.op} ${f.threshold} got ${f.actual}`).join('; ')})`} · pop rate ${r.weeklyPopRate.toFixed(2)}/wk`);
+        const stressSuffix = (STRESS && r.stressed)
+          ? ` · stress floor (worst-start, ${STRESS_MINUTES}min/wk): ${r.stressed.reachableEntering21 ? 'still reachable' : 'NOT reachable'} (entering-21 TSP ${r.stressed.enteringTsp})`
+          : '';
+        lines.push(`**${scenario.name}**: ${r.feasibleEntering21 ? 'REACHABLE entering 21' : 'NOT reachable entering 21'} · full-rule end check ${r.fullRuleMatch ? 'PASS' : `FAIL (${r.failingChecks.map((f) => `${f.field} ${f.op} ${f.threshold} got ${f.actual}`).join('; ')})`} · pop rate ${r.weeklyPopRate.toFixed(2)}/wk${stressSuffix}`);
         lines.push('');
         lines.push(`Plan: ${blockStr || '(no plan found)'}`);
         lines.push('');
         lines.push(`Finishing deltas during age-21 season: ${Object.entries(r.finishingDeltas).map(([k, d]) => `${k.toUpperCase()}+${d}`).join(' ') || 'none'}`);
         lines.push('');
         planSummaries.push({ key: c.derived.archetype.key, scenario: scenario.name,
-          reachable: r.feasibleEntering21, fullRule: r.fullRuleMatch });
+          reachable: r.feasibleEntering21, fullRule: r.fullRuleMatch,
+          stressedReachable: r.stressed?.reachableEntering21 ?? null });
       }
       // Patch byAge 19/20/21 tiers into the proposed rules from the NEUTRAL scenario (results[0] —
       // Slovenian prescription). 18 stays blank — draft-day skills are noise.
@@ -556,6 +580,11 @@ if (PLANS) {
   const customName = planSummaries.find((p) => p.scenario.startsWith('custom'))?.scenario;
   if (customName) {
     summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === customName && p.reachable).length} of ${planSummaries.length / scenarioCount} builds are reachable under the requested ${customName} staff`);
+  }
+  if (STRESS) {
+    const neutralResults = planSummaries.filter((p) => p.scenario === 'neutral');
+    const survivingCount = neutralResults.filter((p) => p.stressedReachable === true).length;
+    summaryLines.push(`- under stress (worst-start draftee, ${STRESS_MINUTES}min/wk), ${survivingCount} of ${neutralResults.length} builds remain reachable entering 21 under neutral staff`);
   }
 }
 summaryLines.push('');

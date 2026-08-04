@@ -1,6 +1,6 @@
 # Market Archetypes — Season 72 (age-21 flood)
 
-Generated: 2026-08-04T15:12:42.880Z · window start 2026-07-10 · seed 72
+Generated: 2026-08-04T15:33:33.027Z · window start 2026-07-10 · seed 72
 Re-run: `npm run training:archetypes` from v2/ (bump SEASON for next season's flood).
 
 ## What this says, in plain language
@@ -16,6 +16,7 @@ versions carry, and (with --plans) the optimized week-by-week training path to r
 - wing: 245 candidates -> 1 distinct build
 - 5 of 5 builds are reachable by a Slovenian-club draftee entering age 21 under neutral staff
 - 5 of 5 builds are reachable under the requested custom (coach 6/YT 6/gym 1/TC 1) staff
+- under stress (worst-start draftee, 38min/wk), 0 of 5 builds remain reachable entering 21 under neutral staff
 
 ## Cohort funnel
 
@@ -185,6 +186,12 @@ See `proposed-defaults.snippet.ts` next to this report. Younger byAge tiers are 
 
 Anchor: the build must be USABLE entering age 21 (WC squad selection); the age-21
 season is a finishing phase. Feasibility shown under: neutral (coach 5/YT 5/gym 0/TC 0) · elite (coach 7/YT 7/gym 2/TC 2) · custom (coach 6/YT 6/gym 1/TC 1) (coach 6/YT 6/gym 1/TC 1).
+Ceiling vs floor: REACHABLE/NOT above is the CEILING — full minutes and midpoint
+starting sublevels (a displayed skill of d assumed to sit at internal d−0.5). The
+"stress floor" line adds the FLOOR — the same plan, forward-simulated from the worst
+hidden sublevels (d−0.99; BB rounds displayed skills UP) under degraded minutes
+(38/wk) for the worst (p25) draftee. A real player's outcome lives
+somewhere between the two.
 Week 14 is a normal training week but has fewer games (no 3-game week), so minutes are
 scarcer: narrow 1-2-position trainings may miss full effective minutes that week, and clubs
 commonly schedule multi-position trainings (e.g. Jump Shot, Rebounding) instead. Our
@@ -199,19 +206,19 @@ Draftee profiles: outside from the top-25%-starting-TSP slice (15) of 59 pot>=7 
 
 ### Path to Market: outside #1
 
-**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.71/wk
+**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.71/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 99)
 
 Plan: Outside Defense (PG)×14 → One on One (PG/SG)×42
 
 Finishing deltas during age-21 season: none
 
-**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.73/wk
+**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.73/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 102)
 
 Plan: Outside Defense (PG)×13 → One on One (PG/SG)×43
 
 Finishing deltas during age-21 season: none
 
-**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.71/wk
+**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.71/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 101)
 
 Plan: Outside Defense (PG)×13 → One on One (PG/SG)×43
 
@@ -227,19 +234,19 @@ byAge tiers (entering-age, neutral staff, lower envelope of p25/p50/p75 draftees
 
 ### Path to Market: outside #2
 
-**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.91/wk
+**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.91/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 101)
 
 Plan: One on One (PG/SG)×2 → Outside Defense (PG)×9 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×20 → Passing (PG)×19
 
 Finishing deltas during age-21 season: PA+6
 
-**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.75/wk
+**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.75/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 104)
 
 Plan: Outside Defense (PG)×7 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×2 → Outside Defense (PG)×3 → One on One (PG/SG)×3 → Jump Shot (PG/SG)×2 → One on One (PG/SG)×37
 
 Finishing deltas during age-21 season: ID+1
 
-**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.73/wk
+**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.73/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 102)
 
 Plan: Outside Defense (PG)×8 → One on One (PG/SG)×3 → Outside Defense (PG)×4 → One on One (PG/SG)×3 → Jump Shot (PG/SG)×2 → One on One (PG/SG)×36
 
@@ -255,19 +262,19 @@ byAge tiers (entering-age, neutral staff, lower envelope of p25/p50/p75 draftees
 
 ### Path to Market: inside #1
 
-**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.96/wk
+**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.96/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 74)
 
 Plan: Inside Defense (C)×1 → Shot Blocking (C)×2 → Inside Defense (C)×1 → Shot Blocking (C)×2 → Inside Defense (C)×2 → Shot Blocking (C)×2 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×2 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×2 → Rebounding (PF/C)×4 → Shot Blocking (C)×5 → One on One (SF/PF)×25
 
 Finishing deltas during age-21 season: JS+2 HA+4 DR+5 IS+3
 
-**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 1.18/wk
+**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 1.18/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 83)
 
 Plan: Inside Defense (C)×1 → Shot Blocking (C)×3 → Inside Defense (C)×2 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×2 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×2 → Rebounding (PF/C)×4 → Shot Blocking (C)×4 → One on One (SF/PF)×29
 
 Finishing deltas during age-21 season: JS+3 JR+1 OD+1 HA+4 DR+5 PA+1 IS+3
 
-**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 1.02/wk
+**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 1.02/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 79)
 
 Plan: Shot Blocking (C)×3 → Inside Defense (C)×2 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×2 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×1 → Inside Defense (C)×1 → Shot Blocking (C)×4 → Rebounding (PF/C)×4 → Shot Blocking (C)×4 → One on One (SF/PF)×26
 
@@ -283,19 +290,19 @@ byAge tiers (entering-age, neutral staff, lower envelope of p25/p50/p75 draftees
 
 ### Path to Market: inside #2
 
-**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.75/wk
+**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.75/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 68)
 
 Plan: Inside Defense (C)×1 → Inside Scoring (C)×1 → Inside Defense (C)×12 → Rebounding (PF/C)×1 → Inside Defense (C)×5 → Rebounding (PF/C)×4 → Inside Scoring (C)×17 → One on One (SF/PF)×15
 
 Finishing deltas during age-21 season: JS+2 HA+4 DR+6 IS+1
 
-**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.79/wk
+**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.79/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 74)
 
 Plan: Inside Defense (C)×16 → Rebounding (PF/C)×4 → Inside Scoring (C)×16 → Shot Blocking (C)×20
 
 Finishing deltas during age-21 season: ID+1 RB+2 SB+4
 
-**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.84/wk
+**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.84/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 71)
 
 Plan: Inside Defense (C)×1 → Inside Scoring (C)×1 → Inside Defense (C)×16 → Rebounding (PF/C)×3 → Inside Scoring (C)×7 → Rebounding (PF/C)×2 → Inside Scoring (C)×8 → One on One (SF/PF)×18
 
@@ -311,19 +318,19 @@ byAge tiers (entering-age, neutral staff, lower envelope of p25/p50/p75 draftees
 
 ### Path to Market: wing #1
 
-**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.91/wk
+**neutral**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.91/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 91)
 
 Plan: Outside Defense (PG)×1 → One on One (PG/SG)×2 → Outside Defense (PG)×7 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×2 → Outside Defense (PG)×2 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×2 → Ball Handling (PG)×3 → One on One (SF/PF)×29
 
 Finishing deltas during age-21 season: JS+3 IS+2
 
-**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 1.07/wk
+**elite**: REACHABLE entering 21 · full-rule end check PASS · pop rate 1.07/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 99)
 
 Plan: Outside Defense (PG)×5 → One on One (PG/SG)×2 → Outside Defense (PG)×2 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×3 → One on One (PG/SG)×16 → Passing (PG)×21
 
 Finishing deltas during age-21 season: PA+7
 
-**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.86/wk
+**custom (coach 6/YT 6/gym 1/TC 1)**: REACHABLE entering 21 · full-rule end check PASS · pop rate 0.86/wk · stress floor (worst-start, 38min/wk): NOT reachable (entering-21 TSP 95)
 
 Plan: Outside Defense (PG)×7 → One on One (PG/SG)×2 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×1 → One on One (PG/SG)×1 → Outside Defense (PG)×2 → One on One (PG/SG)×35
 
