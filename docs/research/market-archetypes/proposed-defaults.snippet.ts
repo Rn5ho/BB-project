@@ -4,9 +4,90 @@ export const MARKET_ARCHETYPES = [
   {
     "key": "mkt72-outside-1",
     "name": "Market: outside #1",
-    "description": "Derived from S72 market flood (496 members, 66 elite).",
+    "description": "Derived from S72 market flood (210 members, 5 elite).",
     "rules": {
       "conditions": [
+        {
+          "kind": "field",
+          "field": "driving",
+          "op": ">=",
+          "byAge": {
+            "21": 11
+          }
+        },
+        {
+          "kind": "field",
+          "field": "handling",
+          "op": ">=",
+          "byAge": {
+            "21": 12
+          }
+        },
+        {
+          "kind": "field",
+          "field": "jump_shot",
+          "op": ">=",
+          "byAge": {
+            "21": 8
+          }
+        },
+        {
+          "kind": "field",
+          "field": "outside_def",
+          "op": ">=",
+          "byAge": {
+            "21": 15
+          }
+        },
+        {
+          "kind": "field",
+          "field": "potential",
+          "op": ">=",
+          "byAge": {
+            "21": 7
+          }
+        },
+        {
+          "kind": "field",
+          "field": "height_cm",
+          "op": ">=",
+          "byAge": {
+            "21": 183
+          }
+        }
+      ]
+    }
+  },
+  {
+    "key": "mkt72-outside-2",
+    "name": "Market: outside #2",
+    "description": "Derived from S72 market flood (286 members, 61 elite).",
+    "rules": {
+      "conditions": [
+        {
+          "kind": "field",
+          "field": "driving",
+          "op": ">=",
+          "byAge": {
+            "21": 14
+          }
+        },
+        {
+          "kind": "field",
+          "field": "handling",
+          "op": ">=",
+          "byAge": {
+            "21": 15
+          }
+        },
+        {
+          "kind": "field",
+          "field": "jump_shot",
+          "op": ">=",
+          "byAge": {
+            "21": 14
+          }
+        },
         {
           "kind": "field",
           "field": "outside_def",
@@ -50,6 +131,14 @@ export const MARKET_ARCHETYPES = [
         },
         {
           "kind": "field",
+          "field": "rebounding",
+          "op": ">=",
+          "byAge": {
+            "21": 13
+          }
+        },
+        {
+          "kind": "field",
           "field": "inside_def",
           "op": ">=",
           "byAge": {
@@ -83,6 +172,30 @@ export const MARKET_ARCHETYPES = [
       "conditions": [
         {
           "kind": "field",
+          "field": "inside_shot",
+          "op": ">=",
+          "byAge": {
+            "21": 18
+          }
+        },
+        {
+          "kind": "field",
+          "field": "shot_blocking",
+          "op": ">=",
+          "byAge": {
+            "21": 9
+          }
+        },
+        {
+          "kind": "field",
+          "field": "rebounding",
+          "op": ">=",
+          "byAge": {
+            "21": 11
+          }
+        },
+        {
+          "kind": "field",
           "field": "inside_def",
           "op": ">=",
           "byAge": {
@@ -114,6 +227,22 @@ export const MARKET_ARCHETYPES = [
     "description": "Derived from S72 market flood (245 members, 0 elite).",
     "rules": {
       "conditions": [
+        {
+          "kind": "field",
+          "field": "driving",
+          "op": ">=",
+          "byAge": {
+            "21": 5
+          }
+        },
+        {
+          "kind": "field",
+          "field": "handling",
+          "op": ">=",
+          "byAge": {
+            "21": 5
+          }
+        },
         {
           "kind": "field",
           "field": "inside_def",

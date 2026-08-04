@@ -15,7 +15,7 @@ const WINDOW_START = '2026-07-10';
 const DELTA = 1.0;
 const POT_FLOOR = { outside: 7, wing: 7, inside: 8, appendix: 7 } as const;
 const K_RANGE = { outside: [2, 5], wing: [2, 5], inside: [2, 4] } as const;
-const SIL_MIN = 0.22;
+const SIL_MIN = 0.12; // silhouette runs structurally low in 10-dim shape space; 0.22 over-collapsed to k=1
 const JACCARD_MIN = 0.6;
 const SEED = 72;
 const PLANS = process.argv.includes('--plans');
@@ -96,6 +96,7 @@ interface GroupResult {
   group: 'outside' | 'inside' | 'wing';
   k: number; silhouetteScores: Record<number, number>; kmeansAgreement: number;
   jaccard: number[]; noStructure: boolean;
+  collapsedByStability: boolean; collapsedFromK: number | null;
   clusters: Array<{
     index: number; members: CohortPlayer[]; centroid: Record<string, number>;
     eliteN: number; derived: ReturnType<typeof deriveArchetype>;
@@ -113,26 +114,35 @@ for (const g of ['outside', 'inside', 'wing'] as const) {
   const [kMin, kMax] = K_RANGE[g];
   const { k, scores } = chooseK(vectors, kMin, kMax);
   const noStructure = Math.max(...Object.values(scores)) < SIL_MIN;
-  const useK = noStructure ? 1 : k;
-  const labels = useK === 1 ? vectors.map(() => 0) : wardCluster(vectors, useK);
-  const km = useK === 1 ? labels : kmeans(vectors, useK, SEED).labels;
-  const jac = useK === 1 ? [1] : bootstrapJaccard(vectors, useK, 100, SEED);
-  // group elite mean over the whole pool's floor-passers (definer baseline)
-  const groupFloorGuess = defenseFloorFor(g, centroidOf(pool) as Record<SkillKey, number>);
-  const groupElite = eliteMembers(pool, groupFloorGuess);
-  const groupEliteMean = centroidOf(groupElite.length >= 5 ? groupElite : pool) as Record<SkillKey, number>;
+  let useK = noStructure ? 1 : k;
+  let labels = useK === 1 ? vectors.map(() => 0) : wardCluster(vectors, useK);
+  let km = useK === 1 ? labels : kmeans(vectors, useK, SEED).labels;
+  let jac = useK === 1 ? [1] : bootstrapJaccard(vectors, useK, 100, SEED);
+  // Stability gate: silhouette only flags candidate structure; bootstrap Jaccard (Hennig,
+  // >=0.6) is the trust gate. A candidate k that doesn't survive resampling collapses to
+  // a single (still meaningful, post-fix) profile rather than reporting noisy sub-clusters.
+  let collapsedByStability = false;
+  let collapsedFromK: number | null = null;
+  if (useK >= 2 && Math.min(...jac) < JACCARD_MIN) {
+    collapsedByStability = true;
+    collapsedFromK = useK;
+    useK = 1;
+    labels = vectors.map(() => 0);
+    km = labels;
+    jac = [1];
+  }
   const clusters = Array.from({ length: useK }, (_, ci) => {
     const members = pool.filter((_, i) => labels[i] === ci);
     const centroid = centroidOf(members);
     const derived = deriveArchetype(
       { group: g, index: ci, members, centroid: centroid as Record<SkillKey, number> },
-      groupEliteMean,
     );
     return { index: ci, members, centroid, eliteN: derived.eliteN, derived };
   });
   groupResults.push({
     group: g, k: useK, silhouetteScores: scores,
-    kmeansAgreement: agreement(labels, km), jaccard: jac, noStructure, clusters,
+    kmeansAgreement: agreement(labels, km), jaccard: jac, noStructure,
+    collapsedByStability, collapsedFromK, clusters,
   });
 }
 
@@ -169,7 +179,7 @@ lines.push('Coverage caveat: Jul 23–Aug 2 captures were suppressed by BB\'s 10
 lines.push('(fixed 2026-08-03 by per-age sweeps); the cohort skews toward Aug 3+ captures.');
 for (const gr of groupResults) {
   lines.push('');
-  lines.push(`## ${gr.group} group — k=${gr.k}${gr.noStructure ? ' (no clear structure; single profile)' : ''}`);
+  lines.push(`## ${gr.group} group — k=${gr.k}${gr.noStructure ? ' (no clear structure; single profile)' : ''}${gr.collapsedByStability ? ` (k=${gr.collapsedFromK} unstable under bootstrap; collapsed)` : ''}`);
   lines.push('');
   lines.push(`Silhouette by k: ${JSON.stringify(gr.silhouetteScores)} · ward-vs-kmeans agreement ${gr.kmeansAgreement.toFixed(2)} · bootstrap Jaccard ${gr.jaccard.map((j) => j.toFixed(2)).join(', ')}`);
   for (const c of gr.clusters) {

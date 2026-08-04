@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { defenseFloorFor, eliteMembers, deriveArchetype, toEvalPlayer } from './rules';
 import type { CohortPlayer } from './groups';
 import { evaluateArchetype } from '../evaluate';
-import type { SkillKey } from '../../training/types';
+import { SKILL_KEYS, type SkillKey } from '../../training/types';
 
 function member(skills: Record<SkillKey, number>, over: Partial<CohortPlayer> = {}): CohortPlayer {
   return { playerId: 1, name: 'M', heightCm: 190, potential: 9, salary: null, startingPrice: null,
@@ -30,12 +30,12 @@ describe('deriveArchetype', () => {
   const members = Array.from({ length: 12 }, (_, i) =>
     member({ ...SHOOTER, js: 16 + (i % 3), jr: 11 + (i % 2) }));
   it('emits lean rules that its own members pass (self-match gate)', () => {
-    const d = deriveArchetype(
-      { group: 'outside', index: 0, members, centroid: SHOOTER }, GROUP_MEAN);
+    const d = deriveArchetype({ group: 'outside', index: 0, members, centroid: SHOOTER });
     expect(d.archetype.key).toBe('mkt72-outside-1');
     expect(d.definers.length).toBeLessThanOrEqual(5);
-    expect(d.definers).toContain('js'); // 17 vs group mean 14 -> definer
-    expect(d.definers).not.toContain('od'); // floor skill is not a definer here (15 vs 15)
+    expect(d.definers).toContain('js'); // elite shape: js is well above the member's own 10-skill mean
+    expect(d.definers).not.toContain('od'); // floor skill is never a definer
+    expect(d.definers).not.toContain('id');
     expect(d.selfMatchRate).toBeGreaterThanOrEqual(0.7);
     const conds = d.archetype.rules.conditions;
     expect(conds.some((c) => c.kind === 'field' && c.field === 'outside_def')).toBe(true);
@@ -46,7 +46,7 @@ describe('deriveArchetype', () => {
     const p = toEvalPlayer(member(SHOOTER));
     expect(p.ageNow).toBe(21);
     expect(p.skills?.jump_shot).toBe(17);
-    const d = deriveArchetype({ group: 'outside', index: 0, members, centroid: SHOOTER }, GROUP_MEAN);
+    const d = deriveArchetype({ group: 'outside', index: 0, members, centroid: SHOOTER });
     const r = evaluateArchetype(toEvalPlayer(members[5]), {
       id: d.archetype.key, key: d.archetype.key, dbId: null, name: d.archetype.name,
       rules: d.archetype.rules, source: 'default',
@@ -71,21 +71,33 @@ describe('eliteMembers widening', () => {
 });
 
 describe('self-match relaxation', () => {
-  it('relaxes the worst-failing definer p25->p10 until the gate passes', () => {
-    const eliteSkills = (js: number) => ({ js, jr: 12, od: 15, ha: 14, dr: 15, pa: 8, is: 10, id: 6, rb: 5, sb: 4 });
-    const nonEliteSkills = { js: 15, jr: 8, od: 15, ha: 14, dr: 15, pa: 6, is: 10, id: 6, rb: 5, sb: 4 }; // tsp 98 < 100
+  it('relaxes the worst-failing definers p25->p10, one at a time, until the gate passes', () => {
+    // base skills shared by all 8 members; only (js, dr) vary.
+    const base = { jr: 8, od: 15, ha: 14, pa: 8, is: 10, id: 6, rb: 5, sb: 4 };
+    const skillsFor = (js: number, dr: number) => ({ ...base, js, dr });
     const members = [
-      member(eliteSkills(14)), member(eliteSkills(16)), member(eliteSkills(16)), member(eliteSkills(16)),
-      member(eliteSkills(16)), member(eliteSkills(16)), member(eliteSkills(17)), member(eliteSkills(17)),
-      member(nonEliteSkills), member(nonEliteSkills), member(nonEliteSkills), member(nonEliteSkills),
+      member(skillsFor(14, 16)), // m1
+      member(skillsFor(15, 16)), // m2
+      member(skillsFor(17, 14)), // m3
+      member(skillsFor(17, 15)), // m4
+      member(skillsFor(17, 16)), // m5
+      member(skillsFor(17, 16)), // m6
+      member(skillsFor(17, 16)), // m7
+      member(skillsFor(17, 16)), // m8
     ];
-    const centroid = { js: 15.7, jr: 10.7, od: 15, ha: 14, dr: 15, pa: 7.3, is: 10, id: 6, rb: 5, sb: 4 };
-    const groupMean = { ...centroid, js: 13 }; // only js clears the 1.5-level definer gap
-    const d = deriveArchetype({ group: 'outside', index: 2, members, centroid }, groupMean);
-    expect(d.definers).toEqual(['js']);
-    expect(d.relaxed).toEqual(['js']); // initial elite p25 = 16 fails 5/12 (0.58 < 0.7)
-    expect(d.selfMatchRate).toBeGreaterThanOrEqual(0.7); // after relax: 11/12
+    // all 8 have tsp in [100,103] and od 15 (floor pass) -> elite = all 8.
+    const centroid = SKILL_KEYS.reduce((acc, k) => {
+      acc[k] = members.reduce((a, m) => a + m.skills[k], 0) / members.length;
+      return acc;
+    }, {} as Record<SkillKey, number>);
+
+    const d = deriveArchetype({ group: 'outside', index: 2, members, centroid });
+
+    expect(d.relaxed).toEqual(['js', 'dr']);
+    expect(d.selfMatchRate).toBe(0.75);
     const jsCond = d.archetype.rules.conditions.find((c) => c.kind === 'field' && c.field === 'jump_shot');
-    expect(jsCond?.kind === 'field' && jsCond.byAge[21]).toBe(15); // elite p10 = 15.4 -> 15
+    expect(jsCond?.kind === 'field' && jsCond.byAge[21]).toBe(15);
+    const drCond = d.archetype.rules.conditions.find((c) => c.kind === 'field' && c.field === 'driving');
+    expect(drCond?.kind === 'field' && drCond.byAge[21]).toBe(15);
   });
 });

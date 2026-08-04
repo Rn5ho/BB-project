@@ -1,6 +1,6 @@
 # Market Archetypes — Season 72 (age-21 flood)
 
-Generated: 2026-08-04T12:09:11.408Z · window start 2026-07-10 · seed 72
+Generated: 2026-08-04T12:23:50.816Z · window start 2026-07-10 · seed 72
 Re-run: `npm run training:archetypes` from v2/ (bump SEASON for next season's flood).
 
 ## What this says, in plain language
@@ -27,24 +27,39 @@ versions carry, and (with --plans) the optimized week-by-week training path to r
 Coverage caveat: Jul 23–Aug 2 captures were suppressed by BB's 1000-result search cap
 (fixed 2026-08-03 by per-age sweeps); the cohort skews toward Aug 3+ captures.
 
-## outside group — k=1 (no clear structure; single profile)
+## outside group — k=2
 
-Silhouette by k: {"2":0.14067782032145046,"3":0.10997216911599493,"4":0.08250655264386766,"5":0.07954759038212644} · ward-vs-kmeans agreement 1.00 · bootstrap Jaccard 1.00
+Silhouette by k: {"2":0.14067782032145046,"3":0.10997216911599493,"4":0.08250655264386766,"5":0.07954759038212644} · ward-vs-kmeans agreement 0.72 · bootstrap Jaccard 0.64, 0.68
 
 ### Market: outside #1 (mkt72-outside-1)
 
-496 members · 66 elite · floor OD>=15 passed by 83/496 · near-cap 49 · 340 distinct sellers · self-match 17%
+210 members · 5 elite · floor OD>=15 passed by 13/210 · near-cap 7 · 153 distinct sellers · self-match 60% (relaxed: ha,dr,js)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| p25 | 9 | 7 | 7 | 10 | 10 | 6 | 4 | 4 | 4 | 3 |
-| median | 12 | 8 | 10 | 12 | 13 | 8 | 7 | 6 | 6 | 5 |
-| p75 | 14 | 10 | 13 | 15 | 16 | 9 | 10 | 8 | 7 | 7 |
-| elite median | 16 | 10 | 16 | 16 | 17 | 8 | 10 | 8 | 5 | 5 |
+| p25 | 7 | 7 | 7 | 7 | 8 | 6 | 4 | 3 | 4 | 4 |
+| median | 9 | 8 | 9 | 9 | 10 | 7 | 6 | 5 | 6 | 6 |
+| p75 | 12 | 10 | 11 | 11 | 12 | 9 | 9 | 8 | 8 | 8 |
+| elite median | 15 | 10 | 15 | 13 | 15 | 9 | 11 | 9 | 6 | 7 |
 
-Typical: height 190cm · TSP 86 · potential {"7":129,"8":117,"9":151,"10":98,"11":1} · ST p50 5 · FT p50 8
+Typical: height 190cm · TSP 77 · potential {"7":63,"8":49,"9":57,"10":41} · ST p50 5 · FT p50 8
 
-Examples: [Olegas Sergadejevas](https://www.buzzerbeater.com/player/55061198/overview.aspx) (JS17 JR13 OD17 HA14 DR13 PA9 IS15 ID9 RB9 SB11) · [Roberto Bellentani](https://www.buzzerbeater.com/player/54664566/overview.aspx) (JS20 JR12 OD18 HA19 DR19 PA9 IS5 ID9 RB8 SB8) · [Duilio Citti](https://www.buzzerbeater.com/player/54664855/overview.aspx) (JS20 JR11 OD17 HA19 DR19 PA7 IS9 ID10 RB5 SB8)
+Examples: [Olegas Sergadejevas](https://www.buzzerbeater.com/player/55061198/overview.aspx) (JS17 JR13 OD17 HA14 DR13 PA9 IS15 ID9 RB9 SB11) · [Nikos Karaindros](https://www.buzzerbeater.com/player/54699033/overview.aspx) (JS15 JR10 OD15 HA13 DR16 PA8 IS12 ID10 RB6 SB7) · [Vadim Silyanov](https://www.buzzerbeater.com/player/55042556/overview.aspx) (JS14 JR12 OD14 HA13 DR14 PA8 IS12 ID11 RB5 SB5)
+
+### Market: outside #2 (mkt72-outside-2)
+
+286 members · 61 elite · floor OD>=15 passed by 70/286 · near-cap 42 · 198 distinct sellers · self-match 70% (relaxed: dr)
+
+|  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| p25 | 11 | 7 | 8 | 12 | 13 | 6 | 5 | 5 | 3 | 3 |
+| median | 13 | 8 | 10 | 14 | 15 | 8 | 8 | 7 | 5 | 5 |
+| p75 | 15 | 10 | 14 | 16 | 17 | 10 | 11 | 8 | 7 | 7 |
+| elite median | 16 | 10 | 16 | 16 | 17 | 8 | 9 | 8 | 5 | 5 |
+
+Typical: height 189cm · TSP 94 · potential {"7":66,"8":68,"9":94,"10":57,"11":1} · ST p50 5 · FT p50 8
+
+Examples: [Roberto Bellentani](https://www.buzzerbeater.com/player/54664566/overview.aspx) (JS20 JR12 OD18 HA19 DR19 PA9 IS5 ID9 RB8 SB8) · [Duilio Citti](https://www.buzzerbeater.com/player/54664855/overview.aspx) (JS20 JR11 OD17 HA19 DR19 PA7 IS9 ID10 RB5 SB8) · [Antonio Zaniolo](https://www.buzzerbeater.com/player/54666500/overview.aspx) (JS17 JR10 OD18 HA18 DR19 PA10 IS12 ID8 RB7 SB6)
 
 ## inside group — k=2
 
@@ -52,7 +67,7 @@ Silhouette by k: {"2":0.30488241934714916,"3":0.19922475948048693,"4":0.15988772
 
 ### Market: inside #1 (mkt72-inside-1)
 
-25 members · 6 elite · floor ID>=16 passed by 18/25 · near-cap 12 · 21 distinct sellers · self-match 60% (relaxed: sb)
+25 members · 6 elite · floor ID>=16 passed by 18/25 · near-cap 12 · 21 distinct sellers · self-match 67% (relaxed: sb,rb)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -67,7 +82,7 @@ Examples: [Sergej Traparić](https://www.buzzerbeater.com/player/54771089/overvi
 
 ### Market: inside #2 (mkt72-inside-2)
 
-170 members · 11 elite · floor ID>=16 passed by 36/170 · near-cap 38 · 125 distinct sellers · self-match 21%
+170 members · 11 elite · floor ID>=16 passed by 36/170 · near-cap 38 · 125 distinct sellers · self-match 73% (relaxed: sb,rb)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -80,13 +95,13 @@ Typical: height 211cm · TSP 78 · potential {"8":59,"9":71,"10":39,"11":1} · S
 
 Examples: [Leticijus Rozenblatas](https://www.buzzerbeater.com/player/55047695/overview.aspx) (JS13 JR9 OD10 HA11 DR11 PA11 IS20 ID17 RB11 SB11) · [Vardis Alvanos](https://www.buzzerbeater.com/player/54697198/overview.aspx) (JS9 JR6 OD7 HA10 DR9 PA6 IS19 ID17 RB14 SB14) · [Kristijonas Enikas](https://www.buzzerbeater.com/player/54740746/overview.aspx) (JS12 JR8 OD6 HA11 DR11 PA9 IS20 ID18 RB6 SB9)
 
-## wing group — k=1 (no clear structure; single profile)
+## wing group — k=1 (k=2 unstable under bootstrap; collapsed)
 
 Silhouette by k: {"2":0.14457463171641582,"3":0.0962686654136707,"4":0.08724160136592764,"5":0.08667165557918702} · ward-vs-kmeans agreement 1.00 · bootstrap Jaccard 1.00
 
 ### Market: wing #1 (mkt72-wing-1) — PROVISIONAL (thin elite sample)
 
-245 members · 0 elite · floor ID>=16 passed by 0/245 · near-cap 4 · 173 distinct sellers · self-match 0%
+245 members · 0 elite · floor ID>=16 passed by 0/245 · near-cap 4 · 173 distinct sellers · self-match 0% (relaxed: ha,dr)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -101,12 +116,13 @@ Examples: [Jouni Skytta](https://www.buzzerbeater.com/player/54832628/overview.a
 
 ## Specificity (match rates across clusters)
 
-| archetype \ cluster | mkt72-outside-1 | mkt72-inside-1 | mkt72-inside-2 | mkt72-wing-1 |
-| --- | --- | --- | --- | --- |
-| mkt72-outside-1 | 17% | 0% | 0% | 2% |
-| mkt72-inside-1 | 0% | 60% | 2% | 0% |
-| mkt72-inside-2 | 0% | 72% | 21% | 0% |
-| mkt72-wing-1 | 0% | 72% | 21% | 0% |
+| archetype \ cluster | mkt72-outside-1 | mkt72-outside-2 | mkt72-inside-1 | mkt72-inside-2 | mkt72-wing-1 |
+| --- | --- | --- | --- | --- | --- |
+| mkt72-outside-1 | 2% | 24% | 0% | 0% | 1% |
+| mkt72-outside-2 | 0% | 16% | 0% | 0% | 1% |
+| mkt72-inside-1 | 0% | 0% | 52% | 2% | 0% |
+| mkt72-inside-2 | 0% | 0% | 0% | 9% | 0% |
+| mkt72-wing-1 | 0% | 0% | 16% | 10% | 0% |
 
 ## Proposed rules (paste-ready)
 

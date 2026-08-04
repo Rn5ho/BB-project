@@ -3,6 +3,7 @@ import type { DefaultArchetype, EvalPlayer, SkillCondition } from '../types';
 import { evaluateArchetype } from '../evaluate';
 import { SKILL_KEYS, SKILL_DB_NAMES, type SkillKey } from '../../training/types';
 import { quantile } from './stats';
+import { shapeVector } from './cluster';
 import type { CohortPlayer, Group } from './groups';
 
 export interface ClusterProfile {
@@ -60,19 +61,33 @@ export function selfMatchRate(members: CohortPlayer[], a: DefaultArchetype): num
 
 export function deriveArchetype(
   cluster: ClusterProfile,
-  groupEliteMean: Record<SkillKey, number>,
   opts: { minEliteForP25?: number; selfMatchMin?: number; definerGap?: number; maxDefiners?: number } = {},
 ): DerivedArchetype {
   const { minEliteForP25 = 5, selfMatchMin = 0.7, definerGap = 1.5, maxDefiners = 5 } = opts;
   const floor = defenseFloorFor(cluster.group, cluster.centroid);
   const elite = eliteMembers(cluster.members, floor);
   const provisional = elite.length < minEliteForP25;
-  const source = provisional ? cluster.members : elite;
+  const floorPassers = cluster.members.filter((m) => m.skills[floor.skill] >= floor.min);
+  const source = provisional
+    ? (floorPassers.length >= minEliteForP25 ? floorPassers : cluster.members)
+    : elite;
   const q = provisional ? 0.75 : 0.25; // spec: n<5 elite -> cluster p75 fallback, marked provisional
 
+  // Definers come from the ELITE SHAPE (row-centered), not a displayed-level gap vs a
+  // group elite mean: shape is quality-independent and still works when a group
+  // collapses to k=1 (cluster centroid == pool mean, which is <= any of its own elite
+  // subsets' means by construction — a displayed-gap comparison would always be empty).
+  const shapeMean: Record<SkillKey, number> = Object.fromEntries(
+    SKILL_KEYS.map((k, i) => [
+      k,
+      source.length
+        ? source.reduce((a, m) => a + shapeVector(m.skills)[i], 0) / source.length
+        : 0,
+    ]),
+  ) as Record<SkillKey, number>;
   const definers = SKILL_KEYS
-    .filter((k) => k !== floor.skill && cluster.centroid[k] - groupEliteMean[k] >= definerGap)
-    .sort((a, b) => (cluster.centroid[b] - groupEliteMean[b]) - (cluster.centroid[a] - groupEliteMean[a]))
+    .filter((k) => k !== floor.skill && shapeMean[k] >= definerGap)
+    .sort((a, b) => shapeMean[b] - shapeMean[a])
     .slice(0, maxDefiners);
 
   const level: Partial<Record<SkillKey, number>> = {};
@@ -98,11 +113,14 @@ export function deriveArchetype(
 
   const relaxed: SkillKey[] = [];
   let archetype = build();
-  let rate = selfMatchRate(cluster.members, archetype);
+  // Gate over `source` — the population the thresholds were fit to — not all cluster
+  // members. Floor pass-rate over ALL members is a separate report column (the
+  // market's verdict); it is not this gate.
+  let rate = selfMatchRate(source, archetype);
   // Relax worst-failing definer p25 -> p10, one at a time, until the gate passes.
   while (rate < selfMatchMin && relaxed.length < definers.length) {
     const failCounts = new Map<SkillKey, number>();
-    for (const m of cluster.members)
+    for (const m of source)
       for (const k of definers)
         if (m.skills[k] < (level[k] ?? 0)) failCounts.set(k, (failCounts.get(k) ?? 0) + 1);
     const worst = [...failCounts.entries()].filter(([k]) => !relaxed.includes(k))
@@ -111,7 +129,7 @@ export function deriveArchetype(
     level[worst] = Math.round(quantile(source.map((m) => m.skills[worst]), 0.1));
     relaxed.push(worst);
     archetype = build();
-    rate = selfMatchRate(cluster.members, archetype);
+    rate = selfMatchRate(source, archetype);
   }
 
   return { archetype, definers, eliteN: elite.length, provisional, selfMatchRate: rate, relaxed };
