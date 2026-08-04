@@ -1,7 +1,7 @@
 # Filter maxes + Inside/Outside TSP — design
 
 **Date:** 2026-08-04
-**Status:** approved (brainstorm session 2026-08-04)
+**Status:** SHIPPED 2026-08-04 (prod verified; commits 39ba5ed..bbf00ad on main)
 
 ## Goal
 

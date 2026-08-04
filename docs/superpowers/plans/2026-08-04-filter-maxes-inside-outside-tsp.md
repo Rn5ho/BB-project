@@ -40,7 +40,7 @@
   - `export function insideTsp(skills: Partial<Record<SkillDbKey, number | null>>): number | null`
   - `export function deriveRowTsp(stored: number | null, inside: number | null, outside: number | null): number | null`
 
-- [ ] **Step 1: Export the archetype partition keys**
+- [x] **Step 1: Export the archetype partition keys**
 
 In `v2/src/lib/archetypes/derive/groups.ts`, change lines 15-16 from `const OSP_KEYS ...` / `const ISP_KEYS ...` to:
 
@@ -49,7 +49,7 @@ export const OSP_KEYS: SkillKey[] = ['js', 'jr', 'od', 'ha', 'dr', 'pa'];
 export const ISP_KEYS: SkillKey[] = ['is', 'id', 'rb', 'sb'];
 ```
 
-- [ ] **Step 2: Write the failing tests**
+- [x] **Step 2: Write the failing tests**
 
 Append to `v2/src/lib/domain.test.ts` (it already imports from `./domain` — extend that import with `insideTsp, outsideTsp, deriveRowTsp, INSIDE_SKILL_KEYS, OUTSIDE_SKILL_KEYS`; `tsp` is already imported):
 
@@ -97,12 +97,12 @@ describe('deriveRowTsp', () => {
 });
 ```
 
-- [ ] **Step 3: Run tests to verify they fail**
+- [x] **Step 3: Run tests to verify they fail**
 
 Run: `cd v2 && npm test -- src/lib/domain.test.ts`
 Expected: FAIL — `insideTsp` etc. are not exported.
 
-- [ ] **Step 4: Implement the helpers**
+- [x] **Step 4: Implement the helpers**
 
 Append to `v2/src/lib/domain.ts` after the `tsp()` function (line 12):
 
@@ -144,12 +144,12 @@ export function deriveRowTsp(stored: number | null, inside: number | null, outsi
 }
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- [x] **Step 5: Run tests to verify they pass**
 
 Run: `cd v2 && npm test -- src/lib/domain.test.ts`
 Expected: PASS (all new + existing).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add v2/src/lib/domain.ts v2/src/lib/domain.test.ts v2/src/lib/archetypes/derive/groups.ts
@@ -168,7 +168,7 @@ git commit -m "feat(v2): insideTsp/outsideTsp helpers + deriveRowTsp"
 - Consumes: `insideTsp`, `outsideTsp`, `deriveRowTsp` from `@/lib/domain` (Task 1).
 - Produces (used by Tasks 3, 5): `PlayerListRow.insideTsp: number | null`, `PlayerListRow.outsideTsp: number | null`; `PlayerListRow.tsp` is now derived-preferring-computed.
 
-- [ ] **Step 1: Extend the interface**
+- [x] **Step 1: Extend the interface**
 
 In `v2/src/queries/players.ts`, after the `tsp: number | null;` line (~line 20):
 
@@ -178,7 +178,7 @@ In `v2/src/queries/players.ts`, after the `tsp: number | null;` line (~line 20):
   outsideTsp: number | null; // JS+JR+OD+HA+DR+PA; null if any component missing
 ```
 
-- [ ] **Step 2: Extend the domain import**
+- [x] **Step 2: Extend the domain import**
 
 The file imports from `@/lib/domain` already (`currentAge`, `computeSkillDeltas`, …). Add `insideTsp`, `outsideTsp`, `deriveRowTsp` to that import. Because the local mapper variables would shadow the function names, alias in the import:
 
@@ -188,7 +188,7 @@ import { computeSkillDeltas, currentAge, insideTsp as computeInsideTsp, outsideT
 
 (Match whatever names the existing import line actually has — only ADD the three new ones.)
 
-- [ ] **Step 3: Compute in the mapper**
+- [x] **Step 3: Compute in the mapper**
 
 In the `.map((r) => {` body, after the `skills` object is built (~line 161) add:
 
@@ -205,7 +205,7 @@ and in the returned object replace `tsp: r.tsp as number | null,` with:
       outsideTsp: outTsp,
 ```
 
-- [ ] **Step 4: Fix the test fixture (compile-time)**
+- [x] **Step 4: Fix the test fixture (compile-time)**
 
 In `v2/src/lib/table.test.ts` `makePlayer`, after `tsp: 100,` add:
 
@@ -214,12 +214,12 @@ In `v2/src/lib/table.test.ts` `makePlayer`, after `tsp: 100,` add:
     outsideTsp: null,
 ```
 
-- [ ] **Step 5: Type-check and run the full suite**
+- [x] **Step 5: Type-check and run the full suite**
 
 Run: `cd v2 && npx tsc --noEmit && npm test`
 Expected: clean compile, all tests PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add v2/src/queries/players.ts v2/src/lib/table.test.ts
@@ -241,7 +241,7 @@ git commit -m "feat(v2): insideTsp/outsideTsp on PlayerListRow; derive row TSP f
   - `SortKey` gains `'insideTsp' | 'outsideTsp'`
   - `export const MORE_PANEL_FIELDS` and `export function countActiveMoreFilters(f: FilterState): number`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Append to `v2/src/lib/table.test.ts` (extend the top import with `countActiveMoreFilters` — note it's a NEW export, and `filterRows`, `sortRows`, `isFilterDefault`, `DEFAULT_FILTER`, `makePlayer` already exist in the file):
 
@@ -337,12 +337,12 @@ describe('isFilterDefault with new fields', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `cd v2 && npm test -- src/lib/table.test.ts`
 Expected: FAIL — new FilterState fields / `countActiveMoreFilters` don't exist. (TS errors surface as vitest transform errors here; that counts as the failing state.)
 
-- [ ] **Step 3: Implement in `v2/src/lib/table.ts`**
+- [x] **Step 3: Implement in `v2/src/lib/table.ts`**
 
 3a. `SortKey` union (line 9-32): after `| 'tspDelta'` add:
 
@@ -451,12 +451,12 @@ Replace the "Min TSP" and "Min DMI" predicates with banded versions, and add In/
     case 'outsideTsp':  return p.outsideTsp;
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `cd v2 && npm test -- src/lib/table.test.ts`
 Expected: PASS (new and existing — existing min-only tests must still pass unchanged).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add v2/src/lib/table.ts v2/src/lib/table.test.ts
@@ -474,7 +474,7 @@ git commit -m "feat(v2): TSP/DMI max bounds + inside/outside TSP filter and sort
 - Consumes: `FilterState` fields and `countActiveMoreFilters` from `@/lib/table` (Task 3).
 - Produces: UI only; no new exports.
 
-- [ ] **Step 1: Import and compute the active count**
+- [x] **Step 1: Import and compute the active count**
 
 Extend the `@/lib/table` import (line 5) with `countActiveMoreFilters`. Next to `const activeSkillCount = ...` (line 21) add:
 
@@ -482,7 +482,7 @@ Extend the `@/lib/table` import (line 5) with `countActiveMoreFilters`. Next to 
   const activeMoreCount = countActiveMoreFilters(filter);
 ```
 
-- [ ] **Step 2: More button active indicator**
+- [x] **Step 2: More button active indicator**
 
 Replace the More toggle button (lines 195-202) with the same active styling the Skill-filters button uses:
 
@@ -501,7 +501,7 @@ Replace the More toggle button (lines 195-202) with the same active styling the 
         </button>
 ```
 
-- [ ] **Step 3: Add a RangeInput component**
+- [x] **Step 3: Add a RangeInput component**
 
 Below the existing `NumInput` component (line 288-309) add:
 
@@ -531,7 +531,7 @@ function RangeInput({
 }
 ```
 
-- [ ] **Step 4: Rebuild the More row**
+- [x] **Step 4: Rebuild the More row**
 
 Replace the More-row contents (lines 230-255) with — note the inline height pair collapses into `RangeInput`, behavior identical:
 
@@ -549,12 +549,12 @@ Replace the More-row contents (lines 230-255) with — note the inline height pa
       )}
 ```
 
-- [ ] **Step 5: Verify**
+- [x] **Step 5: Verify**
 
 Run: `cd v2 && npx tsc --noEmit && npm test && npm run lint`
 Expected: clean.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add v2/src/components/FilterBar.tsx
@@ -573,7 +573,7 @@ git commit -m "feat(v2): range filter inputs for TSP/In/Out/DMI + More-button ac
 - Consumes: `PlayerListRow.insideTsp/outsideTsp` (Task 2), `SortKey` values `'insideTsp'/'outsideTsp'` (Task 3), `INSIDE_SKILL_KEYS`/`OUTSIDE_SKILL_KEYS` from `@/lib/domain` (Task 1).
 - Produces: UI only.
 
-- [ ] **Step 1: Tooltip constants**
+- [x] **Step 1: Tooltip constants**
 
 In `PlayerTable.tsx`, import `INSIDE_SKILL_KEYS, OUTSIDE_SKILL_KEYS` from `@/lib/domain` (`SKILLS` is already imported from `@/lib/constants`). At module level (next to `const RENDER_CAP = 300;`):
 
@@ -583,7 +583,7 @@ const IN_TSP_TITLE = `Inside TSP: ${INSIDE_SKILL_KEYS.map(skillName).join(' + ')
 const OUT_TSP_TITLE = `Outside TSP: ${OUTSIDE_SKILL_KEYS.map(skillName).join(' + ')}`;
 ```
 
-- [ ] **Step 2: Headers**
+- [x] **Step 2: Headers**
 
 After the TSP `SortTh` (line 176), BEFORE the Slovenia Δ block, add (labels exactly `In` / `Out` — e2e constraint):
 
@@ -592,7 +592,7 @@ After the TSP `SortTh` (line 176), BEFORE the Slovenia Δ block, add (labels exa
               <SortTh label="Out" sortKey="outsideTsp" sort={sort} onClick={handleSortClick} className="pr-3 text-right" title={OUT_TSP_TITLE} />
 ```
 
-- [ ] **Step 3: Cells**
+- [x] **Step 3: Cells**
 
 After the TSP cell (line 236), BEFORE the Slovenia Δ cell, add:
 
@@ -601,11 +601,11 @@ After the TSP cell (line 236), BEFORE the Slovenia Δ cell, add:
                 <td className="pr-3 text-right">{p.outsideTsp ?? '–'}</td>
 ```
 
-- [ ] **Step 4: colSpan bump**
+- [x] **Step 4: colSpan bump**
 
 Line 272: change `colSpan={11 + ...}` to `colSpan={13 + ...}` (base now counts Player/Age/Pos/Ht/Pot/Salary/DMI/GS/TSP/In/Out/Owner/Data).
 
-- [ ] **Step 5: Refresh the stale e2e comment**
+- [x] **Step 5: Refresh the stale e2e comment**
 
 `v2/scripts/e2e-smoke.mts:195-196` — replace the column-order comment with:
 
@@ -616,12 +616,12 @@ Line 272: change `colSpan={11 + ...}` to `colSpan={13 + ...}` (base now counts P
 
 (`TSP_COL_IDX = 8` stays correct — columns were inserted after TSP.)
 
-- [ ] **Step 6: Verify**
+- [x] **Step 6: Verify**
 
 Run: `cd v2 && npx tsc --noEmit && npm test && npm run lint && npm run build`
 Expected: all clean.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add v2/src/components/PlayerTable.tsx v2/scripts/e2e-smoke.mts
@@ -635,25 +635,25 @@ git commit -m "feat(v2): In/Out TSP columns on player tables"
 **Files:**
 - Modify: `CLAUDE.md` (root — append changelog entry)
 
-- [ ] **Step 1: Full local verification**
+- [x] **Step 1: Full local verification**
 
 Run: `cd v2 && npm test && npm run lint && npm run build`
 Expected: everything green. If anything fails, fix before pushing.
 
-- [ ] **Step 2: Push (triggers Vercel deploy)**
+- [x] **Step 2: Push (triggers Vercel deploy)**
 
 ```bash
 git push origin main
 ```
 
-- [ ] **Step 3: Verify prod + e2e**
+- [x] **Step 3: Verify prod + e2e**
 
 Wait for the Vercel deploy of `bb-scout-v2` to finish (~2 min), then:
 
 Run: `cd v2 && npm run e2e`
 Expected: all checks pass, including check5 (TSP sorting — guards the td-index-8 and `th:has-text("TSP")` constraints).
 
-- [ ] **Step 4: Changelog entry (repo convention)**
+- [x] **Step 4: Changelog entry (repo convention)**
 
 Append to the dated changelog section of root `CLAUDE.md`:
 
@@ -661,7 +661,7 @@ Append to the dated changelog section of root `CLAUDE.md`:
 **2026-08-04 filter maxes + In/Out TSP shipped** (spec docs/superpowers/specs/2026-08-04-filter-maxes-inside-outside-tsp-design.md): TSP/DMI/height filters are min–max ranges, new Inside TSP (IS+ID+RB+SB) and Outside TSP (JS+JR+OD+HA+DR+PA) always-visible sortable columns + range filters on both player tables; More button now shows an active-filter count. Row TSP is now derived from skills when complete (stored value fallback) so TSP = In + Out always holds in the UI and legacy 12-skill/partial v1 sums self-heal.
 ```
 
-- [ ] **Step 5: Commit + push docs**
+- [x] **Step 5: Commit + push docs**
 
 ```bash
 git add CLAUDE.md
