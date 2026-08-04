@@ -278,6 +278,20 @@ training at high/medium, else fallback). Remaining backlog: tail of
 
 **2026-08-04 filter maxes + In/Out TSP shipped** (spec docs/superpowers/specs/2026-08-04-filter-maxes-inside-outside-tsp-design.md): TSP/DMI/height filters are min–max ranges, new Inside TSP (IS+ID+RB+SB) and Outside TSP (JS+JR+OD+HA+DR+PA) always-visible sortable columns + range filters on both player tables; More button now shows an active-filter count. Row TSP is now derived from skills when complete (stored value fallback) so TSP = In + Out holds in the UI whenever In/Out are populated (partial captures fall back to stored tsp and render In/Out as –) and legacy 12-skill/partial v1 sums self-heal.
 
+**Market archetypes analysis shipped 2026-08-04** — `npm run training:archetypes [-- --plans]`
+(v2/scripts/training/derive-archetypes.mts, SELECT-only) derives data-driven U-21 archetypes
+from the season-end market flood (season-pinned `season=72 and age=21`; three groups via
+balance score b=OSP/6−ISP/4; shape-space Ward clustering, seeded, bootstrap-stability-checked)
+and, with --plans, per-build training paths (beam search + project() forward-sim from census
+draftee profiles -> byAge tiers, entering-21 anchor, neutral+elite staff) plus a Slovenia gap
+analysis (age-conditional: feeders at 18/19, defense season at 20, floor closability at 21).
+Pure logic in `v2/src/lib/archetypes/derive/` (tested). Output:
+`docs/research/market-archetypes/REPORT.md` + `proposed-defaults.snippet.ts` (owner reviews
+REPORT before anything is encoded into DEFAULT_ARCHETYPES/PLAN_TEMPLATES). Greek U-21 bronze
+benchmark data checked in at `docs/research/market-archetypes/greece-s72/`. Re-run next
+season: bump SEASON constant. Backlog from the spec: NT week planner/GS tracker, age-22 sweep,
+od<-ha elastic watch item.
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 

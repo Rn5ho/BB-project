@@ -222,20 +222,16 @@ function drafteesFor(g: 'outside' | 'inside' | 'wing') {
 }
 
 // ---- report ----
+// header is a handful of lines emitted first; the exec summary (summaryLines) is assembled
+// LAST (after the analysis + --plans loops below) so its numeric lines can report real
+// counts, but is still emitted second — right after header, before the rest of `lines`.
+const header: string[] = [];
+header.push(`# Market Archetypes — Season ${SEASON} (age-${AGE_REF} flood)`);
+header.push('');
+header.push(`Generated: ${new Date().toISOString()} · window start ${WINDOW_START} · seed ${SEED}`);
+header.push(`Re-run: \`npm run training:archetypes\` from v2/ (bump SEASON for next season's flood).`);
+header.push('');
 const lines: string[] = [];
-lines.push(`# Market Archetypes — Season ${SEASON} (age-${AGE_REF} flood)`);
-lines.push('');
-lines.push(`Generated: ${new Date().toISOString()} · window start ${WINDOW_START} · seed ${SEED}`);
-lines.push(`Re-run: \`npm run training:archetypes\` from v2/ (bump SEASON for next season's flood).`);
-lines.push('');
-lines.push('## What this says, in plain language');
-lines.push('');
-lines.push(`We looked at ${cohort.length} finished 21-year-old players that top U-21 training`);
-lines.push(`programs sold at the end of season ${SEASON}, split them into outside / inside / wing-forward`);
-lines.push('groups, and let the data reveal which distinct builds exist in each group. Each build below');
-lines.push('comes with: how common it is, what the typical skills look like, how much defense the elite');
-lines.push('versions carry, and (with --plans) the optimized week-by-week training path to reach it.');
-lines.push('');
 // funnel
 lines.push('## Cohort funnel');
 lines.push('');
@@ -291,6 +287,10 @@ for (const gr of groupResults) {
 // specificity: every derived archetype vs every cluster's members
 lines.push('');
 lines.push('## Specificity (match rates across clusters)');
+lines.push('');
+lines.push('Note: self-match % elsewhere in this report is measured over each build\'s threshold');
+lines.push('population (its floor-passing elite); this table\'s diagonal is measured over the full');
+lines.push('cluster — the two intentionally differ.');
 lines.push('');
 const allDerived = groupResults.flatMap((g) => g.clusters.map((c) => c.derived));
 const specRows = allDerived.map((d) => [
@@ -433,6 +433,20 @@ if (PLANS) {
     return { bp, g };
   }).sort((a, b) => (a.g.status === 'at-risk' ? 0 : a.g.status === 'watch' ? 1 : 2)
     - (b.g.status === 'at-risk' ? 0 : b.g.status === 'watch' ? 1 : 2) || a.bp.age - b.bp.age);
+  // Base-rate + season-timing context so AT-RISK/WATCH volumes read correctly (spec §8.6 polish).
+  const onTrackCount = rows21.filter(({ g }) => g.status === 'on-track').length;
+  lines.push(`The universe here is every tracked Slovenian 18–21 prospect (${rows21.length}), most of`);
+  lines.push('whom were never elite-track candidates; WATCH is therefore the expected mode, and the');
+  lines.push(`ON-TRACK list (${onTrackCount}) is the actual elite pipeline.`);
+  lines.push('');
+  const age21Weeks = rows21.filter(({ bp }) => bp.age >= 21).map(({ bp }) => bp.currentSeasonWeek);
+  const seasonWeek = age21Weeks.length ? Math.max(...age21Weeks) : null;
+  if (seasonWeek !== null && seasonWeek >= 14) {
+    lines.push(`At season week ${seasonWeek}, every age-21 floor gap is unclosable by definition ("0`);
+    lines.push('weeks left"), so the age-21 AT-RISK block below is a graduating-class artifact right');
+    lines.push('now — re-run early next season for actionable age-21 grading.');
+    lines.push('');
+  }
   lines.push(mdTable(['player', 'age', 'nearest build', 'status', 'gaps (next tier)', 'why'],
     rows21.map(({ bp, g }) => [
       `[${bp.name}](https://www.buzzerbeater.com/player/${bp.bbPlayerId}/overview.aspx)`, bp.age,
@@ -445,7 +459,26 @@ if (PLANS) {
   lines.push('_Run with `-- --plans` to add training paths, byAge tiers, and the Slovenia gap analysis._');
 }
 
-writeFileSync(path.join(OUT_DIR, 'REPORT.md'), lines.join('\n') + '\n');
+// ---- exec summary (assembled LAST so per-group + plan-reachability counts are real numbers;
+// emitted FIRST via [...header, ...summaryLines, ...lines] below) ----
+const summaryLines: string[] = [];
+summaryLines.push('## What this says, in plain language');
+summaryLines.push('');
+summaryLines.push(`We looked at ${cohort.length} finished 21-year-old players that top U-21 training`);
+summaryLines.push(`programs sold at the end of season ${SEASON}, split them into outside / inside / wing-forward`);
+summaryLines.push('groups, and let the data reveal which distinct builds exist in each group. Each build below');
+summaryLines.push('comes with: how common it is, what the typical skills look like, how much defense the elite');
+summaryLines.push('versions carry, and (with --plans) the optimized week-by-week training path to reach it.');
+summaryLines.push('');
+for (const gr of groupResults) {
+  summaryLines.push(`- ${gr.group}: ${pools[gr.group].length} candidates -> ${gr.k} distinct build${gr.k > 1 ? 's' : ''}${gr.noStructure ? ' (weak separation — treat as one profile)' : ''}`);
+}
+if (PLANS) {
+  summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === 'neutral' && p.reachable).length} of ${planSummaries.length / 2} builds are reachable by a Slovenian-club draftee entering age 21 under neutral staff`);
+}
+summaryLines.push('');
+
+writeFileSync(path.join(OUT_DIR, 'REPORT.md'), [...header, ...summaryLines, ...lines].join('\n') + '\n');
 writeFileSync(
   path.join(OUT_DIR, 'proposed-defaults.snippet.ts'),
   `// Paste-ready DefaultArchetype[] additions derived ${new Date().toISOString().slice(0, 10)} (season ${SEASON}).\n` +

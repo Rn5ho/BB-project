@@ -1,6 +1,6 @@
 # Market Archetypes — Season 72 (age-21 flood)
 
-Generated: 2026-08-04T13:37:39.672Z · window start 2026-07-10 · seed 72
+Generated: 2026-08-04T13:55:10.098Z · window start 2026-07-10 · seed 72
 Re-run: `npm run training:archetypes` from v2/ (bump SEASON for next season's flood).
 
 ## What this says, in plain language
@@ -10,6 +10,11 @@ programs sold at the end of season 72, split them into outside / inside / wing-f
 groups, and let the data reveal which distinct builds exist in each group. Each build below
 comes with: how common it is, what the typical skills look like, how much defense the elite
 versions carry, and (with --plans) the optimized week-by-week training path to reach it.
+
+- outside: 496 candidates -> 2 distinct builds
+- inside: 195 candidates -> 2 distinct builds
+- wing: 245 candidates -> 1 distinct build
+- 4 of 5 builds are reachable by a Slovenian-club draftee entering age 21 under neutral staff
 
 ## Cohort funnel
 
@@ -115,6 +120,10 @@ Typical: height 203cm · TSP 76 · potential {"7":82,"8":50,"9":66,"10":46,"11":
 Examples: [Jouni Skytta](https://www.buzzerbeater.com/player/54832628/overview.aspx) (JS18 JR10 OD15 HA19 DR20 PA8 IS7 ID9 RB6 SB6) · [Maurício Constante](https://www.buzzerbeater.com/player/55038789/overview.aspx) (JS12 JR9 OD15 HA15 DR15 PA9 IS12 ID11 RB7 SB10) · [José Badillo](https://www.buzzerbeater.com/player/54952067/overview.aspx) (JS14 JR11 OD13 HA15 DR15 PA9 IS9 ID12 RB10 SB7)
 
 ## Specificity (match rates across clusters)
+
+Note: self-match % elsewhere in this report is measured over each build's threshold
+population (its floor-passing elite); this table's diagonal is measured over the full
+cluster — the two intentionally differ.
 
 | archetype \ cluster | mkt72-outside-1 | mkt72-outside-2 | mkt72-inside-1 | mkt72-inside-2 | mkt72-wing-1 |
 | --- | --- | --- | --- | --- | --- |
@@ -298,6 +307,14 @@ byAge tiers (entering-age, neutral staff, lower envelope of p25/p50/p75 draftees
 Every tracked Slovenian 18–21 prospect vs the nearest derived build. Status logic is
 age-aware: at 18/19 we grade the elastic FEEDERS (HA/DR), not defense; at 20 we check the
 defense season is actually happening; at 21 we check the floor is still closable.
+
+The universe here is every tracked Slovenian 18–21 prospect (1183), most of
+whom were never elite-track candidates; WATCH is therefore the expected mode, and the
+ON-TRACK list (46) is the actual elite pipeline.
+
+At season week 14, every age-21 floor gap is unclosable by definition ("0
+weeks left"), so the age-21 AT-RISK block below is a graduating-class artifact right
+now — re-run early next season for actionable age-21 grading.
 
 | player | age | nearest build | status | gaps (next tier) | why |
 | --- | --- | --- | --- | --- | --- |
