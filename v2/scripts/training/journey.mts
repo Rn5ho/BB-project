@@ -81,7 +81,16 @@ const rows = await db.execute(sql`
       and shot_blocking is not null and stamina is not null and free_throw is not null
     order by player_id, captured_at desc
   )
-  select p.bb_player_id, p.name, p.height_cm, f.age as snap_age, f.season as snap_season,
+  , latest_any as (
+    -- Age derives from the NEWEST snapshot of ANY source: light api snapshots carry the
+    -- post-rollover season+age (rookies don't +1 at their draft rollover), while the newest
+    -- FULL snapshot may predate the rollover and would derive a year too old.
+    select distinct on (player_id) player_id, age, season
+    from snapshots
+    where age is not null and season is not null
+    order by player_id, captured_at desc
+  )
+  select p.bb_player_id, p.name, p.height_cm, a.age as snap_age, a.season as snap_season,
     f.potential, f.stamina, f.free_throw, f.captured_at,
     f.jump_shot, f.jump_range, f.outside_def, f.handling, f.driving, f.passing,
     f.inside_shot, f.inside_def, f.rebounding, f.shot_blocking,
@@ -89,6 +98,7 @@ const rows = await db.execute(sql`
            + f.inside_shot + f.inside_def + f.rebounding + f.shot_blocking) as tsp
   from players p
   join latest_full f on f.player_id = p.bb_player_id
+  join latest_any a on a.player_id = p.bb_player_id
   where p.bb_player_id = ${playerId}
 `);
 const row = (rows.rows as Record<string, unknown>[])[0];
