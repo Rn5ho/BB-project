@@ -54,3 +54,38 @@ describe('deriveArchetype', () => {
     expect(r.ageTierUsed).toBe(21);
   });
 });
+
+describe('eliteMembers widening', () => {
+  it('widens to floor-passing top-30% when TSP>=100 yields fewer players', () => {
+    const tsps = [101, 100, 99, 98, 97, 96, 95, 94, 93, 92];
+    const members = tsps.map((t, i) => {
+      const skills = { ...SHOOTER, od: 15 };
+      const base = Object.values(skills).reduce((a, b) => a + b, 0);
+      skills.pa = skills.pa + (t - base); // tune 10-skill sum to the target tsp
+      return member(skills, { playerId: i });
+    });
+    const out = eliteMembers(members, { field: 'outside_def', skill: 'od', min: 15 });
+    expect(out).toHaveLength(3); // ceil(10 * 0.3) > the 2 players at TSP>=100
+    expect(out.map((m) => m.tsp)).toContain(99);
+  });
+});
+
+describe('self-match relaxation', () => {
+  it('relaxes the worst-failing definer p25->p10 until the gate passes', () => {
+    const eliteSkills = (js: number) => ({ js, jr: 12, od: 15, ha: 14, dr: 15, pa: 8, is: 10, id: 6, rb: 5, sb: 4 });
+    const nonEliteSkills = { js: 15, jr: 8, od: 15, ha: 14, dr: 15, pa: 6, is: 10, id: 6, rb: 5, sb: 4 }; // tsp 98 < 100
+    const members = [
+      member(eliteSkills(14)), member(eliteSkills(16)), member(eliteSkills(16)), member(eliteSkills(16)),
+      member(eliteSkills(16)), member(eliteSkills(16)), member(eliteSkills(17)), member(eliteSkills(17)),
+      member(nonEliteSkills), member(nonEliteSkills), member(nonEliteSkills), member(nonEliteSkills),
+    ];
+    const centroid = { js: 15.7, jr: 10.7, od: 15, ha: 14, dr: 15, pa: 7.3, is: 10, id: 6, rb: 5, sb: 4 };
+    const groupMean = { ...centroid, js: 13 }; // only js clears the 1.5-level definer gap
+    const d = deriveArchetype({ group: 'outside', index: 2, members, centroid }, groupMean);
+    expect(d.definers).toEqual(['js']);
+    expect(d.relaxed).toEqual(['js']); // initial elite p25 = 16 fails 5/12 (0.58 < 0.7)
+    expect(d.selfMatchRate).toBeGreaterThanOrEqual(0.7); // after relax: 11/12
+    const jsCond = d.archetype.rules.conditions.find((c) => c.kind === 'field' && c.field === 'jump_shot');
+    expect(jsCond?.kind === 'field' && jsCond.byAge[21]).toBe(15); // elite p10 = 15.4 -> 15
+  });
+});
