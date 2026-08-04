@@ -407,6 +407,39 @@ if (PLANS) {
     if (odCond?.kind === 'field' && (odCond.byAge[20] ?? 0) >= floor.min)
       console.error(`WARN ${c.derived.archetype.key}: age-20 ${floor.field} tier ${odCond.byAge[20]} >= floor ${floor.min} (optimizer-optimistic)`);
   }
+  // ---- Slovenia gap analysis (Task 11): age-conditional at-risk grading of every tracked
+  // Slovenian 18-21 prospect against the derived builds' neutral-staff tiers. ----
+  const { getPlannerData } = await import('../../src/queries/planner');
+  const { gradeProspect } = await import('../../src/lib/archetypes/derive/gap');
+  const planner = await getPlannerData();
+  const gapClusters = groupResults.flatMap((gr) => gr.clusters.map((c) => ({
+    key: c.derived.archetype.key, group: gr.group,
+    centroid: c.centroid as Record<SkillKey, number>,
+    tiers: neutralTiersByKey.get(c.derived.archetype.key)!, // Map filled in Task 10's loop
+    floor: defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members),
+  })));
+  lines.push('', '## Slovenia gap analysis', '');
+  lines.push('Every tracked Slovenian 18–21 prospect vs the nearest derived build. Status logic is');
+  lines.push('age-aware: at 18/19 we grade the elastic FEEDERS (HA/DR), not defense; at 20 we check the');
+  lines.push('defense season is actually happening; at 21 we check the floor is still closable.');
+  lines.push('');
+  const rows21 = planner.players.map((bp) => {
+    const skills = Object.fromEntries(SKILL_KEYS.map((k, i) => [k, bp.displayedSkills[i]])) as Record<SkillKey, number>;
+    const g = gradeProspect({
+      age: bp.age, heightCm: bp.heightCm, potential: bp.potential, skills,
+      inferredTrainingId: bp.inferred?.trainingId ?? null,
+      currentSeasonWeek: bp.currentSeasonWeek,
+    }, gapClusters);
+    return { bp, g };
+  }).sort((a, b) => (a.g.status === 'at-risk' ? 0 : a.g.status === 'watch' ? 1 : 2)
+    - (b.g.status === 'at-risk' ? 0 : b.g.status === 'watch' ? 1 : 2) || a.bp.age - b.bp.age);
+  lines.push(mdTable(['player', 'age', 'nearest build', 'status', 'gaps (next tier)', 'why'],
+    rows21.map(({ bp, g }) => [
+      `[${bp.name}](https://www.buzzerbeater.com/player/${bp.bbPlayerId}/overview.aspx)`, bp.age,
+      g.nearestKey, g.status.toUpperCase(),
+      g.gaps.map((x) => `${x.skill.toUpperCase()} ${x.have}->${x.need}`).join(' ') || '–',
+      g.reasons.join('; ') || '–',
+    ])));
 } else {
   lines.push('', '## Plans', '');
   lines.push('_Run with `-- --plans` to add training paths, byAge tiers, and the Slovenia gap analysis._');
