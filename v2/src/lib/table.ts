@@ -18,6 +18,8 @@ export type SortKey =
   | 'gameShape'
   | 'tsp'
   | 'tspDelta'
+  | 'insideTsp'
+  | 'outsideTsp'
   | 'jump_shot'
   | 'jump_range'
   | 'outside_def'
@@ -47,7 +49,13 @@ export interface FilterState {
   archetype: string; // '' = All; filtering happens in PlayerTable where match results are available, not here
   // "More" panel
   minTsp: string;   // empty string = inactive
+  maxTsp: string;
   minDmi: string;
+  maxDmi: string;
+  minInsideTsp: string;
+  maxInsideTsp: string;
+  minOutsideTsp: string;
+  maxOutsideTsp: string;
   minSalary: string;
   heightMin: string;
   heightMax: string;
@@ -60,6 +68,18 @@ export type SkillMins = Partial<Record<SkillDbKey, string>>;
 
 export function countActiveSkillMins(mins: SkillMins): number {
   return Object.values(mins).filter((v) => v != null && v.trim() !== '').length;
+}
+
+/** Every string filter that lives in the collapsed "More" panel — drives the More
+ *  button's active indicator and isFilterDefault. Update when the panel changes. */
+export const MORE_PANEL_FIELDS = [
+  'minTsp', 'maxTsp', 'minDmi', 'maxDmi',
+  'minInsideTsp', 'maxInsideTsp', 'minOutsideTsp', 'maxOutsideTsp',
+  'minSalary', 'heightMin', 'heightMax', 'minGameShape',
+] as const;
+
+export function countActiveMoreFilters(f: FilterState): number {
+  return MORE_PANEL_FIELDS.filter((k) => f[k].trim() !== '').length;
 }
 
 export type Variant = 'slovenia' | 'world';
@@ -81,7 +101,13 @@ export const DEFAULT_FILTER: FilterState = {
   fullSkillsOnly: false,
   archetype: '',
   minTsp: '',
+  maxTsp: '',
   minDmi: '',
+  maxDmi: '',
+  minInsideTsp: '',
+  maxInsideTsp: '',
+  minOutsideTsp: '',
+  maxOutsideTsp: '',
   minSalary: '',
   heightMin: '',
   heightMax: '',
@@ -102,12 +128,7 @@ export function isFilterDefault(f: FilterState): boolean {
     f.potMax === DEFAULT_FILTER.potMax &&
     f.fullSkillsOnly === DEFAULT_FILTER.fullSkillsOnly &&
     f.archetype === DEFAULT_FILTER.archetype &&
-    f.minTsp === DEFAULT_FILTER.minTsp &&
-    f.minDmi === DEFAULT_FILTER.minDmi &&
-    f.minSalary === DEFAULT_FILTER.minSalary &&
-    f.heightMin === DEFAULT_FILTER.heightMin &&
-    f.heightMax === DEFAULT_FILTER.heightMax &&
-    f.minGameShape === DEFAULT_FILTER.minGameShape &&
+    countActiveMoreFilters(f) === 0 &&
     f.discoveredWithinDays === DEFAULT_FILTER.discoveredWithinDays &&
     countActiveSkillMins(f.skillMins) === 0
   );
@@ -137,7 +158,13 @@ function parseNum(s: string): number | null {
 export function filterRows(rows: PlayerListRow[], f: FilterState): PlayerListRow[] {
   const nameNorm = normalize(f.name);
   const minTsp = parseNum(f.minTsp);
+  const maxTsp = parseNum(f.maxTsp);
   const minDmi = parseNum(f.minDmi);
+  const maxDmi = parseNum(f.maxDmi);
+  const minInside = parseNum(f.minInsideTsp);
+  const maxInside = parseNum(f.maxInsideTsp);
+  const minOutside = parseNum(f.minOutsideTsp);
+  const maxOutside = parseNum(f.maxOutsideTsp);
   const minSalary = parseNum(f.minSalary);
   const heightMin = parseNum(f.heightMin);
   const heightMax = parseNum(f.heightMax);
@@ -173,14 +200,32 @@ export function filterRows(rows: PlayerListRow[], f: FilterState): PlayerListRow
     // Full skills only
     if (f.fullSkillsOnly && !p.hasFullSkills) return false;
 
-    // Min TSP — null fails if filter is set
-    if (minTsp !== null) {
-      if (p.tsp == null || p.tsp < minTsp) return false;
+    // TSP band — null fails if either bound is set
+    if (minTsp !== null || maxTsp !== null) {
+      if (p.tsp == null) return false;
+      if (minTsp !== null && p.tsp < minTsp) return false;
+      if (maxTsp !== null && p.tsp > maxTsp) return false;
     }
 
-    // Min DMI — null fails if filter is set
-    if (minDmi !== null) {
-      if (p.dmi == null || p.dmi < minDmi) return false;
+    // DMI band — null fails if either bound is set
+    if (minDmi !== null || maxDmi !== null) {
+      if (p.dmi == null) return false;
+      if (minDmi !== null && p.dmi < minDmi) return false;
+      if (maxDmi !== null && p.dmi > maxDmi) return false;
+    }
+
+    // Inside TSP band — null fails if either bound is set
+    if (minInside !== null || maxInside !== null) {
+      if (p.insideTsp == null) return false;
+      if (minInside !== null && p.insideTsp < minInside) return false;
+      if (maxInside !== null && p.insideTsp > maxInside) return false;
+    }
+
+    // Outside TSP band — null fails if either bound is set
+    if (minOutside !== null || maxOutside !== null) {
+      if (p.outsideTsp == null) return false;
+      if (minOutside !== null && p.outsideTsp < minOutside) return false;
+      if (maxOutside !== null && p.outsideTsp > maxOutside) return false;
     }
 
     // Min Salary — null fails if filter is set
@@ -235,6 +280,8 @@ function getValue(p: PlayerListRow, key: SortKey): string | number | null {
     case 'gameShape':   return p.gameShape;
     case 'tsp':         return p.tsp;
     case 'tspDelta':    return p.tspDelta;
+    case 'insideTsp':   return p.insideTsp;
+    case 'outsideTsp':  return p.outsideTsp;
     default:
       // skill key
       return p.skills?.[key] ?? null;

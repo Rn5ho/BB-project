@@ -5,6 +5,7 @@ import {
   nextSortState,
   isFilterDefault,
   countActiveSkillMins,
+  countActiveMoreFilters,
   DEFAULT_FILTER,
   DEFAULT_SORT,
   type PlayerListRow,
@@ -407,6 +408,104 @@ describe('DEFAULT_SORT', () => {
   it('world defaults to dmi desc', () => {
     expect(DEFAULT_SORT.world).toEqual({ key: 'dmi', direction: 'desc' });
   });
+});
+
+// ─── max bounds + inside/outside filters ──────────────────────────────────────
+
+describe('max bounds + inside/outside filters', () => {
+  it('maxTsp excludes rows above the bound and null-tsp rows', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, tsp: 80 }),
+      makePlayer({ bbPlayerId: 2, tsp: 120 }),
+      makePlayer({ bbPlayerId: 3, tsp: null }),
+    ];
+    const out = filterRows(rows, { ...DEFAULT_FILTER, maxTsp: '100' });
+    expect(out.map((r) => r.bbPlayerId)).toEqual([1]);
+  });
+  it('min+max TSP form a band', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, tsp: 50 }),
+      makePlayer({ bbPlayerId: 2, tsp: 90 }),
+      makePlayer({ bbPlayerId: 3, tsp: 130 }),
+    ];
+    const out = filterRows(rows, { ...DEFAULT_FILTER, minTsp: '60', maxTsp: '100' });
+    expect(out.map((r) => r.bbPlayerId)).toEqual([2]);
+  });
+  it('maxDmi excludes rows above the bound and null-dmi rows', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, dmi: 5000 }),
+      makePlayer({ bbPlayerId: 2, dmi: 20000 }),
+      makePlayer({ bbPlayerId: 3, dmi: null }),
+    ];
+    const out = filterRows(rows, { ...DEFAULT_FILTER, maxDmi: '10000' });
+    expect(out.map((r) => r.bbPlayerId)).toEqual([1]);
+  });
+  it('inside TSP min/max; nulls fail when a bound is set', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, insideTsp: 20 }),
+      makePlayer({ bbPlayerId: 2, insideTsp: 45 }),
+      makePlayer({ bbPlayerId: 3, insideTsp: null }),
+    ];
+    expect(filterRows(rows, { ...DEFAULT_FILTER, minInsideTsp: '30' }).map((r) => r.bbPlayerId)).toEqual([2]);
+    expect(filterRows(rows, { ...DEFAULT_FILTER, maxInsideTsp: '30' }).map((r) => r.bbPlayerId)).toEqual([1]);
+  });
+  it('outside TSP min/max; nulls fail when a bound is set', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, outsideTsp: 40 }),
+      makePlayer({ bbPlayerId: 2, outsideTsp: 70 }),
+      makePlayer({ bbPlayerId: 3, outsideTsp: null }),
+    ];
+    expect(filterRows(rows, { ...DEFAULT_FILTER, minOutsideTsp: '50' }).map((r) => r.bbPlayerId)).toEqual([2]);
+    expect(filterRows(rows, { ...DEFAULT_FILTER, maxOutsideTsp: '50' }).map((r) => r.bbPlayerId)).toEqual([1]);
+  });
+});
+
+// ─── inside/outside sort keys ──────────────────────────────────────────────────
+
+describe('inside/outside sort keys', () => {
+  it('sorts insideTsp desc with nulls last', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, insideTsp: null }),
+      makePlayer({ bbPlayerId: 2, insideTsp: 30 }),
+      makePlayer({ bbPlayerId: 3, insideTsp: 50 }),
+    ];
+    const sorted = sortRows(rows, { key: 'insideTsp', direction: 'desc' });
+    expect(sorted.map((r) => r.bbPlayerId)).toEqual([3, 2, 1]);
+  });
+  it('sorts outsideTsp asc with nulls last', () => {
+    const rows = [
+      makePlayer({ bbPlayerId: 1, outsideTsp: 70 }),
+      makePlayer({ bbPlayerId: 2, outsideTsp: null }),
+      makePlayer({ bbPlayerId: 3, outsideTsp: 40 }),
+    ];
+    const sorted = sortRows(rows, { key: 'outsideTsp', direction: 'asc' });
+    expect(sorted.map((r) => r.bbPlayerId)).toEqual([3, 1, 2]);
+  });
+});
+
+// ─── countActiveMoreFilters ───────────────────────────────────────────────────
+
+describe('countActiveMoreFilters', () => {
+  it('is 0 on defaults', () => expect(countActiveMoreFilters(DEFAULT_FILTER)).toBe(0));
+  it('counts each non-empty More-panel field', () => {
+    expect(countActiveMoreFilters({ ...DEFAULT_FILTER, maxTsp: '100', heightMin: '190' })).toBe(2);
+    expect(countActiveMoreFilters({ ...DEFAULT_FILTER, minOutsideTsp: '50' })).toBe(1);
+  });
+  it('ignores whitespace-only values', () => {
+    expect(countActiveMoreFilters({ ...DEFAULT_FILTER, minDmi: '  ' })).toBe(0);
+  });
+});
+
+// ─── isFilterDefault with new fields ───────────────────────────────────────────
+
+describe('isFilterDefault with new fields', () => {
+  it('is false when any new bound is set', () => {
+    expect(isFilterDefault({ ...DEFAULT_FILTER, maxTsp: '100' })).toBe(false);
+    expect(isFilterDefault({ ...DEFAULT_FILTER, maxDmi: '9' })).toBe(false);
+    expect(isFilterDefault({ ...DEFAULT_FILTER, minInsideTsp: '1' })).toBe(false);
+    expect(isFilterDefault({ ...DEFAULT_FILTER, maxOutsideTsp: '1' })).toBe(false);
+  });
+  it('is true on defaults', () => expect(isFilterDefault(DEFAULT_FILTER)).toBe(true));
 });
 
 // ─── sanitizeShowSkills ───────────────────────────────────────────────────────
