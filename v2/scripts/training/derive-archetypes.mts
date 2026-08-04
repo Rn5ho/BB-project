@@ -33,6 +33,8 @@ const { defenseFloorFor, eliteMembers, deriveArchetype, selfMatchRate, toEvalPla
 const { evaluateArchetype } = await import('../../src/lib/archetypes/evaluate');
 const { mdTable, fmtSkills } = await import('../../src/lib/archetypes/derive/md');
 const { capUsagePct } = await import('../../src/lib/training/salary');
+const { parseGreekTidy, lastWeekRoster, nearestCluster } =
+  await import('../../src/lib/archetypes/derive/greece');
 type CohortPlayer = import('../../src/lib/archetypes/derive/groups').CohortPlayer;
 type Group = import('../../src/lib/archetypes/derive/groups').Group;
 type SkillKey = import('../../src/lib/training/types').SkillKey;
@@ -225,6 +227,37 @@ const specRows = allDerived.map((d) => [
 ]);
 lines.push(mdTable(['archetype \\ cluster', ...groupResults.flatMap((g) => g.clusters.map((c) => c.derived.archetype.key))], specRows));
 lines.push('');
+// ---- Greece external benchmark (benchmark, not ceiling — spec §2/§8) ----
+const greeceCsvPath = path.join(OUT_DIR, 'greece-s72', 'greek_tidy.csv');
+const greekRows = parseGreekTidy(readFileSync(greeceCsvPath, 'utf8'));
+const roster = lastWeekRoster(greekRows);
+const centroids = groupResults.flatMap((g) => g.clusters.map((c) => ({
+  key: c.derived.archetype.key, centroid: c.centroid as Record<SkillKey, number>,
+})));
+lines.push('', '## External benchmark: Greece U-21 (Euro bronze, S72)', '');
+lines.push('Benchmark, not ceiling: Greek outside starters sit ~p60–p75 of the elite market pool;');
+lines.push('thresholds derive from the market cohort. This section validates shapes and floors.');
+lines.push('');
+lines.push(mdTable(
+  ['player', 'pos', 'wk', 'skills', 'TSP10', 'nearest build', 'dist'],
+  roster.sort((a, b) => b.tsp10 - a.tsp10).map((p) => {
+    const n = nearestCluster(p, centroids);
+    return [p.player, p.position ?? '–', p.week, fmtSkills(p.skills), p.tsp10, n.key, n.distance.toFixed(1)];
+  }),
+));
+// above-bronze share per cluster: members strictly above Greece's position-equivalent starters
+lines.push('');
+const greekBest = { outside: Math.max(...roster.filter((r) => ['PG', 'SG', 'SF'].includes(r.position ?? '')).map((r) => r.tsp10)),
+                    inside: Math.max(...roster.filter((r) => ['PF', 'C'].includes(r.position ?? '')).map((r) => r.tsp10)) };
+lines.push(mdTable([`cluster`, `members above Greek best (outside ${greekBest.outside} / inside ${greekBest.inside})`],
+  groupResults.flatMap((g) => g.clusters.map((c) => [
+    c.derived.archetype.key,
+    c.members.filter((m) => m.tsp > (g.group === 'inside' ? greekBest.inside : greekBest.outside)).length,
+  ]))));
+lines.push('');
+lines.push('Caveats: n=17, one federation; coach-recorded levels (two SB=21 above display cap);');
+lines.push('wk14 censored; ages came from our DB (all 21), not the workbook.');
+lines.push('');
 lines.push('## Proposed rules (paste-ready)');
 lines.push('');
 lines.push('See `proposed-defaults.snippet.ts` next to this report. Younger byAge tiers are added by the --plans run.');
@@ -238,7 +271,7 @@ if (belowGate.length) {
 }
 lines.push('## Plans');
 lines.push('');
-lines.push(PLANS ? '(plans sections below)' : '_Run with `-- --plans` to add training paths, byAge tiers, Greece benchmark, and the Slovenia gap analysis._');
+lines.push(PLANS ? '(plans sections below)' : '_Run with `-- --plans` to add training paths, byAge tiers, and the Slovenia gap analysis._');
 
 writeFileSync(path.join(OUT_DIR, 'REPORT.md'), lines.join('\n') + '\n');
 writeFileSync(

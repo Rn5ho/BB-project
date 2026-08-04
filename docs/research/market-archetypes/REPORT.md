@@ -1,6 +1,6 @@
 # Market Archetypes — Season 72 (age-21 flood)
 
-Generated: 2026-08-04T12:33:23.617Z · window start 2026-07-10 · seed 72
+Generated: 2026-08-04T12:48:57.242Z · window start 2026-07-10 · seed 72
 Re-run: `npm run training:archetypes` from v2/ (bump SEASON for next season's flood).
 
 ## What this says, in plain language
@@ -124,6 +124,43 @@ Examples: [Jouni Skytta](https://www.buzzerbeater.com/player/54832628/overview.a
 | mkt72-inside-2 | 0% | 0% | 0% | 9% | 0% |
 | mkt72-wing-1 | 0% | 20% | 0% | 0% | 2% |
 
+
+## External benchmark: Greece U-21 (Euro bronze, S72)
+
+Benchmark, not ceiling: Greek outside starters sit ~p60–p75 of the elite market pool;
+thresholds derive from the market cohort. This section validates shapes and floors.
+
+| player | pos | wk | skills | TSP10 | nearest build | dist |
+| --- | --- | --- | --- | --- | --- | --- |
+| Aristidis Vlastarakis | SF | 14 | JS17 JR11 OD17 HA16 DR17 PA10 IS13 ID9 RB9 SB2 | 121 | mkt72-outside-2 | 7.2 |
+| Stilianos Theodoratos | PF | 14 | JS13 JR6 OD7 HA16 DR17 PA8 IS18 ID16 RB8 SB8 | 117 | mkt72-wing-1 | 11.7 |
+| Akis Kotsalos | SF | 14 | JS16 JR11 OD17 HA16 DR17 PA7 IS13 ID9 RB6 SB4 | 116 | mkt72-outside-2 | 6.7 |
+| Tasoulis Gittas | PG | 14 | JS14 JR9 OD14 HA18 DR19 PA8 IS16 ID9 RB5 SB4 | 116 | mkt72-outside-2 | 8.0 |
+| Alexios Thanos | PG | 14 | JS17 JR11 OD14 HA15 DR16 PA10 IS12 ID6 RB7 SB7 | 115 | mkt72-outside-2 | 4.2 |
+| Vlasis Tzougkarakis | SG | 14 | JS17 JR12 OD15 HA15 DR17 PA10 IS11 ID9 RB4 SB5 | 115 | mkt72-outside-2 | 5.3 |
+| Nikos Karaindros | SF | 14 | JS15 JR10 OD15 HA13 DR16 PA8 IS12 ID10 RB6 SB7 | 112 | mkt72-outside-2 | 5.0 |
+| Lefteris Sfikopoulos | SG | 14 | JS16 JR12 OD16 HA13 DR16 PA8 IS8 ID6 RB7 SB9 | 111 | mkt72-outside-2 | 6.5 |
+| Nikos Loukoumis | SF | 14 | JS15 JR9 OD17 HA16 DR16 PA8 IS11 ID9 RB5 SB5 | 111 | mkt72-outside-2 | 5.7 |
+| Vardis Alvanos | C | 14 | JS9 JR6 OD7 HA10 DR9 PA6 IS19 ID17 RB14 SB14 | 111 | mkt72-inside-2 | 6.3 |
+| Themistoklis Chalkitis | PF | 14 | JS11 JR8 OD8 HA11 DR11 PA7 IS8 ID16 RB11 SB18 | 109 | mkt72-inside-2 | 9.4 |
+| Stefanis Kotoulas | PF | 14 | JS15 JR5 OD7 HA16 DR17 PA5 IS17 ID13 RB5 SB6 | 106 | mkt72-outside-2 | 12.3 |
+| Antonios Sterpis | C | 14 | JS10 JR4 OD4 HA8 DR9 PA9 IS18 ID16 RB13 SB13 | 104 | mkt72-inside-2 | 7.0 |
+| Kostas Tampakis | C | 14 | JS9 JR8 OD4 HA8 DR9 PA8 IS18 ID16 RB12 SB10 | 102 | mkt72-inside-2 | 6.2 |
+| Renos Grafopoulos | PG | 14 | JS14 JR8 OD16 HA16 DR17 PA7 IS3 ID5 RB7 SB5 | 98 | mkt72-outside-2 | 8.2 |
+| Gryllakis Antonopoulos | C | 14 | JS6 JR2 OD7 HA5 DR2 PA8 IS9 ID17 RB15 SB21 | 92 | mkt72-inside-1 | 5.5 |
+| Panteleimon Amanatis | C | 14 | JS4 JR3 OD5 HA6 DR2 PA6 IS7 ID16 RB15 SB21 | 85 | mkt72-inside-1 | 4.4 |
+
+| cluster | members above Greek best (outside 121 / inside 117) |
+| --- | --- |
+| mkt72-outside-1 | 1 |
+| mkt72-outside-2 | 4 |
+| mkt72-inside-1 | 0 |
+| mkt72-inside-2 | 1 |
+| mkt72-wing-1 | 0 |
+
+Caveats: n=17, one federation; coach-recorded levels (two SB=21 above display cap);
+wk14 censored; ages came from our DB (all 21), not the workbook.
+
 ## Proposed rules (paste-ready)
 
 See `proposed-defaults.snippet.ts` next to this report. Younger byAge tiers are added by the --plans run.
@@ -135,4 +172,4 @@ See `proposed-defaults.snippet.ts` next to this report. Younger byAge tiers are 
 
 ## Plans
 
-_Run with `-- --plans` to add training paths, byAge tiers, Greece benchmark, and the Slovenia gap analysis._
+_Run with `-- --plans` to add training paths, byAge tiers, and the Slovenia gap analysis._
