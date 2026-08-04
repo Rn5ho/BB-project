@@ -292,6 +292,43 @@ benchmark data checked in at `docs/research/market-archetypes/greece-s72/`. Re-r
 season: bump SEASON constant. Backlog from the spec: NT week planner/GS tracker, age-22 sweep,
 od<-ha elastic watch item.
 
+**Archetype pipeline follow-ups (2026-08-04, same day)** — five owner-driven upgrades on top of
+the shipped analysis:
+- **Custom staff scenario**: `--coach N --yt N [--gym N] [--tc N]` adds a third scenario beside
+  neutral (5/5) and elite (7/7/gym2/tc2). Real club ask is coach 5-6 / YT 6; 7s are perfection,
+  not the norm. Finding: all 5 builds reachable at 6/6/1/1.
+- **`--stress`**: per-scenario feasibility FLOOR beside each ceiling — same plan re-simulated from
+  worst hidden sublevels (displayed −0.99) at degraded minutes (`STRESS_MINUTES=38`). Ceilings
+  assume full minutes + midpoint sublevels; the truth lives between.
+- **Draftee realism**: profiles now come from the top-`DRAFTEE_TOP_SHARE` (25%) starting-TSP slice
+  of floor-eligible rookies — ~90% of draftees are never U-21 material, and 18yo starts cap at 7
+  per skill. This flipped `mkt72-inside-2` from "needs elite staff" to reachable at neutral: the
+  binding constraint is the DRAFT, not staffing.
+- **U-21 milestone semantics** (`FINALIZE_WEEK=7` in derive/plans.ts): M1 = entering age-21 wk 1
+  PLAYABLE (selection gate, targets relaxed floor−2/definers−1); M2 = age-21 wk ~7 FINALIZED
+  (group stage ends, playoffs begin); after M2 polish only. Staged two-phase beam search; both
+  verdicts render per scenario; `gap.ts` closability now measures against wk 7, not wk 14.
+- **Per-player journey planner**: `npm run training:journey -- --player <id> --build "<name>"
+  [staff flags] [--save]` (v2/scripts/training/journey.mts) — takes a real tracked player's current
+  state (pop-anchored sublevels), any archetype incl. DB customs, and returns the full staged path
+  with M1/M2/end checkpoints. `--save` writes it as his active plan (visible on his player page).
+  Age derives from the newest snapshot of ANY source (light api rows carry post-rollover ages).
+- Week-14 mechanics corrected (owner): NOT a Game Shape week — a normal training week with fewer
+  games, so minutes are scarce and clubs pick multi-position trainings; projections assume full
+  minutes, so narrow-training week-14 gains are optimistic.
+
+**Centri U-21 calibration import (2026-08-04)** — a Slovenian NT centers Discord log (2024-25,
+weekly cards + training + staff) exported and turned into 16 replay cases at
+`docs/research/training/calibration-cases/centri-u21/` (README has full method + results).
+First independent INSIDE-skill ground truth over full 18→21 arcs: bbscout MAE **0.31** displayed
+levels vs the own-team benchmark 0.41. Raw pop recall 35% but **73% timing-tolerant** — misses are
+hidden-sublevel phase shifts (±1-2 wk), not rate errors, so plans are trustworthy cumulatively and
+NOT at week granularity. Gym-3 scatter explains 100% of off-program pops → `baseSlots: 0` unrefuted.
+Source export + parsed tables live outside the repo at `C:\Users\Rn5ho\Downloads\centri-u21\`.
+**Glossary trap:** Slovenian `fitnes` = the GYM facility, not a fitness trainer (`trening igrišče` =
+training court). Mis-mapping it manufactured a false "unmodelled scatter" finding and nearly drove a
+spurious `baseSlots` refit — check facility/staff glossaries before trusting any parameter finding.
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 
