@@ -10,7 +10,7 @@ import { SKILL_KEYS, SKILL_DB_NAMES, type SkillKey } from '../../training/types'
 import type { DefenseFloor } from './rules';
 
 export interface StaffScenario {
-  name: 'neutral' | 'elite';
+  name: string; // 'neutral' | 'elite' + any custom scenario (e.g. CLI-provided staff levels)
   coachLevel: number; youthTrainerLevel: number; gymLevel: number; trainingCourtLevel: number;
 }
 export const STAFF_SCENARIOS: StaffScenario[] = [

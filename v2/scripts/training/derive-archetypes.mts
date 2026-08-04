@@ -2,6 +2,9 @@
 // docs/superpowers/specs/2026-08-04-market-archetypes-design.md).
 // Usage (from v2/): npm run training:archetypes            -- part 1 (cohort/clusters/rules)
 //                   npm run training:archetypes -- --plans -- + plans/tiers/Slovenia (Tasks 9-11)
+//                   npm run training:archetypes -- --plans --coach 6 --yt 6 [--gym 1] [--tc 1]
+//                     -- adds a THIRD "custom" staff scenario next to neutral (5/5) and elite
+//                     (7/7/gym2/tc2), same as picking staff levels in the training planner.
 // Read-only: SELECT statements only. Report goes to docs/research/market-archetypes/REPORT.md.
 import { config } from 'dotenv';
 config({ path: '.env.local' });
@@ -19,6 +22,22 @@ const SIL_MIN = 0.12; // silhouette runs structurally low in 10-dim shape space;
 const JACCARD_MIN = 0.6;
 const SEED = 72;
 const PLANS = process.argv.includes('--plans');
+// Optional custom staff levels (--coach/--yt/--gym/--tc): appended as a third scenario so the
+// report shows feasibility under what the owner can actually request from clubs.
+function argNum(name: string): number | undefined {
+  const i = process.argv.indexOf(`--${name}`);
+  if (i === -1 || i === process.argv.length - 1) return undefined;
+  const v = Number(process.argv[i + 1]);
+  return Number.isFinite(v) ? v : undefined;
+}
+const CUSTOM_STAFF = (() => {
+  const coach = argNum('coach'), yt = argNum('yt'), gym = argNum('gym'), tc = argNum('tc');
+  if (coach === undefined && yt === undefined && gym === undefined && tc === undefined) return null;
+  return {
+    coachLevel: coach ?? 5, youthTrainerLevel: yt ?? 5,
+    gymLevel: gym ?? 0, trainingCourtLevel: tc ?? 0,
+  };
+})();
 
 // Dynamic imports AFTER dotenv (repo convention): src/db reads DATABASE_URL at module scope.
 const { sql } = await import('drizzle-orm');
@@ -349,11 +368,21 @@ if (belowGate.length) {
 // scope for the Slovenia section appended here later. ----
 const neutralTiersByKey = new Map<string, ClusterPlanResult['tiers']>();
 const planSummaries: Array<{ key: string; scenario: string; reachable: boolean; fullRule: boolean }> = [];
+// Scenarios for this run: the fixed neutral/elite bracket + an optional CLI-provided custom
+// scenario (--coach/--yt/--gym/--tc), same knobs as the training planner UI.
+const scenarios = CUSTOM_STAFF
+  ? [...STAFF_SCENARIOS, {
+      name: `custom (coach ${CUSTOM_STAFF.coachLevel}/YT ${CUSTOM_STAFF.youthTrainerLevel}/gym ${CUSTOM_STAFF.gymLevel}/TC ${CUSTOM_STAFF.trainingCourtLevel})`,
+      ...CUSTOM_STAFF,
+    }]
+  : [...STAFF_SCENARIOS];
 if (PLANS) {
   lines.push('', '## Training paths (per build)', '');
   lines.push('Anchor: the build must be USABLE entering age 21 (WC squad selection); the age-21');
-  lines.push('season is a finishing phase. Feasibility shown under neutral (coach 5/YT 5) and elite');
-  lines.push('(coach 7/YT 7, gym 2, TC 2) staff. Week-14s are near-zero training weeks in reality');
+  lines.push('season is a finishing phase. Feasibility shown under: ' + scenarios
+    .map((s) => `${s.name} (coach ${s.coachLevel}/YT ${s.youthTrainerLevel}/gym ${s.gymLevel}/TC ${s.trainingCourtLevel})`)
+    .join(' · ') + '.');
+  lines.push('Week-14s are near-zero training weeks in reality');
   lines.push('(clubs switch to Game Shape) — treat final-week pops as bonus, not plan.');
   lines.push('Finishing deltas describe the age-21 season under the plan\'s final block extended to');
   lines.push('season end; large deltas on a secondary skill mean the searcher finished its targets');
@@ -369,10 +398,10 @@ if (PLANS) {
     for (const c of gr.clusters) {
       const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members);
       lines.push('', `### Path to ${c.derived.archetype.name}`, '');
-      // Run planForCluster ONCE per scenario per cluster; results[0] is neutral (STAFF_SCENARIOS[0]).
-      const results = STAFF_SCENARIOS.map((s) => planForCluster(c.derived.archetype, floor, draftees, s));
-      for (let i = 0; i < STAFF_SCENARIOS.length; i++) {
-        const scenario = STAFF_SCENARIOS[i];
+      // Run planForCluster ONCE per scenario per cluster; results[0] is neutral (scenarios[0]).
+      const results = scenarios.map((s) => planForCluster(c.derived.archetype, floor, draftees, s));
+      for (let i = 0; i < scenarios.length; i++) {
+        const scenario = scenarios[i];
         const r = results[i];
         const blockStr = r.blocks.map((b) => `${getTrainingType(b.trainingId).label}×${b.weeks}`).join(' → ');
         lines.push(`**${scenario.name}**: ${r.feasibleEntering21 ? 'REACHABLE entering 21' : 'NOT reachable entering 21'} · full-rule end check ${r.fullRuleMatch ? 'PASS' : `FAIL (${r.failingChecks.map((f) => `${f.field} ${f.op} ${f.threshold} got ${f.actual}`).join('; ')})`} · pop rate ${r.weeklyPopRate.toFixed(2)}/wk`);
@@ -510,7 +539,12 @@ for (const gr of groupResults) {
   summaryLines.push(`- ${gr.group}: ${pools[gr.group].length} candidates -> ${gr.k} distinct build${gr.k > 1 ? 's' : ''}${gr.noStructure ? ' (weak separation — treat as one profile)' : ''}`);
 }
 if (PLANS) {
-  summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === 'neutral' && p.reachable).length} of ${planSummaries.length / 2} builds are reachable by a Slovenian-club draftee entering age 21 under neutral staff`);
+  const scenarioCount = new Set(planSummaries.map((p) => p.scenario)).size || 1;
+  summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === 'neutral' && p.reachable).length} of ${planSummaries.length / scenarioCount} builds are reachable by a Slovenian-club draftee entering age 21 under neutral staff`);
+  const customName = planSummaries.find((p) => p.scenario.startsWith('custom'))?.scenario;
+  if (customName) {
+    summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === customName && p.reachable).length} of ${planSummaries.length / scenarioCount} builds are reachable under the requested ${customName} staff`);
+  }
 }
 summaryLines.push('');
 
