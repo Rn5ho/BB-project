@@ -147,14 +147,16 @@ export function bootstrapJaccard(vectors: number[][], k: number, rounds: number,
   const sums = new Array<number>(k).fill(0);
   for (let r = 0; r < rounds; r++) {
     const idx = Array.from({ length: vectors.length }, () => Math.floor(rng() * vectors.length));
+    const sampled = new Set(idx);
     const lab = wardCluster(idx.map((i) => vectors[i]), k);
-    const bootSets = Array.from({ length: k }, (_, c) =>
-      new Set(idx.filter((_, p) => lab[p] === c)));
+    const bootSets = Array.from({ length: k }, (_, c) => new Set(idx.filter((_, p) => lab[p] === c)));
     baseSets.forEach((bs, c) => {
+      // Hennig-style: judge stability on the points the resample actually contains
+      const restricted = new Set([...bs].filter((i) => sampled.has(i)));
       let best = 0;
       for (const os of bootSets) {
-        const inter = [...bs].filter((i) => os.has(i)).length;
-        const uni = new Set([...bs, ...os]).size;
+        const inter = [...restricted].filter((i) => os.has(i)).length;
+        const uni = new Set([...restricted, ...os]).size;
         if (uni > 0) best = Math.max(best, inter / uni);
       }
       sums[c] += best;
