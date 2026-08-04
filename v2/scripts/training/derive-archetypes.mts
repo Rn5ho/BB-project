@@ -23,7 +23,7 @@ const PLANS = process.argv.includes('--plans');
 // Dynamic imports AFTER dotenv (repo convention): src/db reads DATABASE_URL at module scope.
 const { sql } = await import('drizzle-orm');
 const { db } = await import('../../src/db/index');
-const { SKILL_KEYS } = await import('../../src/lib/training/types');
+const { SKILL_KEYS, SKILL_DB_NAMES } = await import('../../src/lib/training/types');
 const { assignGroup, balance } = await import('../../src/lib/archetypes/derive/groups');
 const { quantile, mean, median, histogram } = await import('../../src/lib/archetypes/derive/stats');
 const { shapeVector, wardCluster, kmeans, chooseK, silhouette, agreement, bootstrapJaccard } =
@@ -35,9 +35,12 @@ const { mdTable, fmtSkills } = await import('../../src/lib/archetypes/derive/md'
 const { capUsagePct } = await import('../../src/lib/training/salary');
 const { parseGreekTidy, lastWeekRoster, nearestCluster } =
   await import('../../src/lib/archetypes/derive/greece');
+const { STAFF_SCENARIOS, planForCluster } = await import('../../src/lib/archetypes/derive/plans');
+const { getTrainingType } = await import('../../src/lib/training/catalog');
 type CohortPlayer = import('../../src/lib/archetypes/derive/groups').CohortPlayer;
 type Group = import('../../src/lib/archetypes/derive/groups').Group;
 type SkillKey = import('../../src/lib/training/types').SkillKey;
+type ClusterPlanResult = import('../../src/lib/archetypes/derive/plans').ClusterPlanResult;
 
 const OUT_DIR = path.resolve(process.cwd(), '..', 'docs', 'research', 'market-archetypes');
 mkdirSync(OUT_DIR, { recursive: true });
@@ -146,6 +149,57 @@ for (const g of ['outside', 'inside', 'wing'] as const) {
     kmeansAgreement: agreement(labels, km), jaccard: jac, noStructure,
     collapsedByStability, collapsedFromK, clusters,
   });
+}
+
+// ---- draftee profiles (age-18 Slovenian universe; --plans only, read-only) ----
+// Census/API/manual roster — NOT market-censored: per-group p25/p50/p75 skill profiles used
+// as the starting state for the training-path search (spec §7).
+async function fetchRookies(): Promise<CohortPlayer[]> {
+  const rookieRows = await db.execute(sql`
+    with latest_full as (
+      select distinct on (s.player_id)
+        s.player_id, s.jump_shot, s.jump_range, s.outside_def, s.handling, s.driving,
+        s.passing, s.inside_shot, s.inside_def, s.rebounding, s.shot_blocking, s.potential
+      from snapshots s
+      where s.season = ${SEASON} and s.age = 18
+        and s.jump_shot is not null and s.inside_shot is not null and s.shot_blocking is not null
+        and s.jump_range is not null and s.outside_def is not null and s.handling is not null
+        and s.driving is not null and s.passing is not null and s.inside_def is not null
+        and s.rebounding is not null
+      order by s.player_id, s.captured_at desc
+    )
+    select lf.*, p.height_cm
+    from latest_full lf join players p on p.bb_player_id = lf.player_id
+    where (p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))
+      and p.is_utopian = false and p.height_cm is not null
+  `);
+  return (rookieRows.rows as any[]).map((r) => {
+    const skills = {
+      js: Number(r.jump_shot), jr: Number(r.jump_range), od: Number(r.outside_def),
+      ha: Number(r.handling), dr: Number(r.driving), pa: Number(r.passing),
+      is: Number(r.inside_shot), id: Number(r.inside_def), rb: Number(r.rebounding),
+      sb: Number(r.shot_blocking),
+    };
+    return { playerId: Number(r.player_id), name: '', heightCm: Number(r.height_cm),
+      potential: Number(r.potential ?? 7), salary: null, startingPrice: null, ownerTeamName: null,
+      nationality: null, skills, stamina: null, freeThrow: null,
+      tsp: Object.values(skills).reduce((a, b) => a + b, 0) };
+  });
+}
+const rookies: CohortPlayer[] = PLANS ? await fetchRookies() : [];
+function drafteesFor(g: 'outside' | 'inside' | 'wing') {
+  // group rookies by the same balance/height gates; wing draftees = the between band
+  const members = rookies.filter((r) => assignGroup(r, DELTA) === g);
+  const src = members.length >= 8 ? members : rookies; // thin group -> whole universe fallback
+  const heights = src.map((m) => m.heightCm);
+  const pots = src.map((m) => m.potential);
+  return (['p25', 'p50', 'p75'] as const).map((label) => ({
+    label,
+    skills: Object.fromEntries(SKILL_KEYS.map((k) => [k,
+      Math.max(1, Math.round(quantile(src.map((m) => m.skills[k]), { p25: 0.25, p50: 0.5, p75: 0.75 }[label])))])) as any,
+    heightCm: Math.round(median(heights)),
+    potential: Math.round(median(pots)),
+  }));
 }
 
 // ---- report ----
@@ -269,9 +323,66 @@ if (belowGate.length) {
   ])));
   lines.push('');
 }
-lines.push('## Plans');
-lines.push('');
-lines.push(PLANS ? '(plans sections below)' : '_Run with `-- --plans` to add training paths, byAge tiers, and the Slovenia gap analysis._');
+// ---- plans (Tasks 9-11): per-build training paths, byAge tiers patched into the derived
+// archetypes' rules, Slovenia gap analysis. Kept as one block so neutralTiersByKey stays in
+// scope for the Slovenia section appended here later. ----
+const neutralTiersByKey = new Map<string, ClusterPlanResult['tiers']>();
+const planSummaries: any[] = [];
+if (PLANS) {
+  lines.push('', '## Training paths (per build)', '');
+  lines.push('Anchor: the build must be USABLE entering age 21 (WC squad selection); the age-21');
+  lines.push('season is a finishing phase. Feasibility shown under neutral (coach 5/YT 5) and elite');
+  lines.push('(coach 7/YT 7, gym 2, TC 2) staff. Week-14s are near-zero training weeks in reality');
+  lines.push('(clubs switch to Game Shape) — treat final-week pops as bonus, not plan.');
+  for (const gr of groupResults) {
+    const draftees = drafteesFor(gr.group);
+    for (const c of gr.clusters) {
+      const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members);
+      lines.push('', `### Path to ${c.derived.archetype.name}`, '');
+      // Run planForCluster ONCE per scenario per cluster; results[0] is neutral (STAFF_SCENARIOS[0]).
+      const results = STAFF_SCENARIOS.map((s) => planForCluster(c.derived.archetype, floor, draftees, s));
+      for (let i = 0; i < STAFF_SCENARIOS.length; i++) {
+        const scenario = STAFF_SCENARIOS[i];
+        const r = results[i];
+        const blockStr = r.blocks.map((b) => `${getTrainingType(b.trainingId).label}×${b.weeks}`).join(' → ');
+        lines.push(`**${scenario.name}**: ${r.feasibleEntering21 ? 'REACHABLE entering 21' : 'NOT reachable entering 21'} · full-rule end check ${r.fullRuleMatch ? 'PASS' : `FAIL (${r.failingChecks.map((f) => `${f.field} ${f.op} ${f.threshold} got ${f.actual}`).join('; ')})`} · pop rate ${r.weeklyPopRate.toFixed(2)}/wk`);
+        lines.push('');
+        lines.push(`Plan: ${blockStr || '(no plan found)'}`);
+        lines.push('');
+        lines.push(`Finishing deltas during age-21 season: ${Object.entries(r.finishingDeltas).map(([k, d]) => `${k.toUpperCase()}+${d}`).join(' ') || 'none'}`);
+        lines.push('');
+        planSummaries.push({ key: c.derived.archetype.key, scenario: scenario.name,
+          reachable: r.feasibleEntering21, fullRule: r.fullRuleMatch });
+      }
+      // Patch byAge 19/20/21 tiers into the proposed rules from the NEUTRAL scenario (results[0] —
+      // Slovenian prescription). 18 stays blank — draft-day skills are noise.
+      const neutral = results[0];
+      for (const cond of c.derived.archetype.rules.conditions) {
+        if (cond.kind !== 'field') continue;
+        const key = SKILL_KEYS.find((k) => SKILL_DB_NAMES[k] === cond.field);
+        if (!key || cond.op !== '>=') continue;
+        cond.byAge = { 19: neutral.tiers[19][key], 20: neutral.tiers[20][key], 21: cond.byAge[21] };
+      }
+      neutralTiersByKey.set(c.derived.archetype.key, neutral.tiers);
+      lines.push(`byAge tiers (entering-age, neutral staff, lower envelope of p25/p50/p75 draftees):`);
+      lines.push('');
+      lines.push(mdTable(['age', ...SKILL_KEYS.map((k) => k.toUpperCase())],
+        ([19, 20, 21] as const).map((a) => [a, ...SKILL_KEYS.map((k) => neutral.tiers[a][k] ?? null)])));
+    }
+  }
+  // spec §6: back-projected age-20 defense must sit BELOW the age-21 floors — anything else is
+  // an optimizer error, not a target.
+  for (const gr of groupResults) for (const c of gr.clusters) {
+    const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members);
+    const odCond = c.derived.archetype.rules.conditions.find(
+      (x) => x.kind === 'field' && x.field === floor.field);
+    if (odCond?.kind === 'field' && (odCond.byAge[20] ?? 0) >= floor.min)
+      console.error(`WARN ${c.derived.archetype.key}: age-20 ${floor.field} tier ${odCond.byAge[20]} >= floor ${floor.min} (optimizer-optimistic)`);
+  }
+} else {
+  lines.push('', '## Plans', '');
+  lines.push('_Run with `-- --plans` to add training paths, byAge tiers, and the Slovenia gap analysis._');
+}
 
 writeFileSync(path.join(OUT_DIR, 'REPORT.md'), lines.join('\n') + '\n');
 writeFileSync(
@@ -284,5 +395,6 @@ console.log(JSON.stringify({
   cohort: cohort.length,
   groups: Object.fromEntries(Object.entries(groups).map(([k, v]) => [k, v.length])),
   clusters: groupResults.map((g) => ({ group: g.group, k: g.k, sizes: g.clusters.map((c) => c.members.length) })),
+  plans: planSummaries,
 }));
 process.exit(0);
