@@ -21,7 +21,8 @@
     "training:scrape-history": "tsx scripts/training/scrape-training-history.mts",
     "training:replay": "tsx scripts/training/replay-case.mts",
     "training:infer": "tsx scripts/training/run-inference.mts",
-    "training:archetypes": "tsx scripts/training/derive-archetypes.mts"
+    "training:archetypes": "tsx scripts/training/derive-archetypes.mts",
+    "training:journey": "tsx scripts/training/journey.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

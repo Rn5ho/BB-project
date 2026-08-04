@@ -2,7 +2,7 @@
 import { optimizePlan, type SkillTarget, type PlanCandidate } from '../../training/optimize';
 import { project, displayed, type PlayerState, type Projection } from '../../training/engine';
 import { planToWeeks } from '../../training/bridge';
-import { horizonWeeks } from '../../training/horizon';
+import { horizonWeeks, absWeek, WEEKS_PER_SEASON } from '../../training/horizon';
 import { BBSCOUT } from '../../training/models/bbscout';
 import { evaluateArchetype } from '../evaluate';
 import type { DefaultArchetype, EvalPlayer } from '../types';
@@ -250,5 +250,155 @@ export function planForCluster(
     finishingDeltas,
     weeklyPopRate: proj50.weeks.length ? proj50.popCount / proj50.weeks.length : 0,
     stressed,
+  };
+}
+
+export interface JourneyPhase {
+  label: 'to-playable' | 'to-finalized' | 'polish';
+  blocks: Array<{ trainingId: number; weeks: number }>;
+}
+
+export interface JourneyResult {
+  phases: JourneyPhase[];
+  /** M1 (playable, entering age-21 week 1) targets met — trivially true once `now.age >= 21`:
+   *  the milestone is already behind `now`, so there's nothing left to plan toward it. */
+  playable: boolean;
+  /** M2 (finalized, entering age-21 week FINALIZE_WEEK) — full targets met. */
+  finalized: boolean;
+  /** Displayed skills at each milestone; null when that milestone is strictly before `now`. */
+  checkpoints: {
+    m1: Record<SkillKey, number> | null;
+    m2: Record<SkillKey, number> | null;
+    end: Record<SkillKey, number>;
+  };
+  weeklyPopRate: number;
+}
+
+/**
+ * Per-player U-21 journey: a STAGED milestone search from the player's CURRENT (age, season
+ * week) to end of U-21, composing up to three phases —
+ *   1. to-playable:  now -> entering age-21 week 1 (M1), against the relaxed M1 targets
+ *      (floor skill displayed−2, others displayed−1, min 1 — see `targetsFor`/planForCluster).
+ *   2. to-finalized: -> entering age-21 week FINALIZE_WEEK (M2), against the full targets.
+ *   3. polish:       -> entering age-22 week 1, extending whatever was last trained (or, if
+ *      nothing was trained yet — both earlier milestones already behind `now` — a fresh search
+ *      against the full targets).
+ * A phase is entirely omitted once its horizon has already elapsed (a 21yo past FINALIZE_WEEK
+ * gets only the polish phase). Within an INCLUDED phase, if none of that phase's own targets
+ * are still active (already met at the phase's start), the phase is reported with empty blocks
+ * and a trivially-true verdict; the state/season-week simply carry over unchanged into the next
+ * phase rather than analytically fast-forwarding through untrained weeks. Real tracked players
+ * are never already past a relaxed M1 target 40+ weeks out, so this is a documented
+ * simplification of a path that shouldn't be load-bearing, not a modeled feature.
+ */
+export function planJourney(
+  start: PlayerState,
+  now: { age: number; week: number },
+  targets: SkillTarget[],
+  floorSkill: SkillKey | null,
+  staff: StaffScenario,
+): JourneyResult {
+  const staffCfg = {
+    coachLevel: staff.coachLevel, youthTrainerLevel: staff.youthTrainerLevel,
+    gymLevel: staff.gymLevel, trainingCourtLevel: staff.trainingCourtLevel,
+  };
+  const planToWeekCfgs = (bs: Array<{ trainingId: number; weeks: number }>) =>
+    planToWeeks(bs, staff.coachLevel, staff.youthTrainerLevel,
+      { gymLevel: staff.gymLevel, trainingCourtLevel: staff.trainingCourtLevel });
+  const replayEnd = (
+    from: PlayerState, blocks: Array<{ trainingId: number; weeks: number }>, weekOfSeason: number,
+  ): PlayerState => {
+    const proj = project(from, planToWeekCfgs(blocks), BBSCOUT, { startWeekOfSeason: weekOfSeason });
+    const last = proj.weeks[proj.weeks.length - 1];
+    return {
+      skills: proj.finalSkills, age: proj.finalAge, heightCm: from.heightCm, potential: from.potential,
+      ftSkill: last ? last.result.ftAfter : from.ftSkill,
+      staminaSkill: last ? last.result.staminaAfter : from.staminaSkill,
+    };
+  };
+
+  const P1 = { age: 21, week: 1 };
+  const P2 = { age: 21, week: FINALIZE_WEEK };
+  const P3 = { age: 22, week: 1 };
+  const h1 = horizonWeeks(now, P1);
+  const h2 = Math.max(0, horizonWeeks(now, P2) - h1);
+  const h3 = Math.max(0, horizonWeeks(now, P3) - horizonWeeks(now, P2));
+
+  // M1 ("playable") targets — same relaxation as planForCluster's m1Targets.
+  const m1Targets: SkillTarget[] = targets.map((t) => ({
+    ...t, displayed: Math.max(1, t.displayed - (t.skill === floorSkill ? 2 : 1)),
+  }));
+
+  const phases: JourneyPhase[] = [];
+  let playable = true;
+  let cursorState = start;
+  let cursorWeek = now.week;
+
+  if (now.age < 21) {
+    const r1 = optimizePlan(start, m1Targets, { horizonWeeks: h1, startWeekOfSeason: now.week, ...staffCfg });
+    const blocks1 = r1.best ? [...r1.best.blocks] : [];
+    phases.push({ label: 'to-playable', blocks: blocks1 });
+    playable = r1.best ? r1.best.reachable : true; // no active M1 targets = already playable
+    if (blocks1.length > 0) {
+      const newWeek = ((now.week - 1 + h1) % WEEKS_PER_SEASON) + 1;
+      cursorState = replayEnd(start, blocks1, now.week);
+      cursorWeek = newWeek;
+    }
+  }
+
+  if (h2 > 0) {
+    const r2 = optimizePlan(cursorState, targets, { horizonWeeks: h2, startWeekOfSeason: cursorWeek, ...staffCfg });
+    const blocks2 = r2.best ? [...r2.best.blocks] : [];
+    phases.push({ label: 'to-finalized', blocks: blocks2 });
+    if (blocks2.length > 0) {
+      const newWeek = ((cursorWeek - 1 + h2) % WEEKS_PER_SEASON) + 1;
+      cursorState = replayEnd(cursorState, blocks2, cursorWeek);
+      cursorWeek = newWeek;
+    }
+  }
+
+  if (h3 > 0) {
+    const composedSoFar = phases.flatMap((p) => p.blocks);
+    if (composedSoFar.length > 0) {
+      // Existing planForCluster pattern: extend the last-trained plan through the horizon
+      // rather than re-searching (nothing new to optimize for once M2's full targets are set).
+      const lastId = composedSoFar[composedSoFar.length - 1].trainingId;
+      phases.push({ label: 'polish', blocks: [{ trainingId: lastId, weeks: h3 }] });
+    } else {
+      // Nothing trained yet (both earlier milestones already behind `now`) — nothing to
+      // extend, so run a fresh search against the full targets for the polish horizon.
+      const r3 = optimizePlan(cursorState, targets, { horizonWeeks: h3, startWeekOfSeason: cursorWeek, ...staffCfg });
+      phases.push({ label: 'polish', blocks: r3.best ? [...r3.best.blocks] : [] });
+    }
+  }
+
+  const allBlocks = phases.flatMap((p) => p.blocks);
+  const fullProj = project(start, planToWeekCfgs(allBlocks), BBSCOUT, { startWeekOfSeason: now.week });
+  const end = Object.fromEntries(
+    SKILL_KEYS.map((k) => [k, displayed(fullProj.finalSkills[k])]),
+  ) as Record<SkillKey, number>;
+
+  const checkpointAt = (target: { age: number; week: number }): Record<SkillKey, number> | null => {
+    const offset = absWeek(target) - absWeek(now);
+    if (offset < 0) return null; // milestone strictly before `now`
+    if (offset === 0) {
+      return Object.fromEntries(SKILL_KEYS.map((k) => [k, displayed(start.skills[k])])) as Record<SkillKey, number>;
+    }
+    return stateAtWeek(fullProj, offset);
+  };
+  const m1 = checkpointAt(P1);
+  const m2 = checkpointAt(P2);
+
+  const m2Ref = m2 ?? (Object.fromEntries(
+    SKILL_KEYS.map((k) => [k, displayed(start.skills[k])]),
+  ) as Record<SkillKey, number>);
+  const finalized = targets.every((t) => m2Ref[t.skill] >= t.displayed);
+
+  return {
+    phases,
+    playable,
+    finalized,
+    checkpoints: { m1, m2, end },
+    weeklyPopRate: fullProj.weeks.length ? fullProj.popCount / fullProj.weeks.length : 0,
   };
 }

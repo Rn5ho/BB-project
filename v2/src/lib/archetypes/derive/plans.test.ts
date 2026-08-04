@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { targetsFor, planForCluster, STAFF_SCENARIOS, type DrafteeProfile } from './plans';
+import { targetsFor, planForCluster, planJourney, STAFF_SCENARIOS, type DrafteeProfile } from './plans';
 import type { DefaultArchetype } from '../types';
 import { SKILL_KEYS } from '../../training/types';
+import type { SkillTarget } from '../../training/optimize';
+import type { PlayerState } from '../../training/engine';
 
 const ARCH: DefaultArchetype = {
   key: 'mkt72-outside-1', name: 'Market: outside #1',
@@ -88,5 +90,45 @@ describe('planForCluster', () => {
     expect(r.blocks.length).toBeGreaterThanOrEqual(r.candidate!.blocks.length);
     expect(r.feasibleEntering21).toBe(true);
     expect(r.finalizedByPlayoffs).toBe(true);
+  }, 120_000);
+});
+
+describe('planJourney', () => {
+  // Same modest targets + strong draftee + elite staff as the planForCluster milestone test
+  // above (already proven reachable there) — reused here from age 18 week 1 instead of the
+  // fixed p50 profile.
+  const MODEST_TARGETS: SkillTarget[] = [
+    { skill: 'js', displayed: 14, priority: 'normal' },
+    { skill: 'od', displayed: 10, priority: 'high' },
+  ];
+  const STRONG_START: PlayerState = {
+    skills: { js: 7.5, jr: 7.5, od: 5.5, ha: 8.5, dr: 8.5, pa: 6.5, is: 6.5, id: 5.5, rb: 5.5, sb: 4.5 },
+    age: 18, heightCm: 200, potential: 10, ftSkill: 0.5, staminaSkill: 4.5,
+  };
+
+  it('18yo week 1: three staged phases, playable && finalized, monotone checkpoints', () => {
+    const r = planJourney(STRONG_START, { age: 18, week: 1 }, MODEST_TARGETS, 'od', STAFF_SCENARIOS[1]);
+    expect(r.phases.map((p) => p.label)).toEqual(['to-playable', 'to-finalized', 'polish']);
+    expect(r.playable).toBe(true);
+    expect(r.finalized).toBe(true);
+    expect(r.checkpoints.m1).not.toBeNull();
+    expect(r.checkpoints.m2).not.toBeNull();
+    for (const k of SKILL_KEYS) {
+      expect(r.checkpoints.m1![k]).toBeLessThanOrEqual(r.checkpoints.m2![k]);
+      expect(r.checkpoints.m2![k]).toBeLessThanOrEqual(r.checkpoints.end[k]);
+    }
+    expect(r.weeklyPopRate).toBeGreaterThan(0);
+  }, 120_000);
+
+  it('21yo at week 10 (past both milestones): only a polish phase, m1/m2 null, playable true', () => {
+    const start: PlayerState = {
+      skills: { js: 10.5, jr: 9.5, od: 8.5, ha: 10.5, dr: 10.5, pa: 8.5, is: 8.5, id: 7.5, rb: 7.5, sb: 6.5 },
+      age: 21, heightCm: 200, potential: 10, ftSkill: 3.5, staminaSkill: 8.5,
+    };
+    const r = planJourney(start, { age: 21, week: 10 }, MODEST_TARGETS, 'od', STAFF_SCENARIOS[0]);
+    expect(r.phases.map((p) => p.label)).toEqual(['polish']);
+    expect(r.checkpoints.m1).toBeNull();
+    expect(r.checkpoints.m2).toBeNull();
+    expect(r.playable).toBe(true);
   }, 120_000);
 });
