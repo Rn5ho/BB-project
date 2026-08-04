@@ -21,6 +21,7 @@ const K_RANGE = { outside: [2, 5], wing: [2, 5], inside: [2, 4] } as const;
 const SIL_MIN = 0.12; // silhouette runs structurally low in 10-dim shape space; 0.22 over-collapsed to k=1
 const JACCARD_MIN = 0.6;
 const SEED = 72;
+const DRAFTEE_TOP_SHARE = 0.25; // draftee profiles model the recruit-worthy top slice by starting TSP
 const PLANS = process.argv.includes('--plans');
 // Optional custom staff levels (--coach/--yt/--gym/--tc): appended as a third scenario so the
 // report shows feasibility under what the owner can actually request from clubs.
@@ -227,18 +228,25 @@ function drafteesFor(g: 'outside' | 'inside' | 'wing') {
     src = rookies; // group itself is thin -> whole universe fallback
     fallback = `only ${members.length} ${g} rookies; fell back to whole ${rookies.length}-player universe`;
   }
-  const heights = src.map((m) => m.heightCm);
-  const pots = src.map((m) => m.potential);
+  // Owner-corrected 2026-08-04: ~90% of draftees are never counted on for U-21 training — the
+  // recruitment-relevant population is the HIGH-STARTING-SKILLS slice (18yo draftees cap at 7
+  // per skill; the higher the start, the better the elite odds). Profile from the top quartile
+  // of the eligible pool by starting TSP, not the whole pool's middle.
+  const topSlice = [...src].sort((a, b) => b.tsp - a.tsp)
+    .slice(0, Math.max(8, Math.ceil(src.length * DRAFTEE_TOP_SHARE)));
+  const pool = topSlice.length >= 8 ? topSlice : src;
+  const heights = pool.map((m) => m.heightCm);
+  const pots = pool.map((m) => m.potential);
   const profiles = (['p25', 'p50', 'p75'] as const).map((label) => ({
     label,
     skills: Object.fromEntries(SKILL_KEYS.map((k) => [k,
-      Math.max(1, Math.round(quantile(src.map((m) => m.skills[k]), { p25: 0.25, p50: 0.5, p75: 0.75 }[label])))])) as Record<SkillKey, number>,
+      Math.max(1, Math.round(quantile(pool.map((m) => m.skills[k]), { p25: 0.25, p50: 0.5, p75: 0.75 }[label])))])) as Record<SkillKey, number>,
     heightCm: Math.round(median(heights)),
     potential: Math.round(median(pots)),
   }));
   const provenance = fallback
-    ? `${g} from ${src.length} Slovenian 18yos (${fallback})`
-    : `${g} from ${eligible.length} pot>=${POT_FLOOR[g]} Slovenian 18yos`;
+    ? `${g} from ${src.length} Slovenian 18yos (${fallback}; top-${Math.round(DRAFTEE_TOP_SHARE * 100)}% starters = ${pool.length})`
+    : `${g} from the top-${Math.round(DRAFTEE_TOP_SHARE * 100)}%-starting-TSP slice (${pool.length}) of ${eligible.length} pot>=${POT_FLOOR[g]} Slovenian 18yos`;
   return { profiles, provenance };
 }
 
@@ -382,8 +390,12 @@ if (PLANS) {
   lines.push('season is a finishing phase. Feasibility shown under: ' + scenarios
     .map((s) => `${s.name} (coach ${s.coachLevel}/YT ${s.youthTrainerLevel}/gym ${s.gymLevel}/TC ${s.trainingCourtLevel})`)
     .join(' · ') + '.');
-  lines.push('Week-14s are near-zero training weeks in reality');
-  lines.push('(clubs switch to Game Shape) — treat final-week pops as bonus, not plan.');
+  lines.push('Week 14 is a normal training week but has fewer games (no 3-game week), so minutes are');
+  lines.push('scarcer: narrow 1-2-position trainings may miss full effective minutes that week, and clubs');
+  lines.push('commonly schedule multi-position trainings (e.g. Jump Shot, Rebounding) instead. Our');
+  lines.push('projections assume full minutes throughout — when executing a plan, prefer a broad training');
+  lines.push('for week 14 and treat week-14 gains from narrow trainings as optimistic (owner-corrected');
+  lines.push('mechanics, 2026-08-04).');
   lines.push('Finishing deltas describe the age-21 season under the plan\'s final block extended to');
   lines.push('season end; large deltas on a secondary skill mean the searcher finished its targets');
   lines.push('early and the extension repeats its last block — treat those weeks as owner-discretionary');

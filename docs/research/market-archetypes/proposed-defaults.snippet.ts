@@ -12,7 +12,7 @@ export const MARKET_ARCHETYPES = [
           "field": "driving",
           "op": ">=",
           "byAge": {
-            "19": 8,
+            "19": 9,
             "20": 11,
             "21": 11
           }
@@ -22,7 +22,7 @@ export const MARKET_ARCHETYPES = [
           "field": "handling",
           "op": ">=",
           "byAge": {
-            "19": 9,
+            "19": 10,
             "20": 12,
             "21": 12
           }
@@ -32,7 +32,7 @@ export const MARKET_ARCHETYPES = [
           "field": "jump_shot",
           "op": ">=",
           "byAge": {
-            "19": 5,
+            "19": 7,
             "20": 8,
             "21": 8
           }
@@ -42,7 +42,7 @@ export const MARKET_ARCHETYPES = [
           "field": "outside_def",
           "op": ">=",
           "byAge": {
-            "19": 11,
+            "19": 13,
             "20": 14,
             "21": 15
           }
@@ -81,7 +81,7 @@ export const MARKET_ARCHETYPES = [
           "field": "driving",
           "op": ">=",
           "byAge": {
-            "19": 9,
+            "19": 11,
             "20": 14,
             "21": 14
           }
@@ -91,8 +91,8 @@ export const MARKET_ARCHETYPES = [
           "field": "handling",
           "op": ">=",
           "byAge": {
-            "19": 10,
-            "20": 14,
+            "19": 12,
+            "20": 15,
             "21": 15
           }
         },
@@ -101,8 +101,8 @@ export const MARKET_ARCHETYPES = [
           "field": "jump_shot",
           "op": ">=",
           "byAge": {
-            "19": 8,
-            "20": 13,
+            "19": 9,
+            "20": 14,
             "21": 14
           }
         },
@@ -111,7 +111,7 @@ export const MARKET_ARCHETYPES = [
           "field": "outside_def",
           "op": ">=",
           "byAge": {
-            "19": 9,
+            "19": 12,
             "20": 14,
             "21": 15
           }
@@ -150,7 +150,7 @@ export const MARKET_ARCHETYPES = [
           "field": "shot_blocking",
           "op": ">=",
           "byAge": {
-            "19": 11,
+            "19": 12,
             "20": 16,
             "21": 18
           }
@@ -160,8 +160,8 @@ export const MARKET_ARCHETYPES = [
           "field": "rebounding",
           "op": ">=",
           "byAge": {
-            "19": 6,
-            "20": 11,
+            "19": 7,
+            "20": 12,
             "21": 13
           }
         },
@@ -171,7 +171,7 @@ export const MARKET_ARCHETYPES = [
           "op": ">=",
           "byAge": {
             "19": 11,
-            "20": 15,
+            "20": 16,
             "21": 16
           }
         },
@@ -209,7 +209,7 @@ export const MARKET_ARCHETYPES = [
           "field": "inside_shot",
           "op": ">=",
           "byAge": {
-            "19": 6,
+            "19": 7,
             "20": 11,
             "21": 18
           }
@@ -219,7 +219,7 @@ export const MARKET_ARCHETYPES = [
           "field": "shot_blocking",
           "op": ">=",
           "byAge": {
-            "19": 7,
+            "19": 8,
             "20": 9,
             "21": 9
           }
@@ -230,7 +230,7 @@ export const MARKET_ARCHETYPES = [
           "op": ">=",
           "byAge": {
             "19": 6,
-            "20": 10,
+            "20": 11,
             "21": 11
           }
         },
@@ -239,8 +239,8 @@ export const MARKET_ARCHETYPES = [
           "field": "inside_def",
           "op": ">=",
           "byAge": {
-            "19": 11,
-            "20": 14,
+            "19": 12,
+            "20": 15,
             "21": 16
           }
         },
@@ -278,8 +278,8 @@ export const MARKET_ARCHETYPES = [
           "field": "driving",
           "op": ">=",
           "byAge": {
-            "19": 7,
-            "20": 12,
+            "19": 9,
+            "20": 14,
             "21": 15
           }
         },
@@ -288,8 +288,8 @@ export const MARKET_ARCHETYPES = [
           "field": "handling",
           "op": ">=",
           "byAge": {
-            "19": 7,
-            "20": 12,
+            "19": 8,
+            "20": 14,
             "21": 15
           }
         },
@@ -308,8 +308,8 @@ export const MARKET_ARCHETYPES = [
           "field": "outside_def",
           "op": ">=",
           "byAge": {
-            "19": 7,
-            "20": 12,
+            "19": 9,
+            "20": 13,
             "21": 14
           }
         },
