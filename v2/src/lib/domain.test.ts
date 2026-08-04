@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { tsp, skillCapForAge, currentAge, pickCurrentSeason, computeSkillDeltas } from './domain';
+import { tsp, skillCapForAge, currentAge, pickCurrentSeason, computeSkillDeltas, insideTsp, outsideTsp, deriveRowTsp, INSIDE_SKILL_KEYS, OUTSIDE_SKILL_KEYS } from './domain';
 
 describe('computeSkillDeltas', () => {
   it('returns non-zero gains only', () => {
@@ -85,5 +85,47 @@ describe('pickCurrentSeason', () => {
       { id: 71, start: new Date('2026-08-01'), finish: null as Date | null },
     ];
     expect(pickCurrentSeason(withOpen, new Date('2026-08-15'))).toBe(71);
+  });
+});
+
+import { SKILL_DB_NAMES } from './training/types';
+import { OSP_KEYS, ISP_KEYS } from './archetypes/derive/groups';
+
+const FULL = {
+  jump_shot: 11, jump_range: 9, outside_def: 12, handling: 14, driving: 15, passing: 8,
+  inside_shot: 10, inside_def: 6, rebounding: 4, shot_blocking: 1, stamina: 5, free_throw: 3,
+};
+
+describe('insideTsp / outsideTsp', () => {
+  it('sums the 6 outside skills', () => expect(outsideTsp(FULL)).toBe(69));
+  it('sums the 4 inside skills', () => expect(insideTsp(FULL)).toBe(21));
+  it('null-propagates per component', () => {
+    expect(outsideTsp({ ...FULL, passing: null })).toBeNull();
+    expect(insideTsp({ ...FULL, passing: null })).toBe(21); // outside gap doesn't hurt inside
+    expect(insideTsp({ ...FULL, rebounding: null })).toBeNull();
+    expect(outsideTsp({})).toBeNull();
+    expect(insideTsp({})).toBeNull();
+  });
+  it('in + out equals the hand-computed 10-skill sum, NOT the 12-skill tsp()', () => {
+    expect(insideTsp(FULL)! + outsideTsp(FULL)!).toBe(90); // 98 minus stamina 5 minus FT 3
+    expect(insideTsp(FULL)! + outsideTsp(FULL)!).not.toBe(tsp(FULL));
+  });
+  it('partition matches the archetype OSP/ISP grouping', () => {
+    expect(new Set(OSP_KEYS.map((k) => SKILL_DB_NAMES[k]))).toEqual(new Set(OUTSIDE_SKILL_KEYS));
+    expect(new Set(ISP_KEYS.map((k) => SKILL_DB_NAMES[k]))).toEqual(new Set(INSIDE_SKILL_KEYS));
+  });
+});
+
+describe('deriveRowTsp', () => {
+  it('prefers the computed 10-skill sum over legacy stored values', () => {
+    expect(deriveRowTsp(98, 21, 69)).toBe(90);
+  });
+  it('falls back to stored when either component is null', () => {
+    expect(deriveRowTsp(95, null, 69)).toBe(95);
+    expect(deriveRowTsp(95, 21, null)).toBe(95);
+    expect(deriveRowTsp(95, null, null)).toBe(95);
+  });
+  it('null when neither derivable nor stored', () => {
+    expect(deriveRowTsp(null, null, null)).toBeNull();
   });
 });

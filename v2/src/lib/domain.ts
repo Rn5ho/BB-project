@@ -12,6 +12,42 @@ export function tsp(skills: Partial<Record<SkillDbKey, number | null>>): number 
 }
 
 /**
+ * Inside/outside partition of BB's 10-rate-skill TSP (never stamina/free throw).
+ * Same partition as OSP_KEYS/ISP_KEYS in archetypes/derive/groups.ts (cross-checked in tests).
+ * NOTE: insideTsp(s) + outsideTsp(s) is the 10-skill market TSP — NOT tsp(s) above,
+ * which is the 12-skill training sum (off by stamina + free throw).
+ */
+export const OUTSIDE_SKILL_KEYS: readonly SkillDbKey[] = ['jump_shot', 'jump_range', 'outside_def', 'handling', 'driving', 'passing'];
+export const INSIDE_SKILL_KEYS: readonly SkillDbKey[] = ['inside_shot', 'inside_def', 'rebounding', 'shot_blocking'];
+
+function sumKeys(skills: Partial<Record<SkillDbKey, number | null>>, keys: readonly SkillDbKey[]): number | null {
+  let sum = 0;
+  for (const k of keys) {
+    const v = skills[k];
+    if (v == null) return null;
+    sum += v;
+  }
+  return sum;
+}
+
+export function outsideTsp(skills: Partial<Record<SkillDbKey, number | null>>): number | null {
+  return sumKeys(skills, OUTSIDE_SKILL_KEYS);
+}
+
+export function insideTsp(skills: Partial<Record<SkillDbKey, number | null>>): number | null {
+  return sumKeys(skills, INSIDE_SKILL_KEYS);
+}
+
+/**
+ * List-row TSP: the computed 10-skill sum when all components are present (self-heals
+ * legacy v1 stored values that were 12-skill or partial sums), else the stored snapshot tsp.
+ */
+export function deriveRowTsp(stored: number | null, inside: number | null, outside: number | null): number | null {
+  if (inside != null && outside != null) return inside + outside;
+  return stored;
+}
+
+/**
  * Per-skill change between two full-skill records: only non-zero, both-sides-present
  * deltas are returned. Null when either record is missing or nothing changed.
  * BB rule: skills cannot drop before age 35, so negative deltas are snapshot misreads

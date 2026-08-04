@@ -12,8 +12,8 @@ export interface CohortPlayer {
 
 export type Group = 'outside' | 'inside' | 'wing' | 'appendix';
 
-const OSP_KEYS: SkillKey[] = ['js', 'jr', 'od', 'ha', 'dr', 'pa'];
-const ISP_KEYS: SkillKey[] = ['is', 'id', 'rb', 'sb'];
+export const OSP_KEYS: SkillKey[] = ['js', 'jr', 'od', 'ha', 'dr', 'pa'];
+export const ISP_KEYS: SkillKey[] = ['is', 'id', 'rb', 'sb'];
 
 export function osp(s: Record<SkillKey, number>): number {
   return OSP_KEYS.reduce((a, k) => a + s[k], 0);
