@@ -193,7 +193,7 @@ async function check5_tspSorting(token: string): Promise<void> {
     await page.waitForSelector('tbody tr', { timeout: 15000 });
 
     // TSP column index in the Slovenia table (showSkills=true, showCountry=false):
-    // 0=name, 1=age, 2=pos, 3=ht, 4=pot, 5=salary, 6=dmi, 7=gs, 8=tsp, 9+=skills, last=Data
+    // 0=name, 1=age, 2=pos, 3=ht, 4=pot, 5=salary, 6=dmi, 7=gs, 8=tsp, 9=in, 10=out, 11=Δ, 12+=skills, last=Data
     const TSP_COL_IDX = 8;
 
     // Helper: collect up to N numeric TSP values from visible rows

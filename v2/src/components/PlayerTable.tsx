@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { PlayerListRow } from '@/queries/players';
 import { SKILLS, getPotentialColor, POTENTIAL_LEVELS } from '@/lib/constants';
+import { INSIDE_SKILL_KEYS, OUTSIDE_SKILL_KEYS } from '@/lib/domain';
 import {
   DEFAULT_FILTER,
   DEFAULT_SORT,
@@ -31,6 +32,10 @@ const NEW_CHIP_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
 // rows (~25 cells each); rendering them all makes initial paint and every
 // filter/sort interaction sluggish, while sorting puts the relevant rows on top.
 const RENDER_CAP = 300;
+
+const skillName = (k: string) => SKILLS.find((s) => s.dbKey === k)?.name ?? k;
+const IN_TSP_TITLE = `Inside TSP: ${INSIDE_SKILL_KEYS.map(skillName).join(' + ')}`;
+const OUT_TSP_TITLE = `Outside TSP: ${OUTSIDE_SKILL_KEYS.map(skillName).join(' + ')}`;
 
 // ─── localStorage sanitizers ─────────────────────────────────────────────────
 
@@ -174,6 +179,8 @@ export default function PlayerTable({
               <SortTh label="DMI" sortKey="dmi" sort={sort} onClick={handleSortClick} className="pr-3 text-right" />
               <SortTh label="GS" sortKey="gameShape" sort={sort} onClick={handleSortClick} className="pr-3" />
               <SortTh label="TSP" sortKey="tsp" sort={sort} onClick={handleSortClick} className="pr-3 text-right" />
+              <SortTh label="In" sortKey="insideTsp" sort={sort} onClick={handleSortClick} className="pr-3 text-right" title={IN_TSP_TITLE} />
+              <SortTh label="Out" sortKey="outsideTsp" sort={sort} onClick={handleSortClick} className="pr-3 text-right" title={OUT_TSP_TITLE} />
               {variant === 'slovenia' && (
                 <SortTh label="Δ" sortKey="tspDelta" sort={sort} onClick={handleSortClick} className="pr-3 text-right" title="TSP change since last review" />
               )}
@@ -234,6 +241,8 @@ export default function PlayerTable({
                 <td className="pr-3 text-right">{p.dmi?.toLocaleString() ?? '–'}</td>
                 <td className="pr-3">{p.gameShape ?? '–'}</td>
                 <td className="pr-3 text-right font-medium">{p.tsp ?? '–'}</td>
+                <td className="pr-3 text-right">{p.insideTsp ?? '–'}</td>
+                <td className="pr-3 text-right">{p.outsideTsp ?? '–'}</td>
                 {variant === 'slovenia' && (
                   <td className="pr-3 text-right">
                     {p.tspDelta == null ? <span className="text-neutral-600">–</span>
@@ -269,7 +278,7 @@ export default function PlayerTable({
             {sorted.length === 0 && (
               <tr>
                 <td
-                  colSpan={11 + (showCountry ? 2 : 0) + (variant === 'slovenia' ? 1 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
+                  colSpan={13 + (showCountry ? 2 : 0) + (variant === 'slovenia' ? 1 : 0) + (showSkills ? SKILLS.length : 0) + (archetypeMatches ? 1 : 0)}
                   className="py-8 text-center text-neutral-500"
                 >
                   No players match the current filters.
