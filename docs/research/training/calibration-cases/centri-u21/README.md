@@ -62,8 +62,29 @@ over- nor under-predicting.
    every prediction that never washes out. Plans should be read as "≈week 30", never "week 30".
 2. **Inside-skill rates are validated** — the strongest evidence yet for the inside
    archetypes' targets and the ID/SB/RB secondaries.
-3. **Gym scatter is a real unmodelled source** (22/181 = 12% of observed pops landed on
-   skills the program never trained). Future logs should record gym level.
+3. **Cross-training scatter is real and under-modelled at `gymLevel: 0`** (22/181 = 12% of
+   observed pops landed on skills with zero predicted gain). Owner confirms BB always applies
+   a small random element to every training, with the gym adding more on top — matching the
+   dev spec's wording that the gym adds "1, 2 or 3 **EXTRA**" slots, i.e. a base slot exists.
+   `bbscout.crossTraining.baseSlots` is 0 today, on the reasoning that CP-fitted rates already
+   absorb the base slot's average effect. That is fine for total gain but structurally predicts
+   **zero** off-program pops.
+
+   Sensitivity sweep over these cases (gymLevel as a proxy for base+gym slots):
+
+   | slots | off-program misses left | pop recall | final exact | MAE |
+   |---|---|---|---|---|
+   | 0 | 22 | 32% | 71% | 0.294 |
+   | 1 | 14 | 31% | 71% | 0.294 |
+   | 2 | **5** | 34% | **71%** | **0.287** |
+   | 3 | 0 | 35% | 69% | 0.306 |
+
+   ~2 effective slots explains 17 of the 22 off-program pops **without costing accuracy**
+   (MAE improves slightly); 3 slots explains them all but starts over-crediting.
+   **Not changing `baseSlots` on this evidence**: these clubs' gym levels are unknown, so
+   base-slot and gym contributions are confounded. Cheap resolution — ask the three coaches
+   for their gym levels (2024-25), then re-run this sweep with gym fixed per case; whatever
+   scatter remains is the base slot.
 4. bbscout-high buys recall with accuracy (MAE 0.44) — the conservative default is right.
 
 Re-run: `npm run training:replay -- ..\docs\research\training\calibration-cases\centri-u21`
