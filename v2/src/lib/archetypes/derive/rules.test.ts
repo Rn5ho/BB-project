@@ -14,15 +14,25 @@ const GROUP_MEAN: Record<SkillKey, number> = { js: 14, jr: 9, od: 15, ha: 14, dr
 
 describe('defenseFloorFor', () => {
   it('inside gets ID>=16', () => {
-    expect(defenseFloorFor('inside', GROUP_MEAN)).toEqual({ field: 'inside_def', skill: 'id', min: 16 });
+    expect(defenseFloorFor('inside', GROUP_MEAN, [])).toEqual({ field: 'inside_def', skill: 'id', min: 16 });
   });
   it('outside PG-shaped (high HA+DR) gets OD>=14, otherwise 15', () => {
-    expect(defenseFloorFor('outside', { ...GROUP_MEAN, ha: 17, dr: 18 }).min).toBe(14);
-    expect(defenseFloorFor('outside', { ...GROUP_MEAN, ha: 13, dr: 14 }).min).toBe(15);
+    expect(defenseFloorFor('outside', { ...GROUP_MEAN, ha: 17, dr: 18 }, []).min).toBe(14);
+    expect(defenseFloorFor('outside', { ...GROUP_MEAN, ha: 13, dr: 14 }, []).min).toBe(15);
   });
-  it('wing floors on the defense skill its members carry', () => {
-    expect(defenseFloorFor('wing', { ...GROUP_MEAN, od: 15, id: 8 }).skill).toBe('od');
-    expect(defenseFloorFor('wing', { ...GROUP_MEAN, od: 7, id: 16 }).skill).toBe('id');
+  it('wing floors on the defense skill its members actually pass, by measured rate (not a centroid tie-break)', () => {
+    const odHeavy = [
+      member({ ...GROUP_MEAN, od: 15, id: 8 }),
+      member({ ...GROUP_MEAN, od: 16, id: 6 }),
+      member({ ...GROUP_MEAN, od: 14, id: 9 }),
+    ]; // many clear od>=14, none clear id>=16
+    expect(defenseFloorFor('wing', GROUP_MEAN, odHeavy)).toEqual({ field: 'outside_def', skill: 'od', min: 14 });
+    const idHeavy = [
+      member({ ...GROUP_MEAN, od: 8, id: 17 }),
+      member({ ...GROUP_MEAN, od: 9, id: 18 }),
+      member({ ...GROUP_MEAN, od: 7, id: 16 }),
+    ]; // more clear id>=16 than clear od>=14
+    expect(defenseFloorFor('wing', GROUP_MEAN, idHeavy)).toEqual({ field: 'inside_def', skill: 'id', min: 16 });
   });
 });
 

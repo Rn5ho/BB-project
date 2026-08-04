@@ -224,7 +224,7 @@ export const MARKET_ARCHETYPES = [
   {
     "key": "mkt72-wing-1",
     "name": "Market: wing #1",
-    "description": "Derived from S72 market flood (245 members, 0 elite).",
+    "description": "Derived from S72 market flood (245 members, 6 elite).",
     "rules": {
       "conditions": [
         {
@@ -232,7 +232,7 @@ export const MARKET_ARCHETYPES = [
           "field": "driving",
           "op": ">=",
           "byAge": {
-            "21": 5
+            "21": 15
           }
         },
         {
@@ -240,15 +240,23 @@ export const MARKET_ARCHETYPES = [
           "field": "handling",
           "op": ">=",
           "byAge": {
-            "21": 5
+            "21": 15
           }
         },
         {
           "kind": "field",
-          "field": "inside_def",
+          "field": "jump_shot",
           "op": ">=",
           "byAge": {
-            "21": 16
+            "21": 12
+          }
+        },
+        {
+          "kind": "field",
+          "field": "outside_def",
+          "op": ">=",
+          "byAge": {
+            "21": 14
           }
         },
         {

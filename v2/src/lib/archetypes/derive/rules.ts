@@ -19,20 +19,27 @@ export interface DerivedArchetype {
   provisional: boolean;
   selfMatchRate: number;
   relaxed: SkillKey[];
+  gateMet: boolean;
 }
 
 const GROUP_POT_FLOOR: Record<Group, number> = { outside: 7, wing: 7, inside: 8, appendix: 7 };
 
 export function defenseFloorFor(
-  group: Group, centroid: Record<SkillKey, number>, pgFeederSum = 32,
+  group: Group, centroid: Record<SkillKey, number>, members: CohortPlayer[], pgFeederSum = 32,
 ): DefenseFloor {
   if (group === 'inside') return { field: 'inside_def', skill: 'id', min: 16 };
   if (group === 'outside') {
     const pgShaped = centroid.ha + centroid.dr >= pgFeederSum;
     return { field: 'outside_def', skill: 'od', min: pgShaped ? 14 : 15 };
   }
-  // wing: floor on whichever defense the cluster actually carries
-  return centroid.od >= centroid.id
+  // wing: floor on whichever defense the cluster's own members actually carry, by
+  // MEASURED pass rate — not a centroid tie-break. Combo-PFs with real ID land in the
+  // inside group via the balance score; the wing pool is overwhelmingly tall-wing
+  // shaped, and a centroid tie-break can pick a floor nobody passes (od/id quartiles
+  // can be nearly identical while pass counts are lopsided).
+  const odPass = members.filter((m) => m.skills.od >= 14).length;
+  const idPass = members.filter((m) => m.skills.id >= 16).length;
+  return odPass >= idPass
     ? { field: 'outside_def', skill: 'od', min: 14 }
     : { field: 'inside_def', skill: 'id', min: 16 };
 }
@@ -64,7 +71,7 @@ export function deriveArchetype(
   opts: { minEliteForP25?: number; selfMatchMin?: number; definerGap?: number; maxDefiners?: number } = {},
 ): DerivedArchetype {
   const { minEliteForP25 = 5, selfMatchMin = 0.7, definerGap = 1.5, maxDefiners = 5 } = opts;
-  const floor = defenseFloorFor(cluster.group, cluster.centroid);
+  const floor = defenseFloorFor(cluster.group, cluster.centroid, cluster.members);
   const elite = eliteMembers(cluster.members, floor);
   const provisional = elite.length < minEliteForP25;
   const floorPassers = cluster.members.filter((m) => m.skills[floor.skill] >= floor.min);
@@ -132,5 +139,8 @@ export function deriveArchetype(
     rate = selfMatchRate(source, archetype);
   }
 
-  return { archetype, definers, eliteN: elite.length, provisional, selfMatchRate: rate, relaxed };
+  return {
+    archetype, definers, eliteN: elite.length, provisional, selfMatchRate: rate, relaxed,
+    gateMet: rate >= selfMatchMin,
+  };
 }

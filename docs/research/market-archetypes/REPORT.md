@@ -1,6 +1,6 @@
 # Market Archetypes — Season 72 (age-21 flood)
 
-Generated: 2026-08-04T12:23:50.816Z · window start 2026-07-10 · seed 72
+Generated: 2026-08-04T12:33:23.617Z · window start 2026-07-10 · seed 72
 Re-run: `npm run training:archetypes` from v2/ (bump SEASON for next season's flood).
 
 ## What this says, in plain language
@@ -33,7 +33,7 @@ Silhouette by k: {"2":0.14067782032145046,"3":0.10997216911599493,"4":0.08250655
 
 ### Market: outside #1 (mkt72-outside-1)
 
-210 members · 5 elite · floor OD>=15 passed by 13/210 · near-cap 7 · 153 distinct sellers · self-match 60% (relaxed: ha,dr,js)
+210 members · 5 elite · floor OD>=15 passed by 13/210 · near-cap 7 · 153 distinct sellers · self-match 60% (BELOW 70% gate after full relaxation; relaxed: ha,dr,js)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -67,7 +67,7 @@ Silhouette by k: {"2":0.30488241934714916,"3":0.19922475948048693,"4":0.15988772
 
 ### Market: inside #1 (mkt72-inside-1)
 
-25 members · 6 elite · floor ID>=16 passed by 18/25 · near-cap 12 · 21 distinct sellers · self-match 67% (relaxed: sb,rb)
+25 members · 6 elite · floor ID>=16 passed by 18/25 · near-cap 12 · 21 distinct sellers · self-match 67% (BELOW 70% gate after full relaxation; relaxed: sb,rb)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -99,16 +99,16 @@ Examples: [Leticijus Rozenblatas](https://www.buzzerbeater.com/player/55047695/o
 
 Silhouette by k: {"2":0.14457463171641582,"3":0.0962686654136707,"4":0.08724160136592764,"5":0.08667165557918702} · ward-vs-kmeans agreement 1.00 · bootstrap Jaccard 1.00
 
-### Market: wing #1 (mkt72-wing-1) — PROVISIONAL (thin elite sample)
+### Market: wing #1 (mkt72-wing-1)
 
-245 members · 0 elite · floor ID>=16 passed by 0/245 · near-cap 4 · 173 distinct sellers · self-match 0% (relaxed: ha,dr)
+245 members · 6 elite · floor OD>=14 passed by 9/245 · near-cap 4 · 173 distinct sellers · self-match 83%
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | p25 | 7 | 5 | 5 | 7 | 7 | 5 | 6 | 5 | 6 | 5 |
 | median | 9 | 7 | 7 | 9 | 10 | 7 | 8 | 7 | 7 | 6 |
 | p75 | 11 | 8 | 9 | 12 | 12 | 8 | 10 | 9 | 9 | 8 |
-| elite median | – | – | – | – | – | – | – | – | – | – |
+| elite median | 14 | 9 | 15 | 16 | 17 | 8 | 10 | 9 | 7 | 8 |
 
 Typical: height 203cm · TSP 76 · potential {"7":82,"8":50,"9":66,"10":46,"11":1} · ST p50 5 · FT p50 8
 
@@ -122,11 +122,16 @@ Examples: [Jouni Skytta](https://www.buzzerbeater.com/player/54832628/overview.a
 | mkt72-outside-2 | 0% | 16% | 0% | 0% | 1% |
 | mkt72-inside-1 | 0% | 0% | 52% | 2% | 0% |
 | mkt72-inside-2 | 0% | 0% | 0% | 9% | 0% |
-| mkt72-wing-1 | 0% | 0% | 16% | 10% | 0% |
+| mkt72-wing-1 | 0% | 20% | 0% | 0% | 2% |
 
 ## Proposed rules (paste-ready)
 
 See `proposed-defaults.snippet.ts` next to this report. Younger byAge tiers are added by the --plans run.
+
+| archetype | status |
+| --- | --- |
+| mkt72-outside-1 | below gate — review thresholds before adopting |
+| mkt72-inside-1 | below gate — review thresholds before adopting |
 
 ## Plans
 

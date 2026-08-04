@@ -183,7 +183,7 @@ for (const gr of groupResults) {
   lines.push('');
   lines.push(`Silhouette by k: ${JSON.stringify(gr.silhouetteScores)} · ward-vs-kmeans agreement ${gr.kmeansAgreement.toFixed(2)} · bootstrap Jaccard ${gr.jaccard.map((j) => j.toFixed(2)).join(', ')}`);
   for (const c of gr.clusters) {
-    const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>);
+    const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members);
     const elite = eliteMembers(c.members, floor);
     const floorPass = c.members.filter((m) => m.skills[floor.skill] >= floor.min).length;
     const nearCap = c.members.filter((m) => {
@@ -194,7 +194,12 @@ for (const gr of groupResults) {
     lines.push('');
     lines.push(`### ${c.derived.archetype.name} (${c.derived.archetype.key})${c.derived.provisional ? ' — PROVISIONAL (thin elite sample)' : ''}`);
     lines.push('');
-    lines.push(`${c.members.length} members · ${c.eliteN} elite · floor ${floor.skill.toUpperCase()}>=${floor.min} passed by ${floorPass}/${c.members.length} · near-cap ${nearCap} · ${sellers} distinct sellers · self-match ${(c.derived.selfMatchRate * 100).toFixed(0)}%${c.derived.relaxed.length ? ` (relaxed: ${c.derived.relaxed.join(',')})` : ''}`);
+    const gateNotes = [
+      ...(c.derived.gateMet ? [] : ['BELOW 70% gate after full relaxation']),
+      ...(c.derived.relaxed.length ? [`relaxed: ${c.derived.relaxed.join(',')}`] : []),
+    ];
+    const selfMatchNote = `self-match ${(c.derived.selfMatchRate * 100).toFixed(0)}%${gateNotes.length ? ` (${gateNotes.join('; ')})` : ''}`;
+    lines.push(`${c.members.length} members · ${c.eliteN} elite · floor ${floor.skill.toUpperCase()}>=${floor.min} passed by ${floorPass}/${c.members.length} · near-cap ${nearCap} · ${sellers} distinct sellers · ${selfMatchNote}`);
     lines.push('');
     const qrow = (q: number) => SKILL_KEYS.map((k) => quantile(c.members.map((m) => m.skills[k]), q).toFixed(0));
     lines.push(mdTable(['', ...SKILL_KEYS.map((k) => k.toUpperCase())], [
@@ -224,6 +229,13 @@ lines.push('## Proposed rules (paste-ready)');
 lines.push('');
 lines.push('See `proposed-defaults.snippet.ts` next to this report. Younger byAge tiers are added by the --plans run.');
 lines.push('');
+const belowGate = allDerived.filter((d) => !d.gateMet);
+if (belowGate.length) {
+  lines.push(mdTable(['archetype', 'status'], belowGate.map((d) => [
+    d.archetype.key, 'below gate — review thresholds before adopting',
+  ])));
+  lines.push('');
+}
 lines.push('## Plans');
 lines.push('');
 lines.push(PLANS ? '(plans sections below)' : '_Run with `-- --plans` to add training paths, byAge tiers, Greece benchmark, and the Slovenia gap analysis._');
