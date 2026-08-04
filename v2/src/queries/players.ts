@@ -1,6 +1,6 @@
 import { sql, eq } from 'drizzle-orm';
 import { db, reviewMarks } from '@/db';
-import { currentAge, pickCurrentSeason, computeSkillDeltas } from '@/lib/domain';
+import { currentAge, pickCurrentSeason, computeSkillDeltas, insideTsp as computeInsideTsp, outsideTsp as computeOutsideTsp, deriveRowTsp } from '@/lib/domain';
 
 export interface PlayerListRow {
   bbPlayerId: number;
@@ -18,6 +18,8 @@ export interface PlayerListRow {
   snapshotSeason: number | null;
   // from latest FULL snapshot (skills present)
   tsp: number | null;
+  insideTsp: number | null;  // IS+ID+RB+SB from latest full snapshot; null if any component missing
+  outsideTsp: number | null; // JS+JR+OD+HA+DR+PA; null if any component missing
   skills: Record<string, number | null> | null;
   skillsCapturedAt: Date | null;
   hasFullSkills: boolean;
@@ -159,6 +161,8 @@ export async function listPlayers(
       rebounding: r.rebounding as number | null, shot_blocking: r.shot_blocking as number | null,
       stamina: r.stamina as number | null, free_throw: r.free_throw as number | null,
     };
+    const inTsp = skills ? computeInsideTsp(skills) : null;
+    const outTsp = skills ? computeOutsideTsp(skills) : null;
     const skillDeltas = computeSkillDeltas(skills, r.b_jump_shot == null ? null : {
       jump_shot: r.b_jump_shot as number | null, jump_range: r.b_jump_range as number | null,
       outside_def: r.b_outside_def as number | null, handling: r.b_handling as number | null,
@@ -183,7 +187,9 @@ export async function listPlayers(
       potential: r.potential as number | null,
       capturedAt: toDate(r.captured_at),
       snapshotSeason: r.snap_season as number | null,
-      tsp: r.tsp as number | null,
+      tsp: deriveRowTsp(r.tsp as number | null, inTsp, outTsp),
+      insideTsp: inTsp,
+      outsideTsp: outTsp,
       skills,
       skillsCapturedAt: toDate(r.skills_captured_at),
       hasFullSkills: r.jump_shot != null,

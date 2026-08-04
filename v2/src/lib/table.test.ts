@@ -30,6 +30,8 @@ function makePlayer(overrides: Partial<PlayerListRow> = {}): PlayerListRow {
     capturedAt: null,
     snapshotSeason: null,
     tsp: 100,
+    insideTsp: null,
+    outsideTsp: null,
     skills: null,
     skillsCapturedAt: null,
     hasFullSkills: false,
