@@ -1,5 +1,5 @@
 {
- "label": "centri Gojc Jalovec (53898036) alenokc wk37-42 coach7/yt0",
+ "label": "centri Gojc Jalovec (53898036) alenokc wk37-42 coach7/yt0/gym3/tc3",
  "player": {
   "startSkillsDisplayed": {
    "js": 9,
@@ -21,7 +21,7 @@
  },
  "coachLevel": 7,
  "youthTrainerLevel": 0,
- "gymLevel": 0,
+ "gymLevel": 3,
  "trainingCourtLevel": 3,
  "weeks": [
   {

@@ -1,5 +1,5 @@
 {
- "label": "centri Zlatko Jerin (53897602) alenokc wk1-6 coach7/yt7",
+ "label": "centri Zlatko Jerin (53897602) alenokc wk1-6 coach7/yt7/gym3/tc3",
  "player": {
   "startSkillsDisplayed": {
    "js": 7,
@@ -21,7 +21,7 @@
  },
  "coachLevel": 7,
  "youthTrainerLevel": 7,
- "gymLevel": 0,
+ "gymLevel": 3,
  "trainingCourtLevel": 3,
  "weeks": [
   {

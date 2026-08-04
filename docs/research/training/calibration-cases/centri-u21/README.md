@@ -17,8 +17,10 @@ history_pops.csv); builder script in the session scratchpad (`build_cases.py`).
   week gaps, and unmappable trainings; minimum 5 weeks.
 - Week-0 baselines (pre-first-training cards) excluded; alenokc's 17 missing weeks break
   his series into short segments, so most weight sits on pjtr576's gapless 53-week logs.
-- `gymLevel: 0` — the reports name coach, youth trainer, fitness and training court but
-  **not gym**. Off-program pops are therefore unmodellable here (see findings).
+- **Facilities (owner-corrected 2026-08-04):** Slovenian `fitnes` = the **GYM** facility (not a
+  fitness trainer) and `trening igrišče` = training court. Both clubs ran **gym 3** all year;
+  alenokc also had training court 3, pjtr576 none. Cases carry these. (`weeks.csv` keeps the
+  original column name `fitness_level` — read it as gym level.)
 - Extraction integrity: every card prints its own TSP; recomputed sum matched on 253/253
   player-weeks. No skill decreases except stamina.
 
@@ -28,32 +30,34 @@ Ambiguity: does a week's report show the state *before* or *after* that week's t
 Both variants were built and scored. **After (align=N) wins decisively** — bbscout pop
 recall 32% vs 26%, final-skill MAE 0.29 vs 0.50 levels. Only align=N is kept here.
 
-## Results (bbscout, 2026-08-04, 16 cases / 184 weeks / 181 scored pops)
+## Results (bbscout, 2026-08-04, 16 cases / 184 weeks / 181 scored pops, gym 3)
 
 | model | pop recall | false alarms | final-skill exact | MAE |
 |---|---|---|---|---|
-| bbscout | 32% (58/181) | 98 | 113/160 (71%) | **0.29** |
-| coach-parrot | 27% | 82 | 112/160 | 0.38 |
-| open-source-live | 38% | 97 | 112/160 | 0.34 |
-| bbscout-low | 29% | 72 | 109/160 | 0.39 |
-| bbscout-high | 40% | 126 | 98/160 (61%) | 0.44 |
+| bbscout | 35% (63/181) | 99 | 111/160 (69%) | **0.31** |
+| coach-parrot | 27% | 82 | 112/160 (70%) | 0.38 |
+| open-source-live | 38% | 97 | 112/160 (70%) | 0.34 |
+| bbscout-low | 26% | 84 | 110/160 (69%) | 0.38 |
+| bbscout-high | 45% | 126 | 94/160 (59%) | 0.47 |
 
-**MAE 0.29 displayed levels beats the own-team benchmark (0.41)** — the rates, including
-the inside skills, hold up over 6-month horizons.
+**MAE 0.31 displayed levels beats the own-team benchmark (0.41)** — the rates, including
+the inside skills, hold up over 6-month horizons. (A first pass mistakenly ran gym 0 and
+scored MAE 0.29 / 71% exact; the correct gym-3 configuration trades a hair of end-skill
+accuracy for explaining every off-program pop, see below.)
 
-### The raw recall number is misleading — decomposition of the 123 misses
+### The raw recall number is misleading — decomposition of the 118 misses
 
 | category | n | meaning |
 |---|---|---|
-| phase-shift ±1 week | 55 | same skill, model fired one week early/late |
-| phase-shift ±2 weeks | 19 | same, two weeks off |
-| off-program (zero predicted gain) | 22 | gym scatter — unmodellable, gym level unknown |
-| genuine | 27 | real prediction failures |
+| phase-shift ±1 week | 56 | same skill, model fired one week early/late |
+| phase-shift ±2 weeks | 14 | same, two weeks off |
+| off-program (zero predicted gain) | **0** | gym-3 scatter accounts for all of them |
+| genuine | 48 | real prediction failures |
 
-74 of the 98 "false alarms" pair up with a phase-shifted miss — they are the *same* pop at
+70 of the 99 "false alarms" pair up with a phase-shifted miss — they are the *same* pop at
 a different week, not spurious predictions. **Timing-tolerant recall (±2 weeks): 73%.**
-Unmatched false alarms (24) ≈ genuine misses (27): the model is neither systematically
-over- nor under-predicting.
+Unmatched false alarms (29) vs genuine misses (48) — a mild under-prediction tilt once
+scatter is modelled, consistent with the slightly high MAE.
 
 ## What this means
 
@@ -62,29 +66,28 @@ over- nor under-predicting.
    every prediction that never washes out. Plans should be read as "≈week 30", never "week 30".
 2. **Inside-skill rates are validated** — the strongest evidence yet for the inside
    archetypes' targets and the ID/SB/RB secondaries.
-3. **Cross-training scatter is real and under-modelled at `gymLevel: 0`** (22/181 = 12% of
-   observed pops landed on skills with zero predicted gain). Owner confirms BB always applies
-   a small random element to every training, with the gym adding more on top — matching the
-   dev spec's wording that the gym adds "1, 2 or 3 **EXTRA**" slots, i.e. a base slot exists.
-   `bbscout.crossTraining.baseSlots` is 0 today, on the reasoning that CP-fitted rates already
-   absorb the base slot's average effect. That is fine for total gain but structurally predicts
-   **zero** off-program pops.
+3. **The gym-scatter model is VALIDATED at its real setting.** Every one of the 22 pops that
+   looked unmodellable under the mistaken gym-0 run is accounted for by gym-3 scatter:
+   off-program misses drop 22 → **0**. The dev-spec mechanism (each slot = 10% of the primary's
+   pre-elastic amount landing on a uniformly random skill incl. ST/FT; gym adds 1-3 slots)
+   reproduces real off-program pops at the right rate. Sensitivity, for the record:
 
-   Sensitivity sweep over these cases (gymLevel as a proxy for base+gym slots):
-
-   | slots | off-program misses left | pop recall | final exact | MAE |
+   | gym slots | off-program misses left | pop recall | final exact | MAE |
    |---|---|---|---|---|
-   | 0 | 22 | 32% | 71% | 0.294 |
+   | 0 (wrong config) | 22 | 32% | 71% | 0.294 |
    | 1 | 14 | 31% | 71% | 0.294 |
-   | 2 | **5** | 34% | **71%** | **0.287** |
-   | 3 | 0 | 35% | 69% | 0.306 |
+   | 2 | 5 | 34% | 71% | 0.287 |
+   | **3 (actual)** | **0** | 35% | 69% | 0.306 |
 
-   ~2 effective slots explains 17 of the 22 off-program pops **without costing accuracy**
-   (MAE improves slightly); 3 slots explains them all but starts over-crediting.
-   **Not changing `baseSlots` on this evidence**: these clubs' gym levels are unknown, so
-   base-slot and gym contributions are confounded. Cheap resolution — ask the three coaches
-   for their gym levels (2024-25), then re-run this sweep with gym fixed per case; whatever
-   scatter remains is the base slot.
-4. bbscout-high buys recall with accuracy (MAE 0.44) — the conservative default is right.
+   `baseSlots: 0` is therefore **unrefuted by this dataset** — with the true gym level fed in,
+   no residual scatter needs explaining. Owner notes BB applies a small random element to every
+   training regardless of gym; if such a base slot exists, its effect is small enough to sit
+   inside the CP-fitted rates (as that parameter's own comment argues) and cannot be separated
+   at gym 3. Isolating it needs a log from a gym-0 club.
+4. bbscout-high buys recall with accuracy (45% recall, MAE 0.47) — the conservative default is right.
+5. **Lesson for future imports:** Slovenian `fitnes` means the gym, not a fitness trainer. The
+   first run of this analysis mis-mapped it, invented a "12% unmodelled scatter" finding, and
+   nearly motivated a spurious `baseSlots` refit. Facility/staff glossary errors look exactly
+   like model errors.
 
 Re-run: `npm run training:replay -- ..\docs\research\training\calibration-cases\centri-u21`

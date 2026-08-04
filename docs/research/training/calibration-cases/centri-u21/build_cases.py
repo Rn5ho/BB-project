@@ -22,8 +22,10 @@ def lvl(x):
     except Exception: return None
 
 def staff_key(w):
+    # NOTE: weeks.csv's "fitness_level" column holds Slovenian "fitnes" = the GYM facility
+    # (owner-confirmed 2026-08-04), NOT a fitness trainer. "trening igrišče" = training court.
     return (lvl(w.get('coach_level')), lvl(w.get('youth_trainer_level')) or 0,
-            lvl(w.get('training_court_level')) or 0)
+            lvl(w.get('training_court_level')) or 0, lvl(w.get('fitness_level')) or 0)
 
 def build(align_next: bool):
     outdir = OUTBASE + ('-alignNext' if align_next else '')
@@ -72,7 +74,7 @@ def build(align_next: bool):
         for si, seg in enumerate(segs):
             if len(seg) < 5: skipped.append((pid, author, f'segment {si} only {len(seg)} weeks')); continue
             first, last = seg[0]['prev'], seg[-1]['row']
-            coach, yt, tc = seg[0]['staff']
+            coach, yt, tc, gym = seg[0]['staff']
             wks = []
             for s in seg:
                 w = {'date': s['date'], 'trainingId': s['trainingId'], 'minutes': 48,
@@ -81,7 +83,7 @@ def build(align_next: bool):
                 if int(s['row']['age']) != int(s['prev']['age']): w['ageAfterThis'] = int(s['row']['age'])
                 wks.append(w)
             case = {
-                'label': f"centri {first['player_name']} ({int(pid)}) {author} wk{int(first['week_no'])}-{int(last['week_no'])} coach{coach}/yt{yt}",
+                'label': f"centri {first['player_name']} ({int(pid)}) {author} wk{int(first['week_no'])}-{int(last['week_no'])} coach{coach}/yt{yt}/gym{gym}/tc{tc}",
                 'player': {
                     'startSkillsDisplayed': {k: int(first[k]) for k in SKILLS},
                     'age': int(first['age']), 'heightCm': int(first['height_cm']),
@@ -89,7 +91,7 @@ def build(align_next: bool):
                     'startStamina': int(first['st']) if pd.notna(first['st']) else None,
                     'startFreeThrow': int(first['ft']) if pd.notna(first['ft']) else None,
                 },
-                'coachLevel': coach or 5, 'youthTrainerLevel': yt, 'gymLevel': 0, 'trainingCourtLevel': tc,
+                'coachLevel': coach or 5, 'youthTrainerLevel': yt, 'gymLevel': gym, 'trainingCourtLevel': tc,
                 'weeks': wks,
                 'endSkillsDisplayed': {k: int(last[k]) for k in SKILLS},
             }
