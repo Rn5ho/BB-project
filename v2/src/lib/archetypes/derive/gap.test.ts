@@ -8,7 +8,7 @@ const OUT_CLUSTER = {
   tiers: {
     19: { js: 10, ha: 12, dr: 12, od: 6 }, 20: { js: 13, ha: 14, dr: 15, od: 8 },
     21: { js: 16, ha: 15, dr: 16, od: 14 },
-  } as any,
+  } as Record<19 | 20 | 21, Partial<Record<SkillKey, number>>>,
   floor: { field: 'outside_def' as const, skill: 'od' as const, min: 15 },
 };
 const base = { heightCm: 190, potential: 8, currentSeasonWeek: 5, inferredTrainingId: null as number | null };

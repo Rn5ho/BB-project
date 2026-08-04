@@ -1,6 +1,6 @@
 # Market Archetypes — Season 72 (age-21 flood)
 
-Generated: 2026-08-04T13:55:10.098Z · window start 2026-07-10 · seed 72
+Generated: 2026-08-04T14:22:30.557Z · window start 2026-07-10 · seed 72
 Re-run: `npm run training:archetypes` from v2/ (bump SEASON for next season's flood).
 
 ## What this says, in plain language
@@ -34,41 +34,41 @@ Coverage caveat: Jul 23–Aug 2 captures were suppressed by BB's 1000-result sea
 
 ## outside group — k=2
 
-Silhouette by k: {"2":0.14067782032145046,"3":0.10997216911599493,"4":0.08250655264386766,"5":0.07954759038212644} · ward-vs-kmeans agreement 0.72 · bootstrap Jaccard 0.64, 0.68
+Silhouette by k: {"2":0.13247741437590752,"3":0.11496372514485731,"4":0.08177631840672976,"5":0.07491609421198792} · ward-vs-kmeans agreement 0.68 · bootstrap Jaccard 0.64, 0.66
 
 ### Market: outside #1 (mkt72-outside-1)
 
-210 members · 5 elite · floor OD>=15 passed by 13/210 · near-cap 7 · 153 distinct sellers · self-match 60% (BELOW 70% gate after full relaxation; relaxed: ha,dr,js)
+237 members · 5 elite · floor OD>=15 passed by 13/237 · near-cap 8 · 170 distinct sellers · self-match 60% (BELOW 70% gate after full relaxation; relaxed: dr,js,ha)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| p25 | 7 | 7 | 7 | 7 | 8 | 6 | 4 | 3 | 4 | 4 |
-| median | 9 | 8 | 9 | 9 | 10 | 7 | 6 | 5 | 6 | 6 |
-| p75 | 12 | 10 | 11 | 11 | 12 | 9 | 9 | 8 | 8 | 8 |
+| p25 | 7 | 7 | 7 | 7 | 8 | 6 | 4 | 3 | 4 | 3 |
+| median | 9 | 8 | 9 | 10 | 10 | 8 | 6 | 5 | 6 | 5 |
+| p75 | 12 | 10 | 10 | 11 | 12 | 9 | 9 | 7 | 8 | 7 |
 | elite median | 15 | 10 | 15 | 13 | 15 | 9 | 11 | 9 | 6 | 7 |
 
-Typical: height 190cm · TSP 77 · potential {"7":63,"8":49,"9":57,"10":41} · ST p50 5 · FT p50 8
+Typical: height 190cm · TSP 77 · potential {"7":69,"8":58,"9":63,"10":47} · ST p50 5 · FT p50 8
 
 Examples: [Olegas Sergadejevas](https://www.buzzerbeater.com/player/55061198/overview.aspx) (JS17 JR13 OD17 HA14 DR13 PA9 IS15 ID9 RB9 SB11) · [Nikos Karaindros](https://www.buzzerbeater.com/player/54699033/overview.aspx) (JS15 JR10 OD15 HA13 DR16 PA8 IS12 ID10 RB6 SB7) · [Vadim Silyanov](https://www.buzzerbeater.com/player/55042556/overview.aspx) (JS14 JR12 OD14 HA13 DR14 PA8 IS12 ID11 RB5 SB5)
 
 ### Market: outside #2 (mkt72-outside-2)
 
-286 members · 61 elite · floor OD>=15 passed by 70/286 · near-cap 42 · 198 distinct sellers · self-match 70% (relaxed: dr)
+259 members · 61 elite · floor OD>=15 passed by 70/259 · near-cap 41 · 181 distinct sellers · self-match 70% (relaxed: dr)
 
 |  | JS | JR | OD | HA | DR | PA | IS | ID | RB | SB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| p25 | 11 | 7 | 8 | 12 | 13 | 6 | 5 | 5 | 3 | 3 |
-| median | 13 | 8 | 10 | 14 | 15 | 8 | 8 | 7 | 5 | 5 |
-| p75 | 15 | 10 | 14 | 16 | 17 | 10 | 11 | 8 | 7 | 7 |
+| p25 | 11 | 7 | 8 | 13 | 13 | 6 | 5 | 5 | 4 | 3 |
+| median | 13 | 8 | 10 | 15 | 15 | 8 | 8 | 7 | 5 | 5 |
+| p75 | 15 | 10 | 15 | 16 | 17 | 9 | 11 | 9 | 7 | 7 |
 | elite median | 16 | 10 | 16 | 16 | 17 | 8 | 9 | 8 | 5 | 5 |
 
-Typical: height 189cm · TSP 94 · potential {"7":66,"8":68,"9":94,"10":57,"11":1} · ST p50 5 · FT p50 8
+Typical: height 190cm · TSP 95 · potential {"7":60,"8":59,"9":88,"10":51,"11":1} · ST p50 5 · FT p50 8
 
 Examples: [Roberto Bellentani](https://www.buzzerbeater.com/player/54664566/overview.aspx) (JS20 JR12 OD18 HA19 DR19 PA9 IS5 ID9 RB8 SB8) · [Duilio Citti](https://www.buzzerbeater.com/player/54664855/overview.aspx) (JS20 JR11 OD17 HA19 DR19 PA7 IS9 ID10 RB5 SB8) · [Antonio Zaniolo](https://www.buzzerbeater.com/player/54666500/overview.aspx) (JS17 JR10 OD18 HA18 DR19 PA10 IS12 ID8 RB7 SB6)
 
 ## inside group — k=2
 
-Silhouette by k: {"2":0.30488241934714916,"3":0.19922475948048693,"4":0.1598877255863802} · ward-vs-kmeans agreement 0.70 · bootstrap Jaccard 0.66, 0.88
+Silhouette by k: {"2":0.30488241934714905,"3":0.19922475948048723,"4":0.15988772558638023} · ward-vs-kmeans agreement 0.70 · bootstrap Jaccard 0.68, 0.88
 
 ### Market: inside #1 (mkt72-inside-1)
 
@@ -102,7 +102,7 @@ Examples: [Leticijus Rozenblatas](https://www.buzzerbeater.com/player/55047695/o
 
 ## wing group — k=1 (k=2 unstable under bootstrap; collapsed)
 
-Silhouette by k: {"2":0.14457463171641582,"3":0.0962686654136707,"4":0.08724160136592764,"5":0.08667165557918702} · ward-vs-kmeans agreement 1.00 · bootstrap Jaccard 1.00
+Silhouette by k: {"2":0.1446373588992961,"3":0.09459507914034798,"4":0.08778956416111466,"5":0.08882373690600796} · ward-vs-kmeans agreement 1.00 · bootstrap Jaccard 1.00
 
 ### Market: wing #1 (mkt72-wing-1)
 
@@ -117,7 +117,7 @@ Silhouette by k: {"2":0.14457463171641582,"3":0.0962686654136707,"4":0.087241601
 
 Typical: height 203cm · TSP 76 · potential {"7":82,"8":50,"9":66,"10":46,"11":1} · ST p50 5 · FT p50 8
 
-Examples: [Jouni Skytta](https://www.buzzerbeater.com/player/54832628/overview.aspx) (JS18 JR10 OD15 HA19 DR20 PA8 IS7 ID9 RB6 SB6) · [Maurício Constante](https://www.buzzerbeater.com/player/55038789/overview.aspx) (JS12 JR9 OD15 HA15 DR15 PA9 IS12 ID11 RB7 SB10) · [José Badillo](https://www.buzzerbeater.com/player/54952067/overview.aspx) (JS14 JR11 OD13 HA15 DR15 PA9 IS9 ID12 RB10 SB7)
+Examples: [Jouni Skytta](https://www.buzzerbeater.com/player/54832628/overview.aspx) (JS18 JR10 OD15 HA19 DR20 PA8 IS7 ID9 RB6 SB6) · [José Badillo](https://www.buzzerbeater.com/player/54952067/overview.aspx) (JS14 JR11 OD13 HA15 DR15 PA9 IS9 ID12 RB10 SB7) · [Maurício Constante](https://www.buzzerbeater.com/player/55038789/overview.aspx) (JS12 JR9 OD15 HA15 DR15 PA9 IS12 ID11 RB7 SB10)
 
 ## Specificity (match rates across clusters)
 
@@ -127,11 +127,11 @@ cluster — the two intentionally differ.
 
 | archetype \ cluster | mkt72-outside-1 | mkt72-outside-2 | mkt72-inside-1 | mkt72-inside-2 | mkt72-wing-1 |
 | --- | --- | --- | --- | --- | --- |
-| mkt72-outside-1 | 2% | 24% | 0% | 0% | 1% |
-| mkt72-outside-2 | 0% | 16% | 0% | 0% | 1% |
+| mkt72-outside-1 | 2% | 27% | 0% | 0% | 1% |
+| mkt72-outside-2 | 0% | 17% | 0% | 0% | 1% |
 | mkt72-inside-1 | 0% | 0% | 52% | 2% | 0% |
 | mkt72-inside-2 | 0% | 0% | 0% | 9% | 0% |
-| mkt72-wing-1 | 0% | 20% | 0% | 0% | 2% |
+| mkt72-wing-1 | 0% | 22% | 0% | 0% | 2% |
 
 
 ## External benchmark: Greece U-21 (Euro bronze, S72)
@@ -143,19 +143,19 @@ thresholds derive from the market cohort. This section validates shapes and floo
 | --- | --- | --- | --- | --- | --- | --- |
 | Aristidis Vlastarakis | SF | 14 | JS17 JR11 OD17 HA16 DR17 PA10 IS13 ID9 RB9 SB2 | 121 | mkt72-outside-2 | 7.2 |
 | Stilianos Theodoratos | PF | 14 | JS13 JR6 OD7 HA16 DR17 PA8 IS18 ID16 RB8 SB8 | 117 | mkt72-wing-1 | 11.7 |
-| Akis Kotsalos | SF | 14 | JS16 JR11 OD17 HA16 DR17 PA7 IS13 ID9 RB6 SB4 | 116 | mkt72-outside-2 | 6.7 |
+| Akis Kotsalos | SF | 14 | JS16 JR11 OD17 HA16 DR17 PA7 IS13 ID9 RB6 SB4 | 116 | mkt72-outside-2 | 6.6 |
 | Tasoulis Gittas | PG | 14 | JS14 JR9 OD14 HA18 DR19 PA8 IS16 ID9 RB5 SB4 | 116 | mkt72-outside-2 | 8.0 |
-| Alexios Thanos | PG | 14 | JS17 JR11 OD14 HA15 DR16 PA10 IS12 ID6 RB7 SB7 | 115 | mkt72-outside-2 | 4.2 |
-| Vlasis Tzougkarakis | SG | 14 | JS17 JR12 OD15 HA15 DR17 PA10 IS11 ID9 RB4 SB5 | 115 | mkt72-outside-2 | 5.3 |
+| Alexios Thanos | PG | 14 | JS17 JR11 OD14 HA15 DR16 PA10 IS12 ID6 RB7 SB7 | 115 | mkt72-outside-2 | 4.3 |
+| Vlasis Tzougkarakis | SG | 14 | JS17 JR12 OD15 HA15 DR17 PA10 IS11 ID9 RB4 SB5 | 115 | mkt72-outside-2 | 5.2 |
 | Nikos Karaindros | SF | 14 | JS15 JR10 OD15 HA13 DR16 PA8 IS12 ID10 RB6 SB7 | 112 | mkt72-outside-2 | 5.0 |
 | Lefteris Sfikopoulos | SG | 14 | JS16 JR12 OD16 HA13 DR16 PA8 IS8 ID6 RB7 SB9 | 111 | mkt72-outside-2 | 6.5 |
-| Nikos Loukoumis | SF | 14 | JS15 JR9 OD17 HA16 DR16 PA8 IS11 ID9 RB5 SB5 | 111 | mkt72-outside-2 | 5.7 |
+| Nikos Loukoumis | SF | 14 | JS15 JR9 OD17 HA16 DR16 PA8 IS11 ID9 RB5 SB5 | 111 | mkt72-outside-2 | 5.5 |
 | Vardis Alvanos | C | 14 | JS9 JR6 OD7 HA10 DR9 PA6 IS19 ID17 RB14 SB14 | 111 | mkt72-inside-2 | 6.3 |
 | Themistoklis Chalkitis | PF | 14 | JS11 JR8 OD8 HA11 DR11 PA7 IS8 ID16 RB11 SB18 | 109 | mkt72-inside-2 | 9.4 |
-| Stefanis Kotoulas | PF | 14 | JS15 JR5 OD7 HA16 DR17 PA5 IS17 ID13 RB5 SB6 | 106 | mkt72-outside-2 | 12.3 |
+| Stefanis Kotoulas | PF | 14 | JS15 JR5 OD7 HA16 DR17 PA5 IS17 ID13 RB5 SB6 | 106 | mkt72-outside-2 | 12.2 |
 | Antonios Sterpis | C | 14 | JS10 JR4 OD4 HA8 DR9 PA9 IS18 ID16 RB13 SB13 | 104 | mkt72-inside-2 | 7.0 |
 | Kostas Tampakis | C | 14 | JS9 JR8 OD4 HA8 DR9 PA8 IS18 ID16 RB12 SB10 | 102 | mkt72-inside-2 | 6.2 |
-| Renos Grafopoulos | PG | 14 | JS14 JR8 OD16 HA16 DR17 PA7 IS3 ID5 RB7 SB5 | 98 | mkt72-outside-2 | 8.2 |
+| Renos Grafopoulos | PG | 14 | JS14 JR8 OD16 HA16 DR17 PA7 IS3 ID5 RB7 SB5 | 98 | mkt72-outside-2 | 8.0 |
 | Gryllakis Antonopoulos | C | 14 | JS6 JR2 OD7 HA5 DR2 PA8 IS9 ID17 RB15 SB21 | 92 | mkt72-inside-1 | 5.5 |
 | Panteleimon Amanatis | C | 14 | JS4 JR3 OD5 HA6 DR2 PA6 IS7 ID16 RB15 SB21 | 85 | mkt72-inside-1 | 4.4 |
 
@@ -310,7 +310,7 @@ defense season is actually happening; at 21 we check the floor is still closable
 
 The universe here is every tracked Slovenian 18–21 prospect (1183), most of
 whom were never elite-track candidates; WATCH is therefore the expected mode, and the
-ON-TRACK list (46) is the actual elite pipeline.
+ON-TRACK list (44) is the actual elite pipeline.
 
 At season week 14, every age-21 floor gap is unclosable by definition ("0
 weeks left"), so the age-21 AT-RISK block below is a graduating-class artifact right
@@ -320,11 +320,11 @@ now — re-run early next season for actionable age-21 grading.
 | --- | --- | --- | --- | --- | --- |
 | [Oskar Pezdirc](https://www.buzzerbeater.com/player/55135423/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 5->13 OD 7->12 HA 6->16 DR 7->17 PA 3->4 RB 2->4 | defense season, not training OD (inferred: unknown) |
 | [Valen Šušterčič](https://www.buzzerbeater.com/player/55135430/overview.aspx) | 20 | mkt72-outside-2 | AT-RISK | JS 9->18 OD 7->14 HA 13->19 DR 14->19 ID 3->4 SB 2->3 | defense season, not training OD (inferred: unknown) |
-| [Baltazar Mikš](https://www.buzzerbeater.com/player/55135431/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 3->15 OD 6->14 HA 9->18 DR 6->18 PA 2->8 ID 2->4 | defense season, not training OD (inferred: unknown) |
+| [Baltazar Mikš](https://www.buzzerbeater.com/player/55135431/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 3->13 OD 6->12 HA 9->16 DR 6->17 PA 2->4 IS 3->6 ID 2->6 | defense season, not training OD (inferred: unknown) |
 | [Kevin Turkoš](https://www.buzzerbeater.com/player/55135438/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | OD 10->12 ID 4->6 | defense season, not training OD (inferred: unknown) |
 | [Aleksej Pevc](https://www.buzzerbeater.com/player/55135439/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 6->15 OD 6->14 HA 7->18 DR 7->18 PA 7->8 ID 3->4 | defense season, not training OD (inferred: unknown) |
 | [Božo Herceg](https://www.buzzerbeater.com/player/55135440/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 5->15 OD 6->14 HA 5->18 DR 7->18 PA 6->8 ID 1->4 | defense season, not training OD (inferred: unknown) |
-| [Silvo Bartol](https://www.buzzerbeater.com/player/55135447/overview.aspx) | 20 | mkt72-outside-2 | AT-RISK | JS 10->18 OD 9->14 HA 10->19 DR 12->19 ID 1->4 SB 2->3 | defense season, not training OD (inferred: 15) |
+| [Silvo Bartol](https://www.buzzerbeater.com/player/55135447/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 10->15 OD 9->14 HA 10->18 DR 12->18 ID 1->4 SB 2->3 | defense season, not training OD (inferred: 15) |
 | [Blaž Šušter](https://www.buzzerbeater.com/player/55135458/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 12->13 OD 7->12 HA 14->16 DR 15->17 RB 3->4 | defense season, not training OD (inferred: unknown) |
 | [Miro Jecl](https://www.buzzerbeater.com/player/55135460/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 7->13 OD 6->12 HA 7->16 DR 5->17 IS 4->6 RB 3->4 | defense season, not training OD (inferred: unknown) |
 | [Alen Mac](https://www.buzzerbeater.com/player/55135484/overview.aspx) | 20 | mkt72-outside-2 | AT-RISK | JS 11->18 OD 9->14 DR 18->19 | defense season, not training OD (inferred: unknown) |
@@ -369,7 +369,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Oskar Jukić](https://www.buzzerbeater.com/player/55159709/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 7->13 JR 2->4 OD 11->12 HA 2->16 DR 8->17 ID 4->6 | defense season, not training OD (inferred: unknown) |
 | [Jan Salamar](https://www.buzzerbeater.com/player/55197360/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 5->13 OD 2->12 HA 9->16 DR 7->17 PA 3->4 IS 5->6 | defense season, not training OD (inferred: unknown) |
 | [Izidor Mackotevc](https://www.buzzerbeater.com/player/55202826/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | HA 1->3 IS 7->16 ID 8->16 RB 7->10 SB 7->10 | defense season, not training ID (inferred: unknown) |
-| [Hinko Pogac](https://www.buzzerbeater.com/player/55439683/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 6->15 OD 10->14 HA 9->18 DR 5->18 PA 6->8 | defense season, not training OD (inferred: unknown) |
+| [Hinko Pogac](https://www.buzzerbeater.com/player/55439683/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 6->13 OD 10->12 HA 9->16 DR 5->17 IS 3->6 | defense season, not training OD (inferred: unknown) |
 | [Mike Adorjan](https://www.buzzerbeater.com/player/55439684/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 4->13 OD 8->12 HA 6->16 DR 6->17 PA 2->4 IS 2->6 | defense season, not training OD (inferred: unknown) |
 | [Žak Intihar](https://www.buzzerbeater.com/player/55439685/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 12->15 OD 5->14 HA 8->18 DR 11->18 ID 2->4 RB 1->2 | defense season, not training OD (inferred: unknown) |
 | [Leonard Verhovčak](https://www.buzzerbeater.com/player/55439689/overview.aspx) | 20 | mkt72-outside-2 | AT-RISK | JS 11->18 OD 10->14 HA 15->19 DR 17->19 | defense season, not training OD (inferred: unknown) |
@@ -379,7 +379,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Avgust Mahorič](https://www.buzzerbeater.com/player/55439707/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 10->13 OD 8->12 HA 7->16 DR 11->17 | defense season, not training OD (inferred: unknown) |
 | [Pero Koren](https://www.buzzerbeater.com/player/55439708/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 8->13 OD 8->12 HA 7->16 DR 7->17 IS 3->6 | defense season, not training OD (inferred: unknown) |
 | [Goran Lapanja](https://www.buzzerbeater.com/player/55439716/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 11->15 OD 8->14 HA 10->18 DR 9->18 PA 5->8 ID 3->4 SB 2->3 | defense season, not training OD (inferred: unknown) |
-| [Ferdinand Udovčič](https://www.buzzerbeater.com/player/55439730/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 5->15 OD 8->14 HA 8->18 DR 6->18 PA 5->8 ID 2->4 | defense season, not training OD (inferred: unknown) |
+| [Ferdinand Udovčič](https://www.buzzerbeater.com/player/55439730/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 5->13 OD 8->12 HA 8->16 DR 6->17 ID 2->6 | defense season, not training OD (inferred: unknown) |
 | [Slavko Pajenk](https://www.buzzerbeater.com/player/55439743/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 10->15 OD 8->14 HA 9->18 DR 10->18 | defense season, not training OD (inferred: unknown) |
 | [Patrik Macok](https://www.buzzerbeater.com/player/55439766/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 7->13 OD 4->12 HA 5->16 DR 11->17 ID 3->6 | defense season, not training OD (inferred: unknown) |
 | [Nastja Oblak](https://www.buzzerbeater.com/player/55439770/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 9->13 OD 10->12 HA 9->16 DR 6->17 PA 3->4 | defense season, not training OD (inferred: unknown) |
@@ -434,12 +434,12 @@ now — re-run early next season for actionable age-21 grading.
 | [Jordan Keder](https://www.buzzerbeater.com/player/55439965/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 6->15 OD 8->14 HA 4->18 DR 6->18 IS 2->3 ID 3->4 | defense season, not training OD (inferred: unknown) |
 | [Arne Nago](https://www.buzzerbeater.com/player/55439975/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 4->13 OD 5->12 HA 6->16 DR 2->17 | defense season, not training OD (inferred: unknown) |
 | [Janez Šegina](https://www.buzzerbeater.com/player/55439982/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 9->13 JR 3->4 OD 6->12 HA 6->16 DR 7->17 | defense season, not training OD (inferred: unknown) |
-| [Vlado Neumeister](https://www.buzzerbeater.com/player/55439986/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 8->13 OD 10->12 HA 11->16 DR 11->17 ID 4->6 SB 3->4 | defense season, not training OD (inferred: unknown) |
+| [Vlado Neumeister](https://www.buzzerbeater.com/player/55439986/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 8->15 OD 10->14 HA 11->18 DR 11->18 PA 7->8 | defense season, not training OD (inferred: unknown) |
 | [Lovrenc Petrač](https://www.buzzerbeater.com/player/55439987/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | JS 2->6 IS 6->16 ID 10->16 RB 6->10 | defense season, not training ID (inferred: unknown) |
 | [Erazem Ludoviko](https://www.buzzerbeater.com/player/55439991/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 9->15 OD 6->14 HA 3->18 DR 4->18 IS 2->3 RB 1->2 | defense season, not training OD (inferred: unknown) |
 | [Dore Balažic](https://www.buzzerbeater.com/player/55439996/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 10->15 OD 6->14 HA 8->18 DR 8->18 IS 2->3 SB 2->3 | defense season, not training OD (inferred: unknown) |
 | [Braco Sinkovič](https://www.buzzerbeater.com/player/55440002/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | JS 2->6 JR 1->2 DR 2->3 IS 8->16 ID 8->16 RB 6->10 SB 9->10 | defense season, not training ID (inferred: unknown) |
-| [Emil Varga](https://www.buzzerbeater.com/player/55440005/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 9->15 OD 6->14 HA 3->18 DR 6->18 PA 2->8 | defense season, not training OD (inferred: unknown) |
+| [Emil Varga](https://www.buzzerbeater.com/player/55440005/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 9->13 OD 6->12 HA 3->16 DR 6->17 PA 2->4 ID 4->6 | defense season, not training OD (inferred: unknown) |
 | [Kevin Babenko](https://www.buzzerbeater.com/player/55440007/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 7->13 OD 4->12 HA 10->16 DR 7->17 IS 5->6 RB 1->4 SB 1->4 | defense season, not training OD (inferred: unknown) |
 | [Cene Trobec](https://www.buzzerbeater.com/player/55440009/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 12->15 OD 11->14 HA 12->18 DR 10->18 PA 6->8 | defense season, not training OD (inferred: unknown) |
 | [Žiga Majerhofer](https://www.buzzerbeater.com/player/55440011/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | IS 9->16 ID 7->16 RB 8->10 SB 8->10 | defense season, not training ID (inferred: unknown) |
@@ -478,7 +478,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Žan Delak](https://www.buzzerbeater.com/player/55440241/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 8->13 OD 4->12 HA 3->16 DR 7->17 ID 3->6 | defense season, not training OD (inferred: unknown) |
 | [Boštjan Janžević](https://www.buzzerbeater.com/player/55440242/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 6->13 OD 5->12 HA 7->16 DR 3->17 IS 5->6 | defense season, not training OD (inferred: unknown) |
 | [Jaka Vuzem](https://www.buzzerbeater.com/player/55440244/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | IS 12->16 ID 11->16 RB 9->10 SB 3->10 | defense season, not training ID (inferred: unknown) |
-| [Stojan Kobe](https://www.buzzerbeater.com/player/55440248/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 5->15 OD 9->14 HA 3->18 DR 6->18 PA 6->8 | defense season, not training OD (inferred: unknown) |
+| [Stojan Kobe](https://www.buzzerbeater.com/player/55440248/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 5->13 OD 9->12 HA 3->16 DR 6->17 RB 2->4 | defense season, not training OD (inferred: unknown) |
 | [Jakob Brajkovič](https://www.buzzerbeater.com/player/55440252/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 11->13 OD 4->12 HA 11->16 DR 7->17 IS 2->6 | defense season, not training OD (inferred: unknown) |
 | [Milimir Kos](https://www.buzzerbeater.com/player/55440253/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 5->15 OD 8->14 HA 8->18 DR 10->18 PA 5->8 SB 2->3 | defense season, not training OD (inferred: unknown) |
 | [Edin Šimonc](https://www.buzzerbeater.com/player/55440258/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 11->15 OD 9->14 HA 7->18 DR 11->18 PA 7->8 | defense season, not training OD (inferred: unknown) |
@@ -505,7 +505,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Zdravko Špeh](https://www.buzzerbeater.com/player/55461802/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 1->13 OD 5->12 HA 7->16 DR 5->17 PA 3->4 | defense season, not training OD (inferred: unknown) |
 | [Miško Levičar](https://www.buzzerbeater.com/player/55461958/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | JS 5->6 OD 2->4 IS 7->16 ID 8->16 SB 8->10 | defense season, not training ID (inferred: unknown) |
 | [Luka Kosmač](https://www.buzzerbeater.com/player/55462234/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | JS 3->6 HA 1->3 IS 8->16 ID 4->16 RB 7->10 | defense season, not training ID (inferred: unknown) |
-| [Tonček Svete](https://www.buzzerbeater.com/player/55462238/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 8->15 OD 9->14 HA 8->18 DR 4->18 | defense season, not training OD (inferred: 5) |
+| [Tonček Svete](https://www.buzzerbeater.com/player/55462238/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 8->13 OD 9->12 HA 8->16 DR 4->17 ID 5->6 | defense season, not training OD (inferred: 5) |
 | [David Prek](https://www.buzzerbeater.com/player/55462255/overview.aspx) | 20 | mkt72-inside-2 | AT-RISK | IS 11->16 ID 13->16 SB 7->10 | defense season, not training ID (inferred: unknown) |
 | [Vlado Horvat](https://www.buzzerbeater.com/player/55462415/overview.aspx) | 20 | mkt72-outside-1 | AT-RISK | JS 6->15 OD 9->14 HA 10->18 DR 8->18 ID 3->4 | defense season, not training OD (inferred: unknown) |
 | [Tibor Klajderič](https://www.buzzerbeater.com/player/55462692/overview.aspx) | 20 | mkt72-wing-1 | AT-RISK | JS 5->13 OD 5->12 HA 10->16 DR 9->17 | defense season, not training OD (inferred: unknown) |
@@ -577,7 +577,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Aleš Ukmar](https://www.buzzerbeater.com/player/55135472/overview.aspx) | 21 | mkt72-outside-2 | AT-RISK | JS 11->18 OD 7->14 HA 15->19 DR 14->19 | cannot close OD gap 8 in 0 weeks (≤0.0) |
 | [Valuk De Bello](https://www.buzzerbeater.com/player/55135476/overview.aspx) | 21 | mkt72-outside-2 | AT-RISK | JS 10->18 JR 4->6 OD 8->14 HA 16->19 DR 17->19 | cannot close OD gap 7 in 0 weeks (≤0.0) |
 | [Lenart Kos](https://www.buzzerbeater.com/player/55135481/overview.aspx) | 21 | mkt72-outside-2 | AT-RISK | JS 17->18 HA 17->19 DR 18->19 IS 2->3 | cannot close OD gap 1 in 0 weeks (≤0.0) |
-| [Teo Glavina](https://www.buzzerbeater.com/player/55135486/overview.aspx) | 21 | mkt72-outside-1 | AT-RISK | JS 12->15 OD 11->14 HA 12->18 DR 10->18 | cannot close OD gap 4 in 0 weeks (≤0.0) |
+| [Teo Glavina](https://www.buzzerbeater.com/player/55135486/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 12->13 OD 11->12 HA 12->16 DR 10->17 | cannot close OD gap 3 in 0 weeks (≤0.0) |
 | [David Navotnik](https://www.buzzerbeater.com/player/55135487/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 6->13 OD 7->12 HA 3->16 DR 4->17 | cannot close OD gap 7 in 0 weeks (≤0.0) |
 | [Dare Bahovec](https://www.buzzerbeater.com/player/55135488/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 12->13 OD 7->12 HA 9->16 DR 13->17 ID 3->6 | cannot close OD gap 7 in 0 weeks (≤0.0) |
 | [Marko Peterec](https://www.buzzerbeater.com/player/55135491/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 10->13 OD 9->12 HA 6->16 DR 13->17 IS 4->6 | cannot close OD gap 5 in 0 weeks (≤0.0) |
@@ -672,7 +672,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Matija Podlesnikar](https://www.buzzerbeater.com/player/55160286/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 6->13 OD 5->12 HA 9->16 DR 8->17 PA 3->4 ID 3->6 | cannot close OD gap 9 in 0 weeks (≤0.0) |
 | [Klemen Plut](https://www.buzzerbeater.com/player/55160442/overview.aspx) | 21 | mkt72-outside-2 | AT-RISK | JS 16->18 OD 5->14 HA 16->19 DR 18->19 | cannot close OD gap 10 in 0 weeks (≤0.0) |
 | [Hotimir Šporn](https://www.buzzerbeater.com/player/55160522/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 2->13 OD 3->12 HA 10->16 DR 10->17 | cannot close OD gap 11 in 0 weeks (≤0.0) |
-| [Aleš Pintar](https://www.buzzerbeater.com/player/55161248/overview.aspx) | 21 | mkt72-outside-2 | AT-RISK | JS 12->18 OD 11->14 HA 12->19 DR 11->19 | cannot close OD gap 4 in 0 weeks (≤0.0) |
+| [Aleš Pintar](https://www.buzzerbeater.com/player/55161248/overview.aspx) | 21 | mkt72-outside-1 | AT-RISK | JS 12->15 OD 11->14 HA 12->18 DR 11->18 | cannot close OD gap 4 in 0 weeks (≤0.0) |
 | [Otokar Ujčić](https://www.buzzerbeater.com/player/55161353/overview.aspx) | 21 | mkt72-outside-1 | AT-RISK | JS 14->15 OD 13->14 HA 14->18 DR 14->18 | cannot close OD gap 2 in 0 weeks (≤0.0) |
 | [Jaša Pulko](https://www.buzzerbeater.com/player/55167761/overview.aspx) | 21 | mkt72-outside-2 | AT-RISK | JS 13->18 OD 11->14 HA 15->19 DR 16->19 | cannot close OD gap 4 in 0 weeks (≤0.0) |
 | [Admir Muc](https://www.buzzerbeater.com/player/55173735/overview.aspx) | 21 | mkt72-wing-1 | AT-RISK | JS 5->13 OD 5->12 HA 6->16 DR 4->17 | cannot close OD gap 9 in 0 weeks (≤0.0) |
@@ -727,7 +727,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Boško Korde](https://www.buzzerbeater.com/player/55689115/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 8->9 | feeders behind (HA+DR 16 vs track 27) |
 | [Semir Flaker](https://www.buzzerbeater.com/player/55689116/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 8->11 | feeders behind (HA+DR 17 vs track 27) |
 | [Oliver Mantelj](https://www.buzzerbeater.com/player/55689117/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 7->9 | feeders behind (HA+DR 17 vs track 27) |
-| [Cvetko Dobrinja](https://www.buzzerbeater.com/player/55689121/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 4->11 HA 7->9 DR 5->8 PA 2->4 | feeders behind (HA+DR 12 vs track 27) |
+| [Cvetko Dobrinja](https://www.buzzerbeater.com/player/55689121/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 OD 4->7 DR 5->7 PA 2->3 | feeders behind (HA+DR 12 vs track 22) |
 | [Uroš Smrdel](https://www.buzzerbeater.com/player/55689124/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 2->7 | feeders behind (HA+DR 16 vs track 22) |
 | [Cene Vozelj](https://www.buzzerbeater.com/player/55689146/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 2->7 OD 5->7 HA 1->7 DR 5->7 RB 1->3 | feeders behind (HA+DR 6 vs track 22) |
 | [Erik Berk](https://www.buzzerbeater.com/player/55689159/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 5->7 | feeders behind (HA+DR 20 vs track 22) |
@@ -737,7 +737,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Dušan Peterman](https://www.buzzerbeater.com/player/55689200/overview.aspx) | 18 | mkt72-inside-2 | WATCH | DR 1->2 ID 7->11 RB 4->6 SB 4->7 | ID behind the big-man early-defense track |
 | [Nikita Majarič](https://www.buzzerbeater.com/player/55689204/overview.aspx) | 18 | mkt72-inside-2 | WATCH | HA 1->2 DR 1->2 IS 5->6 ID 5->11 RB 3->6 SB 6->7 | ID behind the big-man early-defense track |
 | [Anže Fekonja](https://www.buzzerbeater.com/player/55689209/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 5->7 HA 1->7 DR 5->7 | feeders behind (HA+DR 6 vs track 22) |
-| [Gaj Jelovčan](https://www.buzzerbeater.com/player/55689218/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 6->7 | feeders behind (HA+DR 21 vs track 22) |
+| [Gaj Jelovčan](https://www.buzzerbeater.com/player/55689218/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 | feeders behind (HA+DR 21 vs track 27) |
 | [Matjaž Lovro](https://www.buzzerbeater.com/player/55689231/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 JR 1->3 OD 5->7 HA 1->7 PA 1->3 ID 3->4 | feeders behind (HA+DR 9 vs track 22) |
 | [Jaro Grabić](https://www.buzzerbeater.com/player/55689237/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 3->7 OD 3->7 HA 4->7 SB 1->3 | feeders behind (HA+DR 12 vs track 22) |
 | [Pepe Tome](https://www.buzzerbeater.com/player/55689240/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 8->11 HA 5->9 | feeders behind (HA+DR 13 vs track 27) |
@@ -751,7 +751,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Mišo Lauš](https://www.buzzerbeater.com/player/55689282/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 4->9 DR 7->8 | feeders behind (HA+DR 11 vs track 27) |
 | [Ermin Hrženjak](https://www.buzzerbeater.com/player/55689290/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 4->7 | feeders behind (HA+DR 15 vs track 22) |
 | [Boško Srne](https://www.buzzerbeater.com/player/55689291/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 4->5 OD 6->11 HA 7->9 DR 7->8 | feeders behind (HA+DR 14 vs track 27) |
-| [Zdravko Smrdelj](https://www.buzzerbeater.com/player/55689300/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 5->9 DR 3->8 PA 3->4 | feeders behind (HA+DR 8 vs track 27) |
+| [Zdravko Smrdelj](https://www.buzzerbeater.com/player/55689300/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 HA 5->7 DR 3->7 | feeders behind (HA+DR 8 vs track 22) |
 | [Boško Grims](https://www.buzzerbeater.com/player/55689308/overview.aspx) | 18 | mkt72-inside-2 | WATCH | ID 7->11 SB 5->7 | ID behind the big-man early-defense track |
 | [Lenart Hanc](https://www.buzzerbeater.com/player/55689309/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 JR 2->3 OD 4->7 HA 6->7 | feeders behind (HA+DR 14 vs track 22) |
 | [Žiga Celestin](https://www.buzzerbeater.com/player/55689310/overview.aspx) | 18 | mkt72-inside-2 | WATCH | IS 3->6 ID 7->11 SB 6->7 | ID behind the big-man early-defense track |
@@ -764,7 +764,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Džoni Javor](https://www.buzzerbeater.com/player/55689403/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 3->7 DR 3->7 | feeders behind (HA+DR 10 vs track 22) |
 | [Nikola Majerle](https://www.buzzerbeater.com/player/55689404/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 | feeders behind (HA+DR 22 vs track 27) |
 | [Pepe Pršina](https://www.buzzerbeater.com/player/55689408/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 3->9 DR 7->8 | feeders behind (HA+DR 10 vs track 27) |
-| [Aljaž Teraž](https://www.buzzerbeater.com/player/55689414/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 6->9 DR 4->8 | feeders behind (HA+DR 10 vs track 27) |
+| [Aljaž Teraž](https://www.buzzerbeater.com/player/55689414/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 HA 6->7 DR 4->7 | feeders behind (HA+DR 10 vs track 22) |
 | [Drago Gotar](https://www.buzzerbeater.com/player/55689422/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 OD 3->7 HA 4->7 DR 6->7 | feeders behind (HA+DR 10 vs track 22) |
 | [Vid Lipič](https://www.buzzerbeater.com/player/55689434/overview.aspx) | 18 | mkt72-inside-2 | WATCH | IS 5->6 ID 6->11 | ID behind the big-man early-defense track |
 | [Semir Jeram](https://www.buzzerbeater.com/player/55689449/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 6->7 ID 2->4 | feeders behind (HA+DR 17 vs track 22) |
@@ -776,9 +776,9 @@ now — re-run early next season for actionable age-21 grading.
 | [Boštjan Slapar](https://www.buzzerbeater.com/player/55689476/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 3->7 HA 3->7 DR 5->7 | feeders behind (HA+DR 8 vs track 22) |
 | [Ažbe Germic](https://www.buzzerbeater.com/player/55689482/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 6->7 HA 2->7 DR 6->7 ID 3->4 | feeders behind (HA+DR 8 vs track 22) |
 | [Leo Gačič](https://www.buzzerbeater.com/player/55689492/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 4->9 DR 5->8 | feeders behind (HA+DR 9 vs track 27) |
-| [Bane Pavšič](https://www.buzzerbeater.com/player/55689493/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 4->5 OD 4->11 HA 7->9 DR 3->8 | feeders behind (HA+DR 10 vs track 27) |
+| [Bane Pavšič](https://www.buzzerbeater.com/player/55689493/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 OD 4->7 DR 3->7 IS 2->3 | feeders behind (HA+DR 10 vs track 22) |
 | [Adrijan Supančič](https://www.buzzerbeater.com/player/55689503/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 2->7 OD 4->7 HA 3->7 DR 4->7 | feeders behind (HA+DR 7 vs track 22) |
-| [Sandi Macun](https://www.buzzerbeater.com/player/55689558/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 5->9 DR 7->8 | feeders behind (HA+DR 12 vs track 27) |
+| [Sandi Macun](https://www.buzzerbeater.com/player/55689558/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 OD 6->7 HA 5->7 ID 3->4 | feeders behind (HA+DR 12 vs track 22) |
 | [Ožbej Predalić](https://www.buzzerbeater.com/player/55710561/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 7->9 DR 5->8 | feeders behind (HA+DR 12 vs track 27) |
 | [Stribor Jaunik](https://www.buzzerbeater.com/player/55710628/overview.aspx) | 18 | mkt72-inside-2 | WATCH | ID 4->11 SB 6->7 | ID behind the big-man early-defense track |
 | [Gabrijel Sagmajster](https://www.buzzerbeater.com/player/55710711/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 5->7 HA 5->7 DR 1->7 ID 3->4 | feeders behind (HA+DR 6 vs track 22) |
@@ -789,7 +789,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Bernard Lovrek](https://www.buzzerbeater.com/player/55713935/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 OD 3->7 HA 5->7 | feeders behind (HA+DR 13 vs track 22) |
 | [Žane Kastelic](https://www.buzzerbeater.com/player/55714167/overview.aspx) | 18 | mkt72-wing-1 | WATCH | – | feeders behind (HA+DR 19 vs track 22) |
 | [Zlatimir Mežič](https://www.buzzerbeater.com/player/55714653/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 6->9 DR 7->8 PA 2->4 IS 1->2 | feeders behind (HA+DR 13 vs track 27) |
-| [Oton Pevec](https://www.buzzerbeater.com/player/55714661/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 6->9 DR 6->8 PA 3->4 IS 1->2 | feeders behind (HA+DR 12 vs track 27) |
+| [Oton Pevec](https://www.buzzerbeater.com/player/55714661/overview.aspx) | 18 | mkt72-wing-1 | WATCH | HA 6->7 DR 6->7 IS 1->3 | feeders behind (HA+DR 12 vs track 22) |
 | [Anej Lampič](https://www.buzzerbeater.com/player/55715299/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 7->9 DR 6->8 | feeders behind (HA+DR 13 vs track 27) |
 | [Ahmed Grims](https://www.buzzerbeater.com/player/55717345/overview.aspx) | 18 | mkt72-inside-2 | WATCH | ID 6->11 | ID behind the big-man early-defense track |
 | [Zlatko Perš](https://www.buzzerbeater.com/player/55757021/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 2->7 OD 4->7 RB 1->3 | feeders behind (HA+DR 14 vs track 22) |
@@ -861,7 +861,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Klemen Rakovič](https://www.buzzerbeater.com/player/55967665/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 3->7 OD 5->7 HA 4->7 ID 2->4 | feeders behind (HA+DR 11 vs track 22) |
 | [Benjamin Jug](https://www.buzzerbeater.com/player/55967667/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 7->9 DR 6->8 IS 1->2 ID 2->3 | feeders behind (HA+DR 13 vs track 27) |
 | [Vladislav Delavec](https://www.buzzerbeater.com/player/55967679/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 OD 2->7 HA 4->7 DR 4->7 | feeders behind (HA+DR 8 vs track 22) |
-| [Vladimir Dovšek](https://www.buzzerbeater.com/player/55967686/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 4->9 DR 7->8 | feeders behind (HA+DR 11 vs track 27) |
+| [Vladimir Dovšek](https://www.buzzerbeater.com/player/55967686/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 OD 6->7 HA 4->7 | feeders behind (HA+DR 11 vs track 22) |
 | [Jože Piškur](https://www.buzzerbeater.com/player/55967689/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 4->7 HA 5->7 | feeders behind (HA+DR 12 vs track 22) |
 | [Drejc Malovrh](https://www.buzzerbeater.com/player/55967690/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 4->5 OD 7->11 HA 4->9 DR 7->8 ID 1->3 | feeders behind (HA+DR 11 vs track 27) |
 | [Daniel Klunec](https://www.buzzerbeater.com/player/55967693/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 HA 4->7 DR 4->7 | feeders behind (HA+DR 8 vs track 22) |
@@ -898,13 +898,13 @@ now — re-run early next season for actionable age-21 grading.
 | [Silvo Vodopivec](https://www.buzzerbeater.com/player/55967903/overview.aspx) | 18 | mkt72-inside-2 | WATCH | ID 7->11 | ID behind the big-man early-defense track |
 | [Dalibor Dobrajc](https://www.buzzerbeater.com/player/55967911/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 6->9 DR 4->8 ID 2->3 SB 1->2 | feeders behind (HA+DR 10 vs track 27) |
 | [Davor Baša](https://www.buzzerbeater.com/player/55967922/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 3->5 OD 7->11 HA 6->9 DR 4->8 | feeders behind (HA+DR 10 vs track 27) |
-| [Antonij Deželan](https://www.buzzerbeater.com/player/55967930/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 4->9 DR 3->8 | feeders behind (HA+DR 7 vs track 27) |
+| [Antonij Deželan](https://www.buzzerbeater.com/player/55967930/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 6->7 HA 4->7 DR 3->7 SB 2->3 | feeders behind (HA+DR 7 vs track 22) |
 | [Milan Završki](https://www.buzzerbeater.com/player/55967932/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 6->9 DR 7->8 IS 1->2 SB 1->2 | feeders behind (HA+DR 13 vs track 27) |
 | [Klemen Grošelj](https://www.buzzerbeater.com/player/55967935/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 6->9 DR 3->8 ID 1->3 | feeders behind (HA+DR 9 vs track 27) |
 | [Cveto Mrak](https://www.buzzerbeater.com/player/55967936/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 6->9 DR 6->8 | feeders behind (HA+DR 12 vs track 27) |
 | [Denis Remec](https://www.buzzerbeater.com/player/55967937/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 OD 4->7 ID 2->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Samir Repar](https://www.buzzerbeater.com/player/55967940/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JR 2->3 OD 6->7 HA 6->7 DR 5->7 ID 1->4 | feeders behind (HA+DR 11 vs track 22) |
-| [Danijel Cotman](https://www.buzzerbeater.com/player/55967941/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 7->9 DR 3->8 | feeders behind (HA+DR 10 vs track 27) |
+| [Danijel Cotman](https://www.buzzerbeater.com/player/55967941/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 OD 6->7 DR 3->7 | feeders behind (HA+DR 10 vs track 22) |
 | [Nik Prosen](https://www.buzzerbeater.com/player/55967943/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 5->7 DR 6->7 SB 1->3 | feeders behind (HA+DR 13 vs track 22) |
 | [Anže Franko](https://www.buzzerbeater.com/player/55967965/overview.aspx) | 18 | mkt72-inside-2 | WATCH | HA 1->2 ID 5->11 SB 5->7 | ID behind the big-man early-defense track |
 | [Tilen Loranski](https://www.buzzerbeater.com/player/55967972/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 3->7 OD 1->7 DR 5->7 | feeders behind (HA+DR 12 vs track 22) |
@@ -912,7 +912,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Vitomil Simonc](https://www.buzzerbeater.com/player/55969591/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 3->7 ID 2->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Damjan Malovrh](https://www.buzzerbeater.com/player/55969598/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 4->7 HA 6->7 DR 2->7 SB 2->3 | feeders behind (HA+DR 8 vs track 22) |
 | [Ivica Novičić](https://www.buzzerbeater.com/player/55969599/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JR 3->4 OD 7->11 HA 6->9 DR 6->8 | feeders behind (HA+DR 12 vs track 27) |
-| [Joco Zadnjik](https://www.buzzerbeater.com/player/55969604/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 1->9 DR 5->8 PA 2->4 | feeders behind (HA+DR 6 vs track 27) |
+| [Joco Zadnjik](https://www.buzzerbeater.com/player/55969604/overview.aspx) | 18 | mkt72-wing-1 | WATCH | HA 1->7 DR 5->7 PA 2->3 IS 2->3 | feeders behind (HA+DR 6 vs track 22) |
 | [Miki Radovac](https://www.buzzerbeater.com/player/55989307/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 OD 3->7 DR 6->7 IS 2->3 | feeders behind (HA+DR 13 vs track 22) |
 | [Jasmin Čižman](https://www.buzzerbeater.com/player/55989367/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 4->7 JR 2->3 OD 3->7 HA 2->7 DR 4->7 ID 3->4 SB 2->3 | feeders behind (HA+DR 6 vs track 22) |
 | [Saša Troch](https://www.buzzerbeater.com/player/55989732/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 2->5 OD 5->11 HA 6->9 DR 7->8 ID 2->3 | feeders behind (HA+DR 13 vs track 27) |
@@ -926,12 +926,12 @@ now — re-run early next season for actionable age-21 grading.
 | [Erik Dolenjc](https://www.buzzerbeater.com/player/55993520/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 4->5 OD 3->11 HA 6->9 DR 7->8 SB 1->2 | feeders behind (HA+DR 13 vs track 27) |
 | [Miha Jurajevćić](https://www.buzzerbeater.com/player/55993566/overview.aspx) | 18 | mkt72-outside-1 | WATCH | JS 3->5 OD 7->11 HA 7->9 DR 7->8 PA 2->4 IS 1->2 | feeders behind (HA+DR 14 vs track 27) |
 | [Matej Arih](https://www.buzzerbeater.com/player/55993952/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JR 1->3 HA 6->7 DR 1->7 ID 3->4 RB 2->3 | feeders behind (HA+DR 7 vs track 22) |
-| [Nastja Janc](https://www.buzzerbeater.com/player/55994289/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 7->9 DR 4->8 | feeders behind (HA+DR 11 vs track 27) |
+| [Nastja Janc](https://www.buzzerbeater.com/player/55994289/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 6->7 DR 4->7 | feeders behind (HA+DR 11 vs track 22) |
 | [Leon Seljanar](https://www.buzzerbeater.com/player/56009286/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 4->7 HA 1->7 DR 4->7 PA 1->3 SB 2->3 | feeders behind (HA+DR 5 vs track 22) |
 | [Davor Nared](https://www.buzzerbeater.com/player/56023176/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 3->7 OD 1->7 HA 3->7 DR 2->7 IS 1->3 RB 1->3 SB 2->3 | feeders behind (HA+DR 5 vs track 22) |
 | [Matija Volk](https://www.buzzerbeater.com/player/56023182/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 7->11 HA 3->9 DR 6->8 | feeders behind (HA+DR 9 vs track 27) |
 | [Zlatko Jeraj](https://www.buzzerbeater.com/player/56023183/overview.aspx) | 18 | mkt72-inside-2 | WATCH | JS 1->3 HA 1->2 ID 4->11 RB 4->6 | ID behind the big-man early-defense track |
-| [Jure Zvanut](https://www.buzzerbeater.com/player/56023186/overview.aspx) | 18 | mkt72-wing-1 | WATCH | OD 3->7 ID 3->4 RB 1->3 SB 1->3 | feeders behind (HA+DR 14 vs track 22) |
+| [Jure Zvanut](https://www.buzzerbeater.com/player/56023186/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 3->11 HA 7->9 DR 7->8 SB 1->2 | feeders behind (HA+DR 14 vs track 27) |
 | [Viki Hanc](https://www.buzzerbeater.com/player/56025544/overview.aspx) | 18 | mkt72-wing-1 | WATCH | JS 5->7 OD 1->7 DR 2->7 PA 2->3 | feeders behind (HA+DR 9 vs track 22) |
 | [Bojan Bertoncelj](https://www.buzzerbeater.com/player/56026643/overview.aspx) | 18 | mkt72-outside-1 | WATCH | OD 6->11 HA 6->9 DR 7->8 ID 1->3 | feeders behind (HA+DR 13 vs track 27) |
 | [Rade Nachbar](https://www.buzzerbeater.com/player/56028833/overview.aspx) | 18 | mkt72-inside-2 | WATCH | OD 2->3 IS 5->6 ID 3->11 SB 6->7 | ID behind the big-man early-defense track |
@@ -963,7 +963,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Voranc Navotnik](https://www.buzzerbeater.com/player/55439805/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 3->12 HA 6->12 DR 7->12 RB 1->4 | feeders behind (HA+DR 13 vs track 22) |
 | [Sako Lončar](https://www.buzzerbeater.com/player/55439813/overview.aspx) | 19 | mkt72-outside-2 | WATCH | JS 11->13 JR 4->6 OD 9->14 HA 11->14 DR 9->14 | feeders behind (HA+DR 20 vs track 26) |
 | [Zdravko Miklavžina](https://www.buzzerbeater.com/player/55439822/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 5->12 HA 11->12 DR 8->12 | feeders behind (HA+DR 19 vs track 22) |
-| [Mark Koblenčer](https://www.buzzerbeater.com/player/55439826/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 3->11 OD 7->14 HA 5->15 DR 7->14 | feeders behind (HA+DR 12 vs track 27) |
+| [Mark Koblenčer](https://www.buzzerbeater.com/player/55439826/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 7->12 HA 5->12 DR 7->12 ID 5->6 SB 3->4 | feeders behind (HA+DR 12 vs track 22) |
 | [Branko Perec](https://www.buzzerbeater.com/player/55439856/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 8->12 HA 7->12 DR 9->12 PA 3->4 | feeders behind (HA+DR 16 vs track 22) |
 | [Oto Žula](https://www.buzzerbeater.com/player/55439870/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 JR 2->4 OD 7->12 HA 5->12 DR 7->12 ID 4->6 | feeders behind (HA+DR 12 vs track 22) |
 | [Martin Černak](https://www.buzzerbeater.com/player/55439871/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 4->12 HA 6->12 DR 5->12 PA 3->4 SB 3->4 | feeders behind (HA+DR 11 vs track 22) |
@@ -972,6 +972,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Ožbej Bratušek](https://www.buzzerbeater.com/player/55439910/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 2->12 HA 9->12 DR 7->12 ID 5->6 SB 3->4 | feeders behind (HA+DR 16 vs track 22) |
 | [Šime Jaunik](https://www.buzzerbeater.com/player/55439917/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 JR 3->4 OD 7->12 HA 7->12 DR 4->12 PA 2->4 | feeders behind (HA+DR 11 vs track 22) |
 | [Kevin Winkler](https://www.buzzerbeater.com/player/55439924/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 4->12 HA 3->12 DR 7->12 ID 4->6 | feeders behind (HA+DR 10 vs track 22) |
+| [Žiga Podbevšek](https://www.buzzerbeater.com/player/55439934/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 6->14 HA 14->15 DR 12->14 ID 3->4 | feeders behind (HA+DR 26 vs track 27) |
 | [Jožef Tome](https://www.buzzerbeater.com/player/55439942/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 4->14 HA 7->15 DR 7->14 ID 2->4 | feeders behind (HA+DR 14 vs track 27) |
 | [Borut Slavec](https://www.buzzerbeater.com/player/55439945/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 JR 4->5 OD 7->14 HA 7->15 DR 5->14 PA 4->5 | feeders behind (HA+DR 12 vs track 27) |
 | [Anže Kolarič](https://www.buzzerbeater.com/player/55439947/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 3->12 HA 8->12 DR 5->12 IS 2->4 SB 1->4 | feeders behind (HA+DR 13 vs track 22) |
@@ -988,25 +989,25 @@ now — re-run early next season for actionable age-21 grading.
 | [Alfred Petras](https://www.buzzerbeater.com/player/55440063/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 11->12 HA 6->12 DR 8->12 ID 5->6 | feeders behind (HA+DR 14 vs track 22) |
 | [Muamer Bracek](https://www.buzzerbeater.com/player/55440069/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 JR 3->4 OD 4->12 HA 9->12 DR 9->12 | feeders behind (HA+DR 18 vs track 22) |
 | [Samir Satler](https://www.buzzerbeater.com/player/55440073/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 6->12 HA 8->12 DR 9->12 ID 4->6 SB 3->4 | feeders behind (HA+DR 17 vs track 22) |
-| [Robi Debeljak](https://www.buzzerbeater.com/player/55440078/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 3->11 OD 7->14 HA 7->15 DR 7->14 | feeders behind (HA+DR 14 vs track 27) |
+| [Robi Debeljak](https://www.buzzerbeater.com/player/55440078/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 7->12 HA 7->12 DR 7->12 RB 2->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Anže Pegan](https://www.buzzerbeater.com/player/55440082/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 5->11 OD 6->14 HA 4->15 DR 4->14 ID 1->4 SB 1->3 | feeders behind (HA+DR 8 vs track 27) |
 | [Sašo Zatković](https://www.buzzerbeater.com/player/55440093/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 1->12 HA 1->12 DR 5->12 RB 3->4 | feeders behind (HA+DR 6 vs track 22) |
 | [Franko Rosa](https://www.buzzerbeater.com/player/55440100/overview.aspx) | 19 | mkt72-inside-2 | WATCH | IS 9->11 ID 9->14 | ID behind the big-man early-defense track |
 | [Benjamin Jančar](https://www.buzzerbeater.com/player/55440106/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 1->12 HA 7->12 DR 7->12 IS 3->4 ID 2->6 SB 1->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Izidor Škerlič](https://www.buzzerbeater.com/player/55440131/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 2->12 HA 4->12 DR 5->12 PA 3->4 SB 3->4 | feeders behind (HA+DR 9 vs track 22) |
 | [Fabijan Lambergar](https://www.buzzerbeater.com/player/55440139/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 3->12 HA 9->12 DR 10->12 ID 3->6 | feeders behind (HA+DR 19 vs track 22) |
-| [Teodor Perovšek](https://www.buzzerbeater.com/player/55440156/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 7->14 HA 5->15 DR 7->14 | feeders behind (HA+DR 12 vs track 27) |
+| [Teodor Perovšek](https://www.buzzerbeater.com/player/55440156/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 7->12 HA 5->12 DR 7->12 ID 5->6 | feeders behind (HA+DR 12 vs track 22) |
 | [Tihomir Zagorac](https://www.buzzerbeater.com/player/55440174/overview.aspx) | 19 | mkt72-inside-2 | WATCH | HA 1->3 IS 5->11 ID 7->14 RB 6->10 SB 7->9 | ID behind the big-man early-defense track |
 | [Stojan Rot](https://www.buzzerbeater.com/player/55440187/overview.aspx) | 19 | mkt72-inside-2 | WATCH | OD 3->4 HA 2->3 IS 7->11 ID 7->14 RB 5->10 SB 6->9 | ID behind the big-man early-defense track |
-| [Mišo Kušar](https://www.buzzerbeater.com/player/55440196/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 7->14 HA 7->15 DR 4->14 PA 4->5 ID 3->4 | feeders behind (HA+DR 11 vs track 27) |
-| [Mario Kolednik](https://www.buzzerbeater.com/player/55440213/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 4->11 OD 5->14 HA 5->15 DR 7->14 PA 3->5 ID 1->4 | feeders behind (HA+DR 12 vs track 27) |
+| [Mišo Kušar](https://www.buzzerbeater.com/player/55440196/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 7->12 HA 7->12 DR 4->12 ID 3->6 | feeders behind (HA+DR 11 vs track 22) |
+| [Mario Kolednik](https://www.buzzerbeater.com/player/55440213/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 5->12 HA 5->12 DR 7->12 PA 3->4 IS 3->4 ID 1->6 | feeders behind (HA+DR 12 vs track 22) |
 | [Damjan Skale](https://www.buzzerbeater.com/player/55440216/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 5->12 HA 1->12 DR 2->12 ID 4->6 RB 3->4 | feeders behind (HA+DR 3 vs track 22) |
 | [Sebastijan Žigić](https://www.buzzerbeater.com/player/55440220/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 5->12 HA 4->12 DR 7->12 | feeders behind (HA+DR 11 vs track 22) |
 | [Mladen Rotovnik](https://www.buzzerbeater.com/player/55440255/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 6->14 HA 9->15 DR 10->14 | feeders behind (HA+DR 19 vs track 27) |
 | [Urh Pucl](https://www.buzzerbeater.com/player/55440283/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 3->5 IS 10->11 ID 10->14 RB 8->10 | ID behind the big-man early-defense track |
 | [Ino Lozinšek](https://www.buzzerbeater.com/player/55440285/overview.aspx) | 19 | mkt72-inside-2 | WATCH | OD 1->4 HA 2->3 IS 10->11 ID 10->14 RB 8->10 SB 5->9 | ID behind the big-man early-defense track |
 | [Matjaž Cvitanič](https://www.buzzerbeater.com/player/55440299/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 7->12 HA 1->12 DR 5->12 PA 3->4 IS 3->4 ID 3->6 | feeders behind (HA+DR 6 vs track 22) |
-| [Lojze Nesterović](https://www.buzzerbeater.com/player/55440341/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 5->12 HA 9->12 DR 10->12 ID 4->6 SB 1->4 | feeders behind (HA+DR 19 vs track 22) |
+| [Lojze Nesterović](https://www.buzzerbeater.com/player/55440341/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 5->14 HA 9->15 DR 10->14 SB 1->3 | feeders behind (HA+DR 19 vs track 27) |
 | [Branko Vravnik](https://www.buzzerbeater.com/player/55440350/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 9->14 HA 9->15 DR 10->14 PA 4->5 | feeders behind (HA+DR 19 vs track 27) |
 | [Branko Bošnjak](https://www.buzzerbeater.com/player/55440353/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 HA 9->15 DR 5->14 IS 2->3 | feeders behind (HA+DR 14 vs track 27) |
 | [Manuel Žilavec](https://www.buzzerbeater.com/player/55440390/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 OD 7->12 HA 8->12 DR 8->12 PA 2->4 RB 1->4 | feeders behind (HA+DR 16 vs track 22) |
@@ -1051,13 +1052,13 @@ now — re-run early next season for actionable age-21 grading.
 | [Matic Gale](https://www.buzzerbeater.com/player/55688938/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 3->5 JR 1->2 OD 3->4 IS 9->11 ID 3->14 RB 6->10 | ID behind the big-man early-defense track |
 | [Jovica Volčič](https://www.buzzerbeater.com/player/55688939/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 JR 1->4 OD 5->12 HA 3->12 DR 9->12 RB 3->4 | feeders behind (HA+DR 12 vs track 22) |
 | [Ljubiša Košmrl](https://www.buzzerbeater.com/player/55688945/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 JR 4->5 OD 4->14 HA 10->15 DR 8->14 ID 1->4 | feeders behind (HA+DR 18 vs track 27) |
-| [Dare Baksa](https://www.buzzerbeater.com/player/55688953/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 3->11 OD 9->14 HA 4->15 DR 4->14 | feeders behind (HA+DR 8 vs track 27) |
+| [Dare Baksa](https://www.buzzerbeater.com/player/55688953/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 9->12 HA 4->12 DR 4->12 | feeders behind (HA+DR 8 vs track 22) |
 | [Milimir Veselić](https://www.buzzerbeater.com/player/55688956/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 4->14 HA 5->15 DR 7->14 ID 3->4 | feeders behind (HA+DR 12 vs track 27) |
 | [Pavel Topolovec](https://www.buzzerbeater.com/player/55688958/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 JR 3->4 OD 6->12 HA 10->12 DR 5->12 PA 3->4 | feeders behind (HA+DR 15 vs track 22) |
 | [Vitan Cimirotić](https://www.buzzerbeater.com/player/55688959/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 10->12 HA 4->12 DR 5->12 SB 3->4 | feeders behind (HA+DR 9 vs track 22) |
 | [Aleksej Pucel](https://www.buzzerbeater.com/player/55688960/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 4->12 HA 11->12 DR 9->12 SB 3->4 | feeders behind (HA+DR 20 vs track 22) |
 | [Milimir Valjavec](https://www.buzzerbeater.com/player/55688962/overview.aspx) | 19 | mkt72-outside-2 | WATCH | JS 11->13 OD 7->14 HA 9->14 DR 11->14 PA 4->5 ID 2->4 | feeders behind (HA+DR 20 vs track 26) |
-| [Robert Povh](https://www.buzzerbeater.com/player/55688966/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 10->11 OD 9->14 HA 5->15 DR 5->14 SB 2->3 | feeders behind (HA+DR 10 vs track 27) |
+| [Robert Povh](https://www.buzzerbeater.com/player/55688966/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 OD 9->12 HA 5->12 DR 5->12 SB 2->4 | feeders behind (HA+DR 10 vs track 22) |
 | [Lovro Lorenjak](https://www.buzzerbeater.com/player/55688968/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 5->12 HA 3->12 DR 6->12 IS 3->4 | feeders behind (HA+DR 9 vs track 22) |
 | [Zvonimir Urbanec](https://www.buzzerbeater.com/player/55688969/overview.aspx) | 19 | mkt72-outside-1 | WATCH | OD 8->14 HA 13->15 DR 11->14 RB 1->2 | feeders behind (HA+DR 24 vs track 27) |
 | [Urban Miklavčič](https://www.buzzerbeater.com/player/55688985/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 2->11 OD 7->14 HA 6->15 DR 9->14 ID 3->4 | feeders behind (HA+DR 15 vs track 27) |
@@ -1084,7 +1085,8 @@ now — re-run early next season for actionable age-21 grading.
 | [Egon Sinkovič](https://www.buzzerbeater.com/player/55689049/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 7->12 HA 1->12 DR 3->12 RB 3->4 | feeders behind (HA+DR 4 vs track 22) |
 | [Gojko Balažič](https://www.buzzerbeater.com/player/55689053/overview.aspx) | 19 | mkt72-inside-2 | WATCH | IS 10->11 ID 10->14 SB 8->9 | ID behind the big-man early-defense track |
 | [Jaša Velej](https://www.buzzerbeater.com/player/55689055/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 1->5 IS 6->11 ID 10->14 | ID behind the big-man early-defense track |
-| [Črtomir Kodre](https://www.buzzerbeater.com/player/55689059/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 5->11 OD 2->14 HA 2->15 DR 6->14 | feeders behind (HA+DR 8 vs track 27) |
+| [Črtomir Kodre](https://www.buzzerbeater.com/player/55689059/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 2->12 HA 2->12 DR 6->12 IS 3->4 ID 5->6 RB 3->4 | feeders behind (HA+DR 8 vs track 22) |
+| [Voranc Sernelj](https://www.buzzerbeater.com/player/55689063/overview.aspx) | 19 | mkt72-outside-1 | WATCH | OD 9->14 HA 12->15 DR 13->14 | feeders behind (HA+DR 25 vs track 27) |
 | [Kristijan Kapl](https://www.buzzerbeater.com/player/55689071/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 10->11 OD 11->14 HA 11->15 DR 12->14 | feeders behind (HA+DR 23 vs track 27) |
 | [Taj Pezdir](https://www.buzzerbeater.com/player/55689078/overview.aspx) | 19 | mkt72-outside-2 | WATCH | JS 11->13 JR 5->6 OD 7->14 HA 10->14 DR 12->14 PA 4->5 ID 3->4 SB 1->3 | feeders behind (HA+DR 22 vs track 26) |
 | [Emanuel Miš](https://www.buzzerbeater.com/player/55689079/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 OD 8->12 DR 9->12 | feeders behind (HA+DR 21 vs track 22) |
@@ -1109,21 +1111,21 @@ now — re-run early next season for actionable age-21 grading.
 | [Hotimir Tretjak](https://www.buzzerbeater.com/player/55689158/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 OD 10->14 HA 8->15 DR 9->14 | feeders behind (HA+DR 17 vs track 27) |
 | [Nace Koron](https://www.buzzerbeater.com/player/55689162/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 4->5 PA 1->2 IS 7->11 ID 8->14 RB 8->10 SB 8->9 | ID behind the big-man early-defense track |
 | [Janez Arhar](https://www.buzzerbeater.com/player/55689163/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 7->14 HA 8->15 DR 5->14 ID 3->4 SB 2->3 | feeders behind (HA+DR 13 vs track 27) |
-| [Josip Murn](https://www.buzzerbeater.com/player/55689164/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 JR 3->4 OD 5->12 HA 9->12 DR 10->12 ID 5->6 SB 1->4 | feeders behind (HA+DR 19 vs track 22) |
+| [Josip Murn](https://www.buzzerbeater.com/player/55689164/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 JR 3->5 OD 5->14 HA 9->15 DR 10->14 SB 1->3 | feeders behind (HA+DR 19 vs track 27) |
 | [Metod Neubauer](https://www.buzzerbeater.com/player/55689166/overview.aspx) | 19 | mkt72-inside-2 | WATCH | IS 5->11 ID 10->14 | ID behind the big-man early-defense track |
 | [Alfonz Cedilnik](https://www.buzzerbeater.com/player/55689173/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 JR 2->4 OD 10->12 HA 5->12 DR 10->12 PA 2->4 | feeders behind (HA+DR 15 vs track 22) |
 | [Mirko Mežič](https://www.buzzerbeater.com/player/55689175/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 8->12 HA 10->12 DR 9->12 | feeders behind (HA+DR 19 vs track 22) |
 | [Jani Puntar](https://www.buzzerbeater.com/player/55689183/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 3->5 IS 10->11 ID 5->14 | ID behind the big-man early-defense track |
-| [Ratko Komel](https://www.buzzerbeater.com/player/55689189/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 OD 6->14 HA 9->15 DR 9->14 IS 1->3 | feeders behind (HA+DR 18 vs track 27) |
+| [Ratko Komel](https://www.buzzerbeater.com/player/55689189/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 6->12 HA 9->12 DR 9->12 IS 1->4 | feeders behind (HA+DR 18 vs track 22) |
 | [Slavko Vuzem](https://www.buzzerbeater.com/player/55689191/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 JR 2->4 OD 10->12 HA 8->12 DR 9->12 ID 4->6 | feeders behind (HA+DR 17 vs track 22) |
 | [Vito Železnikar](https://www.buzzerbeater.com/player/55689192/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 9->14 HA 3->15 DR 6->14 ID 2->4 | feeders behind (HA+DR 9 vs track 27) |
 | [Zoki Balažic](https://www.buzzerbeater.com/player/55689193/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 3->5 HA 2->3 IS 8->11 ID 8->14 RB 9->10 | ID behind the big-man early-defense track |
 | [Ferdo Gregorec](https://www.buzzerbeater.com/player/55689197/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 4->12 HA 5->12 DR 8->12 | feeders behind (HA+DR 13 vs track 22) |
 | [Jure Culič](https://www.buzzerbeater.com/player/55689201/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 2->11 OD 4->12 HA 8->12 DR 6->12 PA 1->4 ID 4->6 SB 3->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Leon Kos](https://www.buzzerbeater.com/player/55689203/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 JR 3->4 OD 5->12 HA 8->12 DR 8->12 SB 1->4 | feeders behind (HA+DR 16 vs track 22) |
-| [Rudi Lovrinović](https://www.buzzerbeater.com/player/55689207/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 9->14 HA 4->15 DR 4->14 | feeders behind (HA+DR 8 vs track 27) |
+| [Rudi Lovrinović](https://www.buzzerbeater.com/player/55689207/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 9->12 HA 4->12 DR 4->12 | feeders behind (HA+DR 8 vs track 22) |
 | [Primož Suhadolc](https://www.buzzerbeater.com/player/55689212/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 9->12 HA 5->12 DR 10->12 ID 3->6 RB 2->4 | feeders behind (HA+DR 15 vs track 22) |
-| [Šime Gašpar](https://www.buzzerbeater.com/player/55689215/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 5->11 OD 8->14 HA 3->15 DR 7->14 PA 4->5 | feeders behind (HA+DR 10 vs track 27) |
+| [Šime Gašpar](https://www.buzzerbeater.com/player/55689215/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 8->12 HA 3->12 DR 7->12 | feeders behind (HA+DR 10 vs track 22) |
 | [Matic Kržan](https://www.buzzerbeater.com/player/55689216/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 4->5 DR 1->3 IS 5->11 ID 10->14 | ID behind the big-man early-defense track |
 | [Nik Ropret](https://www.buzzerbeater.com/player/55689217/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 OD 9->14 HA 8->15 DR 8->14 | feeders behind (HA+DR 16 vs track 27) |
 | [Nedžad Lavrenčak](https://www.buzzerbeater.com/player/55689219/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 8->12 HA 8->12 DR 7->12 | feeders behind (HA+DR 15 vs track 22) |
@@ -1134,7 +1136,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Tomo Lovič](https://www.buzzerbeater.com/player/55689232/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 4->12 HA 7->12 DR 2->12 SB 3->4 | feeders behind (HA+DR 9 vs track 22) |
 | [Tim Linasi](https://www.buzzerbeater.com/player/55689233/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 JR 2->4 OD 4->12 HA 7->12 DR 7->12 | feeders behind (HA+DR 14 vs track 22) |
 | [Aleksej Miklošic](https://www.buzzerbeater.com/player/55689234/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 9->12 HA 9->12 DR 11->12 PA 3->4 SB 2->4 | feeders behind (HA+DR 20 vs track 22) |
-| [Tavž Hrušica](https://www.buzzerbeater.com/player/55689235/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 5->11 OD 10->14 HA 4->15 DR 3->14 PA 2->5 | feeders behind (HA+DR 7 vs track 27) |
+| [Tavž Hrušica](https://www.buzzerbeater.com/player/55689235/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 10->12 HA 4->12 DR 3->12 PA 2->4 ID 5->6 | feeders behind (HA+DR 7 vs track 22) |
 | [Dore Dagarin](https://www.buzzerbeater.com/player/55689238/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 4->12 HA 9->12 DR 7->12 | feeders behind (HA+DR 16 vs track 22) |
 | [Henrik Žigić](https://www.buzzerbeater.com/player/55689242/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 4->12 HA 8->12 DR 3->12 ID 3->6 | feeders behind (HA+DR 11 vs track 22) |
 | [Tine Golob](https://www.buzzerbeater.com/player/55689248/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 11->12 HA 10->12 DR 11->12 | feeders behind (HA+DR 21 vs track 22) |
@@ -1163,10 +1165,10 @@ now — re-run early next season for actionable age-21 grading.
 | [Matej Plesavec](https://www.buzzerbeater.com/player/55689393/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 5->12 HA 9->12 DR 3->12 | feeders behind (HA+DR 12 vs track 22) |
 | [Erik Vrdev](https://www.buzzerbeater.com/player/55689396/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 7->14 HA 9->15 DR 2->14 ID 2->4 | feeders behind (HA+DR 11 vs track 27) |
 | [Boris Gornik](https://www.buzzerbeater.com/player/55689405/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 10->11 OD 8->14 HA 9->15 DR 4->14 IS 2->3 | feeders behind (HA+DR 13 vs track 27) |
-| [Miroslav Smolar](https://www.buzzerbeater.com/player/55689406/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 7->12 HA 7->12 DR 7->12 ID 4->6 | feeders behind (HA+DR 14 vs track 22) |
+| [Miroslav Smolar](https://www.buzzerbeater.com/player/55689406/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 7->14 HA 7->15 DR 7->14 | feeders behind (HA+DR 14 vs track 27) |
 | [Matija Vrhovc](https://www.buzzerbeater.com/player/55689410/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 4->12 HA 9->12 DR 4->12 SB 1->4 | feeders behind (HA+DR 13 vs track 22) |
 | [Dominik Perne](https://www.buzzerbeater.com/player/55689411/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 4->5 OD 3->4 IS 10->11 ID 9->14 SB 5->9 | ID behind the big-man early-defense track |
-| [Demis Janževec](https://www.buzzerbeater.com/player/55689412/overview.aspx) | 19 | mkt72-outside-2 | WATCH | JS 9->13 OD 7->14 HA 9->14 DR 10->14 ID 2->4 SB 1->3 | feeders behind (HA+DR 19 vs track 26) |
+| [Demis Janževec](https://www.buzzerbeater.com/player/55689412/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 7->14 HA 9->15 DR 10->14 ID 2->4 SB 1->3 | feeders behind (HA+DR 19 vs track 27) |
 | [Tihomir Malovrh](https://www.buzzerbeater.com/player/55689417/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 7->12 HA 4->12 DR 10->12 | feeders behind (HA+DR 14 vs track 22) |
 | [Aljaž Čarek](https://www.buzzerbeater.com/player/55689445/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 1->12 HA 6->12 DR 9->12 | feeders behind (HA+DR 15 vs track 22) |
 | [Jan Kunc](https://www.buzzerbeater.com/player/55689446/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 JR 1->4 OD 6->12 HA 10->12 DR 11->12 ID 5->6 | feeders behind (HA+DR 21 vs track 22) |
@@ -1215,7 +1217,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Mišo Gorenc](https://www.buzzerbeater.com/player/55967336/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 7->12 HA 5->12 DR 4->12 PA 1->4 SB 3->4 | feeders behind (HA+DR 9 vs track 22) |
 | [Andraž Anžej](https://www.buzzerbeater.com/player/55967341/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 OD 6->12 HA 4->12 DR 1->12 ID 3->6 SB 2->4 | feeders behind (HA+DR 5 vs track 22) |
 | [Tine Merlak](https://www.buzzerbeater.com/player/55967346/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 5->12 HA 9->12 DR 5->12 ID 3->6 | feeders behind (HA+DR 14 vs track 22) |
-| [Kostja Bračko](https://www.buzzerbeater.com/player/55967347/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 10->11 JR 1->5 OD 9->14 HA 4->15 DR 7->14 PA 4->5 ID 3->4 | feeders behind (HA+DR 11 vs track 27) |
+| [Kostja Bračko](https://www.buzzerbeater.com/player/55967347/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 JR 1->4 OD 9->12 HA 4->12 DR 7->12 IS 3->4 ID 3->6 | feeders behind (HA+DR 11 vs track 22) |
 | [Silvester Sviben](https://www.buzzerbeater.com/player/55967349/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 5->11 OD 9->14 HA 6->15 DR 10->14 | feeders behind (HA+DR 16 vs track 27) |
 | [Simon Kordyš](https://www.buzzerbeater.com/player/55967351/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 6->14 HA 10->15 DR 4->14 IS 2->3 SB 1->3 | feeders behind (HA+DR 14 vs track 27) |
 | [Gal Bizant](https://www.buzzerbeater.com/player/55967358/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 3->12 HA 9->12 DR 3->12 ID 2->6 | feeders behind (HA+DR 12 vs track 22) |
@@ -1223,7 +1225,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Viki Pupaher](https://www.buzzerbeater.com/player/55967360/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 8->14 HA 8->15 DR 9->14 IS 2->3 ID 2->4 RB 1->2 | feeders behind (HA+DR 17 vs track 27) |
 | [Andraž Pajenk](https://www.buzzerbeater.com/player/55967366/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 2->11 OD 4->12 HA 3->12 DR 9->12 | feeders behind (HA+DR 12 vs track 22) |
 | [Leonid Kordiš](https://www.buzzerbeater.com/player/55967370/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 5->12 HA 5->12 DR 2->12 ID 4->6 | feeders behind (HA+DR 7 vs track 22) |
-| [Dejan Mayer](https://www.buzzerbeater.com/player/55967373/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 4->11 OD 5->14 HA 5->15 DR 9->14 IS 1->3 | feeders behind (HA+DR 14 vs track 27) |
+| [Dejan Mayer](https://www.buzzerbeater.com/player/55967373/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 5->12 HA 5->12 DR 9->12 IS 1->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Luka Kordež](https://www.buzzerbeater.com/player/55967376/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 3->12 HA 2->12 DR 4->12 PA 3->4 IS 3->4 RB 3->4 | feeders behind (HA+DR 6 vs track 22) |
 | [Julijan Gorza](https://www.buzzerbeater.com/player/55967378/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 6->12 HA 3->12 DR 1->12 | feeders behind (HA+DR 4 vs track 22) |
 | [Urh Anžlovar](https://www.buzzerbeater.com/player/55967388/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 JR 3->4 OD 9->12 HA 6->12 DR 7->12 | feeders behind (HA+DR 13 vs track 22) |
@@ -1303,7 +1305,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Alfonz Volovnik](https://www.buzzerbeater.com/player/55967613/overview.aspx) | 19 | mkt72-inside-2 | WATCH | HA 2->3 IS 9->11 ID 6->14 RB 6->10 SB 7->9 | ID behind the big-man early-defense track |
 | [Admir Zabukovec](https://www.buzzerbeater.com/player/55967616/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 10->14 HA 6->15 DR 3->14 | feeders behind (HA+DR 9 vs track 27) |
 | [Gojmir Toma](https://www.buzzerbeater.com/player/55967617/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 2->11 OD 10->12 HA 7->12 DR 9->12 | feeders behind (HA+DR 16 vs track 22) |
-| [Miroslav Brglez](https://www.buzzerbeater.com/player/55967618/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 10->11 OD 8->14 HA 10->15 DR 6->14 | feeders behind (HA+DR 16 vs track 27) |
+| [Miroslav Brglez](https://www.buzzerbeater.com/player/55967618/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 OD 8->12 HA 10->12 DR 6->12 | feeders behind (HA+DR 16 vs track 22) |
 | [Omar Vesel](https://www.buzzerbeater.com/player/55967621/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 3->5 OD 1->4 HA 2->3 IS 7->11 ID 7->14 RB 8->10 SB 7->9 | ID behind the big-man early-defense track |
 | [Nenad Klobučar](https://www.buzzerbeater.com/player/55967624/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 JR 1->4 OD 5->12 HA 8->12 DR 7->12 IS 3->4 | feeders behind (HA+DR 15 vs track 22) |
 | [Klemen Mlakar](https://www.buzzerbeater.com/player/55967625/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 1->5 JR 1->2 DR 2->3 PA 1->2 IS 8->11 ID 8->14 RB 7->10 SB 6->9 | ID behind the big-man early-defense track |
@@ -1317,7 +1319,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Ožbej Nardin](https://www.buzzerbeater.com/player/55967666/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 8->14 HA 6->15 DR 8->14 IS 1->3 | feeders behind (HA+DR 14 vs track 27) |
 | [Trpimir Repa](https://www.buzzerbeater.com/player/55967668/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 OD 7->14 HA 8->15 DR 8->14 ID 1->4 | feeders behind (HA+DR 16 vs track 27) |
 | [Lan Šegovič](https://www.buzzerbeater.com/player/55967669/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 3->12 HA 10->12 DR 1->12 | feeders behind (HA+DR 11 vs track 22) |
-| [Marko Florjančič](https://www.buzzerbeater.com/player/55967670/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 6->14 HA 3->15 DR 4->14 | feeders behind (HA+DR 7 vs track 27) |
+| [Marko Florjančič](https://www.buzzerbeater.com/player/55967670/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 6->12 HA 3->12 DR 4->12 IS 3->4 ID 5->6 | feeders behind (HA+DR 7 vs track 22) |
 | [Ignac Brezar](https://www.buzzerbeater.com/player/55967675/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 2->11 OD 5->12 HA 4->12 DR 7->12 | feeders behind (HA+DR 11 vs track 22) |
 | [Ferdo Ogrič](https://www.buzzerbeater.com/player/55967677/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 OD 4->12 HA 9->12 DR 7->12 ID 4->6 | feeders behind (HA+DR 16 vs track 22) |
 | [Ljubiša Stupan](https://www.buzzerbeater.com/player/55967678/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 JR 3->4 OD 9->12 HA 5->12 DR 4->12 | feeders behind (HA+DR 9 vs track 22) |
@@ -1348,10 +1350,10 @@ now — re-run early next season for actionable age-21 grading.
 | [Erik Kjuder](https://www.buzzerbeater.com/player/55967775/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 9->12 HA 4->12 DR 5->12 | feeders behind (HA+DR 9 vs track 22) |
 | [Martin Krklec](https://www.buzzerbeater.com/player/55967779/overview.aspx) | 19 | mkt72-inside-2 | WATCH | DR 2->3 IS 5->11 ID 8->14 RB 8->10 SB 4->9 | ID behind the big-man early-defense track |
 | [Dušan Užmak](https://www.buzzerbeater.com/player/55967781/overview.aspx) | 19 | mkt72-inside-2 | WATCH | IS 7->11 ID 10->14 RB 4->10 | ID behind the big-man early-defense track |
-| [Jakob Pamić](https://www.buzzerbeater.com/player/55967793/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 OD 7->14 HA 4->15 DR 8->14 PA 2->5 ID 3->4 | feeders behind (HA+DR 12 vs track 27) |
+| [Jakob Pamić](https://www.buzzerbeater.com/player/55967793/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 7->12 HA 4->12 DR 8->12 PA 2->4 ID 3->6 | feeders behind (HA+DR 12 vs track 22) |
 | [Niki Kramberger](https://www.buzzerbeater.com/player/55967798/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 4->12 HA 7->12 DR 6->12 | feeders behind (HA+DR 13 vs track 22) |
 | [Krištof Dobrak](https://www.buzzerbeater.com/player/55967807/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 9->12 HA 10->12 DR 4->12 | feeders behind (HA+DR 14 vs track 22) |
-| [Timo Setnikar](https://www.buzzerbeater.com/player/55967809/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 8->11 OD 8->14 HA 1->15 DR 4->14 PA 3->5 | feeders behind (HA+DR 5 vs track 27) |
+| [Timo Setnikar](https://www.buzzerbeater.com/player/55967809/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 8->11 OD 8->12 HA 1->12 DR 4->12 PA 3->4 ID 5->6 | feeders behind (HA+DR 5 vs track 22) |
 | [Dare Vižintin](https://www.buzzerbeater.com/player/55967811/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 5->11 OD 6->12 HA 5->12 DR 9->12 PA 3->4 ID 5->6 RB 3->4 | feeders behind (HA+DR 14 vs track 22) |
 | [Gojko Bošnjak](https://www.buzzerbeater.com/player/55967814/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 1->5 IS 9->11 ID 10->14 SB 8->9 | ID behind the big-man early-defense track |
 | [Tugomir Bogataj](https://www.buzzerbeater.com/player/55967818/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 3->12 HA 7->12 DR 6->12 | feeders behind (HA+DR 13 vs track 22) |
@@ -1372,7 +1374,7 @@ now — re-run early next season for actionable age-21 grading.
 | [Gal Podvinski](https://www.buzzerbeater.com/player/55967880/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 JR 3->4 OD 10->12 HA 8->12 DR 10->12 IS 3->4 | feeders behind (HA+DR 18 vs track 22) |
 | [Oliver Kavka](https://www.buzzerbeater.com/player/55967890/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 4->11 JR 3->5 OD 7->14 HA 2->15 DR 4->14 IS 2->3 ID 3->4 | feeders behind (HA+DR 6 vs track 27) |
 | [Dare Vasle](https://www.buzzerbeater.com/player/55967902/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 9->11 JR 4->5 OD 7->14 HA 9->15 DR 5->14 PA 4->5 | feeders behind (HA+DR 14 vs track 27) |
-| [Avgust Anžlin](https://www.buzzerbeater.com/player/55967904/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 OD 9->14 HA 7->15 DR 3->14 PA 4->5 ID 3->4 | feeders behind (HA+DR 10 vs track 27) |
+| [Avgust Anžlin](https://www.buzzerbeater.com/player/55967904/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 6->11 OD 9->12 HA 7->12 DR 3->12 ID 3->6 | feeders behind (HA+DR 10 vs track 22) |
 | [Radomir Lavrinec](https://www.buzzerbeater.com/player/55967905/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 10->11 JR 3->4 OD 7->12 HA 4->12 DR 7->12 SB 3->4 | feeders behind (HA+DR 11 vs track 22) |
 | [Simon Vrčko](https://www.buzzerbeater.com/player/55967907/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 4->11 OD 8->12 HA 4->12 DR 7->12 | feeders behind (HA+DR 11 vs track 22) |
 | [Milimir Dragšič](https://www.buzzerbeater.com/player/55967914/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 5->12 HA 3->12 DR 3->12 | feeders behind (HA+DR 6 vs track 22) |
@@ -1421,13 +1423,13 @@ now — re-run early next season for actionable age-21 grading.
 | [Janez Černač](https://www.buzzerbeater.com/player/55993467/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 3->11 OD 8->14 HA 7->15 DR 8->14 ID 2->4 | feeders behind (HA+DR 15 vs track 27) |
 | [Vlado Pliberšek](https://www.buzzerbeater.com/player/55993875/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 1->5 OD 1->4 HA 2->3 IS 6->11 ID 5->14 RB 8->10 SB 7->9 | ID behind the big-man early-defense track |
 | [Damjan Brezovec](https://www.buzzerbeater.com/player/55994025/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 9->11 OD 4->12 HA 4->12 DR 2->12 ID 4->6 RB 3->4 | feeders behind (HA+DR 6 vs track 22) |
-| [Amir Mileta](https://www.buzzerbeater.com/player/55994335/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 3->11 OD 8->14 HA 4->15 DR 4->14 ID 3->4 | feeders behind (HA+DR 8 vs track 27) |
+| [Amir Mileta](https://www.buzzerbeater.com/player/55994335/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 8->12 HA 4->12 DR 4->12 ID 3->6 | feeders behind (HA+DR 8 vs track 22) |
 | [Igor Dolenjšek](https://www.buzzerbeater.com/player/55994653/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 6->11 OD 8->14 HA 4->15 DR 3->14 SB 2->3 | feeders behind (HA+DR 7 vs track 27) |
 | [Alan Glad](https://www.buzzerbeater.com/player/55995650/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 8->12 HA 9->12 DR 7->12 SB 3->4 | feeders behind (HA+DR 16 vs track 22) |
 | [Aljaž Madić](https://www.buzzerbeater.com/player/56009270/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 4->11 JR 4->5 OD 7->14 HA 6->15 DR 4->14 ID 3->4 SB 2->3 | feeders behind (HA+DR 10 vs track 27) |
 | [Tejo Lesjak](https://www.buzzerbeater.com/player/56023177/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 2->11 OD 5->14 HA 3->15 DR 6->14 PA 1->5 IS 1->3 ID 2->4 SB 1->3 | feeders behind (HA+DR 9 vs track 27) |
-| [Marin Vočanec](https://www.buzzerbeater.com/player/56023189/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 2->11 OD 6->14 HA 5->15 DR 4->14 PA 2->5 ID 2->4 SB 2->3 | feeders behind (HA+DR 9 vs track 27) |
-| [Joško Hrastnik](https://www.buzzerbeater.com/player/56025548/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 5->14 HA 7->15 DR 3->14 PA 2->5 RB 1->2 | feeders behind (HA+DR 10 vs track 27) |
+| [Marin Vočanec](https://www.buzzerbeater.com/player/56023189/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 2->11 OD 6->12 HA 5->12 DR 4->12 PA 2->4 ID 2->6 SB 2->4 | feeders behind (HA+DR 9 vs track 22) |
+| [Joško Hrastnik](https://www.buzzerbeater.com/player/56025548/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 7->11 OD 5->12 HA 7->12 DR 3->12 PA 2->4 IS 3->4 RB 1->4 | feeders behind (HA+DR 10 vs track 22) |
 | [Tine Pellis](https://www.buzzerbeater.com/player/56031968/overview.aspx) | 19 | mkt72-inside-2 | WATCH | JS 3->5 HA 1->3 PA 1->2 IS 7->11 ID 6->14 RB 6->10 SB 4->9 | ID behind the big-man early-defense track |
 | [Mirko Sulejmanović](https://www.buzzerbeater.com/player/56033828/overview.aspx) | 19 | mkt72-wing-1 | WATCH | JS 3->11 OD 1->12 HA 4->12 DR 1->12 PA 2->4 | feeders behind (HA+DR 5 vs track 22) |
 | [Leopold Klinger](https://www.buzzerbeater.com/player/56035046/overview.aspx) | 19 | mkt72-outside-1 | WATCH | JS 7->11 OD 7->14 HA 5->15 DR 6->14 PA 4->5 IS 2->3 ID 3->4 | feeders behind (HA+DR 11 vs track 27) |
@@ -1470,7 +1472,6 @@ now — re-run early next season for actionable age-21 grading.
 | [Kristjan Lovrek](https://www.buzzerbeater.com/player/55439866/overview.aspx) | 19 | mkt72-outside-2 | ON-TRACK | JS 12->13 OD 8->14 | defense lag OK at this age — feeders on track |
 | [Bor Grilanc](https://www.buzzerbeater.com/player/55439918/overview.aspx) | 19 | mkt72-outside-2 | ON-TRACK | JS 12->13 OD 8->14 HA 13->14 | defense lag OK at this age — feeders on track |
 | [Darjan Aljančič](https://www.buzzerbeater.com/player/55439925/overview.aspx) | 19 | mkt72-inside-1 | ON-TRACK | ID 13->15 | – |
-| [Žiga Podbevšek](https://www.buzzerbeater.com/player/55439934/overview.aspx) | 19 | mkt72-outside-2 | ON-TRACK | JS 8->13 OD 6->14 DR 12->14 ID 3->4 | defense lag OK at this age — feeders on track |
 | [Borut Simoniti](https://www.buzzerbeater.com/player/55439994/overview.aspx) | 19 | mkt72-outside-2 | ON-TRACK | JS 11->13 JR 5->6 OD 7->14 HA 12->14 | defense lag OK at this age — feeders on track |
 | [Mihael Deželak](https://www.buzzerbeater.com/player/55440044/overview.aspx) | 19 | mkt72-wing-1 | ON-TRACK | OD 3->12 ID 4->6 | defense lag OK at this age — feeders on track |
 | [Peter Papež](https://www.buzzerbeater.com/player/55440053/overview.aspx) | 19 | mkt72-outside-2 | ON-TRACK | JS 11->13 OD 7->14 | defense lag OK at this age — feeders on track |
@@ -1490,7 +1491,6 @@ now — re-run early next season for actionable age-21 grading.
 | [Patrik Murko](https://www.buzzerbeater.com/player/55689054/overview.aspx) | 19 | mkt72-inside-2 | ON-TRACK | OD 2->4 HA 1->3 IS 10->11 ID 12->14 RB 8->10 SB 4->9 | – |
 | [Zlatan Žižmund](https://www.buzzerbeater.com/player/55689057/overview.aspx) | 19 | mkt72-wing-1 | ON-TRACK | JS 6->11 OD 5->12 PA 3->4 | defense lag OK at this age — feeders on track |
 | [Dore Lovreković](https://www.buzzerbeater.com/player/55689060/overview.aspx) | 19 | mkt72-inside-2 | ON-TRACK | ID 13->14 SB 8->9 | – |
-| [Voranc Sernelj](https://www.buzzerbeater.com/player/55689063/overview.aspx) | 19 | mkt72-wing-1 | ON-TRACK | OD 9->12 RB 3->4 | defense lag OK at this age — feeders on track |
 | [Vasja Podkapnik](https://www.buzzerbeater.com/player/55689171/overview.aspx) | 19 | mkt72-inside-2 | ON-TRACK | JS 2->5 IS 7->11 | – |
 | [Ferdinand Dobovšek](https://www.buzzerbeater.com/player/55689332/overview.aspx) | 19 | mkt72-wing-1 | ON-TRACK | JS 6->11 OD 8->12 HA 9->12 ID 3->6 | defense lag OK at this age — feeders on track |
 | [Uroš Buš](https://www.buzzerbeater.com/player/55712853/overview.aspx) | 19 | mkt72-wing-1 | ON-TRACK | JS 7->11 OD 5->12 HA 11->12 DR 11->12 ID 3->6 | defense lag OK at this age — feeders on track |
@@ -1501,3 +1501,20 @@ now — re-run early next season for actionable age-21 grading.
 | [Samir Lipušček](https://www.buzzerbeater.com/player/55135461/overview.aspx) | 20 | mkt72-inside-2 | ON-TRACK | SB 9->10 | – |
 | [Čarli Jurković](https://www.buzzerbeater.com/player/55135557/overview.aspx) | 20 | mkt72-inside-2 | ON-TRACK | IS 14->16 ID 15->16 RB 7->10 SB 7->10 | – |
 | [Dare Ogrinec](https://www.buzzerbeater.com/player/55135621/overview.aspx) | 20 | mkt72-inside-2 | ON-TRACK | IS 15->16 SB 9->10 | – |
+
+## Caveats & provenance
+
+- **Cohort, not population:** this report describes what top U-21 programs SOLD at age-21
+  eligibility end; senior-NT-track builds that never reach the market are deliberately absent.
+- **Age-18/19/20 tiers are simulated:** market listings at those ages are survivorship-censored
+  (on-track players are held, not sold), so young byAge tiers come from forward-simulated
+  training + the Slovenian rookie census — never from young market listings.
+- **Coverage gap:** Jul 23–Aug 2 captures were suppressed by BB's 1000-result search cap
+  (fixed 2026-08-03 by per-age sweeps); the cohort skews toward Aug 3+ captures.
+- **Greece is a benchmark, not a ceiling:** validates cluster shapes/floors against one
+  federation's U-21 Euro-bronze roster (n=17); it is not a pass/fail target.
+- **Season pin:** SEASON=72, age-21 flood. Re-run next season with
+  `npm run training:archetypes -- --plans` from v2/ after bumping SEASON.
+- **Data sources:** market snapshot sweep (`snapshots`, source='market'), Slovenian 18yo
+  census (`snapshots`+`players`, country_id=66), and the Greek workbook at
+  `docs/research/market-archetypes/greece-s72/greek_tidy.csv`.

@@ -4,7 +4,7 @@ export const MARKET_ARCHETYPES = [
   {
     "key": "mkt72-outside-1",
     "name": "Market: outside #1",
-    "description": "Derived from S72 market flood (210 members, 5 elite).",
+    "description": "Derived from S72 market flood (237 members, 5 elite).",
     "rules": {
       "conditions": [
         {
@@ -13,7 +13,7 @@ export const MARKET_ARCHETYPES = [
           "op": ">=",
           "byAge": {
             "19": 8,
-            "20": 14,
+            "20": 11,
             "21": 11
           }
         },
@@ -23,7 +23,7 @@ export const MARKET_ARCHETYPES = [
           "op": ">=",
           "byAge": {
             "19": 9,
-            "20": 15,
+            "20": 12,
             "21": 12
           }
         },
@@ -33,7 +33,7 @@ export const MARKET_ARCHETYPES = [
           "op": ">=",
           "byAge": {
             "19": 5,
-            "20": 11,
+            "20": 8,
             "21": 8
           }
         },
@@ -52,6 +52,8 @@ export const MARKET_ARCHETYPES = [
           "field": "potential",
           "op": ">=",
           "byAge": {
+            "19": 7,
+            "20": 7,
             "21": 7
           }
         },
@@ -60,7 +62,9 @@ export const MARKET_ARCHETYPES = [
           "field": "height_cm",
           "op": ">=",
           "byAge": {
-            "21": 183
+            "19": 180,
+            "20": 180,
+            "21": 180
           }
         }
       ]
@@ -69,7 +73,7 @@ export const MARKET_ARCHETYPES = [
   {
     "key": "mkt72-outside-2",
     "name": "Market: outside #2",
-    "description": "Derived from S72 market flood (286 members, 61 elite).",
+    "description": "Derived from S72 market flood (259 members, 61 elite).",
     "rules": {
       "conditions": [
         {
@@ -117,6 +121,8 @@ export const MARKET_ARCHETYPES = [
           "field": "potential",
           "op": ">=",
           "byAge": {
+            "19": 7,
+            "20": 7,
             "21": 7
           }
         },
@@ -125,6 +131,8 @@ export const MARKET_ARCHETYPES = [
           "field": "height_cm",
           "op": ">=",
           "byAge": {
+            "19": 180,
+            "20": 180,
             "21": 180
           }
         }
@@ -172,6 +180,8 @@ export const MARKET_ARCHETYPES = [
           "field": "potential",
           "op": ">=",
           "byAge": {
+            "19": 8,
+            "20": 8,
             "21": 8
           }
         },
@@ -180,6 +190,8 @@ export const MARKET_ARCHETYPES = [
           "field": "height_cm",
           "op": ">=",
           "byAge": {
+            "19": 203,
+            "20": 203,
             "21": 203
           }
         }
@@ -237,6 +249,8 @@ export const MARKET_ARCHETYPES = [
           "field": "potential",
           "op": ">=",
           "byAge": {
+            "19": 8,
+            "20": 8,
             "21": 8
           }
         },
@@ -245,6 +259,8 @@ export const MARKET_ARCHETYPES = [
           "field": "height_cm",
           "op": ">=",
           "byAge": {
+            "19": 203,
+            "20": 203,
             "21": 203
           }
         }
@@ -302,6 +318,8 @@ export const MARKET_ARCHETYPES = [
           "field": "potential",
           "op": ">=",
           "byAge": {
+            "19": 7,
+            "20": 7,
             "21": 7
           }
         },
@@ -310,6 +328,8 @@ export const MARKET_ARCHETYPES = [
           "field": "height_cm",
           "op": ">=",
           "byAge": {
+            "19": 178,
+            "20": 178,
             "21": 178
           }
         }
