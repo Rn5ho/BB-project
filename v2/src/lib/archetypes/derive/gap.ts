@@ -1,6 +1,7 @@
 // Slovenia gap analysis: age-conditional at-risk grading (spec §8.6).
 import { type SkillKey } from '../../training/types';
 import { shapeVector, euclid } from './cluster';
+import { FINALIZE_WEEK } from './plans';
 import type { DefenseFloor } from './rules';
 
 export type ProspectStatus = 'on-track' | 'watch' | 'at-risk';
@@ -75,10 +76,12 @@ export function gradeProspect(
     }
   } else if (p.age >= 21) {
     const floorGap = c.floor.min - p.skills[floorSkill];
-    const weeksLeft = Math.max(0, 14 - p.currentSeasonWeek);
+    // Owner U-21 calendar: the build must be FINALIZED entering age-21 week FINALIZE_WEEK
+    // (playoffs begin) — that's the real closure deadline, not season end.
+    const weeksLeft = Math.max(0, FINALIZE_WEEK - p.currentSeasonWeek);
     if (floorGap > weeksLeft * closure) {
       status = 'at-risk';
-      reasons.push(`cannot close ${floorSkill.toUpperCase()} gap ${floorGap} in ${weeksLeft} weeks (≤${(weeksLeft * closure).toFixed(1)})`);
+      reasons.push(`cannot close ${floorSkill.toUpperCase()} gap ${floorGap} in ${weeksLeft} weeks before playoffs (wk ${FINALIZE_WEEK}) (≤${(weeksLeft * closure).toFixed(1)})`);
     } else if (gaps.length > 0 && status === 'on-track') {
       status = 'watch';
     }

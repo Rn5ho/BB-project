@@ -24,19 +24,28 @@ export interface DrafteeProfile {
   heightCm: number; potential: number;
 }
 
+// U-21 training has two owner-specified deadlines. M1 = entering age-21 season week 1: the
+// build must be PLAYABLE (squad selection). M2 = entering age-21 season week FINALIZE_WEEK
+// (group stage ends, playoffs begin): the build must be FINALIZED — full targets met. After
+// M2, only polish. See derive/gap.ts (age>=21 closure test) for the other consumer.
+export const FINALIZE_WEEK = 7; // age-21 season week when playoffs start (group stage = weeks 1-6)
+
 export interface ClusterPlanResult {
   scenario: string;
   candidate: PlanCandidate | null;
   blocks: Array<{ trainingId: number; weeks: number }>;
   tiers: Record<19 | 20 | 21, Partial<Record<SkillKey, number>>>;
+  /** M1 (playable, entering age-21 week 1) reachable — squad-selection targets, not full targets. */
   feasibleEntering21: boolean;
+  /** M2 (finalized, entering age-21 week FINALIZE_WEEK) reachable — full targets met. */
+  finalizedByPlayoffs: boolean;
   fullRuleMatch: boolean;
   failingChecks: Array<{ field: string; op: string; threshold: number | string; actual: number | string | null }>;
   finishingDeltas: Partial<Record<SkillKey, number>>;
   weeklyPopRate: number;
   /** Worst-case floor: same plan, forward-simulated from worst hidden sublevels (displayed
    *  −0.99) under degraded minutes. Present only when `opts.stress` was requested. */
-  stressed?: { reachableEntering21: boolean; enteringTsp: number };
+  stressed?: { reachableEntering21: boolean; enteringTsp: number; stressedFinalized?: boolean };
 }
 
 const DB_TO_KEY = new Map(SKILL_KEYS.map((k) => [SKILL_DB_NAMES[k], k]));
@@ -79,6 +88,17 @@ function stateEntering(proj: Projection, age: 19 | 20 | 21): Record<SkillKey, nu
   return Object.fromEntries(SKILL_KEYS.map((k) => [k, displayed(before[k])])) as Record<SkillKey, number>;
 }
 
+/** Displayed skills at the state ENTERING the plan week that is `weeksTrained + 1` (1-based) —
+ *  i.e. after exactly `weeksTrained` weeks have been trained. `weeksTrained` is meant to come
+ *  from `horizonWeeks(now, target)` (the same "weeks trained before entering `target`" count
+ *  used for H21/HEND), so `proj.weeks[weeksTrained - 1].result.skillsAfter` IS the state
+ *  entering `target`. Falls back to final skills if the projection is shorter than requested. */
+function stateAtWeek(proj: Projection, weeksTrained: number): Record<SkillKey, number> {
+  const w = proj.weeks[weeksTrained - 1];
+  if (!w) return Object.fromEntries(SKILL_KEYS.map((k) => [k, displayed(proj.finalSkills[k])])) as Record<SkillKey, number>;
+  return Object.fromEntries(SKILL_KEYS.map((k) => [k, displayed(w.result.skillsAfter[k])])) as Record<SkillKey, number>;
+}
+
 export function planForCluster(
   archetype: DefaultArchetype, floor: DefenseFloor,
   draftees: DrafteeProfile[], scenario: StaffScenario,
@@ -88,20 +108,76 @@ export function planForCluster(
   const p50 = draftees.find((d) => d.label === 'p50') ?? draftees[0];
   const H21 = horizonWeeks({ age: 18, week: 1 }, { age: 21, week: 1 }); // 42
   const HEND = horizonWeeks({ age: 18, week: 1 }, { age: 22, week: 1 }); // 56
-  const { best } = optimizePlan(toState(p50), targets, {
-    horizonWeeks: H21, startWeekOfSeason: 1,
+  // Weeks trained before entering age-21 week FINALIZE_WEEK (M2) — the same horizonWeeks
+  // convention as H21/HEND; 42 + (FINALIZE_WEEK − 1) = 48 for FINALIZE_WEEK 7.
+  const M2 = horizonWeeks({ age: 18, week: 1 }, { age: 21, week: FINALIZE_WEEK });
+  const staff = {
     coachLevel: scenario.coachLevel, youthTrainerLevel: scenario.youthTrainerLevel,
     gymLevel: scenario.gymLevel, trainingCourtLevel: scenario.trainingCourtLevel,
-  });
-  const blocks = best ? [...best.blocks] : [];
+  };
+  const planToWeekCfgs = (bs: Array<{ trainingId: number; weeks: number }>) =>
+    planToWeeks(bs, scenario.coachLevel, scenario.youthTrainerLevel,
+      { gymLevel: scenario.gymLevel, trainingCourtLevel: scenario.trainingCourtLevel });
+
+  // M1 ("playable") targets, derived from the full targets: the floor skill needs
+  // displayed−2, every other target displayed−1 (same priorities) — squad-selectable at
+  // week 1 of the age-21 season, not yet finished.
+  const m1Targets: SkillTarget[] = targets.map((t) => ({
+    ...t, displayed: Math.max(1, t.displayed - (t.skill === floor.skill ? 2 : 1)),
+  }));
+
+  const phase1 = optimizePlan(toState(p50), m1Targets, { horizonWeeks: H21, startWeekOfSeason: 1, ...staff });
+
+  let candidate: PlanCandidate | null;
+  let blocks: Array<{ trainingId: number; weeks: number }>;
+  let feasibleEntering21: boolean;
+  let finalizedByPlayoffs: boolean;
+
+  if (phase1.best) {
+    candidate = phase1.best;
+    const phase1Blocks = [...phase1.best.blocks];
+    // Phase-1 end state (entering age-21 week 1): skills come straight from the search
+    // (best.finalSkills); FT/stamina aren't tracked by optimizePlan, so project() the
+    // phase-1 plan once (same engine, same staff) and read the last week's ftAfter/staminaAfter.
+    const phase1Proj = project(toState(p50), planToWeekCfgs(phase1Blocks), BBSCOUT, { startWeekOfSeason: 1 });
+    const lastPhase1Week = phase1Proj.weeks[phase1Proj.weeks.length - 1];
+    const phase1EndState: PlayerState = {
+      skills: phase1.best.finalSkills,
+      age: 21,
+      heightCm: p50.heightCm,
+      potential: p50.potential,
+      ftSkill: lastPhase1Week ? lastPhase1Week.result.ftAfter : 0.5,
+      staminaSkill: lastPhase1Week ? lastPhase1Week.result.staminaAfter : 4.5,
+    };
+
+    const phase2 = optimizePlan(phase1EndState, targets, {
+      horizonWeeks: FINALIZE_WEEK - 1, startWeekOfSeason: 1, ...staff,
+    });
+    const phase2Blocks = phase2.best ? [...phase2.best.blocks] : [];
+
+    blocks = [...phase1Blocks, ...phase2Blocks];
+    feasibleEntering21 = phase1.best.reachable;
+    // phase2.best === null means no active targets remained at M1 — full targets already met.
+    finalizedByPlayoffs = phase2.best ? phase2.best.reachable : true;
+  } else {
+    // No active M1 targets (draftee already playable entering week 1) — shouldn't happen with
+    // real draftees, but guard by falling back to the pre-milestone single-phase behavior.
+    const fallback = optimizePlan(toState(p50), targets, { horizonWeeks: H21, startWeekOfSeason: 1, ...staff });
+    candidate = fallback.best;
+    blocks = fallback.best ? [...fallback.best.blocks] : [];
+    feasibleEntering21 = fallback.best?.reachable ?? false;
+    const fallbackProj = project(toState(p50), planToWeekCfgs(blocks), BBSCOUT, { startWeekOfSeason: 1 });
+    const m2State = stateAtWeek(fallbackProj, M2);
+    finalizedByPlayoffs = targets.every((t) => m2State[t.skill] >= t.displayed);
+  }
+
   if (blocks.length > 0) {
     const planned = blocks.reduce((a, b) => a + b.weeks, 0);
     if (planned < HEND) blocks[blocks.length - 1] = {
       ...blocks[blocks.length - 1], weeks: blocks[blocks.length - 1].weeks + (HEND - planned),
     }; // finishing phase: extend last block through end of age 21
   }
-  const weekCfgs = planToWeeks(blocks, scenario.coachLevel, scenario.youthTrainerLevel,
-    { gymLevel: scenario.gymLevel, trainingCourtLevel: scenario.trainingCourtLevel });
+  const weekCfgs = planToWeekCfgs(blocks);
   const projections = draftees.map((d) => project(toState(d), weekCfgs, BBSCOUT, { startWeekOfSeason: 1 }));
 
   const tiers = { 19: {}, 20: {}, 21: {} } as ClusterPlanResult['tiers'];
@@ -154,15 +230,20 @@ export function planForCluster(
     const entering21Stressed = stateEntering(proj25, 21);
     const reachableEntering21 = targets.every((t) => entering21Stressed[t.skill] >= t.displayed);
     const enteringTsp = SKILL_KEYS.reduce((a, k) => a + entering21Stressed[k], 0);
-    stressed = { reachableEntering21, enteringTsp };
+    // M2 under stress: same worst-start/degraded-minutes projection, read entering age-21
+    // week FINALIZE_WEEK instead of week 1, against the FULL targets.
+    const m2Stressed = stateAtWeek(proj25, M2);
+    const stressedFinalized = targets.every((t) => m2Stressed[t.skill] >= t.displayed);
+    stressed = { reachableEntering21, enteringTsp, stressedFinalized };
   }
 
   return {
     scenario: scenario.name,
-    candidate: best,
+    candidate,
     blocks,
     tiers,
-    feasibleEntering21: best?.reachable ?? false,
+    feasibleEntering21,
+    finalizedByPlayoffs,
     fullRuleMatch: verdict.matches,
     failingChecks: verdict.checks.filter((c) => !c.pass)
       .map(({ field, op, threshold, actual }) => ({ field: String(field), op, threshold, actual })),

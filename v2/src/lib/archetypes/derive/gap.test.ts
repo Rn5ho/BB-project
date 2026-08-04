@@ -33,8 +33,8 @@ describe('gradeProspect — age-conditional defense logic', () => {
     const g = gradeProspect({ ...base, age: 20, inferredTrainingId: 10, skills: skills({ od: 6, ha: 15, dr: 16, js: 14 }) }, [OUT_CLUSTER]);
     expect(g.status).toBe('on-track');
   });
-  it('21yo with an unclosable floor gap is AT RISK (0.35/wk closure cap)', () => {
-    // week 5 -> 9 weeks left -> max ~3.15 levels; gap OD 10->15 = 5
+  it('21yo with an unclosable floor gap is AT RISK (0.35/wk closure cap, deadline = playoffs wk 7)', () => {
+    // week 5 -> 2 weeks left before playoffs (wk 7) -> max ~0.7 levels; gap OD 10->15 = 5
     const g = gradeProspect({ ...base, age: 21, currentSeasonWeek: 5, skills: skills({ od: 10, js: 16, ha: 15, dr: 16 }) }, [OUT_CLUSTER]);
     expect(g.status).toBe('at-risk');
   });

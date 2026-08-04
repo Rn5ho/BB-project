@@ -62,7 +62,7 @@ const { mdTable, fmtSkills } = await import('../../src/lib/archetypes/derive/md'
 const { capUsagePct } = await import('../../src/lib/training/salary');
 const { parseGreekTidy, lastWeekRoster, nearestCluster } =
   await import('../../src/lib/archetypes/derive/greece');
-const { STAFF_SCENARIOS, planForCluster } = await import('../../src/lib/archetypes/derive/plans');
+const { STAFF_SCENARIOS, planForCluster, FINALIZE_WEEK } = await import('../../src/lib/archetypes/derive/plans');
 const { getTrainingType } = await import('../../src/lib/training/catalog');
 type CohortPlayer = import('../../src/lib/archetypes/derive/groups').CohortPlayer;
 type Group = import('../../src/lib/archetypes/derive/groups').Group;
@@ -384,7 +384,7 @@ if (belowGate.length) {
 // scope for the Slovenia section appended here later. ----
 const neutralTiersByKey = new Map<string, ClusterPlanResult['tiers']>();
 const planSummaries: Array<{
-  key: string; scenario: string; reachable: boolean; fullRule: boolean;
+  key: string; scenario: string; playable: boolean; finalized: boolean; fullRule: boolean;
   stressedReachable: boolean | null;
 }> = [];
 // Scenarios for this run: the fixed neutral/elite bracket + an optional CLI-provided custom
@@ -397,8 +397,10 @@ const scenarios = CUSTOM_STAFF
   : [...STAFF_SCENARIOS];
 if (PLANS) {
   lines.push('', '## Training paths (per build)', '');
-  lines.push('Anchor: the build must be USABLE entering age 21 (WC squad selection); the age-21');
-  lines.push('season is a finishing phase. Feasibility shown under: ' + scenarios
+  lines.push('Owner U-21 calendar, two milestones: M1 = entering age-21 season week 1, the build must');
+  lines.push(`be PLAYABLE (squad selection). M2 = entering age-21 season week ${FINALIZE_WEEK} (group stage`);
+  lines.push('ends, playoffs begin), the build must be FINALIZED — full targets met. After M2, only');
+  lines.push('polish. Feasibility shown under: ' + scenarios
     .map((s) => s.name.startsWith('custom') // custom scenario name already embeds its staff levels
       ? s.name
       : `${s.name} (coach ${s.coachLevel}/YT ${s.youthTrainerLevel}/gym ${s.gymLevel}/TC ${s.trainingCourtLevel})`)
@@ -440,15 +442,18 @@ if (PLANS) {
         const blockStr = r.blocks.map((b) => `${getTrainingType(b.trainingId).label}×${b.weeks}`).join(' → ');
         const stressSuffix = (STRESS && r.stressed)
           ? ` · stress floor (worst-start, ${STRESS_MINUTES}min/wk): ${r.stressed.reachableEntering21 ? 'still reachable' : 'NOT reachable'} (entering-21 TSP ${r.stressed.enteringTsp})`
+            + (r.stressed.stressedFinalized !== undefined
+              ? ` · finalized-by-playoffs floor: ${r.stressed.stressedFinalized ? 'still reachable' : 'NOT reachable'}`
+              : '')
           : '';
-        lines.push(`**${scenario.name}**: ${r.feasibleEntering21 ? 'REACHABLE entering 21' : 'NOT reachable entering 21'} · full-rule end check ${r.fullRuleMatch ? 'PASS' : `FAIL (${r.failingChecks.map((f) => `${f.field} ${f.op} ${f.threshold} got ${f.actual}`).join('; ')})`} · pop rate ${r.weeklyPopRate.toFixed(2)}/wk${stressSuffix}`);
+        lines.push(`**${scenario.name}**: PLAYABLE entering 21: ${r.feasibleEntering21 ? 'yes' : 'no'} · FINALIZED by playoffs (wk ${FINALIZE_WEEK}): ${r.finalizedByPlayoffs ? 'yes' : 'no'} · full-rule end check ${r.fullRuleMatch ? 'PASS' : `FAIL (${r.failingChecks.map((f) => `${f.field} ${f.op} ${f.threshold} got ${f.actual}`).join('; ')})`} · pop rate ${r.weeklyPopRate.toFixed(2)}/wk${stressSuffix}`);
         lines.push('');
         lines.push(`Plan: ${blockStr || '(no plan found)'}`);
         lines.push('');
         lines.push(`Finishing deltas during age-21 season: ${Object.entries(r.finishingDeltas).map(([k, d]) => `${k.toUpperCase()}+${d}`).join(' ') || 'none'}`);
         lines.push('');
         planSummaries.push({ key: c.derived.archetype.key, scenario: scenario.name,
-          reachable: r.feasibleEntering21, fullRule: r.fullRuleMatch,
+          playable: r.feasibleEntering21, finalized: r.finalizedByPlayoffs, fullRule: r.fullRuleMatch,
           stressedReachable: r.stressed?.reachableEntering21 ?? null });
       }
       // Patch byAge 19/20/21 tiers into the proposed rules from the NEUTRAL scenario (results[0] —
@@ -527,10 +532,11 @@ if (PLANS) {
   lines.push('');
   const age21Weeks = rows21.filter(({ bp }) => bp.age >= 21).map(({ bp }) => bp.currentSeasonWeek);
   const seasonWeek = age21Weeks.length ? Math.max(...age21Weeks) : null;
-  if (seasonWeek !== null && seasonWeek >= 14) {
+  if (seasonWeek !== null && seasonWeek >= FINALIZE_WEEK) {
     lines.push(`At season week ${seasonWeek}, every age-21 floor gap is unclosable by definition ("0`);
-    lines.push('weeks left"), so the age-21 AT-RISK block below is a graduating-class artifact right');
-    lines.push('now — re-run early next season for actionable age-21 grading.');
+    lines.push(`weeks left" before the playoff deadline, wk ${FINALIZE_WEEK}), so the age-21 AT-RISK block`);
+    lines.push('below is a graduating-class artifact right now — re-run early next season for');
+    lines.push('actionable age-21 grading.');
     lines.push('');
   }
   lines.push(mdTable(['player', 'age', 'nearest build', 'status', 'gaps (next tier)', 'why'],
@@ -578,15 +584,17 @@ for (const gr of groupResults) {
 }
 if (PLANS) {
   const scenarioCount = new Set(planSummaries.map((p) => p.scenario)).size || 1;
-  summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === 'neutral' && p.reachable).length} of ${planSummaries.length / scenarioCount} builds are reachable by a Slovenian-club draftee entering age 21 under neutral staff`);
+  const buildCount = planSummaries.length / scenarioCount;
+  summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === 'neutral' && p.playable).length} of ${buildCount} builds are playable by a Slovenian-club draftee entering age 21 (M1) under neutral staff`);
+  summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === 'neutral' && p.finalized).length} of ${buildCount} builds are finalized by the playoff deadline (M2, wk ${FINALIZE_WEEK}) under neutral staff`);
   const customName = planSummaries.find((p) => p.scenario.startsWith('custom'))?.scenario;
   if (customName) {
-    summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === customName && p.reachable).length} of ${planSummaries.length / scenarioCount} builds are reachable under the requested ${customName} staff`);
+    summaryLines.push(`- ${planSummaries.filter((p) => p.scenario === customName && p.playable).length} of ${buildCount} builds are playable under the requested ${customName} staff`);
   }
   if (STRESS) {
     const neutralResults = planSummaries.filter((p) => p.scenario === 'neutral');
     const survivingCount = neutralResults.filter((p) => p.stressedReachable === true).length;
-    summaryLines.push(`- under stress (worst-start draftee, ${STRESS_MINUTES}min/wk), ${survivingCount} of ${neutralResults.length} builds remain reachable entering 21 under neutral staff`);
+    summaryLines.push(`- under stress (worst-start draftee, ${STRESS_MINUTES}min/wk), ${survivingCount} of ${neutralResults.length} builds remain playable entering 21 under neutral staff`);
   }
 }
 summaryLines.push('');
