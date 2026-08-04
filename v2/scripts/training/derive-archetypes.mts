@@ -399,7 +399,9 @@ if (PLANS) {
   lines.push('', '## Training paths (per build)', '');
   lines.push('Anchor: the build must be USABLE entering age 21 (WC squad selection); the age-21');
   lines.push('season is a finishing phase. Feasibility shown under: ' + scenarios
-    .map((s) => `${s.name} (coach ${s.coachLevel}/YT ${s.youthTrainerLevel}/gym ${s.gymLevel}/TC ${s.trainingCourtLevel})`)
+    .map((s) => s.name.startsWith('custom') // custom scenario name already embeds its staff levels
+      ? s.name
+      : `${s.name} (coach ${s.coachLevel}/YT ${s.youthTrainerLevel}/gym ${s.gymLevel}/TC ${s.trainingCourtLevel})`)
     .join(' · ') + '.');
   if (STRESS) {
     lines.push('Ceiling vs floor: REACHABLE/NOT above is the CEILING — full minutes and midpoint');
