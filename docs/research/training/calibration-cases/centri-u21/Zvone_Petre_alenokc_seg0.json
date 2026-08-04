@@ -1,0 +1,84 @@
+{
+ "label": "centri Zvone Petre (53897465) alenokc wk1-6 coach7/yt7",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 7,
+   "jr": 3,
+   "od": 4,
+   "ha": 6,
+   "dr": 5,
+   "pa": 6,
+   "is": 2,
+   "id": 7,
+   "rb": 7,
+   "sb": 7
+  },
+  "age": 18,
+  "heightCm": 201,
+  "potential": 5,
+  "startStamina": 7,
+  "startFreeThrow": 6
+ },
+ "coachLevel": 7,
+ "youthTrainerLevel": 7,
+ "gymLevel": 0,
+ "trainingCourtLevel": 3,
+ "weeks": [
+  {
+   "date": "2024-10-06",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "js": 8,
+    "is": 3
+   }
+  },
+  {
+   "date": "2024-10-12",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 7,
+    "dr": 6
+   }
+  },
+  {
+   "date": "2024-10-19",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2024-10-29",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 7,
+    "is": 4
+   }
+  },
+  {
+   "date": "2024-11-08",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 8
+   },
+   "unmodeledPops": {
+    "ft": 7
+   }
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 8,
+  "jr": 3,
+  "od": 4,
+  "ha": 8,
+  "dr": 7,
+  "pa": 6,
+  "is": 4,
+  "id": 7,
+  "rb": 7,
+  "sb": 7
+ }
+}

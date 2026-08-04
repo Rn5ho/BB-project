@@ -1,0 +1,255 @@
+{
+ "label": "centri Rožle Ostroveršnik (53897574) pjtr576 wk1-28 coach5/yt6",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 6,
+   "jr": 2,
+   "od": 2,
+   "ha": 4,
+   "dr": 3,
+   "pa": 3,
+   "is": 5,
+   "id": 7,
+   "rb": 7,
+   "sb": 7
+  },
+  "age": 18,
+  "heightCm": 206,
+  "potential": 7,
+  "startStamina": 8,
+  "startFreeThrow": 2
+ },
+ "coachLevel": 5,
+ "youthTrainerLevel": 6,
+ "gymLevel": 0,
+ "trainingCourtLevel": 0,
+ "weeks": [
+  {
+   "date": "2024-09-27",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 8
+   }
+  },
+  {
+   "date": "2024-10-04",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "jr": 3,
+    "sb": 8
+   }
+  },
+  {
+   "date": "2024-10-11",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 9
+   }
+  },
+  {
+   "date": "2024-10-18",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "is": 6
+   }
+  },
+  {
+   "date": "2024-10-25",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 9,
+    "rb": 8,
+    "sb": 10
+   }
+  },
+  {
+   "date": "2024-11-01",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2024-11-08",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "od": 3
+   }
+  },
+  {
+   "date": "2024-11-15",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 9
+   },
+   "unmodeledPops": {
+    "ft": 3
+   }
+  },
+  {
+   "date": "2024-11-22",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 11
+   }
+  },
+  {
+   "date": "2024-11-29",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 10
+   }
+  },
+  {
+   "date": "2024-12-06",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 12
+   }
+  },
+  {
+   "date": "2024-12-13",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 4,
+    "rb": 10
+   }
+  },
+  {
+   "date": "2024-12-21",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 11
+   }
+  },
+  {
+   "date": "2024-12-27",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {},
+   "ageAfterThis": 19
+  },
+  {
+   "date": "2025-01-03",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 13
+   }
+  },
+  {
+   "date": "2025-01-10",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 11
+   }
+  },
+  {
+   "date": "2025-01-17",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 12,
+    "sb": 14
+   }
+  },
+  {
+   "date": "2025-01-26",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-01-31",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 4,
+    "sb": 15
+   }
+  },
+  {
+   "date": "2025-02-07",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-02-14",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "id": 12,
+    "rb": 13
+   }
+  },
+  {
+   "date": "2025-02-22",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-02-28",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 16
+   }
+  },
+  {
+   "date": "2025-03-07",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 13
+   }
+  },
+  {
+   "date": "2025-03-14",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "is": 7
+   }
+  },
+  {
+   "date": "2025-03-21",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 14
+   }
+  },
+  {
+   "date": "2025-03-28",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {}
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 6,
+  "jr": 3,
+  "od": 3,
+  "ha": 4,
+  "dr": 4,
+  "pa": 4,
+  "is": 7,
+  "id": 14,
+  "rb": 13,
+  "sb": 16
+ }
+}

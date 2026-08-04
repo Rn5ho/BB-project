@@ -1,0 +1,137 @@
+{
+ "label": "centri Benjamin Piršič (53897845) pjtr576 wk28-41 coach5/yt0",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 9,
+   "jr": 8,
+   "od": 8,
+   "ha": 10,
+   "dr": 9,
+   "pa": 5,
+   "is": 5,
+   "id": 15,
+   "rb": 15,
+   "sb": 17
+  },
+  "age": 20,
+  "heightCm": 211,
+  "potential": 7,
+  "startStamina": 5,
+  "startFreeThrow": 7
+ },
+ "coachLevel": 5,
+ "youthTrainerLevel": 0,
+ "gymLevel": 0,
+ "trainingCourtLevel": 0,
+ "weeks": [
+  {
+   "date": "2025-04-04",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 16
+   },
+   "ageAfterThis": 21
+  },
+  {
+   "date": "2025-04-11",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-04-18",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 16
+   }
+  },
+  {
+   "date": "2025-04-25",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 10,
+    "pa": 6
+   }
+  },
+  {
+   "date": "2025-05-04",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 7
+   }
+  },
+  {
+   "date": "2025-05-09",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 8
+   }
+  },
+  {
+   "date": "2025-05-16",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 11,
+    "is": 6
+   }
+  },
+  {
+   "date": "2025-05-23",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-05-30",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-06-06",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-06-13",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 17
+   }
+  },
+  {
+   "date": "2025-06-20",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-06-27",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "js": 10
+   }
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 10,
+  "jr": 8,
+  "od": 8,
+  "ha": 11,
+  "dr": 10,
+  "pa": 8,
+  "is": 6,
+  "id": 17,
+  "rb": 16,
+  "sb": 17
+ }
+}

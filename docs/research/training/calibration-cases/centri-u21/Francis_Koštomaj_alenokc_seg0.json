@@ -1,0 +1,85 @@
+{
+ "label": "centri Francis Koštomaj (53897393) alenokc wk1-6 coach7/yt7",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 2,
+   "jr": 6,
+   "od": 7,
+   "ha": 4,
+   "dr": 3,
+   "pa": 2,
+   "is": 6,
+   "id": 7,
+   "rb": 4,
+   "sb": 7
+  },
+  "age": 18,
+  "heightCm": 206,
+  "potential": 8,
+  "startStamina": 4,
+  "startFreeThrow": 2
+ },
+ "coachLevel": 7,
+ "youthTrainerLevel": 7,
+ "gymLevel": 0,
+ "trainingCourtLevel": 3,
+ "weeks": [
+  {
+   "date": "2024-10-06",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 5,
+    "dr": 4
+   }
+  },
+  {
+   "date": "2024-10-12",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 5
+   },
+   "unmodeledPops": {
+    "ft": 3
+   }
+  },
+  {
+   "date": "2024-10-19",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "js": 3,
+    "ha": 6
+   }
+  },
+  {
+   "date": "2024-10-29",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 6
+   }
+  },
+  {
+   "date": "2024-11-08",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "is": 7
+   }
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 3,
+  "jr": 6,
+  "od": 7,
+  "ha": 6,
+  "dr": 6,
+  "pa": 2,
+  "is": 7,
+  "id": 7,
+  "rb": 4,
+  "sb": 7
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "label": "centri Gojc Jalovec (53898036) alenokc wk1-6 coach7/yt7",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 4,
+   "jr": 4,
+   "od": 4,
+   "ha": 7,
+   "dr": 5,
+   "pa": 7,
+   "is": 7,
+   "id": 7,
+   "rb": 7,
+   "sb": 4
+  },
+  "age": 18,
+  "heightCm": 216,
+  "potential": 7,
+  "startStamina": 4,
+  "startFreeThrow": 6
+ },
+ "coachLevel": 7,
+ "youthTrainerLevel": 7,
+ "gymLevel": 0,
+ "trainingCourtLevel": 3,
+ "weeks": [
+  {
+   "date": "2024-10-06",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "js": 5,
+    "dr": 6
+   }
+  },
+  {
+   "date": "2024-10-12",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 8
+   }
+  },
+  {
+   "date": "2024-10-19",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 7,
+    "is": 8,
+    "sb": 5
+   }
+  },
+  {
+   "date": "2024-10-29",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2024-11-08",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 9,
+    "dr": 8
+   }
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 5,
+  "jr": 4,
+  "od": 4,
+  "ha": 9,
+  "dr": 8,
+  "pa": 7,
+  "is": 8,
+  "id": 7,
+  "rb": 7,
+  "sb": 5
+ }
+}

@@ -1,0 +1,161 @@
+{
+ "label": "centri Rožle Ostroveršnik (53897574) pjtr576 wk28-44 coach5/yt0",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 6,
+   "jr": 3,
+   "od": 3,
+   "ha": 4,
+   "dr": 4,
+   "pa": 4,
+   "is": 7,
+   "id": 14,
+   "rb": 13,
+   "sb": 16
+  },
+  "age": 19,
+  "heightCm": 206,
+  "potential": 7,
+  "startStamina": 7,
+  "startFreeThrow": 3
+ },
+ "coachLevel": 5,
+ "youthTrainerLevel": 0,
+ "gymLevel": 0,
+ "trainingCourtLevel": 0,
+ "weeks": [
+  {
+   "date": "2025-04-04",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 14
+   },
+   "ageAfterThis": 20
+  },
+  {
+   "date": "2025-04-11",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 15
+   }
+  },
+  {
+   "date": "2025-04-18",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-04-25",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 5,
+    "pa": 5
+   }
+  },
+  {
+   "date": "2025-05-04",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "js": 7
+   }
+  },
+  {
+   "date": "2025-05-09",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 5,
+    "pa": 6
+   }
+  },
+  {
+   "date": "2025-05-16",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-05-23",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 17
+   }
+  },
+  {
+   "date": "2025-05-30",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 16
+   }
+  },
+  {
+   "date": "2025-06-06",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-06-13",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-06-20",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 17
+   }
+  },
+  {
+   "date": "2025-06-27",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-07-04",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 7
+   }
+  },
+  {
+   "date": "2025-07-11",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "od": 4,
+    "ha": 6
+   },
+   "ageAfterThis": 21
+  },
+  {
+   "date": "2025-07-18",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {}
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 7,
+  "jr": 3,
+  "od": 4,
+  "ha": 6,
+  "dr": 5,
+  "pa": 7,
+  "is": 7,
+  "id": 17,
+  "rb": 14,
+  "sb": 17
+ }
+}

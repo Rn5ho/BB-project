@@ -1,0 +1,254 @@
+{
+ "label": "centri Jure Plesavec (53897751) pjtr576 wk1-28 coach5/yt6",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 6,
+   "jr": 5,
+   "od": 5,
+   "ha": 6,
+   "dr": 3,
+   "pa": 6,
+   "is": 2,
+   "id": 4,
+   "rb": 6,
+   "sb": 7
+  },
+  "age": 18,
+  "heightCm": 206,
+  "potential": 9,
+  "startStamina": 1,
+  "startFreeThrow": 7
+ },
+ "coachLevel": 5,
+ "youthTrainerLevel": 6,
+ "gymLevel": 0,
+ "trainingCourtLevel": 0,
+ "weeks": [
+  {
+   "date": "2024-09-27",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 8
+   }
+  },
+  {
+   "date": "2024-10-04",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 5
+   }
+  },
+  {
+   "date": "2024-10-11",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 9
+   }
+  },
+  {
+   "date": "2024-10-18",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "js": 7
+   }
+  },
+  {
+   "date": "2024-10-25",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 6,
+    "sb": 10
+   }
+  },
+  {
+   "date": "2024-11-01",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2024-11-08",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 7
+   }
+  },
+  {
+   "date": "2024-11-15",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 8
+   }
+  },
+  {
+   "date": "2024-11-22",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 7,
+    "sb": 11
+   }
+  },
+  {
+   "date": "2024-11-29",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2024-12-06",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 12
+   }
+  },
+  {
+   "date": "2024-12-13",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "od": 6,
+    "is": 3,
+    "id": 8,
+    "rb": 9
+   }
+  },
+  {
+   "date": "2024-12-21",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2024-12-27",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 10
+   },
+   "ageAfterThis": 19
+  },
+  {
+   "date": "2025-01-03",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 13
+   }
+  },
+  {
+   "date": "2025-01-10",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-01-17",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 9
+   }
+  },
+  {
+   "date": "2025-01-26",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 14
+   }
+  },
+  {
+   "date": "2025-01-31",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-02-07",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 11,
+    "sb": 15
+   }
+  },
+  {
+   "date": "2025-02-14",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "id": 10
+   }
+  },
+  {
+   "date": "2025-02-22",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-02-28",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 16
+   }
+  },
+  {
+   "date": "2025-03-07",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 4,
+    "id": 11
+   }
+  },
+  {
+   "date": "2025-03-14",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 12
+   },
+   "unmodeledPops": {
+    "ft": 8
+   }
+  },
+  {
+   "date": "2025-03-21",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-03-28",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "is": 4,
+    "rb": 12
+   }
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 7,
+  "jr": 5,
+  "od": 6,
+  "ha": 6,
+  "dr": 4,
+  "pa": 6,
+  "is": 4,
+  "id": 12,
+  "rb": 12,
+  "sb": 16
+ }
+}

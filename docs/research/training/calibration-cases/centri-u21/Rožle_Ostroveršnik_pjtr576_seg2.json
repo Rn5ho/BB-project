@@ -1,0 +1,103 @@
+{
+ "label": "centri Rožle Ostroveršnik (53897574) pjtr576 wk44-53 coach6/yt0",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 7,
+   "jr": 3,
+   "od": 4,
+   "ha": 6,
+   "dr": 5,
+   "pa": 7,
+   "is": 7,
+   "id": 17,
+   "rb": 14,
+   "sb": 17
+  },
+  "age": 21,
+  "heightCm": 206,
+  "potential": 7,
+  "startStamina": 7,
+  "startFreeThrow": 3
+ },
+ "coachLevel": 6,
+ "youthTrainerLevel": 0,
+ "gymLevel": 0,
+ "trainingCourtLevel": 0,
+ "weeks": [
+  {
+   "date": "2025-07-26",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 6,
+    "pa": 8
+   }
+  },
+  {
+   "date": "2025-08-01",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-08-08",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-08-15",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 18
+   }
+  },
+  {
+   "date": "2025-08-22",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-08-29",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 15
+   }
+  },
+  {
+   "date": "2025-09-12",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-09-12",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "id": 18
+   }
+  },
+  {
+   "date": "2025-09-19",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 7,
+  "jr": 3,
+  "od": 4,
+  "ha": 6,
+  "dr": 6,
+  "pa": 8,
+  "is": 7,
+  "id": 18,
+  "rb": 15,
+  "sb": 18
+ }
+}

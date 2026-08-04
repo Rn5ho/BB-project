@@ -1,0 +1,111 @@
+{
+ "label": "centri Jure Plesavec (53897751) pjtr576 wk44-53 coach6/yt0",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 7,
+   "jr": 5,
+   "od": 6,
+   "ha": 7,
+   "dr": 5,
+   "pa": 10,
+   "is": 5,
+   "id": 16,
+   "rb": 13,
+   "sb": 17
+  },
+  "age": 21,
+  "heightCm": 206,
+  "potential": 9,
+  "startStamina": 2,
+  "startFreeThrow": 8
+ },
+ "coachLevel": 6,
+ "youthTrainerLevel": 0,
+ "gymLevel": 0,
+ "trainingCourtLevel": 0,
+ "weeks": [
+  {
+   "date": "2025-07-26",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "od": 7
+   }
+  },
+  {
+   "date": "2025-08-01",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 8
+   }
+  },
+  {
+   "date": "2025-08-08",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 18
+   }
+  },
+  {
+   "date": "2025-08-15",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "id": 17
+   }
+  },
+  {
+   "date": "2025-08-22",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {}
+  },
+  {
+   "date": "2025-08-29",
+   "trainingId": 27,
+   "minutes": 48,
+   "observedPops": {
+    "rb": 14
+   }
+  },
+  {
+   "date": "2025-09-12",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "sb": 19
+   }
+  },
+  {
+   "date": "2025-09-12",
+   "trainingId": 24,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 6
+   }
+  },
+  {
+   "date": "2025-09-19",
+   "trainingId": 29,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 11,
+    "id": 18
+   }
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 7,
+  "jr": 5,
+  "od": 7,
+  "ha": 8,
+  "dr": 6,
+  "pa": 11,
+  "is": 5,
+  "id": 18,
+  "rb": 14,
+  "sb": 19
+ }
+}

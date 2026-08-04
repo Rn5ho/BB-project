@@ -1,0 +1,84 @@
+{
+ "label": "centri Zlatko Jerin (53897602) alenokc wk37-42 coach7/yt0",
+ "player": {
+  "startSkillsDisplayed": {
+   "js": 10,
+   "jr": 5,
+   "od": 7,
+   "ha": 9,
+   "dr": 10,
+   "pa": 6,
+   "is": 14,
+   "id": 12,
+   "rb": 11,
+   "sb": 8
+  },
+  "age": 20,
+  "heightCm": 201,
+  "potential": 7,
+  "startStamina": 3,
+  "startFreeThrow": 12
+ },
+ "coachLevel": 7,
+ "youthTrainerLevel": 0,
+ "gymLevel": 0,
+ "trainingCourtLevel": 3,
+ "weeks": [
+  {
+   "date": "2025-06-13",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 10
+   },
+   "unmodeledPops": {
+    "ft": 13
+   }
+  },
+  {
+   "date": "2025-06-21",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 7
+   }
+  },
+  {
+   "date": "2025-06-27",
+   "trainingId": 18,
+   "minutes": 48,
+   "observedPops": {
+    "pa": 8
+   }
+  },
+  {
+   "date": "2025-07-07",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "dr": 11
+   }
+  },
+  {
+   "date": "2025-07-12",
+   "trainingId": 16,
+   "minutes": 48,
+   "observedPops": {
+    "ha": 11
+   },
+   "ageAfterThis": 21
+  }
+ ],
+ "endSkillsDisplayed": {
+  "js": 10,
+  "jr": 5,
+  "od": 7,
+  "ha": 11,
+  "dr": 11,
+  "pa": 8,
+  "is": 14,
+  "id": 12,
+  "rb": 11,
+  "sb": 8
+ }
+}
