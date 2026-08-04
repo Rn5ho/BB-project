@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { POSITIONS, POTENTIAL_LEVELS, SKILLS, type SkillDbKey } from '@/lib/constants';
-import { DEFAULT_FILTER, isFilterDefault, countActiveSkillMins, type FilterState } from '@/lib/table';
+import { DEFAULT_FILTER, isFilterDefault, countActiveSkillMins, countActiveMoreFilters, type FilterState } from '@/lib/table';
 
 interface FilterBarProps {
   filter: FilterState;
@@ -19,6 +19,7 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
   const [moreOpen, setMoreOpen] = useState(false);
   const [skillsOpen, setSkillsOpen] = useState(false);
   const activeSkillCount = countActiveSkillMins(filter.skillMins);
+  const activeMoreCount = countActiveMoreFilters(filter);
   // Local string state for age inputs so clearing doesn't snap to 0
   const [ageMinStr, setAgeMinStr] = useState<string>(String(filter.ageMin));
   const [ageMaxStr, setAgeMaxStr] = useState<string>(String(filter.ageMax));
@@ -196,9 +197,13 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
         <button
           type="button"
           onClick={() => setMoreOpen((v) => !v)}
-          className="text-neutral-400 hover:text-white ml-1"
+          className={`ml-1 px-2 py-0.5 rounded border text-sm ${
+            activeMoreCount > 0
+              ? 'border-amber-500 text-amber-400 bg-amber-500/10'
+              : 'border-neutral-700 text-neutral-400 hover:text-white'
+          }`}
         >
-          More {moreOpen ? '▲' : '▾'}
+          More{activeMoreCount > 0 ? ` (${activeMoreCount})` : ''} {moreOpen ? '▲' : '▾'}
         </button>
 
         {/* Skill filters toggle */}
@@ -229,27 +234,12 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
       {/* Collapsible More row */}
       {moreOpen && (
         <div className="flex flex-wrap items-center gap-2 text-sm border-t border-neutral-800 pt-2">
-          <NumInput label="Min TSP" value={filter.minTsp} onChange={(v) => set('minTsp', v)} />
-          <NumInput label="Min DMI" value={filter.minDmi} onChange={(v) => set('minDmi', v)} />
+          <RangeInput label="TSP" minValue={filter.minTsp} maxValue={filter.maxTsp} onMinChange={(v) => set('minTsp', v)} onMaxChange={(v) => set('maxTsp', v)} />
+          <RangeInput label="In TSP" minValue={filter.minInsideTsp} maxValue={filter.maxInsideTsp} onMinChange={(v) => set('minInsideTsp', v)} onMaxChange={(v) => set('maxInsideTsp', v)} />
+          <RangeInput label="Out TSP" minValue={filter.minOutsideTsp} maxValue={filter.maxOutsideTsp} onMinChange={(v) => set('minOutsideTsp', v)} onMaxChange={(v) => set('maxOutsideTsp', v)} />
+          <RangeInput label="DMI" minValue={filter.minDmi} maxValue={filter.maxDmi} onMinChange={(v) => set('minDmi', v)} onMaxChange={(v) => set('maxDmi', v)} />
           <NumInput label="Min salary" value={filter.minSalary} onChange={(v) => set('minSalary', v)} />
-          <div className="flex items-center gap-1 text-neutral-400">
-            <span>Height cm</span>
-            <input
-              type="number"
-              placeholder="min"
-              value={filter.heightMin}
-              onChange={(e) => set('heightMin', e.target.value)}
-              className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white w-16 text-right focus:outline-none focus:border-amber-500"
-            />
-            <span>–</span>
-            <input
-              type="number"
-              placeholder="max"
-              value={filter.heightMax}
-              onChange={(e) => set('heightMax', e.target.value)}
-              className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white w-16 text-right focus:outline-none focus:border-amber-500"
-            />
-          </div>
+          <RangeInput label="Height cm" minValue={filter.heightMin} maxValue={filter.heightMax} onMinChange={(v) => set('heightMin', v)} onMaxChange={(v) => set('heightMax', v)} />
           <NumInput label="Min GS" value={filter.minGameShape} onChange={(v) => set('minGameShape', v)} />
         </div>
       )}
@@ -304,6 +294,30 @@ function NumInput({
         onChange={(e) => onChange(e.target.value)}
         className="bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white w-20 text-right focus:outline-none focus:border-amber-500"
       />
+    </div>
+  );
+}
+
+function RangeInput({
+  label,
+  minValue,
+  maxValue,
+  onMinChange,
+  onMaxChange,
+}: {
+  label: string;
+  minValue: string;
+  maxValue: string;
+  onMinChange: (v: string) => void;
+  onMaxChange: (v: string) => void;
+}) {
+  const cls = 'bg-neutral-900 border border-neutral-700 rounded px-2 py-1 text-white w-16 text-right focus:outline-none focus:border-amber-500';
+  return (
+    <div className="flex items-center gap-1 text-neutral-400">
+      <span>{label}</span>
+      <input type="number" placeholder="min" value={minValue} onChange={(e) => onMinChange(e.target.value)} className={cls} />
+      <span>–</span>
+      <input type="number" placeholder="max" value={maxValue} onChange={(e) => onMaxChange(e.target.value)} className={cls} />
     </div>
   );
 }
