@@ -41,7 +41,7 @@ Component key lists exported as constants (`INSIDE_SKILL_KEYS`, `OUTSIDE_SKILL_K
 
 `PlayerListRow` gains `insideTsp: number | null` and `outsideTsp: number | null`, computed in the row mapper from the latest-full-snapshot skills record (the same one that already populates `skills`). No SQL changes.
 
-**TSP derivation fix (required for consistency):** the mapper currently passes stored `f.tsp` through raw, but stored tsp can be null or a legacy 12-skill/partial sum on migrated rows. The mapper now sets `tsp = insideTsp + outsideTsp` **whenever both are non-null**, falling back to stored `tsp` otherwise (mirrors `candidate-rows.ts` coalesce semantics). Effects: displayed TSP, In, Out always agree; legacy rows self-heal to the true 10-skill value; `minTsp` filter, tsp sort, and archetype tsp conditions become strictly more complete for those rows. `tspDelta` is unaffected (derived from per-skill deltas only).
+**TSP derivation fix (required for consistency):** the mapper currently passes stored `f.tsp` through raw, but stored tsp can be null or a legacy 12-skill/partial sum on migrated rows. The mapper now sets `tsp = insideTsp + outsideTsp` **whenever both are non-null**, falling back to stored `tsp` otherwise (note: candidate-rows.ts has the OPPOSITE preference — stored-first — which only heals missing values, not wrong ones; unifying the other surfaces is a known follow-up). Effects: displayed TSP, In, Out always agree; legacy rows self-heal to the true 10-skill value; `minTsp` filter, tsp sort, and archetype tsp conditions become strictly more complete for those rows. `tspDelta` is unaffected (derived from per-skill deltas only).
 
 ### Filter state — `v2/src/lib/table.ts`
 

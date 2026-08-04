@@ -276,7 +276,7 @@ noise past 'low'; planner picks the newest USABLE observation per club (non-null
 training at high/medium, else fallback). Remaining backlog: tail of
 `docs/superpowers/plans/2026-07-15-training-phase-c.md`.
 
-**2026-08-04 filter maxes + In/Out TSP shipped** (spec docs/superpowers/specs/2026-08-04-filter-maxes-inside-outside-tsp-design.md): TSP/DMI/height filters are min–max ranges, new Inside TSP (IS+ID+RB+SB) and Outside TSP (JS+JR+OD+HA+DR+PA) always-visible sortable columns + range filters on both player tables; More button now shows an active-filter count. Row TSP is now derived from skills when complete (stored value fallback) so TSP = In + Out always holds in the UI and legacy 12-skill/partial v1 sums self-heal.
+**2026-08-04 filter maxes + In/Out TSP shipped** (spec docs/superpowers/specs/2026-08-04-filter-maxes-inside-outside-tsp-design.md): TSP/DMI/height filters are min–max ranges, new Inside TSP (IS+ID+RB+SB) and Outside TSP (JS+JR+OD+HA+DR+PA) always-visible sortable columns + range filters on both player tables; More button now shows an active-filter count. Row TSP is now derived from skills when complete (stored value fallback) so TSP = In + Out holds in the UI whenever In/Out are populated (partial captures fall back to stored tsp and render In/Out as –) and legacy 12-skill/partial v1 sums self-heal.
 
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
