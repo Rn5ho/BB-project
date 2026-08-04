@@ -1,0 +1,84 @@
+{
+ "ent": {
+  "7": {
+   "label": "ENT",
+   "values": [
+    "11"
+   ]
+  },
+  "8": {
+   "label": "ENT",
+   "values": [
+    "13"
+   ]
+  },
+  "9": {
+   "label": "ENT",
+   "values": [
+    "14"
+   ]
+  },
+  "10": {
+   "label": "ENT",
+   "values": [
+    "15"
+   ]
+  },
+  "11": {
+   "label": "ENT ΠΡΙΝ ΜΕΤΑ",
+   "values": [
+    "15",
+    "15+"
+   ]
+  },
+  "12": {
+   "label": "ENTH ΠΡΙΝ ΚΑΙ ΜΕΤΑ",
+   "values": [
+    "15+",
+    "15+"
+   ]
+  },
+  "13": {
+   "label": "ENTH ΠΡΙΝ ΚΑΙ ΜΕΤΑ",
+   "values": [
+    "15+",
+    "15+"
+   ]
+  },
+  "14": {
+   "label": "ENTH ΠΡΙΝ ΚΑΙ ΜΕΤΑ",
+   "values": [
+    "15+",
+    "15+"
+   ]
+  }
+ },
+ "notes": [
+  {
+   "week": 7,
+   "player": "Akis Kotsalos",
+   "note": "PUSH"
+  },
+  {
+   "week": 8,
+   "player": "Aristidis Vlastarakis",
+   "note": "injury"
+  }
+ ],
+ "minutes": {
+  "7": {
+   "Akis Kotsalos": 22,
+   "Aristidis Vlastarakis": 27,
+   "Lefteris Sfikopoulos": 24,
+   "Vlasis Tzougkarakis": 24,
+   "Alexios Thanos": 24,
+   "Nikos Loukoumis": 19,
+   "Nikos Karaindros": 2,
+   "Stilianos Theodoratos": 4,
+   "Antonios Sterpis": 18,
+   "Kostas Tampakis": 27,
+   "Gryllakis Antonopoulos": 27,
+   "Panteleimon Amanatis": 21
+  }
+ }
+}
