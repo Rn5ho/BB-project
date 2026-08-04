@@ -190,16 +190,35 @@ const rookies: CohortPlayer[] = PLANS ? await fetchRookies() : [];
 function drafteesFor(g: 'outside' | 'inside' | 'wing') {
   // group rookies by the same balance/height gates; wing draftees = the between band
   const members = rookies.filter((r) => assignGroup(r, DELTA) === g);
-  const src = members.length >= 8 ? members : rookies; // thin group -> whole universe fallback
+  // Nobody trains a below-floor-potential draftee toward a floored build, and potential
+  // drives the training cap model — so the profile's own potential must clear the
+  // archetype group's potential floor (POT_FLOOR) for "feasibility" to mean anything.
+  const eligible = members.filter((r) => r.potential >= POT_FLOOR[g]);
+  let src: CohortPlayer[];
+  let fallback: string | null;
+  if (eligible.length >= 8) {
+    src = eligible;
+    fallback = null;
+  } else if (members.length >= 8) {
+    src = members; // too few pot-eligible rookies -> fall back to the whole group (ignores floor)
+    fallback = `only ${eligible.length} pot>=${POT_FLOOR[g]}; fell back to all ${members.length} ${g} rookies`;
+  } else {
+    src = rookies; // group itself is thin -> whole universe fallback
+    fallback = `only ${members.length} ${g} rookies; fell back to whole ${rookies.length}-player universe`;
+  }
   const heights = src.map((m) => m.heightCm);
   const pots = src.map((m) => m.potential);
-  return (['p25', 'p50', 'p75'] as const).map((label) => ({
+  const profiles = (['p25', 'p50', 'p75'] as const).map((label) => ({
     label,
     skills: Object.fromEntries(SKILL_KEYS.map((k) => [k,
       Math.max(1, Math.round(quantile(src.map((m) => m.skills[k]), { p25: 0.25, p50: 0.5, p75: 0.75 }[label])))])) as any,
     heightCm: Math.round(median(heights)),
     potential: Math.round(median(pots)),
   }));
+  const provenance = fallback
+    ? `${g} from ${src.length} Slovenian 18yos (${fallback})`
+    : `${g} from ${eligible.length} pot>=${POT_FLOOR[g]} Slovenian 18yos`;
+  return { profiles, provenance };
 }
 
 // ---- report ----
@@ -334,8 +353,17 @@ if (PLANS) {
   lines.push('season is a finishing phase. Feasibility shown under neutral (coach 5/YT 5) and elite');
   lines.push('(coach 7/YT 7, gym 2, TC 2) staff. Week-14s are near-zero training weeks in reality');
   lines.push('(clubs switch to Game Shape) — treat final-week pops as bonus, not plan.');
+  lines.push('Finishing deltas describe the age-21 season under the plan\'s final block extended to');
+  lines.push('season end; large deltas on a secondary skill mean the searcher finished its targets');
+  lines.push('early and the extension repeats its last block — treat those weeks as owner-discretionary');
+  lines.push('(e.g. swap for defense polish), not a recommendation.');
+  const drafteesByGroup = new Map(
+    (['outside', 'inside', 'wing'] as const).map((g) => [g, drafteesFor(g)] as const),
+  );
+  lines.push(`Draftee profiles: ${(['outside', 'inside', 'wing'] as const)
+    .map((g) => drafteesByGroup.get(g)!.provenance).join('; ')}.`);
   for (const gr of groupResults) {
-    const draftees = drafteesFor(gr.group);
+    const draftees = drafteesByGroup.get(gr.group)!.profiles;
     for (const c of gr.clusters) {
       const floor = defenseFloorFor(gr.group, c.centroid as Record<SkillKey, number>, c.members);
       lines.push('', `### Path to ${c.derived.archetype.name}`, '');
