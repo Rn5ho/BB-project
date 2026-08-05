@@ -1,0 +1,137 @@
+Search this Thread (Supporter Feature) 
+From:
+Preperito 
+To:
+Alonso
+This Post: 
+0
+324393.2
+in reply to 324393.1 
+Date:
+6/28/2024 9:07:01 AM
+Overall Posts Rated: 
+140
+To indicate what and how much to raise or lower, we should be clear at what level each one is exactly now in each position.
+I think.
+I don't know if that information is available or where. 
+Mark Unread 
+ 
+Ignore User 
+ 
+From:
+tunjevinа
+This Post: 
+14
+324393.5
+in reply to 324393.2 
+Date:
+6/28/2024 10:32:51 AM
+Tunjevina 
+Prva Liga 
+Overall Posts Rated: 
+1136
+Second Team:
+Krompir 
+BB salary formula works in a way that each position has skills that cost, and skills that are "free" (or cost very little).
+"Free skills" for PG are: IS, ID, SB.
+"Free skills" for SG are: HA, DR, PA, IS, ID, SB.
+"Free skills" for SF are: HA, DR, PA, IS, SB.
+"Free skills" for PF are: JR, OD, HA, DR, PA.
+"Free skills" for C are: JS, JR, OD, HA, DR, PA.
+Two main problems with the current salary formula is that:
+- IS is free for SF, which makes no sense considering that ID (a defensive skill that is used to stop SFs with high IS) costs for SF.
+- OD is free for PF, which makes no sense considering that JS (an offensive skills used to overcome PFs with high OD) costs for PF.
+In other words, the thing that needs fixing is that IS should cost for a SF position just as much as ID does, and OD should cost for a PF position just as much as JS does. No need to make OD cost for C. It should stay free just as JS is free for C, and if you train a C with high OD, their salary formula will naturally at some point switch to a PF position. Same goes with IS for guards, if you train a player with JS/OD/IS 20+, they would probably be SFs, just like how players with JS/OD/ID 20+ are SFs now.
+Of course, you can't just make IS cost for SF just as much as ID does, without tweaking the rest of the salary formula for SF as well, otherwise all the current top guards would be SFs with 400k+ salaries. So SF formula needs the most tweaking, and PF formula needs some changes as well.
+Other positions only need some minor tweaking, like balancing the salary formula between PG & SG position so we would have roughly equal amount of players in both position, while right now there are 2-3x more PGs than SGs, at least at high levels. Probably reducing a little bit the cost of HA & PA for PG would be a good start. 
+Mark Unread 
+ 
+Ignore User 
+ 
+From:
+mr katering 
+To:
+Alonso
+This Post: 
+11
+324393.7
+in reply to 324393.1 
+Date:
+6/28/2024 11:48:41 AM
+valdepeñas F.C 
+III.16 
+Overall Posts Rated: 
+1453
+Just a question. What sense does it make to blow all the training sessions out of proportion with different measures, and then make it economically unsustainable to train players? 
+Mark Unread 
+ 
+Ignore User 
+ 
+From:
+KM-Jorx 
+To:
+Alonso
+This Post: 
+2
+324393.8
+in reply to 324393.1 
+Date:
+6/28/2024 11:53:32 AM
+El Garito 
+IV.51 
+Overall Posts Rated: 
+396
+What exactly are they looking for with this measure? that leagues with many users have to play with low-level players, but leagues with few users full of farms may have players with disproportionate salaries, thus further generating an already existing gap. 
+Mark Unread 
+ 
+Ignore User 
+ 
+From:
+dsanch 
+To:
+Alonso
+This Post: 
+7
+324393.11
+in reply to 324393.1 
+Date:
+6/28/2024 1:02:07 PM
+C.B. Paralímpicos 
+ACBB 
+Overall Posts Rated: 
+697
+Second Team:
+Paralinaikos 
+Hey everyone, while all efforts are directed to converting the code of BB, we have our attention on changing the salary formulas who hasn't been updated for ages.
+We aim to make the salary formulas reflect the skills that are trained for our BB players and how they affect their performance. So Guards skill will reflect more what Guards primarily do, for example - having good Shooting and Passing abilities. You should still be able to create guards with great Inside Shot (for example) but an elite inside shot skill should reflect in the salary. Having a Center with Legendary outside defense in real basketball would reflect in Salary too. Compared to a C who can't defend the perimeter.
+- Since this topic requires close attention to every small detail that can affect any training plan of our BB managers who train and plan forward years ahead - we will give plenty of time ahead to prepare for any changes to come (so don't worry about that) . 
+In this thread we're looking for your feedback of what do you think needs to be changed in the current salary formulas, let me show you few examples: 
+- Inside Shot is a skill that currently cost NOTHING in our PG SG and SF formulas. This will be changed.
+- Outside Defense is a skill that currently cost NOTHING in our PF and C formulas. This will be changed.
+- Outside defense as a whole is a skill that is too cheap in our PG SG and SF formulas.
+This thread is for you to give us feedback over what skills in your eyes needs an update, how much do you think we should change it, should we make it a lot more expensive or just a little bit more expensive?
+And since we aim that salaries will stay about the same, what skills should we make cheaper? How much cheaper? 
+Please focus about that and not about when it will happen or things related to the implementation itself (we will ask your opinion about that later 😉 ) 
+I understand all these changes and accept them, but there is one thing that worries me: how much time do we have to prepare for this.
+Many managers are currently building their teams understanding that these skills were free and training their players considering that. If there is going to be a big change in the salary formulas, all their training work during seven, eight or nine seasons (two or three years in reality) will be useless or at least they will not get a benefit from other managers that were not paying attention to those aspects.
+As an example, many seasons ago I started a project around an 18 years old player with the idea of becoming a dominant team in Spain. When my player was 20 or 21, the game introduced, without advising, a huge change in training: new buildings and new youth trainers. When my players were 31-32 years old they reached 150SOS, witch was something AMAZING regarding that they never had the opportunity to train with a youth trainer or use the gym during their first 3-4 seasons. At the same time, players with 28-29 years old were reaching easily 155-160SOS, and it was almost imposible to beat them with my players, that just few seasons before would have been extremely dominant.
+Please, consider that many players make big efforts to understand how to play the game in the most efficient way according to these kind of circumstances and that all that effort (sometimes years of careful planification) might be lost with these changes. I understand that is very difficult to be fair with everyone, but at least provide us clear information to planify and prepare for everything. 
+Mark Unread 
+ 
+Ignore User 
+ 
+Disable Emoticons and Images 
+Terms Of Service 
+|
+Privacy Policy 
+|
+Rules of Conduct 
+|
+Partners 
+|
+Advertise on BuzzerBeater 
+|
+|
+|
+|
+ 

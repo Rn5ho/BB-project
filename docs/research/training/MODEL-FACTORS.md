@@ -93,9 +93,18 @@ gain = (gain + elasticBonus) × minutesFactor × capSlowdown          ← post-c
   gating, no gym/TC/YT).
 - `open-source-live` — the deployed buzzeriq.com model as probed 2026-07.
 
-> **ERA NOTE (2026-08-05):** BB's S73-season update slightly changes the training and
-> salary formulas (owner report). This doc and all calibration describe the PRE-update
-> engine; watch the Friday self-trainer scorecard for post-update drift.
+> **ERA NOTE (2026-08-05, updated same evening with forum research —
+> `forum-research/s73-update/digest.md`):** BB's S73 update changes, per BB-Marin
+> (dev-confirmed): (1) **new salary formula** live 8/4-5 but IN FLUX — an admitted
+> guard-ID overshoot bug may trigger another recompute → **hold any salary refit**;
+> (2) **elastic training effect reduced "very gently, over a number of seasons"**,
+> offset so training "is not supposed to slow down" — S73 is step 1, magnitudes
+> unpublished; (3) **SB training now gives slight IS gains** (new link, rate unknown);
+> (4) potential cap re-tuned to "emulate the same general levels" but shifts with the
+> new salary weights; (5) **DMI formula changed** ("hidden attribute") — the Joey-Ka
+> DMI inversion and GS9 probe need re-validation before reuse on S73 data.
+> This doc and all calibration describe the PRE-update engine; the Friday self-trainer
+> scorecard is the drift detector, and Q&A thread 332391 is the watchlist.
 
 ## Standing open questions (ranked by planning impact; 2026-08-05 Centri evidence noted)
 

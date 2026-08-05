@@ -1,0 +1,213 @@
+
+Home
+Tools
+News
+Contact
+About
+Support
+EN
+IT
+Home
+/
+News
+/
+BuzzerBeater salary formula change (Season 73)
+News
+ ·
+2026-08-05
+BuzzerBeater salary formula change (Season 73): what actually moved
+By Ubiond
+ ·
+All news
+Around 
+4-5 August 2026
+ (Season 72→73 rollover), BuzzerBeater shipped a new 
+player salary formula
+. As announced on Discord (BB-Marin and others), the pitch was: a simpler formula, close loopholes (cheap high 
+ID
+ on the perimeter), keep overall salary mass in a similar range, and tweak soft cap / DMI in the same pass.
+This is a manager-facing summary of what seems to have moved. The
+% figures below are estimates from our BuzzerIQ models
+, fitted on large live player samples (pre vs post behaviour). Not official BB coefficients. Use them as a compass, then check your roster in the
+Salary & Cap Estimator
+.
+Legend
+Positions:
+ PG point guard · SG shooting guard · SF small forward · PF power forward · C center
+Skills:
+ JS jump shot · JR jump range · OD outside defense · HA handling · DR driving · PA passing · IS inside shot · ID inside defense · RB rebounding · SB (BL) shot blocking
+TL;DR
+Guards / SF (perimeter):
+ID
+ is clearly more expensive.
+IS
+ a bit more too. Both still weigh less than PA / JS / OD.
+JR
+ and
+PA
+ a touch cheaper, especially PA on pure point guards and JR on shooting guards. Small shifts.
+Bigs:
+ classic IS/ID/RB with low
+SB
+ slightly cheaper.
+SB (block)
+ weighs more.
+Overall, estimated salaries are a bit lower (roughly 
+~−4%
+ median vs the old formula).
+Skill weights by position
+Here we show the approximate change in how much each skill weighs on that role's salary (new vs old). On PG/SG, ID and IS used to sit near zero (almost free). A raw "+%" from that baseline would look absurd, so we write 
+~0 → costs
+: they now have a real weight. That is the ID tax on shorts. In absolute terms they still weigh less than PA / JS / OD, so +1 training barely moves salary; stacked
+high ID
+ (see builds below) is what gets expensive.
+Position
+Skill
+~Δ role weight
+Note
+PG
+PA
+~−6%
+Pure point guard a bit cheaper
+PG
+JR
+~−2%
+Almost unchanged
+PG
+ID
+~0 → costs
+Was almost free; high-ID shorts dearer
+PG
+IS
+~0 → costs
+Up a bit; still light secondary
+SG
+JR
+~−8%
+JR-heavy SG slightly cheaper
+SG
+ID
+~0 → costs
+Same loophole closed as PG
+SG
+IS
+~0 → costs
+Still light vs OD / JS
+SF
+ID
+~+11%
+Clearer ID tax on wing
+SF
+IS
+~0 → costs
+Still secondary
+SF
+JR
+~−4%
+Mild
+PF
+IS / ID / RB
+~−1% to −3%
+Classic interiors a bit cheaper
+PF
+SB (BL)
+~+40%
+Block weighs more
+C
+IS / ID / RB
+~−2% to −6%
+ID down a bit more
+C
+SB (BL)
+~+38%
+Block weighs more
+Approximate salary shifts by build
+Total player salary by position (max over roles). Order of magnitude, not a promise for every player:
+Build
+~Δ salary
+Read
+Guard with high ID (ID ≥ 13)
+~+10%
+Loophole closed
+SF with high ID (ID ≥ 13)
+~+13%
+ID tax on wing
+Guard with high IS (IS ≥ 14)
+~+8%
+IS slightly dearer
+Pure PG (high PA, low ID/IS)
+~−5.5%
+PA a bit cheaper
+JR-heavy guard
+~−3%
+Mild
+Traditional big (high IS/ID/RB, low SB)
+~−3%
+Slightly cheaper
+SB-heavy big (block ≥ 12)
+~+11%
+Block matters more
+Training +1 ID/IS on a normal short still looks like a light secondary. The big jump is mainly 
+ID
+ on builds that are
+already high
+ (and IS a bit), not from one ordinary training season.
+Soft cap / potential
+Soft cap was adjusted with the salary change. Directionally you see the same themes in "how full" a player looks: perimeter
+ID/IS
+ count a bit more;
+block
+ a bit more for bigs; pure PA / JR a hair less. Official weights are not published.
+We do 
+not
+ get a "this player is capped" flag from BBAPI, only skills + potential. To improve estimates, we need community help:
+Call to action
+If you have trainees you 
+know
+ are soft-capped (training clearly at 1/3), share them on the 
+BuzzerIQ Discord
+ for study. A short list of known capped players beats guessing from one snapshot.
+DMI & form decimals
+In BuzzerIQ we use 
+DMI
+ to estimate
+game shape decimals
+ (the hidden part of form between whole GS levels). Marin also confirmed DMI moved (tied to a changed hidden attribute), with an intent to keep levels similar. We are
+following the evolution
+ over the next weeks via roster snapshots (season-open GS≈7, later GS=9). More concrete numbers once the sample has matured. No formula swap on day one.
+Personal note (meta)
+On 
+bigs
+, I am fairly happy with the direction. If salary and cap both nudge toward more all-around interiors, and make pure "block-first, zero offense" less free, that helps break an old distortion: two stoppers parked as PGs because PA was nearly free on bigs, and IS-stuffed shorts parked as bigs. The vector is right. Fine-tuning will still come.
+Same for cooling the eternal 
+3-2 / SB-heavy
+dominance: I like the intent. But
+salaries alone are not enough
+. You can still build expensive, SB-dominant rosters that win on the court. Rebalancing that meta almost certainly needs a hand on the 
+match engine
+, not only the wage bill.
+On 
+shorts
+, I am having a harder time reading the changes. If the goal was to cool the stretch / 3-2 meta, taxing
+ID on shorts
+ is odd given that man-to-man defense is essential, while 
+IS
+ as a salary component barely moved and stays economically a secondary. We will probably keep seeing high-IS shorts. We will understand more in the coming days as a community, also after developer statements.
+Try it on your roster
+Updated estimates are live in BuzzerIQ tools (salary estimator, training projections, roster). Feedback welcome on 
+Discord
+.
+Try BuzzerIQ →
+BuzzerIQ
+Rule the game with data
+Explore
+News
+Contact
+About
+Support Us
+Discord
+Legal
+Terms of Service
+Privacy Policy
+Cookie Preferences
+BuzzerBeater Salary Formula Change (Season 73) Explained — BuzzerIQ
