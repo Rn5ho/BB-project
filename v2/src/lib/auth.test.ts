@@ -47,19 +47,16 @@ describe('session tokens', () => {
 });
 
 describe('resolvePassword', () => {
-  it('maps the owner password to owner', () => expect(resolvePassword('correct-horse')).toBe('owner'));
-  it('maps the guest password to guest', () => expect(resolvePassword('battery-staple')).toBe('guest'));
-  it('rejects a wrong password', () => expect(resolvePassword('wrong')).toBe(null));
-  it('rejects empty input', () => expect(resolvePassword('')).toBe(null));
-  it('disables guest login when GUEST_PASSWORD is unset', () => {
-    delete process.env.GUEST_PASSWORD;
+  it('maps the owner password to owner', () => expect(resolvePassword('correct-horse', 'battery-staple')).toBe('owner'));
+  it('maps the guest password to guest', () => expect(resolvePassword('battery-staple', 'battery-staple')).toBe('guest'));
+  it('rejects a wrong password', () => expect(resolvePassword('wrong', 'battery-staple')).toBe(null));
+  it('rejects empty input', () => expect(resolvePassword('', 'battery-staple')).toBe(null));
+  it('disables guest login when no guest password is configured', () => {
+    expect(resolvePassword('battery-staple', null)).toBe(null);
     expect(resolvePassword('battery-staple')).toBe(null);
-    process.env.GUEST_PASSWORD = 'battery-staple';
   });
-  it('disables guest login when GUEST_PASSWORD is empty', () => {
-    process.env.GUEST_PASSWORD = '';
-    expect(resolvePassword('')).toBe(null);
-    process.env.GUEST_PASSWORD = 'battery-staple';
+  it('empty guest password never matches', () => {
+    expect(resolvePassword('', '')).toBe(null);
   });
 });
 

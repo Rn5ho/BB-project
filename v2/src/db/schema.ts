@@ -251,6 +251,14 @@ export const selfTrainerConfig = pgTable('self_trainer_config', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
+// App configuration managed from /settings (key-value; e.g. 'guest_password' —
+// the shareable read-only community password; null/absent row = guest login disabled).
+export const appConfig = pgTable('app_config', {
+  key: text('key').primaryKey(),
+  value: text('value'),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
 // One row per model per self-trainer run: replay of every own-team player's full
 // visible training history vs observed pops. Trend across run_at = model drift.
 export const modelScorecards = pgTable('model_scorecards', {

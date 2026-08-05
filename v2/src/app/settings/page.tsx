@@ -5,6 +5,8 @@ import { getCountriesCatalog } from '@/server/sync/countries';
 import CountryPicker from '@/components/settings/CountryPicker';
 import TrackedCountryList from '@/components/settings/TrackedCountryList';
 import SyncJobsCard, { type JobLastRun, type CensusLastRun } from '@/components/settings/SyncJobsCard';
+import GuestAccessCard from '@/components/settings/GuestAccessCard';
+import { getGuestPassword } from '@/queries/app-config';
 import { formatStartedAt, formatDuration, formatSyncResult, type SyncCounts } from '@/lib/format-sync';
 import type { CensusTotals } from '@/lib/format-census';
 
@@ -38,7 +40,7 @@ function Card({ title, blurb, children }: { title: string; blurb?: string; child
 }
 
 export default async function SettingsPage() {
-  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastInference, lastCensusRows] = await Promise.all([
+  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastInference, lastCensusRows, guestPassword] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
     getCountriesCatalog().catch(() => []),
@@ -48,6 +50,7 @@ export default async function SettingsPage() {
     lastRunOf('minutes'),
     lastRunOf('inference'),
     db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(1),
+    getGuestPassword().catch(() => null),
   ]);
 
   const censusLastRun: CensusLastRun | null = lastCensusRows[0]
@@ -71,6 +74,13 @@ export default async function SettingsPage() {
       >
         <CountryPicker available={available} />
         <TrackedCountryList tracked={tracked} />
+      </Card>
+
+      <Card
+        title="Guest access"
+        blurb="Share the dashboard read-only with community members — one shared password, revocable here anytime."
+      >
+        <GuestAccessCard current={guestPassword} />
       </Card>
 
       <Card title="Data sync">

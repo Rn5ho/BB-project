@@ -78,6 +78,13 @@
       "when": 1784309551726,
       "tag": "0010_self_trainer",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1785931676757,
+      "tag": "0011_guest_config",
+      "breakpoints": true
     }
   ]
 }

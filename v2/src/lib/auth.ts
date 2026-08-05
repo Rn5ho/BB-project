@@ -45,13 +45,13 @@ function matches(input: string, expected: string): boolean {
   return diff === 0;
 }
 
-/** Which role does this password grant? Owner checked first; guest only when
- *  GUEST_PASSWORD is configured and non-empty. */
-export function resolvePassword(input: string): Role | null {
+/** Which role does this password grant? Owner (env APP_PASSWORD) checked first, so a
+ *  DB outage can never lock the owner out; guest only when `guestPassword` (from the
+ *  app_config table, managed on /settings) is present and non-empty. */
+export function resolvePassword(input: string, guestPassword: string | null = null): Role | null {
   const owner = process.env.APP_PASSWORD ?? '';
   if (!owner) throw new Error('APP_PASSWORD is not set');
   if (matches(input, owner)) return 'owner';
-  const guest = process.env.GUEST_PASSWORD ?? '';
-  if (guest && matches(input, guest)) return 'guest';
+  if (guestPassword && matches(input, guestPassword)) return 'guest';
   return null;
 }

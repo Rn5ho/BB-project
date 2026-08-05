@@ -9,6 +9,7 @@ import { runMarketSweep } from '@/server/sync/market';
 import { runMinutesSync } from '@/server/sync/minutes';
 import { runTrainingInference } from '@/server/sync/inference';
 import { requireOwner } from '@/lib/session';
+import { setGuestPassword } from '@/queries/app-config';
 
 export async function addTrackedCountry(countryId: number, name: string) {
   await requireOwner();
@@ -26,6 +27,23 @@ export async function toggleStar(id: number, starred: boolean) {
   await requireOwner();
   await db.update(trackedCountries).set({ starred }).where(eq(trackedCountries.id, id));
   revalidatePath('/settings');
+}
+
+export async function saveGuestPassword(password: string) {
+  await requireOwner();
+  const pw = password.trim();
+  if (pw.length < 6) return { ok: false as const, error: 'At least 6 characters.' };
+  if (pw === (process.env.APP_PASSWORD ?? '')) return { ok: false as const, error: 'Must differ from the owner password.' };
+  await setGuestPassword(pw);
+  revalidatePath('/settings');
+  return { ok: true as const };
+}
+
+export async function disableGuestAccess() {
+  await requireOwner();
+  await setGuestPassword(null);
+  revalidatePath('/settings');
+  return { ok: true as const };
 }
 
 export async function syncNow(job: 'players' | 'seasons' | 'market' | 'minutes' | 'inference') {
