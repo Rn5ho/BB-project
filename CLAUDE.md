@@ -77,7 +77,17 @@ high-potential 21yo Hellas listings missing from the dashboard. Two stacked root
   snapshot stamped with the old season derives +1 too old after the flip until a
   post-rollover snapshot restamps them. **Standing action: after each rollover run
   `npx tsx scripts/daily-sync.mts --force-players` on the box** (or wait for Monday's
-  cron) to restamp the universe with the new season id.
+  cron) to restamp the universe with the new season id, **then `npx tsx
+  scripts/fix-aged-out.mts`** (dry-run first) — the all-countries age reconciler.
+  WHY (learned 2026-08-05, S72→73): a sync that runs in BB's rollover LAG WINDOW
+  (season flipped, API ages not yet) stamps (new season, old age), which derives wrong
+  FOREVER; players who turned 22 keep deriving 21 (they froze census #22 — BB shows no
+  recruit control for them — and pollute the World page), and only fix-aged-out heals
+  them because the weekly 18–21 sync never fetches them again. World players are
+  market-discovered (`tracked_countries` is empty!), so they're extra-dependent on the
+  reconciler. 2026-08-05 repairs: 189 Slovenians + 880 across ~80 World countries.
+  Census worker now classifies missing-recruit-control as `[ineligible]` → skip (not
+  session-death abort); deleted-player pruning is open backlog.
 - Related fix: `market-sweep.mts` now runs the seasons sync FIRST (before any sweeping) so
   rollover-day market snapshots can't pair post-rollover ages with the pre-rollover season.
 - **Draft intake**: BB's Players API picked up the new Slovenian draft class the same day
