@@ -93,19 +93,34 @@ gain = (gain + elasticBonus) × minutesFactor × capSlowdown          ← post-c
   gating, no gym/TC/YT).
 - `open-source-live` — the deployed buzzeriq.com model as probed 2026-07.
 
+> **ERA NOTE (2026-08-05):** BB's S73-season update slightly changes the training and
+> salary formulas (owner report). This doc and all calibration describe the PRE-update
+> engine; watch the Friday self-trainer scorecard for post-update drift.
+
 ## Standing open questions (ranked by planning impact; 2026-08-05 Centri evidence noted)
 
-1. **Club-scale factor** (NEW): the Centri deep-calibration found a ×1.48 between-club
-   multiplicative tilt shared by all models — confounded with training rows / coach / TC.
-   Until separated, per-club projections may be ±15–20% scaled.
-2. Minutes-factor shape below the threshold (linear is a guess).
+1. **Top-skill malus shape** (NEW, round 2): ×0.925^(gap) reaches ×0.5–0.6 for
+   specialist bigs and three independent within-club tests contradict it; malus-off
+   removes the pjtr576 cold tilt but overshoots globally → shape (cap the exponent?)
+   is the question, not existence. Owner review.
+   (The round-1 "×1.48 club tilt" is CLOSED as a rate issue — the quantization-free DMI
+   channel puts weekly rates at 0.991 obs/pred and excludes 1.48 at P<5e-5.)
+2. **Gym scatter EV ~1.5× light** (round 2): pooled corpus ≈27 obs off-program pops vs
+   ~17 EV; needs one unified recount across methods before any slotShare/baseSlots talk.
 3. is←id elastic: 0.001 (Dormouse) vs 0.0096 (forum) — **Centri data favors 0.0096**
    (gap-proportional signature; fixes the 3 worst IS cases, none worsen). Owner decision pending.
-4. HA height scaling: flat or scaled.
-5. Youth trainer per-level value (2.5% estimate) — Centri gives a weak ~4:1 lean AGAINST
-   the age-≤19 gate (underpowered); a designed own-team season test is feasible (~18 wks/side).
-6. Negative elastic pairs — id←sb −0.005 disfavored at claimed magnitude on Centri; others untested.
-7. Base cross-training slot at gym 0 (needs a gym-0 club log; unresolvable from gym-3 data).
+4. **HA height column open at tall heights**: scaled ×0.75@213cm EXCLUDED by third-club
+   ground truth (implied ×1.19); 206v201 still weakly favors scaled — shape unclear,
+   tall end lands flat-or-above.
+5. Minutes-factor shape below the threshold (linear is a guess).
+6. Youth trainer per-level value (2.5% estimate) — weak ~4:1 lean AGAINST the age-≤19
+   gate (underpowered); a designed own-team season test is feasible (~18 wks/side).
+7. js→jr towing: first quantitative datapoint (Umek ×9 JR under-prediction, implied
+   ~0.25 coupling) — the community-paste era-conflict is live.
+8. Potential-cap stages 2–3 untested; per-player cap heterogeneity above stage 1 is real
+   (Jalovec's freeze refutes ×0.725 for him; pooled stage 1 otherwise validates at 0.743).
+9. Negative elastic pairs — id←sb −0.005 disfavored at claimed magnitude; others untested.
+10. Base cross-training slot at gym 0 (needs a gym-0 club log).
 
 Full evidence: `calibration-cases/centri-u21/ANALYSIS-2026-08-05.md`. Also established
 there: DMI reads CONTINUOUS internal skills (weekly training probe), BB salary is set
