@@ -30,6 +30,15 @@ Ambiguity: does a week's report show the state *before* or *after* that week's t
 Both variants were built and scored. **After (align=N) wins decisively** — bbscout pop
 recall 32% vs 26%, final-skill MAE 0.29 vs 0.50 levels. Only align=N is kept here.
 
+> **SUPERSEDED 2026-08-05** — every number below ran with player ages frozen at segment
+> start (`replay-case.mts` dropped `ageAfterThis`; fixed in a6229cf). Corrected baseline
+> (bbscout 32.0% recall / FA 99 / 112,160 exact / MAE 0.300) and the full nine-angle
+> deep-calibration results live in **`ANALYSIS-2026-08-05.md`** — including: club-scale
+> tilt ×1.48 as the dominant error, SB cold-spot dissolving into it, timing-tolerant
+> recall 71.8%, fitted-sublevel ceiling 72.9%, TC-FT validated to 1%, DMI = continuous
+> internal-skill weekly probe, GS reset to 7 at rollover, and Centri evidence favoring
+> is←id 0.0096. Read that file first; the tables below are kept for history.
+
 ## Results (bbscout, 2026-08-04, 16 cases / 184 weeks / 181 scored pops, gym 3)
 
 | model | pop recall | false alarms | final-skill exact | MAE |

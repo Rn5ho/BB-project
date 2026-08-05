@@ -93,11 +93,20 @@ gain = (gain + elasticBonus) × minutesFactor × capSlowdown          ← post-c
   gating, no gym/TC/YT).
 - `open-source-live` — the deployed buzzeriq.com model as probed 2026-07.
 
-## Standing open questions (ranked by planning impact)
+## Standing open questions (ranked by planning impact; 2026-08-05 Centri evidence noted)
 
-1. Minutes-factor shape below the threshold (linear is a guess).
-2. is←id elastic: 0.001 (Dormouse) vs 0.0096 (forum measurement) — 10× dispute.
-3. HA height scaling: flat or scaled.
-4. Youth trainer per-level value (2.5% estimate).
-5. Negative elastic pairs — real or noise.
-6. Base cross-training slot at gym 0 (needs a gym-0 club log; unresolvable from gym-3 data).
+1. **Club-scale factor** (NEW): the Centri deep-calibration found a ×1.48 between-club
+   multiplicative tilt shared by all models — confounded with training rows / coach / TC.
+   Until separated, per-club projections may be ±15–20% scaled.
+2. Minutes-factor shape below the threshold (linear is a guess).
+3. is←id elastic: 0.001 (Dormouse) vs 0.0096 (forum) — **Centri data favors 0.0096**
+   (gap-proportional signature; fixes the 3 worst IS cases, none worsen). Owner decision pending.
+4. HA height scaling: flat or scaled.
+5. Youth trainer per-level value (2.5% estimate) — Centri gives a weak ~4:1 lean AGAINST
+   the age-≤19 gate (underpowered); a designed own-team season test is feasible (~18 wks/side).
+6. Negative elastic pairs — id←sb −0.005 disfavored at claimed magnitude on Centri; others untested.
+7. Base cross-training slot at gym 0 (needs a gym-0 club log; unresolvable from gym-3 data).
+
+Full evidence: `calibration-cases/centri-u21/ANALYSIS-2026-08-05.md`. Also established
+there: DMI reads CONTINUOUS internal skills (weekly training probe), BB salary is set
+once per season with a per-season deflator, game shape resets to 7 at rollover.
