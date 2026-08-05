@@ -115,6 +115,44 @@ availability (the search's current hit-earliness tiebreaker, cf. the Župan /jou
 discussion) must stay a weak tiebreaker — wherever earliness trades against M1/M2
 quality, quality wins.
 
+## Batch 3 (same day) — positional context: key skills + age-21 entry bands
+
+Positions must each be filled every match (PG/SG/SF/PF/C) — archetypes live inside
+that team-composition puzzle, plus tactic and opponent matchup. Bands below = entering
+the age-21 U-21 season ("really rough descriptions", owner).
+
+**PG (playmaker):** key = HA, PA, OD; rest tactic-dependent; all-around (JS+IS) best.
+Bands: OD min 14 ideally 15-16 · PA ideally 11-12 · JS 13-16 · IS conditional on
+draft: drafted with IS 5-7 + wings-1v1 training → 9-10; otherwise skip IS entirely
+and put those weeks into JR instead.
+
+**SG:** all-around with OD+PA, but the KEY is **high JS + high JR**. Team note:
+with 2-3 players of this type they get slotted at PG or wing for outside-tactic games
+— interchangeability is part of the value.
+
+**Wing/SF:** tactic-dependent; more IS than guards: **11-14** · OD min 14-15 at
+season start, trained on to 16-17 (OD floor applies to ALL outside positions) ·
+PA nice, not crucial · some RB nice to have (helps team rebounding) · JS 14-17 ideal.
+
+**JR mechanics (owner's operating model — important for the value function):** JR is
+purely supportive: it only reduces how much JS quality decays with shot distance.
+JS 7 + JR 20 still shoots like a 7 from anywhere. → **JR's value scales with JS** —
+a JR target only makes sense on top of a high JS (SG builds), and JR-first training
+is always wrong.
+
+**PF:** most versatile — center-like defensive (SB/RB/ID) or offensive-classic (IS);
+"not picky", often just a classic center. Selection heuristic: play the big with the
+highest JS. Note: heavy IS training NATURALLY lands JS 12-13 by 21 (IS rows carry a
+JS secondary cell — engine-consistent: rows 21-23 have js 0.1/0.075/0.04), so the
+scouting move is spotting an 18yo ~215 cm with high OD + high JS → PF track (keeps
+the outside skills while training inside).
+
+**C:** classic defensive (SB/ID/RB) or Israeli all-four. **No secondary skills at
+all — full-in on primaries** (talls train them very fast). Ambitious entry bands:
+IS 18-20 · ID 16-17 · RB 12-16 · SB present (band unstated). Read together with
+batch 1: those were the viability MINIMUMS (ID 15/IS 15/RB 11), these are the
+full-in targets.
+
 ## Open items for the smart-pass design
 
 - Encode viability gates as first-class M1 bars per class (outside/big; wing TBD).
