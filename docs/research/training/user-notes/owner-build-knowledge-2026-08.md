@@ -134,11 +134,15 @@ with 2-3 players of this type they get slotted at PG or wing for outside-tactic 
 season start, trained on to 16-17 (OD floor applies to ALL outside positions) ·
 PA nice, not crucial · some RB nice to have (helps team rebounding) · JS 14-17 ideal.
 
-**JR mechanics (owner's operating model — important for the value function):** JR is
-purely supportive: it only reduces how much JS quality decays with shot distance.
+**JR mechanics (owner's operating model — MANUAL-CONFIRMED, BBmanual.txt:427):** JR is
+purely supportive: it only reduces how much JS quality decays with shot distance
+(manual: "effectiveness of his jump shot decreases less with distance").
 JS 7 + JR 20 still shoots like a 7 from anywhere. → **JR's value scales with JS** —
 a JR target only makes sense on top of a high JS (SG builds), and JR-first training
-is always wrong.
+is always wrong. Related manual backing: SB "not very useful for perimeter players"
+(:443 — supports never targeting SB on outsiders); RB height note (:441 — displayed RB
+already height-adjusted; tall low-RB "will learn more quickly", consistent with the
+height multipliers).
 
 **PF:** most versatile — center-like defensive (SB/RB/ID) or offensive-classic (IS);
 "not picky", often just a classic center. Selection heuristic: play the big with the
