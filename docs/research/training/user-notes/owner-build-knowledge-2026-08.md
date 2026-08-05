@@ -80,6 +80,41 @@ owner explicitly wants MULTIPLE ranked proposals with visible reasoning, not one
   Observed in Israeli U-21 rosters; contrast with the owner's "normal center" (SB
   deprioritized).
 
+## Batch 2 (same day) — corrections + secondary-skill balance
+
+### DR/HA bars for outside players (fills batch-1 gap)
+Minimum **15-16**; most players run **17-19** in practice — partly because 1v1 trains
+them so cheaply, partly pushed to 18-19 **for the ha→od elastic**. Whether 18-19 is
+actually optimal vs stopping at 16-17 is an OPEN QUESTION the owner wants computed
+(marginal HA week's elastic value to OD vs a direct OD week — engine can answer).
+Principle: "never hurts to have too much; only hurts to not have enough."
+
+### IS on outside players — refined (batch 1 was the degenerate case)
+Meaningful band: **9-12**. Environment context: outside players never train ID — it
+stays at draft level + passive gains (gym scatter; OD training's small 0.1 ID cell) —
+so opposing outside defenders rarely have ID ≥9. An outsider with IS 10-11 therefore
+already plays inside tactics QUITE WELL (his 10-11 beats their 6-8). Batch 1's "IS 1
+→ 6-8 is wasted" stands ONLY for that from-1 case: below ~9 it doesn't stand out;
+9-12 does. (Rare ID≥9 outsider builds exist — exceptions, not the rule.)
+→ Computable check: we hold the full market+Slovenia universe — the actual ID
+distribution of 18-21 outside players can verify the "defenders sit at 6-8" premise.
+
+### The core tension, stated by the owner
+Secondary skills: "the more the better" — but the whole optimization problem is
+striking the balance between secondaries and PERFECTED primaries under the U-21 clock.
+That balance IS the product.
+
+### Correction: high TSP with low OD at age 20 is NOT a failure state
+It may simply be mid-process (OD block still scheduled). **Judgment day = turning 21**
+(entering the U-21 season); a 20yo has 5-10 weeks of runway before it. The value
+function judges the age-21 state, not the age-20 snapshot.
+
+### Value-function directive: never jeopardize the end build for an earlier call-up
+Optimize for the player's BEST STATE THROUGH the age-21 U-21 season. Early
+availability (the search's current hit-earliness tiebreaker, cf. the Župan /journey
+discussion) must stay a weak tiebreaker — wherever earliness trades against M1/M2
+quality, quality wins.
+
 ## Open items for the smart-pass design
 
 - Encode viability gates as first-class M1 bars per class (outside/big; wing TBD).
