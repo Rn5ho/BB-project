@@ -22,10 +22,13 @@
     "training:replay": "tsx scripts/training/replay-case.mts",
     "training:infer": "tsx scripts/training/run-inference.mts",
     "training:archetypes": "tsx scripts/training/derive-archetypes.mts",
-    "training:journey": "tsx scripts/training/journey.mts"
+    "training:journey": "tsx scripts/training/journey.mts",
+    "bot": "tsx scripts/discord-bot.mts",
+    "bot:register": "tsx scripts/discord-register.mts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
+    "discord.js": "^14.27.0",
     "drizzle-orm": "^0.45.2",
     "jose": "^6.2.3",
     "next": "16.2.10",
