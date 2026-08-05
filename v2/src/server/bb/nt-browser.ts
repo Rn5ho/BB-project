@@ -55,12 +55,18 @@ export class NtBrowser {
     await this.page.goto(`${BASE}/player/${id}/overview.aspx`, { waitUntil: 'domcontentloaded' });
   }
 
-  /** Call a player up to the NT roster. Throws if not confirmed rostered. */
+  /** Call a player up to the NT roster. Throws if not confirmed rostered.
+   *  A missing recruit control on an otherwise-rendered player page is a per-player
+   *  eligibility state (e.g. aged out to 22 — census #22, 2026-08-05), marked with
+   *  [ineligible] so the run loop can skip it without counting it as session death. */
   async recruit(id: number): Promise<void> {
     await this.gotoPlayer(id);
     if (await this.page.locator('#cphContent_btnNTDismiss2').count() > 0) return; // already rostered
     if (await this.page.locator('#cphContent_btnNTRecruit2').count() === 0) {
-      throw new Error(`recruit ${id}: no recruit control (not eligible?)`);
+      if (this.page.url().includes('login.aspx') || await this.page.locator('#cphContent_txtUserName').count() > 0) {
+        throw new Error(`recruit ${id}: session lost (login page)`);
+      }
+      throw new Error(`recruit ${id}: [ineligible] no recruit control on player page`);
     }
     await this.page.click('#cphContent_btnNTRecruit2');            // show popup (client-side)
     await Promise.all([

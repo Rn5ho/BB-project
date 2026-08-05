@@ -151,7 +151,7 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log, existi
     // RESTORE WRAPPER: whatever happens inside (success, abort, crash), the user's own roster
     // is re-recruited before we exit. Re-recruiting costs no enthusiasm; a failed restore is
     // surfaced loudly for a trivial manual fix.
-    let captured = 0, failed = 0, consecutiveRecruitFails = 0;
+    let captured = 0, failed = 0, consecutiveRecruitFails = 0, consecutiveIneligible = 0;
     try {
       if (opts.clearRoster && originalRoster.length > 0 && !opts.resumeRunId) {
         log(`Clearing your ${originalRoster.length} players from the roster (will restore at end): ${originalRoster.join(', ')}`);
@@ -180,9 +180,18 @@ export async function runCensus(opts: CensusOpts, log: Log = console.log, existi
               await mark(runId, it.playerId, 'recruited');
               batchIds.push(it.playerId);
               consecutiveRecruitFails = 0;
+              consecutiveIneligible = 0;
             } catch (e) {
-              await mark(runId, it.playerId, 'failed', String(e)); failed++;
-              if (++consecutiveRecruitFails >= 3) { await abort(nt, runId, batchIds, log); throw new Error('3 consecutive recruit failures — aborted with clean roster'); }
+              if (String(e).includes('[ineligible]')) {
+                // Per-player eligibility (page rendered, no recruit control — e.g. aged out).
+                // Not session death; skip and continue. The high cap still catches selector
+                // rot (if EVERY player looks ineligible, the button id probably changed).
+                await mark(runId, it.playerId, 'skipped', String(e));
+                if (++consecutiveIneligible >= 25) { await abort(nt, runId, batchIds, log); throw new Error('25 consecutive ineligible players — recruit button selector may have changed; aborted with clean roster'); }
+              } else {
+                await mark(runId, it.playerId, 'failed', String(e)); failed++;
+                if (++consecutiveRecruitFails >= 3) { await abort(nt, runId, batchIds, log); throw new Error('3 consecutive recruit failures — aborted with clean roster'); }
+              }
             }
             await sleep();
           }
