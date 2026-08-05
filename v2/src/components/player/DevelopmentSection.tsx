@@ -11,7 +11,7 @@ import type { EffectiveArchetype, EvalPlayer } from '@/lib/archetypes/types';
 
 export default function DevelopmentSection({
   playerId, playerState, startWeekOfSeason, weeks, age, initialPlan, templates, skillsDb, potential, sublevelBounds,
-  archetypes, evalPlayer,
+  archetypes, evalPlayer, readOnly = false,
 }: {
   playerId: number;
   playerState: PlayerState;
@@ -25,6 +25,7 @@ export default function DevelopmentSection({
   sublevelBounds?: SublevelBounds;
   archetypes?: EffectiveArchetype[];
   evalPlayer?: EvalPlayer | null;
+  readOnly?: boolean;
 }) {
   // `weeks` (per-position minutes history) isn't used by the projection panel today —
   // kept in the prop list because the player page already fetches and passes it.
@@ -51,7 +52,7 @@ export default function DevelopmentSection({
       startWeekOfSeason={startWeekOfSeason}
       initialPlan={initialPlan}
       templates={templates}
-      onSave={handleSave}
+      onSave={readOnly ? undefined : handleSave}
       sublevelBounds={sublevelBounds}
       archetypes={archetypes}
       evalPlayer={evalPlayer}

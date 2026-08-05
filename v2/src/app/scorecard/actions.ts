@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { db, selfTrainerConfig } from '@/db';
 import { runSelfTrainer } from '@/server/sync/self-trainer';
+import { requireOwner } from '@/lib/session';
 
 export interface SelfTrainerConfigInput {
   teamId: number;
@@ -14,6 +15,7 @@ export interface SelfTrainerConfigInput {
 }
 
 export async function saveSelfTrainerConfig(input: SelfTrainerConfigInput) {
+  await requireOwner();
   const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, Math.round(v)));
   const values = {
     teamId: Math.round(input.teamId),
@@ -35,6 +37,7 @@ export async function saveSelfTrainerConfig(input: SelfTrainerConfigInput) {
 }
 
 export async function runSelfTrainerNow() {
+  await requireOwner();
   try {
     const counts = await runSelfTrainer('manual');
     revalidatePath('/scorecard');

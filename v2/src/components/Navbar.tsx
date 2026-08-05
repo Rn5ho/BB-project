@@ -8,19 +8,19 @@ const LINKS = [
   { href: '/world', label: 'World' },
   { href: '/training', label: 'Training' },
   { href: '/planner', label: 'Planner' },
-  { href: '/scorecard', label: 'Scorecard' },
+  { href: '/scorecard', label: 'Scorecard', ownerOnly: true },
   { href: '/archetypes', label: 'Archetypes' },
-  { href: '/census', label: 'Census' },
-  { href: '/settings', label: 'Settings' },
+  { href: '/census', label: 'Census', ownerOnly: true },
+  { href: '/settings', label: 'Settings', ownerOnly: true },
 ];
 
-export default function Navbar() {
+export default function Navbar({ guest = false }: { guest?: boolean }) {
   const pathname = usePathname();
   if (pathname === '/login') return null;
   return (
     <nav className="flex items-center gap-4 px-6 py-3 border-b border-neutral-800">
       <span className="font-bold text-amber-500">BB Scout</span>
-      {LINKS.map(({ href, label }) => (
+      {LINKS.filter((l) => !(guest && l.ownerOnly)).map(({ href, label }) => (
         <Link key={href} href={href}
           className={pathname.startsWith(href) ? 'text-white font-medium' : 'text-neutral-400 hover:text-white'}>
           {label}

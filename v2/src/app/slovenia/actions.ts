@@ -2,8 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { db, reviewMarks } from '@/db';
+import { requireOwner } from '@/lib/session';
 
 export async function markReviewed() {
+  await requireOwner();
   await db
     .insert(reviewMarks)
     .values({ scope: 'slovenia', markedAt: new Date() })

@@ -22,15 +22,18 @@ import ProfileCard from '@/components/player/ProfileCard';
 import ArchetypeMatches from '@/components/player/ArchetypeMatches';
 import DevelopmentSection from '@/components/player/DevelopmentSection';
 import MinutesStrip from '@/components/player/MinutesStrip';
+import { getSessionRole } from '@/lib/session';
 
 export const dynamic = 'force-dynamic';
 
 export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const [detail, archetypes] = await Promise.all([
+  const [detail, archetypes, role] = await Promise.all([
     getPlayerDetail(Number(id)),
     getEffectiveArchetypes(),
+    getSessionRole(),
   ]);
+  const readOnly = role !== 'owner';
   if (!detail) notFound();
   const { player, snaps, notes, tags } = detail;
   const profile = currentProfile(snaps);
@@ -86,7 +89,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
         {player.ownerTeamId && <a href={`https://buzzerbeater.com/team/${player.ownerTeamId}/overview.aspx`} target="_blank" className="hover:text-amber-500">{player.ownerTeamName ?? 'owner'} ↗</a>}
       </div>
 
-      <TagsSection playerId={player.bbPlayerId} tags={tags} />
+      <TagsSection playerId={player.bbPlayerId} tags={tags} readOnly={readOnly} />
 
       <section className="mt-6">
         <ProfileCard profile={profile} heightCm={player.heightCm} bestPosition={player.bestPosition} />
@@ -113,6 +116,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             sublevelBounds={sublevelBounds}
             archetypes={archetypes}
             evalPlayer={evalPlayer}
+            readOnly={readOnly}
           />
         ) : (
           <p className="text-sm text-neutral-500">Needs a full-skill snapshot (census or API) to project development.</p>
@@ -153,7 +157,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
 
       <section className="mt-6">
         <h2 className="font-medium mb-2">Notes</h2>
-        <NotesSection playerId={player.bbPlayerId} notes={notes.map((n) => ({ ...n, createdAt: n.createdAt.toISOString() }))} />
+        <NotesSection playerId={player.bbPlayerId} notes={notes.map((n) => ({ ...n, createdAt: n.createdAt.toISOString() }))} readOnly={readOnly} />
       </section>
     </main>
   );

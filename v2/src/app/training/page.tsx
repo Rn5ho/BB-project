@@ -11,6 +11,7 @@ import { PLAN_TEMPLATES } from '@/lib/training/templates';
 import { SKILL_KEYS, type SkillKey } from '@/lib/training/types';
 import { seasonWeekOf } from '@/server/sync/minutes';
 import TrainingLab, { type SelectedPlayer } from '@/components/training/TrainingLab';
+import { getSessionRole } from '@/lib/session';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,10 +22,11 @@ export default async function TrainingPage({
 }) {
   const { player: playerParam } = await searchParams;
 
-  const [players, seasonNow, archetypes] = await Promise.all([
+  const [players, seasonNow, archetypes, role] = await Promise.all([
     getProjectablePlayers(),
     getCurrentSeasonId(),
     getEffectiveArchetypes(),
+    getSessionRole(),
   ]);
   const [seasonRow] = await db.select().from(seasons).where(eq(seasons.id, seasonNow));
   const startWeekOfSeason = seasonRow ? Math.min(14, Math.max(1, seasonWeekOf(new Date(), seasonRow.start))) : 1;
@@ -87,6 +89,7 @@ export default async function TrainingPage({
         startWeekOfSeason={startWeekOfSeason}
         templates={PLAN_TEMPLATES}
         archetypes={archetypes}
+        readOnly={role !== 'owner'}
       />
     </main>
   );

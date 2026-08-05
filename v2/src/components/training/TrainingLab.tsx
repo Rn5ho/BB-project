@@ -40,13 +40,14 @@ function tsp10(skills: Record<string, number | null>): number | null {
 }
 
 export default function TrainingLab({
-  players, selected, startWeekOfSeason, templates, archetypes,
+  players, selected, startWeekOfSeason, templates, archetypes, readOnly = false,
 }: {
   players: ProjectablePlayer[];
   selected: SelectedPlayer | null;
   startWeekOfSeason: number;
   templates: PlanTemplate[];
   archetypes?: EffectiveArchetype[];
+  readOnly?: boolean;
 }) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>(selected ? 'database' : 'manual');
@@ -139,7 +140,7 @@ export default function TrainingLab({
                 startWeekOfSeason={startWeekOfSeason}
                 initialPlan={selected.initialPlan}
                 templates={templates}
-                onSave={handleSaveSelected}
+                onSave={readOnly ? undefined : handleSaveSelected}
                 sublevelBounds={selected.sublevelBounds}
                 archetypes={archetypes}
                 evalPlayer={selectedEval}

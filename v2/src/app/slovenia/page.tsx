@@ -5,6 +5,7 @@ import PlayerTable from '@/components/PlayerTable';
 import ReviewBar from '@/components/ReviewBar';
 import { db, reviewMarks } from '@/db';
 import { eq } from 'drizzle-orm';
+import { getSessionRole } from '@/lib/session';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,11 +27,12 @@ export default async function SloveniaPage({
   const since = sinceParam && /^\d{4}-\d{2}-\d{2}$/.test(sinceParam) ? sinceParam : null;
   const baselineAt = since ? new Date(`${since}T23:59:59.999Z`) : undefined;
 
-  const [rows, archetypes, markRows, sweeps] = await Promise.all([
+  const [rows, archetypes, markRows, sweeps, role] = await Promise.all([
     listPlayers('slovenia', { baselineAt }),
     getEffectiveArchetypes(),
     db.select().from(reviewMarks).where(eq(reviewMarks.scope, 'slovenia')).limit(1),
     listCaptureSweeps(),
+    getSessionRole(),
   ]);
   const markedAtIso = markRows[0]?.markedAt.toISOString() ?? null;
   const cov = coverage(rows, 7);
@@ -54,7 +56,7 @@ export default async function SloveniaPage({
         <span className="text-neutral-400">{covAll.done}/{covAll.total} of all 18–21 ({covAll.pct}%)</span>
         {cov.total - cov.done > 0 && <span className="text-neutral-400"> · {cov.total - cov.done} relevant still to scout</span>}
       </p>
-      <ReviewBar markedAtIso={markedAtIso} sweeps={sweeps} since={since} />
+      {role === 'owner' && <ReviewBar markedAtIso={markedAtIso} sweeps={sweeps} since={since} />}
       <PlayerTable rows={rows} variant="slovenia" defaultShowSkills archetypeMatches={archetypeMatches} archetypeNames={archetypeNames} />
     </main>
   );

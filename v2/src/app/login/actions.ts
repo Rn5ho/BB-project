@@ -2,14 +2,15 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { checkPassword, createSessionToken, SESSION_COOKIE } from '@/lib/auth';
+import { resolvePassword, createSessionToken, SESSION_COOKIE } from '@/lib/auth';
 
 export async function login(_prev: { error?: string } | undefined, formData: FormData) {
   const password = String(formData.get('password') ?? '');
-  if (!checkPassword(password)) return { error: 'Wrong password' };
+  const role = resolvePassword(password);
+  if (!role) return { error: 'Wrong password' }; // never reveals which tier failed
   let token: string;
   try {
-    token = await createSessionToken();
+    token = await createSessionToken(role);
   } catch {
     return { error: 'Server misconfiguration — check APP_SESSION_SECRET' };
   }
@@ -17,7 +18,7 @@ export async function login(_prev: { error?: string } | undefined, formData: For
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 24 * (role === 'guest' ? 7 : 30),
     path: '/',
   });
   redirect('/slovenia');

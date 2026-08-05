@@ -6,6 +6,7 @@ import { getCurrentSeasonId } from '@/queries/players';
 import { benchmarkTsp } from '@/lib/training/benchmarks';
 import { selectCandidates } from '@/server/census/candidates';
 import { loadCandidateRows, currentSeasonWeek, lastKnownRoster } from '@/server/census/candidate-rows';
+import { requireOwner } from '@/lib/session';
 
 export interface EnqueueOpts {
   minAge?: number;
@@ -47,6 +48,7 @@ async function wakeWorker(): Promise<void> {
  * it, a 'requested' run waits for the worker's daily safety poll.
  */
 export async function wakeWorkerNow(): Promise<{ ok: true } | { ok: false; error: string }> {
+  await requireOwner();
   const url = process.env.CENSUS_WAKE_URL;
   const secret = process.env.CENSUS_WAKE_SECRET;
   if (!url || !secret) return { ok: false, error: 'CENSUS_WAKE_URL / CENSUS_WAKE_SECRET not configured' };
@@ -68,6 +70,7 @@ export async function enqueueCensus(
   opts: EnqueueOpts,
   offseasonConfirm: string,
 ): Promise<{ ok: true; runId: number } | { ok: false; error: string }> {
+  await requireOwner();
   if (offseasonConfirm.trim().toUpperCase() !== 'OFFSEASON') {
     return {
       ok: false,
@@ -117,6 +120,7 @@ export interface PreviewResult {
 export async function previewCensus(
   opts: EnqueueOpts,
 ): Promise<PreviewResult | { ok: false; error: string }> {
+  await requireOwner();
   try {
     const season = await getCurrentSeasonId();
     const [rows, seasonWeek, roster] = await Promise.all([

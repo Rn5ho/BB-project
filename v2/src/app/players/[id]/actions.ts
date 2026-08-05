@@ -3,24 +3,29 @@
 import { revalidatePath } from 'next/cache';
 import { db, notes, tags, trainingPlans } from '@/db';
 import { and, eq } from 'drizzle-orm';
+import { requireOwner } from '@/lib/session';
 
 export async function addNote(playerId: number, body: string) {
+  await requireOwner();
   const text = body.trim();
   if (!text) return;
   await db.insert(notes).values({ playerId, body: text });
   revalidatePath(`/players/${playerId}`);
 }
 export async function deleteNote(playerId: number, id: number) {
+  await requireOwner();
   await db.delete(notes).where(eq(notes.id, id));
   revalidatePath(`/players/${playerId}`);
 }
 export async function addTag(playerId: number, tag: string) {
+  await requireOwner();
   const t = tag.trim();
   if (!t) return;
   await db.insert(tags).values({ playerId, tag: t }).onConflictDoNothing();
   revalidatePath(`/players/${playerId}`);
 }
 export async function removeTag(playerId: number, tag: string) {
+  await requireOwner();
   await db.delete(tags).where(and(eq(tags.playerId, playerId), eq(tags.tag, tag)));
   revalidatePath(`/players/${playerId}`);
 }
@@ -38,6 +43,7 @@ export async function savePlan(
     horizon?: { age: number; week: number } | null;
   },
 ) {
+  await requireOwner();
   const { blocks, coachLevel, youthTrainerLevel } = data;
   const gymLevel = data.gymLevel ?? 0;
   const trainingCourtLevel = data.trainingCourtLevel ?? 0;
