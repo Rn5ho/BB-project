@@ -20,8 +20,8 @@ function loadCase(file: string): ReplayCase {
       startAge: c.player.age, heightCm: c.player.heightCm, potential: c.player.potential,
       startStamina: c.player.startStamina ?? null, startFreeThrow: c.player.startFreeThrow ?? null,
       coachLevel: c.coachLevel, youthTrainerLevel: c.youthTrainerLevel, gymLevel: c.gymLevel ?? 0, trainingCourtLevel: c.trainingCourtLevel ?? 0,
-      weeks: c.weeks.map((w: { date: string; trainingId: number; minutes: number; observedPops: Record<string, number> }) => ({
-        date: w.date, trainingId: w.trainingId, minutes: w.minutes, observedPops: w.observedPops ?? {},
+      weeks: c.weeks.map((w: { date: string; trainingId: number; minutes: number; observedPops: Record<string, number>; ageAfterThis?: number }) => ({
+        date: w.date, trainingId: w.trainingId, minutes: w.minutes, observedPops: w.observedPops ?? {}, ageAfterThis: w.ageAfterThis,
       })),
       endSkills: SKILL_KEYS.map((k) => c.endSkillsDisplayed?.[k] ?? null),
       unmodeledPopCount: c.weeks.reduce((a: number, w: { unmodeledPops?: object }) => a + Object.keys(w.unmodeledPops ?? {}).length, 0),
