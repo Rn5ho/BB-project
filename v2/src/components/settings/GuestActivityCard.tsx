@@ -1,11 +1,13 @@
 import type { GuestActivity } from '@/lib/guest-activity';
 import { formatStartedAt } from '@/lib/format-sync';
 
-function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
+// Secondary stats are context, not the headline — kept visually quiet so the
+// primary figure below (distinct sessions) is the only thing that reads as urgent.
+function SecondaryStat({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
     <div>
-      <div className="text-2xl font-semibold tabular-nums">{value}</div>
-      <div className="text-xs text-neutral-400">{label}</div>
+      <div className="text-lg font-medium tabular-nums text-neutral-300">{value}</div>
+      <div className="text-xs text-neutral-500">{label}</div>
       {hint && <div className="text-xs text-neutral-600">{hint}</div>}
     </div>
   );
@@ -21,11 +23,19 @@ export default function GuestActivityCard({ activity, days }: { activity: GuestA
 
   return (
     <div className="space-y-4 text-sm">
-      <div className="flex flex-wrap gap-8">
-        <Stat label={`distinct sessions (${days}d)`} value={String(distinctSessions)} hint="one per guest login" />
-        <Stat label={`page views (${days}d)`} value={String(totalViews)} />
-        <Stat label={`logins (${days}d)`} value={String(logins)} />
-        <Stat label="last seen" value={lastSeenAt ? formatStartedAt(lastSeenAt) : '–'} hint={lastSeenAt ? 'UTC' : undefined} />
+      {/* Distinct sessions is the only number that answers "has the password spread
+          further than I handed it out?" — page views alone can't tell one enthusiast
+          refreshing all day from ten new people. Sized and colored to dominate the card. */}
+      <div>
+        <div className="text-5xl font-semibold tabular-nums text-amber-400 leading-none">{distinctSessions}</div>
+        <div className="text-sm text-neutral-300 mt-1.5">distinct guest sessions in the last {days} days</div>
+        <div className="text-xs text-neutral-500">one per login — more than you shared the password with means it has spread</div>
+      </div>
+
+      <div className="flex flex-wrap gap-6">
+        <SecondaryStat label={`page views (${days}d)`} value={String(totalViews)} />
+        <SecondaryStat label={`logins (${days}d)`} value={String(logins)} />
+        <SecondaryStat label="last seen" value={lastSeenAt ? formatStartedAt(lastSeenAt) : '–'} hint={lastSeenAt ? 'UTC' : undefined} />
       </div>
 
       <div>
