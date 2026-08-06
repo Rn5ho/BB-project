@@ -351,6 +351,39 @@ except secrets (env files)**).
 training court). Mis-mapping it manufactured a false "unmodelled scatter" finding and nearly drove a
 spurious `baseSlots` refit — check facility/staff glossaries before trusting any parameter finding.
 
+**Guest usage tracking shipped 2026-08-06** — anonymous view counting for the shared guest
+login, so the owner can see whether the dashboard is used and, more importantly, whether the
+password has spread further than it was handed out. Each guest login mints a random `jti` into
+its JWT; `verifySession` (`src/lib/auth.ts`) exposes it as an anonymous session id (owner tokens
+deliberately get none — owner traffic is never tracked). `src/proxy.ts` writes one `guest_events`
+row per real navigation via `event.waitUntil()`; the login itself is recorded from
+`src/app/login/actions.ts` via Next 16's `after()`. Both keep the write OFF the response path —
+an inline await there would put a cold-starting Neon compute (neon-http has no default timeout)
+directly in front of a guest's page load or login. `isTrackableNavigation`
+(`src/lib/guest-tracking.ts`) filters prefetches, `/api/*` and asset requests — App Router
+client navigations arrive as RSC GETs, so without it router prefetches would inflate every
+number. Read side splits deliberately: `fetchGuestEvents` (`src/queries/guest-events.ts`) is
+thin SQL, and ALL aggregation lives in the pure, self-scoping `summarizeGuestEvents`
+(`src/lib/guest-activity.ts`) — it ignores rows outside its own {days, now} window for every
+output, so the headline number can never silently read all-time under a "last 30 days" label.
+Pure because the repo has NO DB test harness (`vitest.config.ts` stubs `DATABASE_URL`), which is
+also why `SummarizableEvent` is re-declared locally rather than imported from the queries module
+— do not "fix" that. `/settings` shows a "Guest activity" card leading with **distinct sessions**
+as a large amber figure: it is the only number that reveals a shared-on password (page views
+can't tell one enthusiast refreshing from ten new people), and the remedy — rotate the password —
+is the card directly above. NO identity data is stored: no IP, no user-agent, no query strings,
+and by owner's decision there is no guest-facing notice. Migration `0012_guest_events`.
+Spec: `docs/superpowers/specs/2026-08-06-guest-usage-tracking-design.md`.
+
+**Drizzle migration bookkeeping (learned 2026-08-06)** — applying `0012` failed because
+`0011_guest_config` had been applied to prod out-of-band (via `drizzle-kit push`) with no row in
+`drizzle.__drizzle_migrations`, so `drizzle-kit migrate` tried to replay it and hit "app_config
+already exists". Fixed by inserting the missing tracking row (sha256 of the .sql file,
+`created_at` = the journal's `when`). Note migrations `0006` and `0010` also carry stale hashes
+there because their `.sql` files were edited after being applied — harmless, since the migrator
+compares `created_at`, never hashes. **Use `drizzle-kit migrate`, not `push`, on this database**
+— mixing them is what caused the drift.
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 

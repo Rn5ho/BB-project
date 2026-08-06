@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterEach } from 'vitest';
 import { SignJWT } from 'jose';
-import { createSessionToken, verifySessionToken, resolvePassword } from './auth';
+import { createSessionToken, verifySession, verifySessionToken, resolvePassword } from './auth';
 
 beforeAll(() => {
   process.env.APP_SESSION_SECRET = 'a'.repeat(64);
@@ -43,6 +43,40 @@ describe('session tokens', () => {
   });
   it('rejects garbage', async () => {
     expect(await verifySessionToken('not-a-jwt')).toBe(null);
+  });
+});
+
+describe('anonymous guest session ids', () => {
+  it('gives each guest token a session id', async () => {
+    const token = await createSessionToken('guest');
+    const session = await verifySession(token);
+    expect(session?.role).toBe('guest');
+    expect(typeof session?.sessionId).toBe('string');
+    expect(session?.sessionId?.length).toBeGreaterThan(0);
+  });
+
+  it('gives two guest logins different session ids', async () => {
+    const a = await verifySession(await createSessionToken('guest'));
+    const b = await verifySession(await createSessionToken('guest'));
+    expect(a?.sessionId).not.toBe(b?.sessionId);
+  });
+
+  it('does not tag owner tokens with a session id', async () => {
+    const session = await verifySession(await createSessionToken('owner'));
+    expect(session).toEqual({ role: 'owner', sessionId: null });
+  });
+
+  it('accepts guest tokens issued before session ids existed', async () => {
+    const legacy = await new SignJWT({ sub: 'owner', role: 'guest' })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('7d')
+      .sign(new TextEncoder().encode(process.env.APP_SESSION_SECRET));
+    expect(await verifySession(legacy)).toEqual({ role: 'guest', sessionId: null });
+  });
+
+  it('returns null for a token that does not verify', async () => {
+    expect(await verifySession('not-a-jwt')).toBe(null);
   });
 });
 

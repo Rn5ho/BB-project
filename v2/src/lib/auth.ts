@@ -4,6 +4,8 @@ export const SESSION_COOKIE = 'bbscout_session';
 
 export type Role = 'owner' | 'guest';
 
+export type Session = { role: Role; sessionId: string | null };
+
 function secret(): Uint8Array {
   const s = process.env.APP_SESSION_SECRET;
   if (!s || s.length < 32) throw new Error('APP_SESSION_SECRET missing or too short');
@@ -15,26 +17,36 @@ function secret(): Uint8Array {
 const EXPIRY: Record<Role, string> = { owner: '30d', guest: '7d' };
 
 export async function createSessionToken(role: Role = 'owner'): Promise<string> {
-  return new SignJWT({ sub: 'owner', role })
+  const jwt = new SignJWT({ sub: 'owner', role })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime(EXPIRY[role])
-    .sign(secret());
+    .setExpirationTime(EXPIRY[role]);
+  // Guest tokens carry a random id so anonymous usage can be counted per login without
+  // identifying anyone. Owner tokens don't — owner traffic is deliberately not tracked.
+  if (role === 'guest') jwt.setJti(crypto.randomUUID());
+  return jwt.sign(secret());
 }
 
-/** Returns the session role, or null if the token is invalid/expired.
+/** Returns the session role + anonymous id, or null if the token is invalid/expired.
  *  Back-compat: owner tokens issued before roles existed carry sub:'owner' and no
- *  role claim — they verify as 'owner'. Return truthiness matches the old boolean. */
-export async function verifySessionToken(token: string): Promise<Role | null> {
+ *  role claim — they verify as 'owner'. Tokens issued before session ids existed
+ *  simply have no jti, and report sessionId: null. */
+export async function verifySession(token: string): Promise<Session | null> {
   const key = secret(); // throws loudly on misconfiguration
   try {
     const { payload } = await jwtVerify(token, key);
+    const sessionId = typeof payload.jti === 'string' ? payload.jti : null;
     const role = payload.role;
-    if (role === 'owner' || role === 'guest') return role;
-    return payload.sub === 'owner' ? 'owner' : null;
+    if (role === 'owner' || role === 'guest') return { role, sessionId };
+    return payload.sub === 'owner' ? { role: 'owner', sessionId } : null;
   } catch {
     return null;
   }
+}
+
+/** Role-only view of verifySession, for the many call sites that don't care about the id. */
+export async function verifySessionToken(token: string): Promise<Role | null> {
+  return (await verifySession(token))?.role ?? null;
 }
 
 /** Constant-time-ish compare without node:crypto (single-user hobby app). */

@@ -7,11 +7,21 @@ import TrackedCountryList from '@/components/settings/TrackedCountryList';
 import SyncJobsCard, { type JobLastRun, type CensusLastRun } from '@/components/settings/SyncJobsCard';
 import GuestAccessCard from '@/components/settings/GuestAccessCard';
 import { getGuestPassword } from '@/queries/app-config';
+import GuestActivityCard from '@/components/settings/GuestActivityCard';
+import { fetchGuestEvents } from '@/queries/guest-events';
+import { summarizeGuestEvents } from '@/lib/guest-activity';
 import { formatStartedAt, formatDuration, formatSyncResult, type SyncCounts } from '@/lib/format-sync';
 import type { CensusTotals } from '@/lib/format-census';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
+
+const GUEST_ACTIVITY_DAYS = 30;
+// Guest tokens hard-expire after 7 days with no sliding renewal (EXPIRY.guest in
+// src/lib/auth.ts), so a 7-day distinct-session count is the one that maps ~1:1 to
+// people currently holding the password — the 30-day count is inflated ~4-5x for a
+// single continuously-active guest and is not a usable leak signal on its own.
+const GUEST_ACTIVITY_RECENT_DAYS = 7;
 
 function lastRunOf(job: string) {
   return db.select().from(syncLog).where(eq(syncLog.jobType, job)).orderBy(desc(syncLog.startedAt)).limit(1);
@@ -40,7 +50,10 @@ function Card({ title, blurb, children }: { title: string; blurb?: string; child
 }
 
 export default async function SettingsPage() {
-  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastInference, lastCensusRows, guestPassword] = await Promise.all([
+  // One clock read so the fetch window and summary windows cannot disagree
+  const now = new Date();
+
+  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastInference, lastCensusRows, guestPassword, guestEventRows] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
     getCountriesCatalog().catch(() => []),
@@ -51,6 +64,7 @@ export default async function SettingsPage() {
     lastRunOf('inference'),
     db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(1),
     getGuestPassword().catch(() => null),
+    fetchGuestEvents(new Date(now.getTime() - GUEST_ACTIVITY_DAYS * 86_400_000)).catch(() => []),
   ]);
 
   const censusLastRun: CensusLastRun | null = lastCensusRows[0]
@@ -60,6 +74,13 @@ export default async function SettingsPage() {
         totals: lastCensusRows[0].totals as CensusTotals,
       }
     : null;
+
+  // One fetch (guestEventRows, 30 days), two summaries — summarizeGuestEvents is
+  // self-scoping (ignores rows outside its own {days, now} window for every output),
+  // so re-running it over a narrower window needs no second query.
+  const guestActivity = summarizeGuestEvents(guestEventRows, { days: GUEST_ACTIVITY_DAYS, now });
+  const guestActivityRecent = summarizeGuestEvents(guestEventRows, { days: GUEST_ACTIVITY_RECENT_DAYS, now });
+  const showGuestActivity = guestPassword !== null || guestActivity.totalViews > 0 || guestActivity.logins > 0;
 
   const trackedIds = new Set(tracked.map((t) => t.countryId));
   const available = catalog.filter((c) => !trackedIds.has(c.id) && c.id !== 66);
@@ -82,6 +103,20 @@ export default async function SettingsPage() {
       >
         <GuestAccessCard current={guestPassword} />
       </Card>
+
+      {showGuestActivity && (
+        <Card
+          title="Guest activity"
+          blurb="Anonymous usage of the shared guest login. Guest logins last 7 days, so recent distinct sessions is roughly how many people are using the password right now — a jump above that suggests it has spread; rotate it above."
+        >
+          <GuestActivityCard
+            activity={guestActivity}
+            recent={guestActivityRecent}
+            days={GUEST_ACTIVITY_DAYS}
+            recentDays={GUEST_ACTIVITY_RECENT_DAYS}
+          />
+        </Card>
+      )}
 
       <Card title="Data sync">
         <SyncJobsCard
