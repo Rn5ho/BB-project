@@ -100,6 +100,9 @@ console.log(`API tiers: ${dryRun ? 'would fix' : 'fixed'} ${totalFixed}`);
 
 // ---- tier 3: page-verify residual poison-window players ----
 if (deep) {
+  // Anything stamped BEFORE this run's day that still derives 18-21 and that no API
+  // fetch could vouch for gets its live page checked: covers the Aug-4 poison window,
+  // pre-rollover S72 stamps (S72-draft rookies derive +1 wrongly), and null-country rows.
   const flagged = await db.execute(sql`
     with latest as (
       select distinct on (player_id) player_id, age, season, captured_at from snapshots
@@ -107,8 +110,8 @@ if (deep) {
     )
     select p.bb_player_id, p.country_id, l.age as snap_age, l.season as snap_season
     from players p join latest l on l.player_id = p.bb_player_id
-    where l.season = ${season}
-      and l.captured_at >= ${POISON_START} and l.captured_at < ${POISON_END}
+    where (l.season < ${season} or (l.captured_at >= ${POISON_START} and l.captured_at < ${POISON_END}))
+      and l.captured_at < ${todayStart.toISOString()}
       and l.age + (${season} - l.season) between 18 and 21`);
   const residual = (flagged.rows as { bb_player_id: number; country_id: number | null; snap_age: number; snap_season: number }[])
     .filter((r) => !(r.country_id != null && coveredByCountry.get(Number(r.country_id))?.has(Number(r.bb_player_id))));
