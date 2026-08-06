@@ -277,3 +277,17 @@ export const modelScorecards = pgTable('model_scorecards', {
 }, (t) => [
   index('idx_model_scorecards_model').on(t.modelId, t.runAt.desc()),
 ]);
+
+// One row per guest page view (plus one per guest login). Anonymous by design: session_id
+// is the guest token's random jti, so the owner can see HOW MANY distinct sessions use the
+// shared password — a jump means it spread further than it was handed out — with no way to
+// tell who anyone is. No IP, no user-agent, no query strings.
+export const guestEvents = pgTable('guest_events', {
+  id: serial('id').primaryKey(),
+  occurredAt: timestamp('occurred_at', { withTimezone: true }).notNull().defaultNow(),
+  sessionId: text('session_id').notNull(), // jti, or 'unknown' for pre-jti guest tokens
+  event: text('event').notNull(),          // 'login' | 'pageview'
+  path: text('path'),                      // pathname only; null for 'login'
+}, (t) => [
+  index('idx_guest_events_occurred').on(t.occurredAt.desc()),
+]);
