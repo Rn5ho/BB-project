@@ -17,6 +17,11 @@ export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 const GUEST_ACTIVITY_DAYS = 30;
+// Guest tokens hard-expire after 7 days with no sliding renewal (EXPIRY.guest in
+// src/lib/auth.ts), so a 7-day distinct-session count is the one that maps ~1:1 to
+// people currently holding the password — the 30-day count is inflated ~4-5x for a
+// single continuously-active guest and is not a usable leak signal on its own.
+const GUEST_ACTIVITY_RECENT_DAYS = 7;
 
 function lastRunOf(job: string) {
   return db.select().from(syncLog).where(eq(syncLog.jobType, job)).orderBy(desc(syncLog.startedAt)).limit(1);
@@ -67,10 +72,12 @@ export default async function SettingsPage() {
       }
     : null;
 
-  const guestActivity = summarizeGuestEvents(guestEventRows, {
-    days: GUEST_ACTIVITY_DAYS,
-    now: new Date(),
-  });
+  // One fetch (guestEventRows, 30 days), two summaries — summarizeGuestEvents is
+  // self-scoping (ignores rows outside its own {days, now} window for every output),
+  // so re-running it over a narrower window needs no second query.
+  const now = new Date();
+  const guestActivity = summarizeGuestEvents(guestEventRows, { days: GUEST_ACTIVITY_DAYS, now });
+  const guestActivityRecent = summarizeGuestEvents(guestEventRows, { days: GUEST_ACTIVITY_RECENT_DAYS, now });
   const showGuestActivity = guestPassword !== null || guestActivity.totalViews > 0 || guestActivity.logins > 0;
 
   const trackedIds = new Set(tracked.map((t) => t.countryId));
@@ -98,9 +105,14 @@ export default async function SettingsPage() {
       {showGuestActivity && (
         <Card
           title="Guest activity"
-          blurb="Anonymous usage of the shared guest login, last 30 days. Distinct sessions is the one to watch — more than you shared the password with means it has spread; rotate it above."
+          blurb="Anonymous usage of the shared guest login. Guest logins last 7 days, so recent distinct sessions is roughly how many people are using the password right now — a jump above that suggests it has spread; rotate it above."
         >
-          <GuestActivityCard activity={guestActivity} days={GUEST_ACTIVITY_DAYS} />
+          <GuestActivityCard
+            activity={guestActivity}
+            recent={guestActivityRecent}
+            days={GUEST_ACTIVITY_DAYS}
+            recentDays={GUEST_ACTIVITY_RECENT_DAYS}
+          />
         </Card>
       )}
 
