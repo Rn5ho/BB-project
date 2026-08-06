@@ -1,0 +1,28 @@
+{
+  "file": "image-174c9cbf31bbebb2.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Jure Plesavec",
+      "player_id": 53897751,
+      "club": null,
+      "age": 19,
+      "height_cm": 206,
+      "potential_word": "NKI",
+      "potential_num": 9,
+      "salary": 4857,
+      "dmi": 147900,
+      "game_shape": 9,
+      "experience": 1,
+      "skills": {"js": 7, "jr": 5, "od": 6, "ha": 6, "dr": 4, "pa": 6, "is": 3, "id": 12, "rb": 11, "sb": 16, "st": 1, "ft": 8},
+      "tsp_printed": 76,
+      "tsp_out_printed": 34,
+      "tsp_in_printed": 42,
+      "tsp_checksum_ok": true,
+      "arrows": ["id", "ft"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card (words only, no printed numbers). Position Center. Role: redna menjava. Potential range 59%-64%. BM eval PG 6.69 SG 6.73 SF 7.58 PF 7.86 C 8.14."
+    }
+  ],
+  "history_entries": []
+}

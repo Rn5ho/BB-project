@@ -1,0 +1,83 @@
+﻿author,week_no,week_no_source,report_date,training_raw,training_name,position_group,training_key,minutes_note,coach_level,youth_trainer_level,fitness_level,training_court_level,n_player_cards,report_ts,message_id
+alenokc,1,reported,2024-09-29,1 na 1 za krila,One on One,SF-PF,16,"vsi 48 min (razen Pokorn, brez trenininga)",7,7.0,3,3.0,5,2024-09-29T20:59:31.061+02:00,1290025182685040641
+alenokc,2,reported,2024-10-06,1 na 1 za krila,One on One,SF-PF,16,vsi 48 min,7,7.0,3,3.0,5,2024-10-06T15:20:49.095+02:00,1292476661241086045
+alenokc,3,reported,2024-10-12,1 na 1 za krila,One on One,SF-PF,16,vsi 48 min,7,7.0,3,3.0,5,2024-10-12T14:48:05.264+02:00,1294642751530602529
+alenokc,4,reported,2024-10-19,1 na 1 za krila,One on One,SF-PF,16,vsi 48 min,7,7.0,3,3.0,5,2024-10-19T11:21:22.014+02:00,1297127443588583437
+alenokc,5,reported,2024-10-29,1 na 1 za krila,One on One,SF-PF,16,vsi 48 min,7,7.0,3,3.0,5,2024-10-29T21:27:28.929+01:00,1300918955636162620
+alenokc,6,reported,2024-11-08,1 na 1 za krila,One on One,SF-PF,16,vsi 48 min,7,7.0,3,3.0,5,2024-11-08T08:31:35.879+01:00,1304347576648073277
+alenokc,10,reported,2024-11-29,Skok za C/KC,Rebounding,PF-C,27,vsi 48 min,7,7.0,3,3.0,3,2024-11-29T19:29:17.876+01:00,1312123237437673482
+alenokc,11,reported,2024-12-07,Blokade za C,Shot Blocking,C,29,vsi 48 min,7,7.0,3,3.0,3,2024-12-07T10:01:48.327+01:00,1314879526203035708
+alenokc,12,reported,2024-12-15,Blokade za C,Shot Blocking,C,29,vsi 48 min,7,7.0,3,3.0,3,2024-12-15T20:04:43.465+01:00,1317930358653845516
+alenokc,14,reported,2024-12-28,Skok za KC/C,Rebounding,PF-C,27,vsi 48 min,7,7.0,3,3.0,3,2024-12-28T11:07:35.079+01:00,1322506225258074193
+alenokc,17,reported,2025-01-23,Met pod košem za C,Inside Scoring,C,21,vsi 48 min,7,7.0,3,3.0,3,2025-01-23T07:28:08.822+01:00,1331873086479274077
+alenokc,18,reported,2025-01-29,Met pod košem za C,Inside Scoring,C,21,vsi 48 min,7,7.0,3,3.0,3,2025-01-29T19:04:20.556+01:00,1334222617023877150
+alenokc,19,reported,2025-02-06,Met pod košem za C,Inside Scoring,C,21,vsi 48 min,7,7.0,3,3.0,3,2025-02-06T14:48:48.293+01:00,1337057411776643083
+alenokc,21,reported,2025-02-15,Skok za C/KC,Rebounding,PF-C,27,vsi 48 min,7,7.0,3,3.0,3,2025-02-15T18:50:51.275+01:00,1340379816368537652
+alenokc,25,inferred_from_cadence,2025-03-14,MPK za C,Inside Scoring,C,21,"2x 48 min, Koštomaj 26 min",7,7.0,3,3.0,3,2025-03-14T15:36:16.543+01:00,1350115321364611205
+alenokc,27,reported,2025-03-28,Skok za C/KC,Rebounding,PF-C,27,3x 48 min,7,7.0,3,3.0,3,2025-03-28T11:34:23.07+01:00,1355127877565284372
+alenokc,29,reported,2025-04-11,MPK za C,Inside Scoring,C,21,3x 48 min,7,7.0,3,3.0,3,2025-04-11T14:56:36.6+02:00,1360237099902566401
+alenokc,30,reported,2025-04-18,MPK za C,Inside Scoring,C,21,3x 48 min,7,7.0,3,3.0,3,2025-04-18T12:37:55.01+02:00,1362738911683547277
+alenokc,32,reported,2025-05-02,OPK za C,Inside Defense,C,24,3x 48 min,7,7.0,3,3.0,3,2025-05-02T13:25:13.101+02:00,1367824245618511942
+alenokc,34,reported,2025-05-19,OPK za C,Inside Defense,C,24,3x 48 min,7,7.0,3,3.0,3,2025-05-19T22:12:49.086+02:00,1374117614158352576
+alenokc,35,reported,2025-05-27,1 na 1 za krila,One on One,SF-PF,16,"2x 48 min, Gojc Jalovec 44 min",7,7.0,3,3.0,3,2025-05-27T12:44:44.626+02:00,1376873756495970314
+alenokc,37,reported,2025-06-10,Podaje za OI,Passing,PG,18,3x 48 min,7,7.0,3,3.0,3,2025-06-10T17:52:51.745+02:00,1382024727211802837
+alenokc,38,reported,2025-06-13,Podaje za OI,Passing,PG,18,3x 48 min,7,,3,3.0,3,2025-06-13T15:05:29.111+02:00,1383069768948649984
+alenokc,39,reported,2025-06-21,Podaje za OI,Passing,PG,18,3x 48 min,7,,3,3.0,3,2025-06-21T11:32:00.555+02:00,1385915148895522888
+alenokc,40,reported,2025-06-27,Podaje za OI,Passing,PG,18,3x 48 min,7,,3,3.0,3,2025-06-27T13:04:57.96+02:00,1388112869421351004
+alenokc,41,reported,2025-07-07,1na1 za krila,One on One,SF-PF,16,3x 48 min,7,,3,3.0,3,2025-07-07T11:07:51.781+02:00,1391707278146539572
+alenokc,42,reported,2025-07-12,1na1 za krila,One on One,SF-PF,16,3x 48 min,7,,3,3.0,3,2025-07-12T11:01:23.648+02:00,1393517589526872104
+alenokc,44,reported,2025-07-29,OPK za C,Inside Defense,C,24,3x 48 min,7,,3,3.0,3,2025-07-29T09:43:41.011+02:00,1399658626725052466
+alenokc,46,reported,2025-08-08,OPK za C,Inside Defense,C,24,3x 48 min,7,,3,3.0,3,2025-08-08T13:38:48.053+02:00,1403341674603876435
+pjtr576,1,reported,2024-09-20,1 na 1 za K/KC,One on One,SF-PF,16,oba 48 min,5,,3,,3,2024-09-20T12:52:23.469+02:00,1286641102488600586
+pjtr576,2,reported,2024-09-27,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-09-27T12:31:33.593+02:00,1289172575188025396
+pjtr576,3,reported,2024-10-04,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-10-04T12:28:18.276+02:00,1291708471028350997
+pjtr576,4,reported,2024-10-11,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-10-11T15:39:16.376+02:00,1294293244842086512
+pjtr576,5,reported,2024-10-18,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-10-18T12:53:37.766+02:00,1296788274349867028
+pjtr576,6,reported,2024-10-25,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-10-25T13:05:24.022+02:00,1299327951661305919
+pjtr576,7,reported,2024-11-01,oviranje meta za C,Shot Blocking,C,29,"Piršič in Ostrovršek 48 min, Plesavec 47 min",5,6.0,3,,3,2024-11-01T19:35:20.891+01:00,1301977899796004926
+pjtr576,8,reported,2024-11-08,skok za C/KC,Rebounding,PF-C,27,vsi 48 min,5,6.0,3,,3,2024-11-08T13:01:35.35+01:00,1304415522154086401
+pjtr576,9,reported,2024-11-15,skok za C/KC,Rebounding,PF-C,27,vsi 48 min,5,6.0,3,,3,2024-11-15T13:13:26.873+01:00,1306955221557182565
+pjtr576,10,reported,2024-11-22,Oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-11-22T13:03:25.214+01:00,1309489413075501067
+pjtr576,11,reported,2024-11-29,Oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2024-11-29T13:07:54.321+01:00,1312027256851398757
+pjtr576,12,reported,2024-12-06,Oviranje meta za C,Shot Blocking,C,29,"Plesavec 47 min, druga dva 48 min",5,6.0,3,,3,2024-12-06T12:27:36.013+01:00,1314553828791685290
+pjtr576,13,reported,2024-12-13,Skok za C/KC,Rebounding,PF-C,27,vsi 48 min,5,6.0,3,,3,2024-12-13T12:24:42.583+01:00,1317089816432873472
+pjtr576,14,reported,2024-12-21,Skok za C/KC,Rebounding,PF-C,27,vsi 48 min,5,6.0,3,,3,2024-12-21T12:24:39.808+01:00,1319988907718344735
+pjtr576,15,reported,2024-12-27,Skok za C/KC,Rebounding,PF-C,27,vsi 48 min,5,6.0,3,,3,2024-12-27T12:34:15.566+01:00,1322165649815900235
+pjtr576,16,reported,2025-01-03,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2025-01-03T12:45:52.946+01:00,1324705289899081748
+pjtr576,17,reported,2025-01-10,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2025-01-10T12:31:37.098+01:00,1327238415271460885
+pjtr576,18,reported,2025-01-17,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2025-01-17T12:34:33.584+01:00,1329775870566596709
+pjtr576,19,reported,2025-01-26,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2025-01-26T07:33:09.947+01:00,1332961513085993122
+pjtr576,20,reported,2025-01-31,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2025-01-31T12:23:49.657+01:00,1334846599859408961
+pjtr576,21,reported,2025-02-07,oviranje meta za C,Shot Blocking,C,29,vsi 48 min,5,6.0,3,,3,2025-02-07T12:43:29.706+01:00,1337388264402976818
+pjtr576,22,reported,2025-02-14,skok za C/KC,Rebounding,PF-C,27,vsi 48 min,5,6.0,3,,3,2025-02-14T13:43:17.019+01:00,1339940025743310868
+pjtr576,23,reported,2025-02-22,oviranje meta za C,Shot Blocking,C,29,"Ostrovršnik 46 min (poln trening?), Plesavec in Piršič 48 min",5,6.0,3,,3,2025-02-22T13:47:29.026+01:00,1342840185661947904
+pjtr576,24,reported,2025-02-28,oviranje meta za C,Shot Blocking,C,29,vsi poln trening,5,6.0,3,,3,2025-02-28T12:24:07.254+01:00,1344993533903503371
+pjtr576,25,reported,2025-03-07,OPK za C,Inside Defense,C,24,"Plesavec in Ostroveršnik poln trening, Piršič 38 minut",5,6.0,3,,3,2025-03-07T12:21:57.72+01:00,1347529705657733153
+pjtr576,26,reported,2025-03-14,OPK za C,Inside Defense,C,24,vsi 48 minut,5,6.0,3,,3,2025-03-14T12:22:10.758+01:00,1350066475402006679
+pjtr576,27,reported,2025-03-21,OPK za C,Inside Defense,C,24,vsi 48 minut,5,6.0,3,,3,2025-03-21T11:38:10.142+01:00,1352592114915217480
+pjtr576,28,reported,2025-03-28,skok za C/KC,Rebounding,PF-C,27,vsi 48 minut,5,6.0,3,,3,2025-03-28T11:25:37.524+01:00,1355125673265729536
+pjtr576,29,reported,2025-04-04,skok za C/KC,Rebounding,PF-C,27,vsi 48 minut,5,,3,,3,2025-04-04T12:48:58.816+02:00,1357668265769439312
+pjtr576,30,reported,2025-04-11,OPK za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-04-11T12:24:10.669+02:00,1360198739087851635
+pjtr576,31,reported,2025-04-18,OPK za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-04-18T12:36:01.035+02:00,1362738433637875886
+pjtr576,32,reported,2025-04-25,podajanje za OI,Passing,PG,18,"Piršič 48 minut, Ostroveršnik 46 minut, Plesavec poškodovan",5,,3,,3,2025-04-25T12:21:37.813+02:00,1365271528081461258
+pjtr576,33,reported,2025-05-04,podajanje za OI,Passing,PG,18,"Piršič in Plesavec 48 minut, Ostroveršnik 46 minut",5,,3,,3,2025-05-04T11:27:52.202+02:00,1368519489678737428
+pjtr576,34,reported,2025-05-09,podajanje za OI,Passing,PG,18,vsi 48 minut,5,,3,,3,2025-05-09T12:22:04.722+02:00,1370345071064518718
+pjtr576,35,reported,2025-05-16,podajanje za OI,Passing,PG,18,"Piršič in Plesavec 48 minut, Ostroveršnik 46 minut",5,,3,,3,2025-05-16T12:26:19.029+02:00,1372882852764581909
+pjtr576,36,reported,2025-05-23,oviranje meta za C,Shot Blocking,C,29,"Plesavec 48 minut, Ostroveršnik 46 minut, Piršič poškodovan",5,,3,,3,2025-05-23T12:35:51.786+02:00,1375421970140889170
+pjtr576,37,reported,2025-05-30,obramba pod košem za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-05-30T12:21:49.209+02:00,1377955151176011940
+pjtr576,38,reported,2025-06-06,obramba pod košem za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-06-06T12:21:21.605+02:00,1380491750455513148
+pjtr576,39,reported,2025-06-13,obramba pod košem za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-06-13T12:31:11.489+02:00,1383030939667665039
+pjtr576,40,reported,2025-06-20,obramba pod košem za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-06-20T12:54:32.827+02:00,1385573532364439652
+pjtr576,41,reported,2025-06-27,obramba pod košem za C,Inside Defense,C,24,vsi 48 minut,5,,3,,3,2025-06-27T12:22:07.852+02:00,1388102089607221258
+pjtr576,42,reported,2025-07-04,podajanje za OI,Passing,PG,18,oba 48 minut,5,,3,,2,2025-07-04T12:31:28.835+02:00,1390641157599399967
+pjtr576,43,reported,2025-07-11,podajanje za OI,Passing,PG,18,oba 48 minut,5,,3,,2,2025-07-11T12:24:32.46+02:00,1393176126255398963
+pjtr576,44,reported,2025-07-18,podajanje za OI,Passing,PG,18,oba 48 minut,5,,3,,2,2025-07-18T14:20:55.511+02:00,1395742130353213631
+pjtr576,45,reported,2025-07-26,podajanje za OI,Passing,PG,18,"Plesavec 48, Ostroveršnik 46 minut",6,,3,,2,2025-07-26T01:01:01.224+02:00,1398439930648203398
+pjtr576,46,reported,2025-08-01,podaje za OI,Passing,PG,18,Plesavec 48 minut. Ostroveršnik 46 minut,6,,3,,2,2025-08-01T16:26:29.277+02:00,1400847159376744448
+pjtr576,47,reported,2025-08-08,oviranje meta za C,Shot Blocking,C,29,oba 48 minut,6,,3,,2,2025-08-08T13:39:20.159+02:00,1403341809265934498
+pjtr576,48,reported,2025-08-15,oviranje meta za C,Shot Blocking,C,29,oba 48 minut,6,,3,,2,2025-08-15T12:28:02.759+02:00,1405860583609208933
+pjtr576,49,reported,2025-08-22,oviranje meta za C,Shot Blocking,C,29,oba 48 minut,6,,3,,2,2025-08-22T13:38:19.464+02:00,1408414984811053116
+pjtr576,50,reported,2025-08-29,skok za C/KC,Rebounding,PF-C,27,oba 48 minut,6,,3,,2,2025-08-29T12:28:56.665+02:00,1410934239825887307
+pjtr576,51,reported,2025-09-12,oviranje meta za C,Shot Blocking,C,29,oba 48 minut,6,,3,,2,2025-09-12T12:28:01.303+02:00,1416007437739360316
+pjtr576,52,reported,2025-09-12,obramba pod košem za C,Inside Defense,C,24,oba 48 minut,6,,3,,2,2025-09-12T12:28:56.185+02:00,1416007667931156480
+pjtr576,53,reported,2025-09-19,blokade za C,Shot Blocking,C,29,oba 48 minut,6,,3,,2,2025-09-19T12:37:49.568+02:00,1418546620160806942

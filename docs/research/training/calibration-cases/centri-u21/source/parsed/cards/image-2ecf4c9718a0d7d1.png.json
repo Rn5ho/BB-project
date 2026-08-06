@@ -1,0 +1,49 @@
+{
+  "file": "image-2ecf4c9718a0d7d1.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Goran Pokorn",
+      "player_id": 53897731,
+      "club": null,
+      "age": 18,
+      "height_cm": 206,
+      "potential_word": "superzvezdnik",
+      "potential_num": 8,
+      "salary": 2658,
+      "dmi": 7600,
+      "game_shape": 6,
+      "experience": 1,
+      "skills": {"js":3,"jr":2,"od":2,"ha":3,"dr":3,"pa":7,"is":8,"id":6,"rb":5,"sb":4,"st":1,"ft":4},
+      "tsp_printed": 43,
+      "tsp_out_printed": 20,
+      "tsp_in_printed": 23,
+      "tsp_checksum_ok": true,
+      "arrows": ["ha","dr"],
+      "confidence": "high",
+      "notes": "Position Center. Rookie badge. Vloga: vleče plačo. Salary secondary $2808. Potential range 35%-38%."
+    },
+    {
+      "name": "Francis Koštomaj",
+      "player_id": 53897393,
+      "club": null,
+      "age": 18,
+      "height_cm": 206,
+      "potential_word": "superzvezdnik",
+      "potential_num": 8,
+      "salary": 2184,
+      "dmi": 27700,
+      "game_shape": 9,
+      "experience": 1,
+      "skills": {"js":2,"jr":6,"od":7,"ha":5,"dr":5,"pa":2,"is":6,"id":7,"rb":4,"sb":7,"st":4,"ft":3},
+      "tsp_printed": 51,
+      "tsp_out_printed": 27,
+      "tsp_in_printed": 24,
+      "tsp_checksum_ok": true,
+      "arrows": ["dr","ft"],
+      "confidence": "high",
+      "notes": "Position Center. Rookie badge. Vloga: član prve peterke. Salary secondary $2599. Potential range 36%-39%."
+    }
+  ],
+  "history_entries": []
+}

@@ -1,0 +1,41 @@
+{
+  "file": "image-614e9e020cd070e0.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": "Kremenca Modre Jakne",
+      "age": 18,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 3767,
+      "dmi": 12500,
+      "game_shape": 6,
+      "experience": 1,
+      "skills": {
+        "js": 6,
+        "jr": 2,
+        "od": 2,
+        "ha": 4,
+        "dr": 3,
+        "pa": 3,
+        "is": 5,
+        "id": 7,
+        "rb": 7,
+        "sb": 7,
+        "st": 8,
+        "ft": 2
+      },
+      "tsp_printed": 46,
+      "tsp_out_printed": 20,
+      "tsp_in_printed": 26,
+      "tsp_checksum_ok": true,
+      "arrows": [],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card, Slovenian. Position: Krilni center (PF). Vloga: vlece placo. Rookie badge next to age. Potencial zvezdnik vec let 43%-48%. Secondary salary in green: $3635. BM evaluation PG 3.58 SG 3.63 SF 4.75 PF 5.44 C 5.80. Checksum: out 6+2+2+4+3+3=20, in 5+7+7+7=26, total 46 - all match."
+    }
+  ],
+  "history_entries": []
+}

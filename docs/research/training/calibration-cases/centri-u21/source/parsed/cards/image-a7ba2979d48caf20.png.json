@@ -1,0 +1,28 @@
+{
+  "file": "image-a7ba2979d48caf20.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 19,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 9551,
+      "dmi": 227600,
+      "game_shape": 8,
+      "experience": 2,
+      "skills": {"js": 6, "jr": 3, "od": 3, "ha": 4, "dr": 4, "pa": 4, "is": 6, "id": 11, "rb": 12, "sb": 15, "st": 8, "ft": 3},
+      "tsp_printed": 68,
+      "tsp_out_printed": 24,
+      "tsp_in_printed": 44,
+      "tsp_checksum_ok": true,
+      "arrows": ["pa", "sb"],
+      "confidence": "high",
+      "notes": "BB web player page, position Center. Secondary salary in green: $15820. Potential range [73%-80%]. Izkusenost obupen with up-arrow. Buzzer-Manager evaluation PG 4.99 SG 5.06 SF 6.91 PF 8.03 C 8.65."
+    }
+  ],
+  "history_entries": []
+}

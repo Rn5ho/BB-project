@@ -9,7 +9,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 
-const PARSED = 'C:/Users/Rn5ho/Downloads/centri-u21/parsed';
+const PARSED = '../docs/research/training/calibration-cases/centri-u21/source/parsed';
 const { weekStep, displayed } = await import('../../../../src/lib/training/engine');
 const { SKILL_KEYS, skillsFromArray } = await import('../../../../src/lib/training/types');
 const { BBSCOUT } = await import('../../../../src/lib/training/models/bbscout');

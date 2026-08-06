@@ -19,7 +19,7 @@ import { SKILL_KEYS, ALL_POSITIONS, type Skills, type Position } from '../../../
 
 const OUT_DIR =
   'C:/Users/Rn5ho/AppData/Local/Temp/claude/D--ClaudeProjects-BB-project-v2/3cc08ba3-8a42-4d6b-9ea5-496b684e99bf/scratchpad/agents/salary-dmi-gs';
-const SERIES = 'C:/Users/Rn5ho/Downloads/centri-u21/parsed/series.csv';
+const SERIES = '../docs/research/training/calibration-cases/centri-u21/source/parsed/series.csv';
 
 // ---- 2010 Joey Ka multipliers (identical to salary.ts SALARY_MULTIPLIERS) ----
 const MULT_2010: Record<Position, number[]> = {

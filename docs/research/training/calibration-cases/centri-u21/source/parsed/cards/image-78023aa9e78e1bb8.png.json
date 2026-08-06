@@ -1,0 +1,28 @@
+{
+  "file": "image-78023aa9e78e1bb8.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 20,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 28312,
+      "dmi": 466100,
+      "game_shape": 8,
+      "experience": 3,
+      "skills": {"js":7,"jr":3,"od":3,"ha":5,"dr":5,"pa":6,"is":7,"id":15,"rb":14,"sb":16,"st":7,"ft":3},
+      "tsp_printed": 81,
+      "tsp_out_printed": 29,
+      "tsp_in_printed": 52,
+      "tsp_checksum_ok": true,
+      "arrows": ["dr"],
+      "confidence": "high",
+      "notes": "Position Center. Words-only variant; converted via ladder. Vloga: član prve peterke. Salary secondary $38071. Potential range 89%-98%. Experience also carried a level-up arrow (not a rate skill)."
+    }
+  ],
+  "history_entries": []
+}

@@ -1,0 +1,28 @@
+{
+  "file": "image-ec5c2dd2d708910a.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 19,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 9551,
+      "dmi": 188200,
+      "game_shape": 9,
+      "experience": 1,
+      "skills": {"js":6,"jr":3,"od":3,"ha":4,"dr":4,"pa":3,"is":6,"id":11,"rb":11,"sb":13,"st":8,"ft":3},
+      "tsp_printed": 64,
+      "tsp_out_printed": 23,
+      "tsp_in_printed": 41,
+      "tsp_checksum_ok": true,
+      "arrows": ["id"],
+      "confidence": "high",
+      "notes": "Position Center. Words-only variant; converted via ladder. Vloga: redna menjava. Salary secondary $12721. Potential range 69%-75%. Same player one training week earlier than image-d2704851e33115cf."
+    }
+  ],
+  "history_entries": []
+}

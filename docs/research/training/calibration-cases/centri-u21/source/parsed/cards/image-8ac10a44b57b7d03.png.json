@@ -1,0 +1,41 @@
+{
+  "file": "image-8ac10a44b57b7d03.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Benjamin Piršič",
+      "player_id": 53897845,
+      "club": null,
+      "age": 21,
+      "height_cm": 211,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 34070,
+      "dmi": 479200,
+      "game_shape": 8,
+      "experience": 4,
+      "skills": {
+        "js": 10,
+        "jr": 8,
+        "od": 8,
+        "ha": 11,
+        "dr": 10,
+        "pa": 8,
+        "is": 6,
+        "id": 17,
+        "rb": 16,
+        "sb": 17,
+        "st": 5,
+        "ft": 7
+      },
+      "tsp_printed": 111,
+      "tsp_out_printed": 55,
+      "tsp_in_printed": 56,
+      "tsp_checksum_ok": true,
+      "arrows": ["js"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card, Slovenian. Position: Center. Vloga: clan prve peterke. Potencial zvezdnik vec let [100%]. Secondary salary in green: $58957. BM evaluation PG 9.71 SG 9.59 SF 11.04 PF 11.81 C 12.32. Latest of the three Pirsic snapshots in this batch (109 -> 110 -> 111). Checksum: out 10+8+8+11+10+8=55, in 6+17+16+17=56, total 111 - all match."
+    }
+  ],
+  "history_entries": []
+}

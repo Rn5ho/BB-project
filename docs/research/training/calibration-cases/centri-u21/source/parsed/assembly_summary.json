@@ -1,0 +1,598 @@
+{
+  "generated_from": {
+    "cards_dir": "C:\\Users\\Rn5ho\\Downloads\\centri-u21\\parsed\\cards",
+    "n_card_json": 187,
+    "card_image_types": {
+      "other": 6,
+      "card": 178,
+      "training_history": 3
+    },
+    "n_report_messages": 239,
+    "n_discussion_messages": 262
+  },
+  "join": {
+    "n_images_in_messages": 205,
+    "join_rule_counts": {
+      "prev_within_60min": 139,
+      "same_message": 31,
+      "side_channel_not_joined": 24,
+      "no_week_reports_by_author": 6,
+      "pre_first_report_baseline_week0": 3,
+      "prev_late_same_day": 1,
+      "same_message_inferred_week": 1
+    },
+    "n_images_unjoined": 0,
+    "attachments_with_no_card_json": [
+      "Screenshot_20241129_213118_Chrome-32a4a2d31844a02b.jpg",
+      "image-14b8c9e21be8b686.png",
+      "image-1bd453b082151aae.png",
+      "image-1c797cc579db0e4b.png",
+      "image-37a1e8a85aa78135.png",
+      "image-3e30aa3e4c449b4a.png",
+      "image-4d0032f0d3142aaa.png",
+      "image-7b002c686fbf62da.png",
+      "image-831265cf83615749.png",
+      "image-84d0e3ddd62e07a7.png",
+      "image-880ec8599176c042.png",
+      "image-8b9d8685db8b58f5.png",
+      "image-8eda1c220927a3f6.png",
+      "image-aba96cf925a8df41.png",
+      "image-ad170183cda4c4c7.png",
+      "image-b5950909fbd25a8a.png",
+      "image-b6be6119407fecc5.png",
+      "image-c7f280e3534b32b0.png",
+      "image-ca31ee0edd51d143.png",
+      "image-ee0bfd8fd7fdf245.png",
+      "image0-85658746bfeac093.jpg",
+      "image0-9beb98872c33765e.jpg",
+      "image0-a60b74fec5f13a82.jpg",
+      "image0-b65a1a3ecaa3f039.jpg"
+    ],
+    "card_json_with_no_message": [
+      "0-eb806f2bcf037a33.png",
+      "3-fb0335e5edad7b09.png",
+      "4-4551a51a707878de.png",
+      "5-e9bdbc123bbdd5b5.png",
+      "8b6f2928580bc8049c8088aa0e3b0c5c-d5742039a6d1207d.png",
+      "fbadaf4e45e31e8ec3b2881fa88b271c-6664d7557862600e.png"
+    ]
+  },
+  "players": [
+    {
+      "player": "Jure Plesavec",
+      "player_id": 53897751,
+      "authors": [
+        "pjtr576"
+      ],
+      "n_weeks": 54,
+      "week_min": 0,
+      "week_max": 53,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [],
+      "date_first": "2024-09-20",
+      "date_last": "2025-09-19",
+      "age_first": 18,
+      "age_last": 21,
+      "tsp_first": 48,
+      "tsp_last": 100,
+      "n_pops": 55
+    },
+    {
+      "player": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "authors": [
+        "pjtr576"
+      ],
+      "n_weeks": 53,
+      "week_min": 1,
+      "week_max": 53,
+      "has_week0_baseline": false,
+      "missing_weeks_in_span": [],
+      "date_first": "2024-09-20",
+      "date_last": "2025-09-19",
+      "age_first": 18,
+      "age_last": 21,
+      "tsp_first": 46,
+      "tsp_last": 92,
+      "n_pops": 47
+    },
+    {
+      "player": "Benjamin Piršič",
+      "player_id": 53897845,
+      "authors": [
+        "pjtr576"
+      ],
+      "n_weeks": 42,
+      "week_min": 0,
+      "week_max": 41,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [],
+      "date_first": "2024-09-20",
+      "date_last": "2025-06-27",
+      "age_first": 19,
+      "age_last": 21,
+      "tsp_first": 72,
+      "tsp_last": 111,
+      "n_pops": 40
+    },
+    {
+      "player": "Francis Koštomaj",
+      "player_id": 53897393,
+      "authors": [
+        "alenokc"
+      ],
+      "n_weeks": 30,
+      "week_min": 0,
+      "week_max": 46,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [
+        7,
+        8,
+        9,
+        13,
+        15,
+        16,
+        20,
+        22,
+        23,
+        24,
+        26,
+        28,
+        31,
+        33,
+        36,
+        43,
+        45
+      ],
+      "date_first": "2024-09-27",
+      "date_last": "2025-08-08",
+      "age_first": 18,
+      "age_last": 21,
+      "tsp_first": 46,
+      "tsp_last": 95,
+      "n_pops": 53
+    },
+    {
+      "player": "Zlatko Jerin",
+      "player_id": 53897602,
+      "authors": [
+        "alenokc"
+      ],
+      "n_weeks": 30,
+      "week_min": 0,
+      "week_max": 46,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [
+        7,
+        8,
+        9,
+        13,
+        15,
+        16,
+        20,
+        22,
+        23,
+        24,
+        26,
+        28,
+        31,
+        33,
+        36,
+        43,
+        45
+      ],
+      "date_first": "2024-09-27",
+      "date_last": "2025-08-08",
+      "age_first": 18,
+      "age_last": 21,
+      "tsp_first": 55,
+      "tsp_last": 101,
+      "n_pops": 52
+    },
+    {
+      "player": "Gojc Jalovec",
+      "player_id": 53898036,
+      "authors": [
+        "alenokc"
+      ],
+      "n_weeks": 30,
+      "week_min": 0,
+      "week_max": 46,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [
+        7,
+        8,
+        9,
+        13,
+        15,
+        16,
+        20,
+        22,
+        23,
+        24,
+        26,
+        28,
+        31,
+        33,
+        36,
+        43,
+        45
+      ],
+      "date_first": "2024-09-27",
+      "date_last": "2025-08-08",
+      "age_first": 18,
+      "age_last": 21,
+      "tsp_first": 54,
+      "tsp_last": 99,
+      "n_pops": 48
+    },
+    {
+      "player": "Zvone Petre",
+      "player_id": 53897465,
+      "authors": [
+        "alenokc"
+      ],
+      "n_weeks": 7,
+      "week_min": 0,
+      "week_max": 6,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [],
+      "date_first": "2024-09-27",
+      "date_last": "2024-11-08",
+      "age_first": 18,
+      "age_last": 18,
+      "tsp_first": 53,
+      "tsp_last": 61,
+      "n_pops": 9
+    },
+    {
+      "player": "Goran Pokorn",
+      "player_id": 53897731,
+      "authors": [
+        "alenokc"
+      ],
+      "n_weeks": 7,
+      "week_min": 0,
+      "week_max": 6,
+      "has_week0_baseline": true,
+      "missing_weeks_in_span": [],
+      "date_first": "2024-09-27",
+      "date_last": "2024-11-08",
+      "age_first": 18,
+      "age_last": 18,
+      "tsp_first": 40,
+      "tsp_last": 47,
+      "n_pops": 8
+    }
+  ],
+  "n_players": 8,
+  "total_player_weeks": 253,
+  "total_player_weeks_excl_baseline": 246,
+  "weeks_rows": 82,
+  "weeks_unmappable_training": [],
+  "training_key_distribution": {
+    "16": 10,
+    "18": 13,
+    "21": 6,
+    "24": 15,
+    "27": 13,
+    "29": 25
+  },
+  "total_pops": 312,
+  "pops_by_skill": {
+    "id": 53,
+    "sb": 50,
+    "rb": 35,
+    "dr": 34,
+    "is": 33,
+    "ft": 27,
+    "ha": 24,
+    "pa": 22,
+    "js": 19,
+    "od": 8,
+    "jr": 5,
+    "st": 2
+  },
+  "pops_clean_single_week_interval": 219,
+  "pops_multiweek_interval": 84,
+  "pops_by_training_key": {
+    "29": 69,
+    "16": 47,
+    "18": 33,
+    "27": 29,
+    "24": 27,
+    "21": 14
+  },
+  "pops_interval_length_histogram": {
+    "1": 228,
+    "2": 55,
+    "3": 10,
+    "4": 19
+  },
+  "pops_with_unknown_training_in_interval": 84,
+  "clean_pops_by_training_key_and_skill": {
+    "16": {
+      "dr": 18,
+      "ft": 5,
+      "ha": 11,
+      "id": 0,
+      "is": 7,
+      "jr": 0,
+      "js": 5,
+      "od": 0,
+      "pa": 0,
+      "rb": 0,
+      "sb": 1,
+      "st": 0
+    },
+    "18": {
+      "dr": 4,
+      "ft": 2,
+      "ha": 7,
+      "id": 0,
+      "is": 1,
+      "jr": 0,
+      "js": 1,
+      "od": 2,
+      "pa": 15,
+      "rb": 0,
+      "sb": 0,
+      "st": 1
+    },
+    "21": {
+      "dr": 1,
+      "ft": 1,
+      "ha": 0,
+      "id": 0,
+      "is": 6,
+      "jr": 1,
+      "js": 3,
+      "od": 0,
+      "pa": 1,
+      "rb": 0,
+      "sb": 1,
+      "st": 0
+    },
+    "24": {
+      "dr": 3,
+      "ft": 1,
+      "ha": 0,
+      "id": 15,
+      "is": 3,
+      "jr": 0,
+      "js": 1,
+      "od": 1,
+      "pa": 0,
+      "rb": 1,
+      "sb": 1,
+      "st": 1
+    },
+    "27": {
+      "dr": 1,
+      "ft": 1,
+      "ha": 0,
+      "id": 5,
+      "is": 3,
+      "jr": 1,
+      "js": 0,
+      "od": 2,
+      "pa": 0,
+      "rb": 15,
+      "sb": 1,
+      "st": 0
+    },
+    "29": {
+      "dr": 0,
+      "ft": 2,
+      "ha": 1,
+      "id": 16,
+      "is": 1,
+      "jr": 1,
+      "js": 1,
+      "od": 0,
+      "pa": 3,
+      "rb": 7,
+      "sb": 37,
+      "st": 0
+    }
+  },
+  "player_weeks_by_author": {
+    "alenokc": 104,
+    "pjtr576": 149
+  },
+  "pop_intervals_by_author": {
+    "alenokc": 170,
+    "pjtr576": 142
+  },
+  "history_pops": {
+    "n_rows": 98,
+    "n_source_images": 3,
+    "source_images": [
+      "Screenshot_20250612_184016_Chrome-ca49be037b6d4cc1.jpg",
+      "Screenshot_20250612_184036_Chrome-a4a046e8546e4333.jpg",
+      "Screenshot_20250612_184054_Chrome-ade828506a8f60c7.jpg"
+    ],
+    "date_min": "2024-12-06",
+    "date_max": "2025-06-06",
+    "by_skill": {
+      "dr": 21,
+      "js": 20,
+      "ha": 19,
+      "id": 10,
+      "rb": 10,
+      "experience": 6,
+      "pa": 3,
+      "jr": 3,
+      "is": 2,
+      "od": 2,
+      "sb": 2
+    },
+    "players": [
+      "Bert Heyngenstaedt",
+      "Fuad Khayyat",
+      "Gabriel Baía",
+      "Gaitán Lizana Lezana",
+      "Juraj Orolík",
+      "Kamatchinathan Bhushan",
+      "Manuel Abas",
+      "Miha Šušterič",
+      "Mubarak Manaf",
+      "Nien Hông",
+      "Pablo Alpízar",
+      "Stane Brodnik",
+      "Tadej Vindiš",
+      "Valjhun Umek"
+    ],
+    "trainings": {
+      "One on One for PG / SG": 63,
+      "Rebounding for C / PF": 15,
+      "Inside Defense for C": 13,
+      "Jump Shot for PG / SG": 4,
+      "Game Shape for Team Training": 3
+    },
+    "history_weeks_with_zero_pops": 1,
+    "overlaps_series_players": [],
+    "distinct_history_weeks": 26
+  },
+  "weeks_with_training_text_but_no_cards": [],
+  "weeks_with_cards_but_no_training_text": [
+    [
+      "alenokc",
+      0
+    ],
+    [
+      "pjtr576",
+      0
+    ]
+  ],
+  "inferred_week_numbers": [
+    {
+      "author": "alenokc",
+      "week_no": 25,
+      "est": 25.0,
+      "anchor_week": 27,
+      "anchor_date": "2025-03-28",
+      "report_date": "2025-03-14",
+      "message_id": 1350115321364611205,
+      "training_raw": "MPK za C",
+      "training_key": 21
+    }
+  ],
+  "orphan_cards_no_training_frame": [
+    {
+      "file": "Screenshot_20240920_130146_Chrome-b75369096e24b1a8.jpg",
+      "player": "Baltazar Hotič",
+      "author": "markokrizman.",
+      "ts": "2024-09-20T13:03:59.895+02:00",
+      "rule": "no_week_reports_by_author"
+    },
+    {
+      "file": "Screenshot_20240920_130103_Chrome-7059d3645abfb23a.jpg",
+      "player": "Franc Čepic",
+      "author": "markokrizman.",
+      "ts": "2024-09-20T13:04:03.021+02:00",
+      "rule": "no_week_reports_by_author"
+    },
+    {
+      "file": "image0-35611f1c040b8424.jpg",
+      "player": "Baltazar Hotič",
+      "author": "markokrizman.",
+      "ts": "2024-12-15T14:28:01.087+01:00",
+      "rule": "no_week_reports_by_author"
+    }
+  ],
+  "checksum_failure_count": 0,
+  "low_confidence_player_records": 0,
+  "duplicate_player_week_records": [],
+  "cards_dropped_unjoined": [
+    {
+      "file": "Screenshot_20240920_130146_Chrome-b75369096e24b1a8.jpg",
+      "player": "Baltazar Hotič",
+      "author": "markokrizman.",
+      "ts": "2024-09-20T13:03:59.895+02:00",
+      "rule": "no_week_reports_by_author"
+    },
+    {
+      "file": "Screenshot_20240920_130103_Chrome-7059d3645abfb23a.jpg",
+      "player": "Franc Čepic",
+      "author": "markokrizman.",
+      "ts": "2024-09-20T13:04:03.021+02:00",
+      "rule": "no_week_reports_by_author"
+    },
+    {
+      "file": "image0-35611f1c040b8424.jpg",
+      "player": "Baltazar Hotič",
+      "author": "markokrizman.",
+      "ts": "2024-12-15T14:28:01.087+01:00",
+      "rule": "no_week_reports_by_author"
+    }
+  ],
+  "players_missing_player_id_in_source": [
+    {
+      "file": "image0-e4cc1534276665dc.jpg",
+      "name": "Francis Koštomaj",
+      "resolved_id": 53897393
+    },
+    {
+      "file": "image0-e4cc1534276665dc.jpg",
+      "name": "Zlatko Jerin",
+      "resolved_id": 53897602
+    },
+    {
+      "file": "image0-e4cc1534276665dc.jpg",
+      "name": "Gojc Jalovec",
+      "resolved_id": 53898036
+    }
+  ],
+  "skill_decreases": [
+    {
+      "player": "Rožle Ostroveršnik",
+      "author": "pjtr576",
+      "skill": "st",
+      "from_level": 8,
+      "to_level": 7,
+      "week_from": 26,
+      "week_to": 27,
+      "date_from": "2025-03-14",
+      "date_to": "2025-03-21",
+      "legitimate_stamina_decay": true,
+      "images": [
+        "image-58f16c6046a33397.png",
+        "image-8c41fdb20c84e70f.png"
+      ]
+    },
+    {
+      "player": "Jure Plesavec",
+      "author": "pjtr576",
+      "skill": "st",
+      "from_level": 2,
+      "to_level": 1,
+      "week_from": 32,
+      "week_to": 33,
+      "date_from": "2025-04-25",
+      "date_to": "2025-05-04",
+      "legitimate_stamina_decay": true,
+      "images": [
+        "image-0d2653f27b87b995.png",
+        "image-d5e50006489875c7.png"
+      ]
+    },
+    {
+      "player": "Benjamin Piršič",
+      "author": "pjtr576",
+      "skill": "st",
+      "from_level": 6,
+      "to_level": 5,
+      "week_from": 17,
+      "week_to": 18,
+      "date_from": "2025-01-10",
+      "date_to": "2025-01-17",
+      "legitimate_stamina_decay": true,
+      "images": [
+        "image-0d75f947b086a3b1.png",
+        "image-947925ad2159daf3.png"
+      ]
+    }
+  ],
+  "skill_decreases_excluding_stamina": []
+}

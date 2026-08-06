@@ -1,0 +1,28 @@
+{
+  "file": "image-c9a4f2b3ab5113ba.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Benjamin Piršič",
+      "player_id": 53897845,
+      "club": null,
+      "age": 19,
+      "height_cm": 211,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 8826,
+      "dmi": 182700,
+      "game_shape": 9,
+      "experience": 2,
+      "skills": {"js": 9, "jr": 7, "od": 7, "ha": 10, "dr": 9, "pa": 5, "is": 4, "id": 11, "rb": 12, "sb": 12, "st": 6, "ft": 6},
+      "tsp_printed": 86,
+      "tsp_out_printed": 47,
+      "tsp_in_printed": 39,
+      "tsp_checksum_ok": true,
+      "arrows": ["id", "sb"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card, words only - converted via ladder. Rookie badge. Role: član prve peterke. Position label: Krilo."
+    }
+  ],
+  "history_entries": []
+}

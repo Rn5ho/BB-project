@@ -1,0 +1,41 @@
+{
+  "file": "image-704ca26a28bbacea.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 18,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 3767,
+      "dmi": 127400,
+      "game_shape": 8,
+      "experience": 1,
+      "skills": {
+        "js": 6,
+        "jr": 3,
+        "od": 3,
+        "ha": 4,
+        "dr": 4,
+        "pa": 3,
+        "is": 6,
+        "id": 10,
+        "rb": 11,
+        "sb": 12,
+        "st": 8,
+        "ft": 3
+      },
+      "tsp_printed": 62,
+      "tsp_out_printed": 23,
+      "tsp_in_printed": 39,
+      "tsp_checksum_ok": true,
+      "arrows": ["rb"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card, Slovenian, alternate layout (TSP line reads 'Skupek sposobnostnih tock (TSP): 62 (23 + 39)'). Position: Center. Vloga: clan prve peterke. No club/percentage shown in this variant. Same player as image-614e9e020cd070e0, later in the same season (TSP 46 -> 62, DMI 12500 -> 127400, both age 18). Checksum: out 6+3+3+4+4+3=23, in 6+10+11+12=39, total 62 - all match."
+    }
+  ],
+  "history_entries": []
+}

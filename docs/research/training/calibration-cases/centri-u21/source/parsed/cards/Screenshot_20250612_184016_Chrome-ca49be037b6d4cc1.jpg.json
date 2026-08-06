@@ -1,0 +1,131 @@
+{
+  "file": "Screenshot_20250612_184016_Chrome-ca49be037b6d4cc1.jpg",
+  "image_type": "training_history",
+  "players": [],
+  "history_entries": [
+    {
+      "date": "2025-03-07",
+      "training": "Rebounding for C / PF",
+      "pops": [
+        {"player": "Valjhun Umek", "skill": "rb", "from": 12, "to": 13}
+      ]
+    },
+    {
+      "date": "2025-02-28",
+      "training": "Rebounding for C / PF",
+      "pops": [
+        {"player": "Tadej Vindiš", "skill": "id", "from": 16, "to": 17},
+        {"player": "Tadej Vindiš", "skill": "rb", "from": 13, "to": 14},
+        {"player": "Stane Brodnik", "skill": "rb", "from": 15, "to": 16},
+        {"player": "Juraj Orolík", "skill": "rb", "from": 10, "to": 11}
+      ]
+    },
+    {
+      "date": "2025-02-21",
+      "training": "Rebounding for C / PF",
+      "pops": [
+        {"player": "Valjhun Umek", "skill": "rb", "from": 11, "to": 12},
+        {"player": "Juraj Orolík", "skill": "jr", "from": 5, "to": 6},
+        {"player": "Juraj Orolík", "skill": "id", "from": 9, "to": 10},
+        {"player": "Fuad Khayyat", "skill": "experience", "from": 3, "to": 4}
+      ]
+    },
+    {
+      "date": "2025-02-14",
+      "training": "Rebounding for C / PF",
+      "pops": [
+        {"player": "Stane Brodnik", "skill": "id", "from": 18, "to": 19},
+        {"player": "Stane Brodnik", "skill": "rb", "from": 14, "to": 15}
+      ]
+    },
+    {
+      "date": "2025-02-07",
+      "training": "Inside Defense for C",
+      "pops": []
+    },
+    {
+      "date": "2025-01-31",
+      "training": "Inside Defense for C",
+      "pops": [
+        {"player": "Valjhun Umek", "skill": "id", "from": 15, "to": 16},
+        {"player": "Gabriel Baía", "skill": "experience", "from": 1, "to": 2}
+      ]
+    },
+    {
+      "date": "2025-01-24",
+      "training": "Inside Defense for C",
+      "pops": [
+        {"player": "Stane Brodnik", "skill": "id", "from": 17, "to": 18},
+        {"player": "Valjhun Umek", "skill": "experience", "from": 2, "to": 3}
+      ]
+    },
+    {
+      "date": "2025-01-17",
+      "training": "Inside Defense for C",
+      "pops": [
+        {"player": "Valjhun Umek", "skill": "id", "from": 14, "to": 15},
+        {"player": "Stane Brodnik", "skill": "experience", "from": 4, "to": 5}
+      ]
+    },
+    {
+      "date": "2025-01-10",
+      "training": "Game Shape for Team Training",
+      "pops": [
+        {"player": "Fuad Khayyat", "skill": "rb", "from": 1, "to": 2},
+        {"player": "Valjhun Umek", "skill": "jr", "from": 4, "to": 5},
+        {"player": "Manuel Abas", "skill": "pa", "from": 5, "to": 6}
+      ]
+    },
+    {
+      "date": "2025-01-03",
+      "training": "One on One for PG / SG",
+      "pops": [
+        {"player": "Tadej Vindiš", "skill": "ha", "from": 7, "to": 8},
+        {"player": "Stane Brodnik", "skill": "js", "from": 5, "to": 6},
+        {"player": "Valjhun Umek", "skill": "ha", "from": 8, "to": 9},
+        {"player": "Valjhun Umek", "skill": "dr", "from": 9, "to": 10},
+        {"player": "Gabriel Baía", "skill": "js", "from": 7, "to": 8},
+        {"player": "Gabriel Baía", "skill": "id", "from": 3, "to": 4},
+        {"player": "Juraj Orolík", "skill": "dr", "from": 5, "to": 6}
+      ]
+    },
+    {
+      "date": "2024-12-27",
+      "training": "One on One for PG / SG",
+      "pops": [
+        {"player": "Tadej Vindiš", "skill": "dr", "from": 5, "to": 6},
+        {"player": "Stane Brodnik", "skill": "dr", "from": 6, "to": 7},
+        {"player": "Valjhun Umek", "skill": "js", "from": 6, "to": 7},
+        {"player": "Juraj Orolík", "skill": "js", "from": 5, "to": 6},
+        {"player": "Juraj Orolík", "skill": "ha", "from": 4, "to": 5}
+      ]
+    },
+    {
+      "date": "2024-12-20",
+      "training": "One on One for PG / SG",
+      "pops": [
+        {"player": "Stane Brodnik", "skill": "ha", "from": 7, "to": 8},
+        {"player": "Nien Hông", "skill": "experience", "from": 2, "to": 3}
+      ]
+    },
+    {
+      "date": "2024-12-13",
+      "training": "One on One for PG / SG",
+      "pops": [
+        {"player": "Stane Brodnik", "skill": "js", "from": 4, "to": 5},
+        {"player": "Stane Brodnik", "skill": "dr", "from": 5, "to": 6}
+      ]
+    },
+    {
+      "date": "2024-12-06",
+      "training": "One on One for PG / SG",
+      "pops": [
+        {"player": "Valjhun Umek", "skill": "js", "from": 5, "to": 6},
+        {"player": "Valjhun Umek", "skill": "ha", "from": 7, "to": 8},
+        {"player": "Valjhun Umek", "skill": "dr", "from": 8, "to": 9},
+        {"player": "Manuel Abas", "skill": "js", "from": 2, "to": 3}
+      ]
+    }
+  ],
+  "notes": "English-language BB training history table (mobile browser screenshot), dates M/D/YYYY converted to ISO. Screenshot is cropped: rows above 2025-03-07 and below 2024-12-06 are cut off. 'experience' used as skill key for Experience pops (not one of js..ft). Cross-row continuity verified (e.g. Valjhun Umek rb 11->12 then 12->13; Stane Brodnik id 17->18 then 18->19)."
+}

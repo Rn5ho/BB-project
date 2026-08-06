@@ -3,7 +3,7 @@
 16 replay cases built 2026-08-04 from the "Centri U-21 NT" Discord training log
 (#report-treninga, Sept 2024 – Sept 2025): 8 centers/PFs, weekly cards + the training,
 minutes and staff levels named in each post. Source export + parsed tables:
-`C:\Users\Rn5ho\Downloads\centri-u21\parsed\` (series.csv / weeks.csv / pops.csv /
+`source/parsed/` in this directory (in-repo since 2026-08-06; formerly local-only) (series.csv / weeks.csv / pops.csv /
 history_pops.csv); builder script in the session scratchpad (`build_cases.py`).
 
 **Why these matter:** first independent ground truth for INSIDE skills across a full

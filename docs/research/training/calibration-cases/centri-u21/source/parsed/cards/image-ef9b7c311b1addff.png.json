@@ -1,0 +1,28 @@
+{
+  "file": "image-ef9b7c311b1addff.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Benjamin Piršič",
+      "player_id": 53897845,
+      "club": null,
+      "age": 19,
+      "height_cm": 211,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 8826,
+      "dmi": 128200,
+      "game_shape": 8,
+      "experience": 1,
+      "skills": {"js": 9, "jr": 7, "od": 7, "ha": 10, "dr": 9, "pa": 5, "is": 3, "id": 9, "rb": 10, "sb": 9, "st": 6, "ft": 6},
+      "tsp_printed": 78,
+      "tsp_out_printed": 47,
+      "tsp_in_printed": 31,
+      "tsp_checksum_ok": true,
+      "arrows": [],
+      "confidence": "high",
+      "notes": "BB web player page, position Krilo. Rookie tag. Secondary salary in green: $9076. Potential range [65%-72%]. Buzzer-Manager evaluation PG 7.39 SG 7.35 SF 7.42 PF 7.32 C 7.33."
+    }
+  ],
+  "history_entries": []
+}

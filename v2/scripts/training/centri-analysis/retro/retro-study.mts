@@ -10,7 +10,7 @@ config({ path: '.env.local' });
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-const PARSED = 'C:/Users/Rn5ho/Downloads/centri-u21/parsed';
+const PARSED = '../docs/research/training/calibration-cases/centri-u21/source/parsed';
 const outDir = process.argv[2];
 if (!outDir) throw new Error('usage: retro-study.mts <outDir> [--player Name]');
 const onlyPlayer = process.argv.includes('--player') ? process.argv[process.argv.indexOf('--player') + 1] : null;

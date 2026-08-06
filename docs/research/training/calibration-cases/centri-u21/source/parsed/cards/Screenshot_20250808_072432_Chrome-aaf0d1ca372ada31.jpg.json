@@ -1,0 +1,49 @@
+{
+  "file": "Screenshot_20250808_072432_Chrome-aaf0d1ca372ada31.jpg",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 21,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 52731,
+      "dmi": 934400,
+      "game_shape": 9,
+      "experience": 3,
+      "skills": {"js": 7, "jr": 3, "od": 4, "ha": 6, "dr": 6, "pa": 8, "is": 7, "id": 17, "rb": 14, "sb": 17, "st": 7, "ft": 3},
+      "tsp_printed": 89,
+      "tsp_out_printed": 34,
+      "tsp_in_printed": 55,
+      "tsp_checksum_ok": true,
+      "arrows": [],
+      "confidence": "high",
+      "notes": "Mobile-browser screenshot of Buzzer-Manager cards, stacked 1 of 2. Position Center. Vloga: redna menjava. Words only, no printed numbers, no BM eval row. No potential percentage range shown."
+    },
+    {
+      "name": "Jure Plesavec",
+      "player_id": 53897751,
+      "club": null,
+      "age": 21,
+      "height_cm": 206,
+      "potential_word": "NKI",
+      "potential_num": 9,
+      "salary": 30533,
+      "dmi": 265600,
+      "game_shape": 8,
+      "experience": 2,
+      "skills": {"js": 7, "jr": 5, "od": 7, "ha": 8, "dr": 5, "pa": 10, "is": 5, "id": 16, "rb": 13, "sb": 18, "st": 2, "ft": 8},
+      "tsp_printed": 94,
+      "tsp_out_printed": 42,
+      "tsp_in_printed": 52,
+      "tsp_checksum_ok": true,
+      "arrows": ["sb"],
+      "confidence": "high",
+      "notes": "Stacked 2 of 2. Position Center. Vloga: redna menjava. Blokade nadnaraven (18) with up arrow. Words only."
+    }
+  ],
+  "history_entries": []
+}

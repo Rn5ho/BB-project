@@ -12,7 +12,7 @@ import { BBSCOUT } from '../../../src/lib/training/models/bbscout';
 import { COACH_PARROT } from '../../../src/lib/training/models/coach-parrot';
 import { OPEN_SOURCE_LIVE } from '../../../src/lib/training/models/open-source-live';
 
-const PARSED = 'C:/Users/Rn5ho/Downloads/centri-u21/parsed';
+const PARSED = '../docs/research/training/calibration-cases/centri-u21/source/parsed';
 const outDir = process.argv[2];
 if (!outDir) throw new Error('usage: verify-alenokc-r2.mts <outDir>');
 mkdirSync(outDir, { recursive: true });

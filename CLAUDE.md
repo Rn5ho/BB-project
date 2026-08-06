@@ -334,7 +334,10 @@ First independent INSIDE-skill ground truth over full 18→21 arcs: bbscout MAE 
 levels vs the own-team benchmark 0.41. Raw pop recall 35% but **73% timing-tolerant** — misses are
 hidden-sublevel phase shifts (±1-2 wk), not rate errors, so plans are trustworthy cumulatively and
 NOT at week granularity. Gym-3 scatter explains 100% of off-program pops → `baseSlots: 0` unrefuted.
-Source export + parsed tables live outside the repo at `C:\Users\Rn5ho\Downloads\centri-u21\`.
+Source export + parsed tables live IN-REPO at
+`docs/research/training/calibration-cases/centri-u21/source/` (moved 2026-08-06;
+**standing policy: ALL research data/artifacts live on GitHub — nothing local-only
+except secrets (env files)**).
 **Glossary trap:** Slovenian `fitnes` = the GYM facility, not a fitness trainer (`trening igrišče` =
 training court). Mis-mapping it manufactured a false "unmodelled scatter" finding and nearly drove a
 spurious `baseSlots` refit — check facility/staff glossaries before trusting any parameter finding.

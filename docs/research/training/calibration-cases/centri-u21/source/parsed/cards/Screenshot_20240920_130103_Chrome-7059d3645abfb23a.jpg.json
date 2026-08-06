@@ -1,0 +1,41 @@
+{
+  "file": "Screenshot_20240920_130103_Chrome-7059d3645abfb23a.jpg",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Franc Čepic",
+      "player_id": 53922521,
+      "club": null,
+      "age": 18,
+      "height_cm": 206,
+      "potential_word": "hall of famer",
+      "potential_num": 10,
+      "salary": 3706,
+      "dmi": 9900,
+      "game_shape": 5,
+      "experience": 1,
+      "skills": {
+        "js": 6,
+        "jr": 4,
+        "od": 7,
+        "ha": 5,
+        "dr": 4,
+        "pa": 7,
+        "is": 7,
+        "id": 7,
+        "rb": 5,
+        "sb": 6,
+        "st": 3,
+        "ft": 7
+      },
+      "tsp_printed": 58,
+      "tsp_out_printed": 33,
+      "tsp_in_printed": 25,
+      "tsp_checksum_ok": true,
+      "arrows": [],
+      "confidence": "high",
+      "notes": "BB web player page in ENGLISH, mobile-browser screenshot (Chrome, 2024-09-20). Position: Power Forward. Role: draws a paycheck. Rookie badge. Two flags shown in the header (Slovenia plus a second nationality). No BM evaluation line and no potential-percentage range on this variant. Checksum: out 6+4+7+5+4+7=33, in 7+7+5+6=25, total 58 - all match."
+    }
+  ],
+  "history_entries": []
+}

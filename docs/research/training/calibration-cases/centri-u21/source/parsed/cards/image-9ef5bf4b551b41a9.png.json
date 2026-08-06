@@ -1,0 +1,28 @@
+{
+  "file": "image-9ef5bf4b551b41a9.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 19,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 9551,
+      "dmi": 205300,
+      "game_shape": 8,
+      "experience": 2,
+      "skills": {"js": 6, "jr": 3, "od": 3, "ha": 4, "dr": 4, "pa": 4, "is": 7, "id": 14, "rb": 13, "sb": 16, "st": 7, "ft": 3},
+      "tsp_printed": 74,
+      "tsp_out_printed": 24,
+      "tsp_in_printed": 50,
+      "tsp_checksum_ok": true,
+      "arrows": [],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card, words only - converted via ladder. Role: član prve peterke. Potential range 85%-93%. Position label: Center. BM eval PG 5.16 SG 5.24 SF 7.66 PF 9.23 C 10.10."
+    }
+  ],
+  "history_entries": []
+}

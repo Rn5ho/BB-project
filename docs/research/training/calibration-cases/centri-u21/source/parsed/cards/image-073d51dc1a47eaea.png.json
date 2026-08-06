@@ -1,0 +1,41 @@
+{
+  "file": "image-073d51dc1a47eaea.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Jure Plesavec",
+      "player_id": 53897751,
+      "club": null,
+      "age": 19,
+      "height_cm": 206,
+      "potential_word": "NKI",
+      "potential_num": 9,
+      "salary": 4857,
+      "dmi": 69700,
+      "game_shape": 8,
+      "experience": 1,
+      "skills": {
+        "js": 7,
+        "jr": 5,
+        "od": 6,
+        "ha": 6,
+        "dr": 4,
+        "pa": 6,
+        "is": 3,
+        "id": 11,
+        "rb": 11,
+        "sb": 16,
+        "st": 1,
+        "ft": 7
+      },
+      "tsp_printed": 75,
+      "tsp_out_printed": 34,
+      "tsp_in_printed": 41,
+      "tsp_checksum_ok": true,
+      "arrows": ["dr", "id"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card, Slovenian. Position: Krilni center (PF). Vloga: redna menjava. Potencial NKI 57%-62%. Secondary salary figure in green: $10740. BM evaluation PG 6.68 SG 6.72 SF 7.45 PF 7.62 C 7.84. Checksum: out 7+5+6+6+4+6=34, in 3+11+11+16=41, total 75 - all match."
+    }
+  ],
+  "history_entries": []
+}

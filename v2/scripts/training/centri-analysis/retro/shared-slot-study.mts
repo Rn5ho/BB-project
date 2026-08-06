@@ -21,7 +21,7 @@ config({ path: '.env.local' });
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-const PARSED = 'C:/Users/Rn5ho/Downloads/centri-u21/parsed';
+const PARSED = '../docs/research/training/calibration-cases/centri-u21/source/parsed';
 const outDir = process.argv[2];
 if (!outDir) throw new Error('usage: shared-slot-study.mts <outDir> --retro <dir> [--scheme A|B] [--beam N]');
 const argOf = (flag: string): string | null =>

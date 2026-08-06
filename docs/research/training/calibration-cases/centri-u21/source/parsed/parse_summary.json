@@ -1,0 +1,160 @@
+{
+  "report_treninga": {
+    "total_messages_in_export": 243,
+    "system_messages_skipped": 4,
+    "rows_in_reports_csv": 239,
+    "rows_with_week_no": 81,
+    "attachments_total": 181,
+    "per_author_report_counts": {
+      "alenokc": 30,
+      "delonche": 3,
+      "markokrizman.": 8,
+      "pjtr576": 198
+    },
+    "per_author_week_coverage": {
+      "alenokc": {
+        "min": 1,
+        "max": 46,
+        "distinct_weeks": 28,
+        "missing_weeks": [
+          7,
+          8,
+          9,
+          13,
+          15,
+          16,
+          20,
+          22,
+          23,
+          24,
+          25,
+          26,
+          28,
+          31,
+          33,
+          36,
+          43,
+          45
+        ]
+      },
+      "pjtr576": {
+        "min": 1,
+        "max": 53,
+        "distinct_weeks": 53,
+        "missing_weeks": []
+      }
+    },
+    "overall_week_coverage": {
+      "min": 1,
+      "max": 53,
+      "distinct_weeks": 53,
+      "missing_weeks": [],
+      "duplicate_weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        10,
+        11,
+        12,
+        14,
+        17,
+        18,
+        19,
+        21,
+        27,
+        29,
+        30,
+        32,
+        34,
+        35,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        44,
+        46
+      ]
+    },
+    "image_messages_attributed_to_nearby_numbered_report_60min": 141,
+    "image_continuations_per_author": {
+      "pjtr576": 141
+    },
+    "messages_with_images_but_no_week_no": [
+      {
+        "message_id": "1286644023510962208",
+        "timestamp_iso": "2024-09-20T13:03:59.895+02:00",
+        "author_name": "markokrizman.",
+        "attachment_count": 1,
+        "text_snippet": ""
+      },
+      {
+        "message_id": "1286644036622614540",
+        "timestamp_iso": "2024-09-20T13:04:03.021+02:00",
+        "author_name": "markokrizman.",
+        "attachment_count": 1,
+        "text_snippet": ""
+      },
+      {
+        "message_id": "1286687195108999264",
+        "timestamp_iso": "2024-09-20T15:55:32.806+02:00",
+        "author_name": "pjtr576",
+        "attachment_count": 1,
+        "text_snippet": ""
+      },
+      {
+        "message_id": "1289153480048775249",
+        "timestamp_iso": "2024-09-27T11:15:40.957+02:00",
+        "author_name": "alenokc",
+        "attachment_count": 1,
+        "text_snippet": "Pred prvim treningom. Koštomaj delno in predvsem Petre sta bila še del plana za defenzivne centre ampak ju bom zaenkrat "
+      },
+      {
+        "message_id": "1317845623738728539",
+        "timestamp_iso": "2024-12-15T14:28:01.087+01:00",
+        "author_name": "markokrizman.",
+        "attachment_count": 1,
+        "text_snippet": ""
+      },
+      {
+        "message_id": "1350115321364611205",
+        "timestamp_iso": "2025-03-14T15:36:16.543+01:00",
+        "author_name": "alenokc",
+        "attachment_count": 1,
+        "text_snippet": "trening: MPK za C, 2x 48 min, Koštomaj 26 min, trener: 7. stopnja, mladinski trener: 7. stopnja, fitnes: 3. stopnja, tre"
+      },
+      {
+        "message_id": "1382761661831843860",
+        "timestamp_iso": "2025-06-12T18:41:10.65+02:00",
+        "author_name": "delonche",
+        "attachment_count": 1,
+        "text_snippet": ""
+      },
+      {
+        "message_id": "1382761691221196914",
+        "timestamp_iso": "2025-06-12T18:41:17.657+02:00",
+        "author_name": "delonche",
+        "attachment_count": 1,
+        "text_snippet": ""
+      },
+      {
+        "message_id": "1382761710707933267",
+        "timestamp_iso": "2025-06-12T18:41:22.303+02:00",
+        "author_name": "delonche",
+        "attachment_count": 1,
+        "text_snippet": ""
+      }
+    ]
+  },
+  "splosna_diskusija": {
+    "total_messages_in_export": 262,
+    "system_messages_skipped": 0,
+    "rows_in_discussion_csv": 262,
+    "rows_with_week_no_reference": 0,
+    "attachments_total": 24
+  }
+}

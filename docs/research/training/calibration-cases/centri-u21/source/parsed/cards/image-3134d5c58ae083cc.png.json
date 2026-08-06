@@ -1,0 +1,28 @@
+{
+  "file": "image-3134d5c58ae083cc.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Benjamin Piršič",
+      "player_id": 53897845,
+      "club": "KK Leone",
+      "age": 19,
+      "height_cm": 211,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 8826,
+      "dmi": 0,
+      "game_shape": 7,
+      "experience": 1,
+      "skills": {"js": 9, "jr": 7, "od": 7, "ha": 9, "dr": 9, "pa": 5, "is": 3, "id": 8, "rb": 9, "sb": 6, "st": 6, "ft": 6},
+      "tsp_printed": 72,
+      "tsp_out_printed": 46,
+      "tsp_in_printed": 26,
+      "tsp_checksum_ok": true,
+      "arrows": [],
+      "confidence": "high",
+      "notes": "BB web player page with transfer-listing block below (bid history, closes 19.09.2024). Position Krilo. Secondary salary in green: $7841. Potential range [62%-68%]. Buzzer-Manager evaluation PG 7.07 SG 7.07 SF 6.95 PF 6.73 C 6.69."
+    }
+  ],
+  "history_entries": []
+}

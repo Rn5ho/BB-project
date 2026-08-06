@@ -1,0 +1,28 @@
+{
+  "file": "image-a147679a37d96ae7.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Rožle Ostroveršnik",
+      "player_id": 53897574,
+      "club": null,
+      "age": 18,
+      "height_cm": 206,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 3767,
+      "dmi": 68500,
+      "game_shape": 9,
+      "experience": 1,
+      "skills": {"js": 6, "jr": 3, "od": 2, "ha": 4, "dr": 3, "pa": 3, "is": 6, "id": 8, "rb": 7, "sb": 9, "st": 8, "ft": 2},
+      "tsp_printed": 51,
+      "tsp_out_printed": 21,
+      "tsp_in_printed": 30,
+      "tsp_checksum_ok": true,
+      "arrows": ["is"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card (words only). Position Krilni center. Rookie tag. Role: clan prve peterke. Potential range 49%-54%. BM eval PG 3.74 SG 3.84 SF 5.15 PF 6.02 C 6.46. Earliest snapshot (age 18) of player 53897574."
+    }
+  ],
+  "history_entries": []
+}

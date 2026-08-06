@@ -1,0 +1,28 @@
+{
+  "file": "image-51e6420222c51872.png",
+  "image_type": "card",
+  "players": [
+    {
+      "name": "Benjamin Piršič",
+      "player_id": 53897845,
+      "club": null,
+      "age": 19,
+      "height_cm": 211,
+      "potential_word": "zvezdnik več let",
+      "potential_num": 7,
+      "salary": 8826,
+      "dmi": 109300,
+      "game_shape": 8,
+      "experience": 2,
+      "skills": {"js": 9, "jr": 7, "od": 7, "ha": 10, "dr": 9, "pa": 5, "is": 4, "id": 10, "rb": 11, "sb": 11, "st": 6, "ft": 6},
+      "tsp_printed": 83,
+      "tsp_out_printed": 47,
+      "tsp_in_printed": 36,
+      "tsp_checksum_ok": true,
+      "arrows": ["is", "rb"],
+      "confidence": "high",
+      "notes": "Buzzer-Manager card (words only), TSP line 'Skupek sposobnostnih tock (TSP): 83 (47 + 36)'. Position Krilo (SF). Rookie tag. Role: clan prve peterke."
+    }
+  ],
+  "history_entries": []
+}
