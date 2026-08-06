@@ -50,6 +50,9 @@ function Card({ title, blurb, children }: { title: string; blurb?: string; child
 }
 
 export default async function SettingsPage() {
+  // One clock read so the fetch window and summary windows cannot disagree
+  const now = new Date();
+
   const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastInference, lastCensusRows, guestPassword, guestEventRows] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
@@ -61,7 +64,7 @@ export default async function SettingsPage() {
     lastRunOf('inference'),
     db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(1),
     getGuestPassword().catch(() => null),
-    fetchGuestEvents(new Date(Date.now() - GUEST_ACTIVITY_DAYS * 86_400_000)).catch(() => []),
+    fetchGuestEvents(new Date(now.getTime() - GUEST_ACTIVITY_DAYS * 86_400_000)).catch(() => []),
   ]);
 
   const censusLastRun: CensusLastRun | null = lastCensusRows[0]
@@ -75,7 +78,6 @@ export default async function SettingsPage() {
   // One fetch (guestEventRows, 30 days), two summaries — summarizeGuestEvents is
   // self-scoping (ignores rows outside its own {days, now} window for every output),
   // so re-running it over a narrower window needs no second query.
-  const now = new Date();
   const guestActivity = summarizeGuestEvents(guestEventRows, { days: GUEST_ACTIVITY_DAYS, now });
   const guestActivityRecent = summarizeGuestEvents(guestEventRows, { days: GUEST_ACTIVITY_RECENT_DAYS, now });
   const showGuestActivity = guestPassword !== null || guestActivity.totalViews > 0 || guestActivity.logins > 0;
