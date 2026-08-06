@@ -75,44 +75,71 @@ In the `role === 'guest'` branch, before returning:
   is unit-testable without a running server.
 - Skip non-page requests: any pathname containing a file extension (e.g. `/favicon.ico`) or
   starting with `/api/`.
-- Insert one `pageview` row, **best-effort**: wrapped in `try/catch`, awaited but never allowed to
-  fail the request. A DB hiccup must never break a guest's browsing.
+- Insert one `pageview` row via **`event.waitUntil(...)`**, never awaited inline, with the promise's
+  rejection swallowed (`.catch(() => {})`). A DB hiccup must never break a guest's browsing, and the
+  write must never delay the response.
 
-Note: this runs in the Next proxy. The existing Neon/Drizzle client (`@/db`) must be importable
-there; if the proxy is edge-constrained in this Next version, the insert moves behind a tiny
-internal server call rather than changing the design. Implementation verifies this early — it is
-the one real unknown in this spec.
+**Runtime — resolved 2026-08-06 against `node_modules/next/dist/docs`, no longer an open question:**
+
+- Next 16 proxy *defaults to the Node.js runtime* and forbids the `runtime` segment config
+  (`03-api-reference/03-file-conventions/proxy.md` §Runtime). The existing `@/db` client
+  (`@neondatabase/serverless` over HTTP fetch) therefore imports and runs there unchanged. No
+  internal-call workaround is needed.
+- The same doc warns *"Proxy is not intended for slow data fetching"*, and its `waitUntil` section
+  shows **exactly this analytics-beacon pattern** as the sanctioned way to do background work from
+  a proxy. `waitUntil` takes the write off the response path, which is what makes proxy-side
+  logging appropriate here rather than merely convenient. The proxy signature becomes
+  `proxy(req: NextRequest, event: NextFetchEvent)`.
+- App Router client-side navigations reach the proxy as RSC requests, so in-app link clicks are
+  captured alongside full page loads — which is precisely why the prefetch filter above is load-bearing.
 
 ### 3. `src/app/login/actions.ts` — login event
 
 On a successful `guest` login, insert one `login` row with the same `session_id` as the freshly
-minted token. Best-effort, same try/catch treatment.
+minted token. Best-effort (`try/catch`) — a logging failure must never block the login itself.
+This is a server action, not the proxy, so the insert is awaited normally.
 
-### 4. `src/queries/guest-activity.ts` — read side
+### 4. Read side — split thin-SQL / pure-aggregation
 
-`getGuestActivity(days = 30)` returns, in one place, everything the card renders:
+The repo has **no DB test harness** (`vitest.config.ts` sets a stub `DATABASE_URL`, and no test
+imports `@/db`). The established pattern is: queries stay thin and untested, logic lives in
+`src/lib/*` and is unit-tested. This split follows it:
 
-- `totalViews`, `distinctSessions`, `lastSeenAt`, `logins`
-- `perDay`: `{ day, views, sessions }[]` for the window (for a sparkline/bar strip)
-- `topPaths`: `{ path, views }[]`, top 10
+- `src/queries/guest-activity.ts` — `fetchGuestEvents(sinceIso)`: one `SELECT` of the raw rows in
+  the window, ordered by `occurred_at`. No aggregation, nothing to test.
+- `src/lib/guest-activity.ts` — `summarizeGuestEvents(rows, { days, now })`, a **pure function**
+  doing all the counting, so every number on the card is unit-testable without a database:
+  - `totalViews`, `distinctSessions`, `logins`, `lastSeenAt`
+  - `perDay`: `{ day: 'YYYY-MM-DD', views, sessions }[]` — one entry per day in the window,
+    including zero-days so the bar strip has no gaps
+  - `topPaths`: `{ path, views }[]`, top 10 by views
+
+Days bucket by **UTC** date, matching how every other date in this project is handled.
 
 ### 5. `/settings` — display
 
 A new `Card` titled **"Guest activity"**, placed directly below the existing "Guest access" card
 (same subject, natural reading order). Server-rendered — no client interactivity needed.
 
-Content: headline numbers (views / distinct sessions / last seen), a compact per-day bar strip for
-the last 30 days, and the top-paths list. Empty state: *"No guest activity yet."* When guest access
-is disabled and there is no history, the card is hidden entirely.
+Content, leading with the leak-watch number: **distinct sessions** first, then total views, then
+last seen; a compact per-day bar strip over the window; then the top-paths list. Empty state:
+*"No guest activity yet."* When guest access is disabled and there is no history at all, the card
+is hidden entirely.
 
 ## Testing
 
-- `src/lib/auth.test.ts`: guest tokens carry a `jti` and it round-trips through `verifySession`;
-  two logins produce different ids; owner tokens are unaffected; legacy tokens without `jti`
-  verify with `sessionId: null`.
-- New test for `isTrackableNavigation`: plain GET tracked; prefetch headers, non-GET, `/api/*`
-  and extension paths rejected.
-- `getGuestActivity` shape test against the existing vitest DB setup.
+All tests are pure-function tests — no database required, consistent with the rest of the repo.
+
+- `src/lib/auth.test.ts` (extend): guest tokens carry a `jti` that round-trips through
+  `verifySession`; two guest logins produce different ids; owner tokens carry no `jti`; legacy
+  guest tokens without `jti` verify with `sessionId: null`; existing `verifySessionToken`
+  assertions still pass unchanged.
+- `src/lib/guest-tracking.test.ts` (new): `isTrackableNavigation` accepts a plain GET page request
+  and rejects prefetches (`next-router-prefetch`, `purpose: prefetch`, `x-purpose: prefetch`),
+  non-GET methods, `/api/*` paths, and paths with a file extension.
+- `src/lib/guest-activity.test.ts` (new): `summarizeGuestEvents` counts views and distinct
+  sessions, emits a zero-filled per-day series in UTC, ranks top paths, ignores `login` rows in
+  the view count, and returns a well-formed empty summary for no rows.
 
 ## No guest-facing notice
 
