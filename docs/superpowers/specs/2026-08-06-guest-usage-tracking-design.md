@@ -12,6 +12,12 @@ Answer, from `/settings`: **is anyone actually using the guest dashboard, how mu
 pages do they use?** Nothing more. Guests stay anonymous by design — the owner explicitly does
 not need to know *who* they are, only *whether* and *how much*.
 
+Second motivation (owner, 2026-08-06): the guest password is shared by hand and could be passed
+on further than intended. A jump in **distinct sessions per day** beyond the handful of people the
+owner actually shared it with is the signal that the password has spread, and the fix is already
+one click away — rotate it on the Guest access card. This makes `distinctSessions` the headline
+number rather than raw view count, and it is why the per-day series tracks sessions alongside views.
+
 ## Non-goals
 
 - No identity: no IP addresses, no user-agent strings, no fingerprinting.
@@ -108,10 +114,11 @@ is disabled and there is no history, the card is hidden entirely.
   and extension paths rejected.
 - `getGuestActivity` shape test against the existing vitest DB setup.
 
-## Privacy note (for the guest-facing blurb)
+## No guest-facing notice
 
-The GuestAccessCard footer text gains one sentence: page visits are counted anonymously so the
-owner can see whether the shared dashboard is being used. No names, IPs or devices are recorded.
+Decided against (owner, 2026-08-06): the GuestAccessCard blurb is **not** changed. Nothing personal
+is recorded — there is no identity, device or location data to disclose, only anonymous hit counts
+on a private dashboard the owner runs for themselves.
 
 ## Cost
 
