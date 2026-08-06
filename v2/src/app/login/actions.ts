@@ -2,8 +2,9 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { resolvePassword, createSessionToken, SESSION_COOKIE } from '@/lib/auth';
+import { resolvePassword, createSessionToken, verifySession, SESSION_COOKIE } from '@/lib/auth';
 import { getGuestPassword } from '@/queries/app-config';
+import { recordGuestEvent } from '@/queries/guest-events';
 
 export async function login(_prev: { error?: string } | undefined, formData: FormData) {
   const password = String(formData.get('password') ?? '');
@@ -22,6 +23,16 @@ export async function login(_prev: { error?: string } | undefined, formData: For
     token = await createSessionToken(role);
   } catch {
     return { error: 'Server misconfiguration — check APP_SESSION_SECRET' };
+  }
+  if (role === 'guest') {
+    // Read the id back off the freshly minted token so the login row shares the session
+    // id its page views will carry. Best-effort: never block a login on logging.
+    try {
+      const session = await verifySession(token);
+      await recordGuestEvent({ sessionId: session?.sessionId ?? 'unknown', event: 'login', path: null });
+    } catch {
+      // ignored on purpose
+    }
   }
   (await cookies()).set(SESSION_COOKIE, token, {
     httpOnly: true,
