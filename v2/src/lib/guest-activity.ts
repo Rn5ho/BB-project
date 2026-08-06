@@ -26,12 +26,15 @@ function utcDay(d: Date): string {
 }
 
 /** Aggregate raw guest events into everything the settings card displays.
- *  Days bucket by UTC, matching the rest of the project. */
+ *  Days bucket by UTC, matching the rest of the project. Rows outside the
+ *  window are ignored entirely — window is self-enforcing, so callers may
+ *  pass a wider set safely. */
 export function summarizeGuestEvents(
   rows: SummarizableEvent[],
   opts: { days: number; now: Date },
 ): GuestActivity {
   // Seed every day in the window so the bar strip has no gaps, oldest first.
+  // The keys in this map ARE the window definition.
   const perDay = new Map<string, { views: number; sessions: Set<string> }>();
   for (let i = opts.days - 1; i >= 0; i--) {
     perDay.set(utcDay(new Date(opts.now.getTime() - i * DAY_MS)), { views: 0, sessions: new Set() });
@@ -44,22 +47,28 @@ export function summarizeGuestEvents(
   let lastSeenAt: Date | null = null;
 
   for (const row of rows) {
+    // Window check first: compute day once and look it up. If outside window, skip row entirely.
+    const day = utcDay(row.occurredAt);
+    const bucket = perDay.get(day);
+    if (!bucket) continue; // Row is outside the window — ignore entirely.
+
+    // Now safe to update all totals; this row is inside the window.
     if (!lastSeenAt || row.occurredAt > lastSeenAt) lastSeenAt = row.occurredAt;
+
+    // Count logins (window-scoped).
     if (row.event === 'login') {
       logins++;
       continue;
     }
+
     if (row.event !== 'pageview') continue;
 
     totalViews++;
     sessions.add(row.sessionId);
     if (row.path) pathViews.set(row.path, (pathViews.get(row.path) ?? 0) + 1);
 
-    const bucket = perDay.get(utcDay(row.occurredAt));
-    if (bucket) {
-      bucket.views++;
-      bucket.sessions.add(row.sessionId);
-    }
+    bucket.views++;
+    bucket.sessions.add(row.sessionId);
   }
 
   return {
