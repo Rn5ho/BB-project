@@ -1,4 +1,8 @@
-# Claude Code local config
+# Claude Code local config (machine-specific: permissions, locks).
+# EXCEPTION: v2/.claude/skills/ holds PROJECT skills — shared build/verify recipes that
+# are project artifacts, not local config. They are force-added and tracked; once tracked,
+# .gitignore no longer applies to them. Standing policy: nothing project-related lives
+# local-only except secrets.
 .claude/
 
 # Dependencies
