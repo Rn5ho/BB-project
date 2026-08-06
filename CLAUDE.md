@@ -77,8 +77,17 @@ high-potential 21yo Hellas listings missing from the dashboard. Two stacked root
   snapshot stamped with the old season derives +1 too old after the flip until a
   post-rollover snapshot restamps them. **Standing action: after each rollover run
   `npx tsx scripts/daily-sync.mts --force-players` on the box** (or wait for Monday's
-  cron) to restamp the universe with the new season id, **then `npx tsx
-  scripts/fix-aged-out.mts`** (dry-run first) — the all-countries age reconciler.
+  cron) to restamp the universe with the new season id, **then `nohup npx tsx
+  scripts/fix-aged-out.mts --deep &` on the box** (dry-run first) — the all-countries
+  age reconciler. Three tiers: (1) per-country Players-API 18-22 fetch → restamp
+  mismatches; (2) the 8 biggest countries (España/Italia/USA/France/Polska/Hellas/
+  Lietuva/China) blow BB's 1000-row cap at ages 18/19 (España/Italia at EVERY age) —
+  falls back to single-age windows; (3) `--deep` page-verifies every remaining
+  API-unvouched player deriving 18-21 (BbWebSession GET, "Age:" regex, 400ms pace,
+  ~15-25 min). Also fixes S72-draft rookies deriving +1 and null-country rows. NOTE:
+  the market sweep's staleness early-stop PRESERVES wrong-age snapshots for the life
+  of a listing — never assume market data self-heals ages. S72→73 totals: 1,069
+  (API) + 467 (tiers 2-3) + final deep pass run 2026-08-06 on the box.
   WHY (learned 2026-08-05, S72→73): a sync that runs in BB's rollover LAG WINDOW
   (season flipped, API ages not yet) stamps (new season, old age), which derives wrong
   FOREVER; players who turned 22 keep deriving 21 (they froze census #22 — BB shows no
