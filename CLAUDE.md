@@ -53,6 +53,27 @@ high-potential 21yo Hellas listings missing from the dashboard. Two stacked root
 - **TEMPORARY: 18:00 UTC crontab entry** runs market-sweep a second time while the season-end
   flood lasts (belt-and-braces against >1000 listings/day per band). Remove it once the new
   season starts and `bb-market-sweep.log` shows small per-band totals again.
+  **DO NOT REMOVE IT YET — condition NOT met as of 2026-08-06 (see next bullet).** Season 73
+  has started, so the naive reading of the sentence above says "remove now"; the log says
+  otherwise.
+- **OPEN COVERAGE GAP — per-age split is no longer enough (observed 2026-08-06)**: the
+  age-band fix assumed each of 18/19/20/21 stays under BB's 1000-result search cap. It no
+  longer does. In `bb-market-sweep.log`, ages **18 and 19** repeatedly return
+  `totalListed: 1000` with `hitPageCap: true` **and `stoppedEarly: false`** on BOTH the
+  newest-first AND oldest-first passes — meaning neither pass ever reached the staleness
+  stop, so listings in the MIDDLE of those bands' orderings are invisible to both ends.
+  Ages 20/21 are healthy (`stoppedEarly: true`). Read those three fields together:
+  `stoppedEarly: false` + `hitPageCap: true` = incomplete coverage, and it is the ONLY
+  reliable signal — raw counts look fine because they are clamped to exactly 1000.
+  Raising `MARKET_MAX_PAGES` cannot fix it (BB caps the RESULT SET at 1000, not the paging);
+  the band must be sub-split further — by potential (6-7 vs 8+), price, or country group —
+  so each individual search returns <1000. Until then the 18/19 bands are partially blind
+  and the 18:00 second run is the only mitigation.
+- **Market sweep has no retry — a BB 503 kills the whole run (observed 2026-08-06)**:
+  `BbWebSession.post` throws on non-OK (`web-session.ts:60`), `runMarketSweep` doesn't catch,
+  so one transient `HTTP 503` from `/manage/transferlist.aspx` aborted a run after the age-18
+  pass and ages 19/20/21 were never swept that cycle. Worth a bounded retry/backoff around
+  the page fetch, and per-band error isolation so one band's failure can't skip the rest.
 - **Write-safety audit (2026-08-03)**: the census (`NtBrowser` recruit/dismiss) is the ONLY
   code path that writes to BB. Market sweep, daily-sync and self-trainer are read-only —
   their only POSTs are search/pagination/`lbSwitchTeams` navigation postbacks. Census is
@@ -87,7 +108,10 @@ high-potential 21yo Hellas listings missing from the dashboard. Two stacked root
   ~15-25 min). Also fixes S72-draft rookies deriving +1 and null-country rows. NOTE:
   the market sweep's staleness early-stop PRESERVES wrong-age snapshots for the life
   of a listing — never assume market data self-heals ages. S72→73 totals: 1,069
-  (API) + 467 (tiers 2-3) + final deep pass run 2026-08-06 on the box.
+  (API) + 467 (tiers 2-3) + **1,174 (deep pass, COMPLETED 2026-08-06: "deep: checked 2997,
+  fixed 1174, deleted/no-age 0")** = **2,710 total**. The S72→73 age repair is DONE — World
+  and Slovenia derived ages should now be honest. `deleted/no-age 0` also means no player in
+  that 2,997-row set had vanished from BB, so the deleted-player pruning backlog stayed flat.
   WHY (learned 2026-08-05, S72→73): a sync that runs in BB's rollover LAG WINDOW
   (season flipped, API ages not yet) stamps (new season, old age), which derives wrong
   FOREVER; players who turned 22 keep deriving 21 (they froze census #22 — BB shows no
