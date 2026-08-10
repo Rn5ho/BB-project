@@ -12,6 +12,41 @@ All quotes verbatim from logged-in fetches (raw text in this directory).
 
 ---
 
+## UPDATE 2026-08-10 — the news post and Q&A have since been published and ANSWERED
+
+*(Raw capture 2026-08-07 in `raw-0807/`; measured salary numbers in
+`probe-outputs-2026-08-10.md`. Several statements below are superseded:)*
+
+- **§1.2 RESOLVED**: a second salary update ran overnight 8/5→8/6 — ID cost for guards
+  lowered vs the first version; **IS and SB raised for guards+SFs vs BOTH the old formula
+  and the first version**; PF/C untouched (news post part 1 + Q&A 332391.42). ⚠ Marin's
+  GROUP-8 answer originally said "OD" and was corrected 8/7 to "ID" (332391.53) — quote
+  only the corrected text. **The salary-refit hold is lifted**; tag any refit S73-only
+  (SB "might" rise again in S74 — 332391.43). Measured second-update effect (same-player
+  8/7 vs 8/4): SG ×0.88, SF ×0.92 median; PG/PF/C ~×0.96.
+- **§1.3 SUPERSEDED**: "Update since then, after reviewing data and code: **The cap has
+  been set at higher levels than before** … most players will have more cap room"
+  (332391.36).
+- **§1.4 NUANCED**: "Elastics were reduced only marginally, so there is no need for any
+  speed bumps" (332391.41) — BUT the news post says "**Expect skill progression to be a
+  touch slower overall**": the earlier "training is not supposed to slow down" is walked
+  back to a small net slowdown.
+- **§1.5 QUANTIFIED + a second, previously unflagged matrix change**: "IS will be trained
+  at the same level rebounding was, the tradeoff is both with ID and rebounding"
+  (332391.38, answering Nowitzki's 332391.6) — AND "**Inside Scoring trains more inside
+  defense and slightly less jump shot**" (news post part 1).
+- **NEW dev facts**: the salary formula is now weights-based and deliberately tunable;
+  ~85% of teams pay less, 180k+ players intentionally costlier; SB to become "a little
+  bit more costly, especially in the extremes"; PA cost cuts for PG NOT planned; S72
+  rookie scouting reports used the OLD formula (explains B+/A− salary inversions).
+  Game engine: rebounding now depends on player energy (effect "will grow"); rarer
+  position-dependent rebound tip-outs; multi-OT experience double-count bug fixed.
+  **NEXT SEASON: 3-2 defense weakened, hoarding tax 10%→20% above 15M (was 25M) — S74
+  is another era boundary.**
+- Veteran no-pop salary jumps are intended recompute behavior, not a bug (332387).
+
+---
+
 ## 1. DEV-CONFIRMED
 
 ### 1.1 New salary formula is live (applied during 8/4–8/5 offseason processing)

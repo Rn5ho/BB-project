@@ -1,0 +1,4009 @@
+BuzzerBeater | BuzzerBeater Forums | Bugs, bugs, bugs > New salary bug
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+ 
+ 
+
+ 
+ 
+ 
+
+BuzzerBeater 
+
+
+ 
+
+ 
+
+
+ 
+ 
+
+ 
+
+
+
+BuzzerBeater Forums
+
+
+
+Bugs, bugs, bugs > New salary bug
+
+
+
+
+
+
+
+ Back to the Sneak Peek
+
+
+ Federations
+
+
+ Manage My Team
+
+
+ BB-Mail
+
+
+ Scrimmages
+
+
+ Savlje BC
+
+
+ League II.2
+
+
+ Slovenija
+
+
+ World
+
+
+ Community
+
+
+ Game Manual
+
+
+ Help
+
+
+ Preferences
+
+
+ Refer A Friend
+
+
+ Supporter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Bugs, bugs, bugs
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ URGENT bugs only!
+ 
+ 2/2
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Read first: Known issues, repo...
+ 
+ 3/3
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Bugs forum rules
+ 
+ 2
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ New salary bug
+ 
+ 1/12
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Arena
+ 
+ 4/4
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Possible Financial Calculation...
+ 
+ 1/1
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Fountain of youth
+ 
+ 3/3
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Didn't get the promotion money
+ 
+ 8/8
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Wrong team got promoted?
+ 
+ 5/5
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Reward-Economy bug
+ 
+ 1/1
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ allow garbage time
+ 
+ 11/11
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ BBAPI playbyplay shows game re...
+ 
+ 5/5
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Points per 100 bugged?
+ 
+ 5/5
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Merchandise still not correct
+ 
+ 41/41
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Former player and team dissapp...
+ 
+ 2/2
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Four players injured and out.
+ 
+ 5/5
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ PROMOTION REFUND
+ 
+ 8/8
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ B3 Predictions Contest Missing...
+ 
+ 10/10
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ images in forums/bb-mail missi...
+ 
+ 1/1
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Can't view a team's roster
+ 
+ 1/1
+ 
+
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ < 
+ > 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ New thread
+
+ Mark all as read
+
+ Add to Favorites
+
+ Search this Folder (Supporter Feature)
+ 
+
+ 
+ 
+
+
+
+
+
+
+ 
+ 
+
+Favorite Folders
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ BB Global (English)
+ 
+ 
+ (2895)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ NT Coaches
+ 
+ 
+ (532)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ BB Slovenija
+ 
+ 
+ (42)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ BB Utopia
+ 
+ 
+ (666)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Help - English
+ 
+ 
+ (610)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Help - Slovenšcina
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Slovenija - I.1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Slovenija - II.2
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Slovenija - II.4
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Utopia - IV.35
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Deluxe League
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ SLO reprezentanca
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Language Admin
+ 
+ 
+ (335)
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Back to Sneak Peek
+
+ Find more folders
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+
+
+
+
+
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ New salary bug
+ 
+ 
+
+ 
+
+ 
+ Set priority
+
+ 
+ High
+ Normal
+ Low
+
+
+ 
+
+ 
+ Show messages by
+
+ 
+ Everybody
+ rufferto (2)
+ Promoe (3)
+ LA-flaterik123 (4)
+ Pro_Shot &#127477;&#127469; (1)
+ Topi88 (1)
+ GabrielusHermannus (1)
+
+
+ 
+
+ 
+ 
+ Move thread to:
+
+ 
+ Bugs, bugs, bugs
+ BB Global (English)
+ NT Coaches
+ BB Slovenija
+ BB Utopia
+ Help - English
+ Help - Slovenšcina
+ Slovenija - I.1
+ Slovenija - II.2
+ Slovenija - II.4
+ Utopia - IV.35
+ Deluxe League
+ SLO reprezentanca
+ Language Admin
+ Other
+
+
+ 
+
+ 
+ 
+ 
+ Search this Thread (Supporter Feature)
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ 
+ rufferto
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.1
+ 
+ 
+ 
+ 
+
+ 
+ Date:
+ 8/5/2026 9:15:07 AM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Ratu BK 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ SBBL 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 211
+ 
+
+
+ 
+ 
+
+ 
+ 
+ Second Team:
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Ivarsboda Bears
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ (50756961)
+
+This player went up from 157k to 184k in salary, aged 34-->35. No pops involved. Is there a new way to calculate salary that I missed or is this a bug?
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ LA-flaterik123
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ rufferto
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.2
+ 
+ 
+ in reply to 332387.1
+ 
+
+ 
+ Date:
+ 8/5/2026 10:16:00 AM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ NakamichiDragons 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ II.3 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 2493
+ 
+
+
+ 
+ 
+
+ 
+ 
+ Second Team:
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Little Computer People
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ It was announced with the News for the last season, that they are thinking about to adjust the salary formular … i did not expect that they are doing this either.
+
+But 27k for an old man is bad … my SB-Center (34yo) gets 7k on top.
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ founded in S3 IV.5 (34234) - returned in S28 IV.7
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ Pro_Shot 🇵🇭
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ rufferto
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.3
+ 
+ 
+ in reply to 332387.1
+ 
+
+ 
+ Date:
+ 8/5/2026 12:52:34 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Diamond Dogs 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ PPL 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 153
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 3 of my players also experienced a significant increase in salary, a total of 60k increase that put my weekly income close to negative. Only one of them gained a skill last season and it was a secondary skill (DR).
+
+Last edited by Pro_Shot 🇵🇭 at 8/5/2026 12:53:21 PM
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ GabrielusHermannus
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ Pro_Shot 🇵🇭
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.4
+ 
+ 
+ in reply to 332387.3
+ 
+
+ 
+ Date:
+ 8/5/2026 2:34:21 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Dortmund Miners 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ III.8 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 11
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ Salary update was announced and yesterday it was implemented. More info is announced to be published. However, if you might have access to Discord, you might read there additional infos commin' from the user base who already dealt with this issue during the last couple of hours.
+
+And no, it is not a bug, it is fully intended.
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ rufferto
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ GabrielusHermannus
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.5
+ 
+ 
+ in reply to 332387.4
+ 
+
+ 
+ Date:
+ 8/5/2026 5:27:11 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Ratu BK 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ SBBL 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 211
+ 
+
+
+ 
+ 
+
+ 
+ 
+ Second Team:
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Ivarsboda Bears
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ I remember reading something was coming up, have discord but not used to checking it. I guess a tweak was in order, but for such an old player (with multiple skill drops coming this season) makes his value quite low, at least for the second half of the season.
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ 
+ Promoe
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 2
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.6
+ 
+ 
+ in reply to 332387.5
+ 
+
+ 
+ Date:
+ 8/6/2026 4:42:55 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Ootsetee 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Kõrgliiga 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 253
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ I have 60 000 more salary increase than i was excpecting. I have multi-skill players. So this is reward for training multi-skill players?
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ LA-flaterik123
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ Promoe
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.7
+ 
+ 
+ in reply to 332387.6
+ 
+
+ 
+ Date:
+ 8/6/2026 5:02:38 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ NakamichiDragons 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ II.3 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 2493
+ 
+
+
+ 
+ 
+
+ 
+ 
+ Second Team:
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Little Computer People
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ I have 60 000 more salary increase than i was excpecting. I have multi-skill players. So this is reward for training multi-skill players?
+Aren‘t there any players on your team which have beed trained regulary?
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ founded in S3 IV.5 (34234) - returned in S28 IV.7
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ 
+ Topi88
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 4
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.8
+ 
+ 
+ in reply to 332387.7
+ 
+
+ 
+ Date:
+ 8/6/2026 6:04:32 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ NY Knickers 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ II.3 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 165
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ Great!! You need Discord to play Buzzetbeater. Has this direction been officially chosen now?
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ Promoe
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ LA-flaterik123
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.9
+ 
+ 
+ in reply to 332387.7
+ 
+
+ 
+ Date:
+ 8/6/2026 8:13:42 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Ootsetee 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Kõrgliiga 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 253
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ Yes there are
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ LA-flaterik123
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ Promoe
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.10
+ 
+ 
+ in reply to 332387.9
+ 
+
+ 
+ Date:
+ 8/6/2026 8:26:07 PM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ NakamichiDragons 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ II.3 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 2493
+ 
+
+
+ 
+ 
+
+ 
+ 
+ Second Team:
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Little Computer People
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ Yes there are
+Did you take that into account with the 60k?
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ founded in S3 IV.5 (34234) - returned in S28 IV.7
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ From:
+ Promoe
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ To:
+ 
+ LA-flaterik123
+ 
+ 
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ This Post:
+ 
+ 
+ 
+ 
+ 0
+ 
+
+
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 332387.11
+ 
+ 
+ in reply to 332387.10
+ 
+
+ 
+ Date:
+ 8/7/2026 12:10:38 AM
+ 
+
+ 
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Ootsetee 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Kõrgliiga 
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Overall Posts Rated:
+ 
+ 
+ 253
+ 
+
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ I was assuming 100 000k salary raise but it was 160 000 k. So yes, i took it into account.
+
+Last edited by Promoe at 8/7/2026 12:14:19 AM
+
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ Rate this post: +1
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+ 
+ 
+ Mark Unread
+ 
+ Ignore User
+ 
+ Delete
+ 
+ 
+ 
+ Edit
+ 
+ 
+ 
+ 
+ Reply
+ 
+ 
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ Disable Emoticons and Images
+ 
+
+ 
+ Close
+ 
+ Delete
+ 
+ Sticky
+ 
+ 
+ 
+ Change Title
+ 
+
+ 
+
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+
+ 
+
+
+
+
+
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+Your Next Game
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+
+ 
+ 
+ View Live!
+ 
+ 
+
+ 
+ 
+ @
+ KK Jesenovo
+ 
+ 
+ 
+
+ 
+ 
+ 
+ Set your lineup! 
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+ 
+ 
+ 
+
+
+
+
+
+Active Bids
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ Bidding time expired! Check out all of the bids in one page.
+ 
+ 
+
+ 
+ 600 8/7/2026 6:28:55 AM 8/7/2026 6:38:55 AM 8/7/2026 6:28:55 AM
+
+ 
+ 
+ Dare Korelc
+ 
+
+
+ Current Bid: 
+ $ 750 000
+ 
+
+ by
+ CussacLight
+ 
+
+
+ Auction Ends: 
+ 
+
+ 8/8/2026 1:29:44 AM
+ 
+
+ 
+ 
+ 
+ Auction ending soon, check the Player/Staff Overview page for exact auction status! 
+ 
+
+ 
+
+ 
+ 
+ Connection to server is lost or you have been logged out. Please reload page or log in.
+ 
+ 
+ 
+
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+
+ 
+ 
+
+Switch to:
+
+
+
+
+ Berlin BC
+ 
+
+
+
+
+
+
+
+
+
+Menu
+
+
+
+
+ 
+Manage My Team
+
+Community
+
+World
+
+News
+
+BB-Mail
+
+Forums
+
+Federations
+
+Help
+Game Manual
+
+Your Friendly Staff
+
+Refer A Friend
+
+B3 Predictions
+
+Savlje BC
+League II.2
+
+Tournament
+
+Schedule
+
+Scrimmages
+
+Economy
+
+Arena
+
+Staff
+
+Fan Survey
+
+Roster
+
+Weekly Stats
+
+Training
+
+Draft and Scouting
+
+Slovenija
+
+National Team
+
+U21 National Team
+
+NT Matches
+
+NT Election
+
+NT Rankings
+
+BuzzerBeater's Best
+
+BBM Tournaments
+
+Transfer List
+
+Bids
+
+Search
+
+Preferences
+
+Report Cheaters
+
+Supporter
+
+Donations
+
+Manage Scoreboard
+
+Private Leagues
+
+Hall Of Fame
+
+Bookmarks
+
+Short Menu
+
+
+
+
+ 
+
+
+
+
+
+ 
+ 
+ 
+
+Buddy List
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Bradinho
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Cimi2255
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Deschamps
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ ElanNM
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Eli
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ ElvedinElvedin
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Insomnia
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ JJ team
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Ketera
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ KoperBoy
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ LA-sensiman
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ leco
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ M_Art
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Mr.X
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Nowitzki (SLO NT)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ peterremic
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Petracarek
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Seraphim
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Teorija
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ tevz89
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ Edit Buddy List
+ 
+
+ 
+ 
+
+
+
+
+
+
+
+ 
+ 
+
+ 
+
+Custom Menu
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ Market 
+ 
+
+ 
+ 
+ 
+
+ 
+
+ 
+
+ 
+ 
+
+ 
+ 
+ Add Current Page
+ 
+ 
+ 
+ 
+ 
+ Link Name Required!
+ 
+ 
+
+
+ 
+
+
+ 
+ Add Custom Link
+ 
+ 
+ 
+ 
+ 
+ Link Name Required!
+ 
+ Link URL Required!
+ 
+ 
+
+
+ 
+
+
+ 
+ Remove Link
+ 
+ 
+
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+ 
+
+ 
+ 
+
+ 
+ Terms Of Service
+ |
+ Privacy Policy
+ |
+ Rules of Conduct
+ |
+ Partners
+ |
+ Advertise on BuzzerBeater
+ 
+
+ 
+
+ 
+ |
+ 
+ |
+ 
+ |
+ 
+ |
