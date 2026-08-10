@@ -1,0 +1,296 @@
+{
+ "49983596": {
+  "pid": 49983596,
+  "team": 114360,
+  "note": "Savlje BC, s69-72 (cross-check)",
+  "error": "no training rows parsed"
+ },
+ "50891529": {
+  "pid": 50891529,
+  "team": 276888,
+  "note": "Berlin BC, s69-73",
+  "weeksObserved": 28,
+  "spanWeeks": 27,
+  "distinctTrainings": 5,
+  "blockCount": 12,
+  "meanBlockWeeks": 2.33,
+  "medianBlockWeeks": 1,
+  "maxBlockWeeks": 7,
+  "switchesPer14wkSeason": 6,
+  "blockLengthHistogram": {
+   "1": 7,
+   "4-7": 3,
+   "2-3": 2
+  },
+  "blocks": [
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 7,
+    "from": "1/30/2026",
+    "to": "3/13/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 2,
+    "from": "3/20/2026",
+    "to": "3/27/2026"
+   },
+   {
+    "training": "Inside Scoring (C)",
+    "weeks": 5,
+    "from": "4/3/2026",
+    "to": "5/1/2026"
+   },
+   {
+    "training": "One on One (SF/PF)",
+    "weeks": 1,
+    "from": "5/8/2026",
+    "to": "5/8/2026"
+   },
+   {
+    "training": "Inside Scoring (C)",
+    "weeks": 5,
+    "from": "5/15/2026",
+    "to": "6/12/2026"
+   },
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 1,
+    "from": "6/19/2026",
+    "to": "6/19/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 2,
+    "from": "6/26/2026",
+    "to": "7/3/2026"
+   },
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 1,
+    "from": "7/10/2026",
+    "to": "7/10/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 1,
+    "from": "7/17/2026",
+    "to": "7/17/2026"
+   },
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 1,
+    "from": "7/24/2026",
+    "to": "7/24/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 1,
+    "from": "7/31/2026",
+    "to": "7/31/2026"
+   },
+   {
+    "training": "Shot Blocking (C)",
+    "weeks": 1,
+    "from": "8/7/2026",
+    "to": "8/7/2026"
+   }
+  ]
+ },
+ "54209203": {
+  "pid": 54209203,
+  "team": 114360,
+  "note": "Savlje BC, s69-73",
+  "weeksObserved": 28,
+  "spanWeeks": 27,
+  "distinctTrainings": 5,
+  "blockCount": 14,
+  "meanBlockWeeks": 2,
+  "medianBlockWeeks": 2,
+  "maxBlockWeeks": 5,
+  "switchesPer14wkSeason": 7,
+  "blockLengthHistogram": {
+   "1": 5,
+   "2-3": 8,
+   "4-7": 1
+  },
+  "blocks": [
+   {
+    "training": "One on One (PG/SG)",
+    "weeks": 3,
+    "from": "1/30/2026",
+    "to": "2/13/2026"
+   },
+   {
+    "training": "Outside Shooting (SG)",
+    "weeks": 5,
+    "from": "2/20/2026",
+    "to": "3/20/2026"
+   },
+   {
+    "training": "Jump Shot (PG/SG)",
+    "weeks": 2,
+    "from": "3/27/2026",
+    "to": "4/3/2026"
+   },
+   {
+    "training": "Outside Defense (PG)",
+    "weeks": 3,
+    "from": "4/10/2026",
+    "to": "4/24/2026"
+   },
+   {
+    "training": "One on One (PG/SG)",
+    "weeks": 2,
+    "from": "5/1/2026",
+    "to": "5/8/2026"
+   },
+   {
+    "training": "Jump Shot (PG/SG)",
+    "weeks": 2,
+    "from": "5/15/2026",
+    "to": "5/22/2026"
+   },
+   {
+    "training": "One on One (PG/SG)",
+    "weeks": 1,
+    "from": "5/29/2026",
+    "to": "5/29/2026"
+   },
+   {
+    "training": "Outside Defense (PG)",
+    "weeks": 2,
+    "from": "6/5/2026",
+    "to": "6/12/2026"
+   },
+   {
+    "training": "One on One (PG/SG)",
+    "weeks": 1,
+    "from": "6/19/2026",
+    "to": "6/19/2026"
+   },
+   {
+    "training": "Outside Defense (PG)",
+    "weeks": 1,
+    "from": "6/26/2026",
+    "to": "6/26/2026"
+   },
+   {
+    "training": "One on One (PG/SG)",
+    "weeks": 1,
+    "from": "7/3/2026",
+    "to": "7/3/2026"
+   },
+   {
+    "training": "Passing (PG)",
+    "weeks": 1,
+    "from": "7/10/2026",
+    "to": "7/10/2026"
+   },
+   {
+    "training": "Outside Defense (PG)",
+    "weeks": 2,
+    "from": "7/17/2026",
+    "to": "7/24/2026"
+   },
+   {
+    "training": "One on One (PG/SG)",
+    "weeks": 2,
+    "from": "7/31/2026",
+    "to": "8/7/2026"
+   }
+  ]
+ },
+ "54849455": {
+  "pid": 54849455,
+  "team": 276888,
+  "note": "Berlin BC, s69-73 (cross-check)",
+  "weeksObserved": 28,
+  "spanWeeks": 27,
+  "distinctTrainings": 5,
+  "blockCount": 12,
+  "meanBlockWeeks": 2.33,
+  "medianBlockWeeks": 1,
+  "maxBlockWeeks": 7,
+  "switchesPer14wkSeason": 6,
+  "blockLengthHistogram": {
+   "1": 7,
+   "4-7": 3,
+   "2-3": 2
+  },
+  "blocks": [
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 7,
+    "from": "1/30/2026",
+    "to": "3/13/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 2,
+    "from": "3/20/2026",
+    "to": "3/27/2026"
+   },
+   {
+    "training": "Inside Scoring (C)",
+    "weeks": 5,
+    "from": "4/3/2026",
+    "to": "5/1/2026"
+   },
+   {
+    "training": "One on One (SF/PF)",
+    "weeks": 1,
+    "from": "5/8/2026",
+    "to": "5/8/2026"
+   },
+   {
+    "training": "Inside Scoring (C)",
+    "weeks": 5,
+    "from": "5/15/2026",
+    "to": "6/12/2026"
+   },
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 1,
+    "from": "6/19/2026",
+    "to": "6/19/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 2,
+    "from": "6/26/2026",
+    "to": "7/3/2026"
+   },
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 1,
+    "from": "7/10/2026",
+    "to": "7/10/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 1,
+    "from": "7/17/2026",
+    "to": "7/17/2026"
+   },
+   {
+    "training": "Rebounding (PF/C)",
+    "weeks": 1,
+    "from": "7/24/2026",
+    "to": "7/24/2026"
+   },
+   {
+    "training": "Inside Defense (C)",
+    "weeks": 1,
+    "from": "7/31/2026",
+    "to": "7/31/2026"
+   },
+   {
+    "training": "Shot Blocking (C)",
+    "weeks": 1,
+    "from": "8/7/2026",
+    "to": "8/7/2026"
+   }
+  ]
+ }
+}

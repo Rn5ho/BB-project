@@ -1,0 +1,240 @@
+{
+  "fetchedAt": "2026-08-07T14:51:19.124Z",
+  "teams": [
+    {
+      "teamId": 114360,
+      "name": "Savlje BC"
+    },
+    {
+      "teamId": 276888,
+      "name": "Berlin BC"
+    }
+  ],
+  "seasons": [
+    {
+      "season": 69,
+      "start": "2025-07-08T06:20:54.000Z",
+      "finish": "Tue Oct 14 2025 12:05:35 GMT+0200 (Central European Summer Time)"
+    },
+    {
+      "season": 70,
+      "start": "2025-10-14T10:05:35.000Z",
+      "finish": "Tue Jan 20 2026 15:23:23 GMT+0100 (Central European Standard Time)"
+    },
+    {
+      "season": 71,
+      "start": "2026-01-20T14:23:23.000Z",
+      "finish": "Wed Apr 29 2026 14:44:39 GMT+0200 (Central European Summer Time)"
+    },
+    {
+      "season": 72,
+      "start": "2026-04-29T12:44:39.000Z",
+      "finish": "Tue Aug 04 2026 11:23:13 GMT+0200 (Central European Summer Time)"
+    },
+    {
+      "season": 73,
+      "start": "2026-08-04T09:23:13.000Z",
+      "finish": null
+    }
+  ],
+  "coverage": [
+    {
+      "teamId": 114360,
+      "season": 69,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 67,
+      "countableMatches": 56,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1,
+        "bbm.playoff": 3
+      },
+      "boxscoresOk": 56,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 14,
+      "minuteRows": 446,
+      "firstMatchDate": "2025-07-11T00:00:00.000Z",
+      "lastMatchDate": "2025-10-12T15:30:00.000Z"
+    },
+    {
+      "teamId": 114360,
+      "season": 70,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 61,
+      "countableMatches": 53,
+      "skippedTypes": {
+        "bbb": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 53,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 18,
+      "minuteRows": 373,
+      "firstMatchDate": "2025-10-16T14:30:00.000Z",
+      "lastMatchDate": "2026-01-17T16:30:00.000Z"
+    },
+    {
+      "teamId": 114360,
+      "season": 71,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 46,
+      "countableMatches": 38,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 38,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 16,
+      "minuteRows": 314,
+      "firstMatchDate": "2026-01-22T16:55:00.000Z",
+      "lastMatchDate": "2026-04-25T15:30:00.000Z"
+    },
+    {
+      "teamId": 114360,
+      "season": 72,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 47,
+      "countableMatches": 39,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 39,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 18,
+      "minuteRows": 318,
+      "firstMatchDate": "2026-04-30T15:55:00.000Z",
+      "lastMatchDate": "2026-08-01T15:30:00.000Z"
+    },
+    {
+      "teamId": 114360,
+      "season": 73,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 26,
+      "countableMatches": 1,
+      "skippedTypes": {
+        "bbm": 1,
+        "unknown": 1
+      },
+      "boxscoresOk": 1,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 7,
+      "minuteRows": 7,
+      "firstMatchDate": "2026-08-06T08:00:00.000Z",
+      "lastMatchDate": "2026-08-06T08:00:00.000Z"
+    },
+    {
+      "teamId": 276888,
+      "season": 69,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 39,
+      "countableMatches": 31,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 31,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 14,
+      "minuteRows": 184,
+      "firstMatchDate": "2025-07-10T17:00:00.000Z",
+      "lastMatchDate": "2025-10-12T01:00:00.000Z"
+    },
+    {
+      "teamId": 276888,
+      "season": 70,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 35,
+      "countableMatches": 27,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 27,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 13,
+      "minuteRows": 173,
+      "firstMatchDate": "2025-10-18T15:30:00.000Z",
+      "lastMatchDate": "2026-01-18T02:00:00.000Z"
+    },
+    {
+      "teamId": 276888,
+      "season": 71,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 34,
+      "countableMatches": 26,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 26,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 9,
+      "minuteRows": 223,
+      "firstMatchDate": "2026-01-24T16:30:00.000Z",
+      "lastMatchDate": "2026-04-26T01:00:00.000Z"
+    },
+    {
+      "teamId": 276888,
+      "season": 72,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 46,
+      "countableMatches": 38,
+      "skippedTypes": {
+        "bbm": 7,
+        "unknown": 1
+      },
+      "boxscoresOk": 38,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 16,
+      "minuteRows": 314,
+      "firstMatchDate": "2026-05-02T15:30:00.000Z",
+      "lastMatchDate": "2026-08-02T01:00:00.000Z"
+    },
+    {
+      "teamId": 276888,
+      "season": 73,
+      "scheduleOk": true,
+      "scheduleError": null,
+      "matchesReturned": 26,
+      "countableMatches": 1,
+      "skippedTypes": {
+        "bbm": 1,
+        "unknown": 1
+      },
+      "boxscoresOk": 1,
+      "boxscoresFailed": 0,
+      "failedMatchIds": [],
+      "distinctPlayers": 9,
+      "minuteRows": 9,
+      "firstMatchDate": "2026-08-07T00:00:00.000Z",
+      "lastMatchDate": "2026-08-07T00:00:00.000Z"
+    }
+  ],
+  "totals": {
+    "minuteRows": 2361,
+    "playerSeasonRows": 134,
+    "boxscoresOk": 310,
+    "boxscoresFailed": 0,
+    "countableMatches": 310
+  }
+}
