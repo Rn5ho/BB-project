@@ -36,7 +36,7 @@ gain = (gain + elasticBonus) × minutesFactor × capSlowdown          ← post-c
 | 7 | **Elastic bonuses** | A lower skill trains faster when a linked higher skill is far above it. ADDITIVE after the multiplier chain, NOT scaled by age/height/coach (2026 dev worked example). | Pair table, e.g. ha←od 0.05, id←is 0.02, pa←ha 0.03, rb←is 0.02, sb←id 0.0197, jr←od 0.0371, is←id 0.001 (disputed — one forum measurement says 0.0096) | Measured (worked example validates id←is) |
 | 8 | **Minutes factor** | Full speed at ≥44 min/week (age ≤19; 47 at 20–26, 39 at 27+), linearly less below. Minutes must be at the training's qualifying positions. | ×min(1, minutes/44) | Threshold official (BB manual); linear shape below is an estimate |
 | 9 | **Potential cap** | When the best-position weighted sum of skills reaches the potential ceiling, training slows in three stages (never stops). | ×0.725 / ×0.45 / ×0.25 at weighted-sum ≥ 8/9/10 + 2·potential (Josef Ka weights) | Dev-blessed ladder + 2,276-sample weights |
-| 10 | **Gym cross-training scatter** | Each gym level adds a "slot": 10% of the primary skill's training amount lands on a random skill (any of the 12, incl. ST/FT). Modeled as expected value: spread evenly over all 12. | gym 3 → 3 × 10% of primary / 12 per skill | Dev spec + validated on gym-3 ground truth (Centri: explains 100% of off-program pops) |
+| 10 | **Gym cross-training scatter** | Each gym level adds a "slot": 10% of the primary skill's training amount lands on a random skill (any of the 12, incl. ST/FT). Modeled as expected value: spread evenly over all 12. | gym 3 → 3 × 10% of primary / 12 per skill | Dev spec. Attribution validated (Centri: explains 100% of off-program pops) but **magnitude runs ~1.6× light** at gym 3 — `baseSlots: 1` is the best current hypothesis (would give ratio 1.19, inside noise); see `forum-research/crosstraining-2026-08/FINDINGS.md` |
 | 11 | **Training court** | Passive free-throw gain, independent of minutes and of the weekly training choice. Mild age falloff. | L1 ≈ 1/11, L2 ≈ 1/7, L3 ≈ 1/6 level/week at 18 | Measured (In-Depth guide + own-team) |
 | 12 | **Stamina / FT team training** | If the club trains Stamina or Free Throws as the weekly slot: flat gain, no multipliers. | ST +0.667, FT +0.5 per week | Fitted (CP) |
 
@@ -106,21 +106,62 @@ gain = (gain + elasticBonus) × minutesFactor × capSlowdown          ← post-c
 > This doc and all calibration describe the PRE-update engine; the Friday self-trainer
 > scorecard is the drift detector, and Q&A thread 332391 is the watchlist.
 
+> **ERA NOTE UPDATE (2026-08-10, from the 2026-08-07 raw capture —
+> `forum-research/s73-update/raw-0807/` + `probe-outputs-2026-08-10.md`):**
+> (1) The guard-ID overshoot was FIXED by a second salary update overnight 8/5→8/6
+> (final S73 shape: IS/SB up for guards+SFs vs both the old formula and the first
+> version; ID partially walked back; PF/C untouched) → **the salary-refit hold is
+> LIFTED**, but tag any refit S73-only — SB "might" rise again in S74. Measured on the
+> 18-21 market (n=10,780): implied scale vs our old formula median 0.762 with
+> per-position spread SG 0.70 … PG 0.79 — the SHAPE changed; a flat rescale is no
+> longer a good salary model. (Beware: Marin's Q&A GROUP-8 answer originally said "OD",
+> corrected 8/7 to "ID".)
+> (2) Cap statement SUPERSEDED: "The cap has been set at HIGHER levels than before"
+> (Marin, after reviewing data and code) — most players have MORE cap room.
+> (3) NEW matrix change nobody had flagged: **Inside Scoring now trains more ID and
+> slightly less JS**; and SB→IS is quantified — "IS will be trained at the same level
+> rebounding was, the tradeoff is both with ID and rebounding" (SB's ID/RB secondaries
+> reduced).
+> (4) Elastic: "reduced only marginally", BUT "expect skill progression to be a touch
+> slower overall" — a small net slowdown is now dev-acknowledged; watch the Friday
+> scorecard for systematic over-prediction, not just per-pair residuals.
+> (5) Game engine: rebounding now depends on energy (effect "will grow"). NEXT SEASON:
+> 3-2 weakened, hoarding tax 20% above 15M — **S74 is another era boundary**.
+
 ## Standing open questions (ranked by planning impact; 2026-08-05 Centri evidence noted)
 
-1. **Top-skill malus shape** (NEW, round 2): ×0.925^(gap) reaches ×0.5–0.6 for
+> **Standing rule (adopted after two near-misses — the `fitnes` glossary error and the
+> 2026-08-07 concentration study): before touching any scatter/brake parameter
+> (baseSlots, top-skill malus, slotShare), first control for training-PROGRAM realism
+> (real clubs switch ~every 2 weeks and spread ~5 trainings — see
+> `concentration-study-2026-08-07/FINDINGS.md`) and for facility/staff glossary.**
+
+1. **Top-skill malus shape** (round 3): ×0.925^(gap) reaches ×0.5–0.6 for
    specialist bigs and three independent within-club tests contradict it; malus-off
    removes the pjtr576 cold tilt but overshoots globally → shape (cap the exponent?)
    is the question, not existence. Owner review.
    (The round-1 "×1.48 club tilt" is CLOSED as a rate issue — the quantization-free DMI
    channel puts weekly rates at 0.991 obs/pred and excludes 1.48 at P<5e-5.)
-2. **Gym scatter EV ~1.5× light** (round 2): pooled corpus ≈27 obs off-program pops vs
+   Round 3 (2026-08-07/10, `forum-research/crosstraining-2026-08/FINDINGS.md` §4): the
+   population gap distribution (n=19,305) puts the MEDIAN player at ×0.785 vs the
+   manual's ~10%-for-the-average — a second independent line saying the malus is ~2×
+   too strong. CAUTION: confounded with the untested cap ladder (#8) in any fit lacking
+   cap data — revise the two together, and per the standing rule control for program
+   realism first (the concentration study's sweep "favoring" malus ~0.80 was fitting a
+   confound).
+2. **Gym scatter EV ~1.5× light** (round 3): pooled corpus ≈27 obs off-program pops vs
    ~17 EV; needs one unified recount across methods before any slotShare/baseSlots talk.
+   Round 3: the crosstraining evidence review names **`baseSlots: 1`** as the best
+   current hypothesis (27 vs 22.7 EV → ratio 1.19, inside noise; candidate change
+   drafted, NOT applied) and two closure paths: ask BB-Justin the base-slot count on
+   Discord, or obtain a gym-0 club training log.
 3. is←id elastic: 0.001 (Dormouse) vs 0.0096 (forum) — **Centri data favors 0.0096**
    (gap-proportional signature; fixes the 3 worst IS cases, none worsen). Owner decision pending.
 4. **HA height column open at tall heights**: scaled ×0.75@213cm EXCLUDED by third-club
    ground truth (implied ×1.19); 206v201 still weakly favors scaled — shape unclear,
-   tall end lands flat-or-above.
+   tall end lands flat-or-above. Scorecard signal (2026-08-10 audit): `bbscout-ha-flat`
+   currently LEADS the Friday scorecard — MAE 0.380 vs bbscout's 0.404, fewer false
+   alarms, held for 6 consecutive runs (small n: 4 players).
 5. Minutes-factor shape below the threshold (linear is a guess).
 6. Youth trainer per-level value (2.5% estimate) — weak ~4:1 lean AGAINST the age-≤19
    gate (underpowered); a designed own-team season test is feasible (~18 wks/side).
@@ -129,7 +170,9 @@ gain = (gain + elasticBonus) × minutesFactor × capSlowdown          ← post-c
 8. Potential-cap stages 2–3 untested; per-player cap heterogeneity above stage 1 is real
    (Jalovec's freeze refutes ×0.725 for him; pooled stage 1 otherwise validates at 0.743).
 9. Negative elastic pairs — id←sb −0.005 disfavored at claimed magnitude; others untested.
-10. Base cross-training slot at gym 0 (needs a gym-0 club log).
+10. Base cross-training slot at gym 0 (needs a gym-0 club log, or ask BB-Justin) — full
+    evidence review: `forum-research/crosstraining-2026-08/FINDINGS.md` (baseSlots 1 =
+    best hypothesis, merged into #2 above).
 
 Full evidence: `calibration-cases/centri-u21/ANALYSIS-2026-08-05.md`. Also established
 there: DMI reads CONTINUOUS internal skills (weekly training probe), BB salary is set

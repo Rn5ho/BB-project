@@ -88,9 +88,13 @@ export const BBSCOUT: ModelParams = {
     // Dev spec (2026): slot = 10% of the primary skill's pre-elastic amount to a random
     // skill incl. ST/FT; the gym adds 1-3 EXTRA slots. baseSlots is 0 here because the
     // CP-fitted rates were measured on real teams and already average in the base
-    // slot's effects — only gym-added slots are modeled explicitly. EV validated on
-    // the owner's gym-3 trainees (~2-3 off-training pops per 10 weeks ≈ 3 x 0.1 x
-    // primary spread over 12 skills).
+    // slot's effects — only gym-added slots are modeled explicitly. EV ATTRIBUTION
+    // validated on the owner's gym-3 trainees (explains 100% of off-program pops), but
+    // MAGNITUDE runs ~1.6x light at gym 3 (Centri R2.2) — baseSlots: 1 is the best
+    // current hypothesis (would give ratio 1.19, inside noise), and the baseSlots-0
+    // rationale above is untested reasoning (every calibration corpus is gym-3).
+    // NOT changed pending the unified scatter recount; see
+    // docs/research/training/forum-research/crosstraining-2026-08/FINDINGS.md §3-§5.
     value: { kind: 'slot-scatter', baseSlots: 0, slotShare: 0.1 },
     source: `${RESEARCH}/user-notes/dev-statements-2026.md §2 + calibration-cases/auto (gym-3 trainees)`,
     confidence: 'measured',

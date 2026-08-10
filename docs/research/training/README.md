@@ -58,6 +58,41 @@ Archived BB forum research threads (mostly via Wayback; `t<thread>-m<msg>.txt`).
   Drive links are owner-locked; re-request via forum/Discord.
 - Thread 188524 — Josef Ka "Formula for Potential Uncovered" (2,276 samples)
 
+### `forum-research/s73-update/` (2026-08-05; raw refresh 2026-08-07; probes 2026-08-10)
+S73 era-boundary digest (`digest.md`, with the 2026-08-10 update block): new salary
+formula (second correction final — refit hold LIFTED, S73-tagged), cap set HIGHER than
+before, elastic trim + dev-acknowledged "touch slower" net slowdown, SB→IS quantified +
+new IS-training rebalance (more ID, less JS), DMI change. `raw-0807/` = full news post +
+answered Q&A capture; `probe-outputs-2026-08-10.md` = measured implied salary scale by
+position (shape changed — flat rescale no longer fits).
+
+### `forum-research/crosstraining-2026-08/` (2026-08-07)
+Full dev/forum evidence review of cross-training & gym scatter (11 threads + population
+probe): destination uniform-random confirmed, slot = 10% of primary; `baseSlots: 1` is
+the best current hypothesis for the 1.6×-light gym-3 scatter (NOT applied); top-skill
+malus ~2× too strong at the population median (n=19,305). Verdict: cross-training is NOT
+the concentration brake.
+
+### `forum-research/dr-ha-2026-08/` (captured 2026-08-07, written up 2026-08-10)
+DR/HA "how much is enough" for outside builds (6 threads + wild shape probe + engine
+marginal computation): forum "enough" band ~15-16, wild elite median DR/HA 16, HA 16-17
+arrives ~free via OD secondaries+elastic while 18-19 costs ~2-3 OD — supports the 16-17
+club-advice revision (owner decision 3, pending).
+
+### `concentration-study-2026-08-07/`
+"Does the engine over-concentrate skills?" — claim RETRACTED after the program-realism
+control (shipped model reproduces the wild range once training-budget diversity is
+realistic); measured real club cadence ~2-week blocks, ~5 trainings; product implication
+= planner adherence warning, not an engine refit; standing rule: control for program
+realism before touching scatter/brake parameters.
+
+### `long-arc/` (2026-08-07)
+Five-season per-position minutes ground truth for both own clubs (310/310 boxscores,
+2,361 minute rows, 58 players, seasons 69-73) + measured training cadence
+(`training-cadence.json`) + `related-probes-2026-08-10.md` (Greek bronze lookup: 0/17 in
+our DB — cadence-score pipeline needs BB-side id lookup; scorecard audit: bbscout-ha-flat
+currently leading).
+
 ### `salary-potential/`
 Salary, potential-cap, sublevel, and game-shape sources.
 
