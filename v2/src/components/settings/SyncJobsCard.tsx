@@ -6,7 +6,7 @@ import { syncNow } from '@/app/settings/actions';
 import { formatStartedAt, formatSyncResult, type SyncCounts } from '@/lib/format-sync';
 import { formatCensusResult, type CensusTotals } from '@/lib/format-census';
 
-type SyncJob = 'seasons' | 'players' | 'market' | 'minutes' | 'inference';
+type SyncJob = 'seasons' | 'players' | 'market' | 'market-senior' | 'minutes' | 'inference';
 
 export interface JobLastRun {
   startedAtIso: string;
@@ -43,6 +43,13 @@ const JOBS: { job: SyncJob; title: string; chip: string; description: string }[]
     chip: 'cron: daily',
     description:
       'Scrapes the transfer list (ages 18–21, potential ≥6, all countries) for full skills and auction info. Press to catch fresh listings before bidding.',
+  },
+  {
+    job: 'market-senior',
+    title: 'Market (seniors)',
+    chip: 'cron: daily',
+    description:
+      'Sweeps the transfer market for age-22+ players on a senior national team; market listings expose full skills that NT rosters hide.',
   },
   {
     job: 'minutes',

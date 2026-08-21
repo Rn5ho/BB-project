@@ -36,19 +36,49 @@ export interface MarketSweepCounts {
   hitPageCap: boolean;
 }
 
-export async function runMarketSweep(opts: { fullSweep?: boolean; oldestFirst?: boolean; minAge?: number; maxAge?: number } = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
-  const [logRow] = await db.insert(syncLog).values({ jobType: 'market', trigger }).returning({ id: syncLog.id });
+export interface MarketSweepOpts {
+  fullSweep?: boolean;
+  oldestFirst?: boolean;
+  minAge?: number;
+  /** null posts an EMPTY tbMaxAge (no upper bound); undefined keeps the default '21'. */
+  maxAge?: number | null;
+  /** Tick BB's "IsOnNT" checkbox — only players on a senior national team. */
+  ntOnly?: boolean;
+  /** Potential floor; defaults to 6 (allstar). */
+  minPotential?: number;
+}
+
+/** Senior-NT sweep scope: age 22+, on a senior NT, no potential floor — market cards
+ *  expose the full skills NT rosters hide. Shared by cron script, route and settings. */
+export const SENIOR_NT_SWEEP_OPTS: MarketSweepOpts = { minAge: 22, maxAge: null, ntOnly: true, minPotential: 0 };
+
+/** Set the search-scope fields on the transfer-search form. Pure — returns a new map.
+ *  When ntOnly, ticks IsOnNT and BLANKS tbMaxSalary/tbMaxCurrentBid: the form prefills
+ *  them with current market maxima, which would exclude a high-salary senior star.
+ *  (Live-verified 2026-08-21: checkbox name, empty maxima, ~58 senior results.) */
+export function applySweepScope(fields: Record<string, string>, opts: MarketSweepOpts): Record<string, string> {
+  const out = { ...fields };
+  out['ctl00$cphContent$tbMinAge'] = opts.minAge != null ? String(opts.minAge) : MIN_AGE;
+  out['ctl00$cphContent$tbMaxAge'] = opts.maxAge === null ? '' : opts.maxAge != null ? String(opts.maxAge) : MAX_AGE;
+  out['ctl00$cphContent$ddlPotentialMin'] = opts.minPotential != null ? String(opts.minPotential) : MIN_POTENTIAL;
+  out['ctl00$cphContent$ddlsortBy'] = opts.oldestFirst ? SORT_OLDEST_FIRST : SORT_NEWEST_FIRST;
+  if (opts.ntOnly) {
+    out['ctl00$cphContent$cbIsOnNT'] = 'on';
+    out['ctl00$cphContent$tbMaxSalary'] = '';
+    out['ctl00$cphContent$tbMaxCurrentBid'] = '';
+  }
+  return out;
+}
+
+export async function runMarketSweep(opts: MarketSweepOpts = {}, trigger: 'cron' | 'manual' = 'manual'): Promise<MarketSweepCounts> {
+  const [logRow] = await db.insert(syncLog).values({ jobType: opts.ntOnly ? 'market-senior' : 'market', trigger }).returning({ id: syncLog.id });
   try {
     const session = new BbWebSession();
     await session.login();
 
     // search
     const formPage = await session.get('/manage/transferlist.aspx');
-    const fields = collectFormFields(formPage);
-    fields['ctl00$cphContent$tbMinAge'] = opts.minAge != null ? String(opts.minAge) : MIN_AGE;
-    fields['ctl00$cphContent$tbMaxAge'] = opts.maxAge != null ? String(opts.maxAge) : MAX_AGE;
-    fields['ctl00$cphContent$ddlPotentialMin'] = MIN_POTENTIAL;
-    fields['ctl00$cphContent$ddlsortBy'] = opts.oldestFirst ? SORT_OLDEST_FIRST : SORT_NEWEST_FIRST;
+    const fields = applySweepScope(collectFormFields(formPage), opts);
     let page = await session.post('/manage/transferlist.aspx', {
       ...collectHiddenFields(formPage),
       ...fields,
@@ -116,6 +146,14 @@ export async function runMarketSweep(opts: { fullSweep?: boolean; oldestFirst?: 
           await db.update(players)
             .set({ ownerTeamId: card.ownerTeamId, ownerTeamName: card.ownerTeamName })
             .where(and(eq(players.bbPlayerId, card.bbPlayerId), sql`owner_team_id is distinct from ${card.ownerTeamId}`));
+        }
+      }
+
+      // senior-NT sweep: stamp every swept player (new + existing) as seen on a senior NT
+      if (opts.ntOnly) {
+        const seenAt = new Date();
+        for (const chunk of chunks(ids, 500)) {
+          await db.update(players).set({ seniorNtSeenAt: seenAt }).where(inArray(players.bbPlayerId, chunk));
         }
       }
 

@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { POSITIONS, POTENTIAL_LEVELS, SKILLS, type SkillDbKey } from '@/lib/constants';
-import { DEFAULT_FILTER, isFilterDefault, countActiveSkillMins, countActiveMoreFilters, type FilterState } from '@/lib/table';
+import { DEFAULT_FILTER, isFilterDefault, countActiveSkillMins, countActiveMoreFilters, type FilterState, type Variant } from '@/lib/table';
 
 interface FilterBarProps {
+  variant: Variant;
   filter: FilterState;
   onChange: (f: FilterState) => void;
   onReset: () => void;
@@ -15,7 +16,7 @@ interface FilterBarProps {
   archetypeNames?: string[];
 }
 
-export default function FilterBar({ filter, onChange, onReset, shown, total, showSkills, onToggleSkills, archetypeNames }: FilterBarProps) {
+export default function FilterBar({ variant, filter, onChange, onReset, shown, total, showSkills, onToggleSkills, archetypeNames }: FilterBarProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const [skillsOpen, setSkillsOpen] = useState(false);
   const activeSkillCount = countActiveSkillMins(filter.skillMins);
@@ -31,7 +32,7 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
     setAgeMinStr(String(filter.ageMin));
     setAgeMaxStr(String(filter.ageMax));
   }, [filter.ageMin, filter.ageMax]);
-  const isDirty = !isFilterDefault(filter);
+  const isDirty = !isFilterDefault(filter, variant);
 
   function set<K extends keyof FilterState>(key: K, value: FilterState[K]) {
     onChange({ ...filter, [key]: value });
@@ -44,13 +45,14 @@ export default function FilterBar({ filter, onChange, onReset, shown, total, sho
   function handleReset() {
     setMoreOpen(false);
     setSkillsOpen(false);
-    setAgeMinStr(String(DEFAULT_FILTER.ageMin));
-    setAgeMaxStr(String(DEFAULT_FILTER.ageMax));
+    setAgeMinStr(String(DEFAULT_FILTER[variant].ageMin));
+    setAgeMaxStr(String(DEFAULT_FILTER[variant].ageMax));
     onReset();
   }
 
   function commitAge(field: 'ageMin' | 'ageMax', strVal: string) {
-    const defaultVal = DEFAULT_FILTER[field];
+    // Empty/invalid input snaps back to this variant's default (22/45 on Seniors, 18/21 elsewhere)
+    const defaultVal = DEFAULT_FILTER[variant][field];
     const n = strVal.trim() === '' ? defaultVal : Number(strVal);
     const committed = isNaN(n) ? defaultVal : n;
     set(field, committed);

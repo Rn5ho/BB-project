@@ -27,6 +27,9 @@ export const players = pgTable('players', {
   draftPick: integer('draft_pick'),
   ownerTeamId: integer('owner_team_id'),
   ownerTeamName: text('owner_team_name'),
+  // Last time a senior-NT market sweep (age 22+, "IsOnNT") returned this player;
+  // refreshed on every senior sweep that sees him. Null = never seen by one.
+  seniorNtSeenAt: timestamp('senior_nt_seen_at', { withTimezone: true }),
   firstSeenAt: timestamp('first_seen_at', { withTimezone: true }).notNull().defaultNow(),
   archived: boolean('archived').notNull().default(false),
 }, (t) => [

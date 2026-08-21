@@ -48,7 +48,7 @@ export function formatSyncResult(
     return <span>{seasons} season{seasons !== 1 ? 's' : ''} synced</span>;
   }
 
-  if (jobType === 'market') {
+  if (jobType === 'market' || jobType === 'market-senior') {
     const newPlayers = n('newPlayers');
     const captured = n('snapshotsInserted');
     const refreshed = n('snapshotsUpdated');

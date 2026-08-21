@@ -69,7 +69,7 @@ export async function listCaptureSweeps(): Promise<CaptureSweep[]> {
   }));
 }
 
-export type PlayerScope = 'slovenia' | 'world';
+export type PlayerScope = 'slovenia' | 'world' | 'seniors';
 
 export async function listPlayers(
   scope: PlayerScope,
@@ -79,7 +79,13 @@ export async function listPlayers(
   // (market-discovered players with an unmatched flag keep country_id null + 'Slovenija').
   const slovene = sql`(p.country_id = 66 or p.nationality in ('Slovenia', 'Slovenija'))`;
   const notSlovene = sql`(p.country_id is distinct from 66 and (p.nationality is null or p.nationality not in ('Slovenia', 'Slovenija')))`;
-  const where = scope === 'slovenia' ? sql`where ${slovene}` : sql`where ${notSlovene}`;
+  // senior_nt_seen_at = last time the player came back from a senior-NT market sweep
+  // (age 22+, on a senior NT). Seniors are their own scope; World excludes them so the
+  // U-21 scouting view stays free of 22+ senior-NT intel rows.
+  const where =
+    scope === 'slovenia' ? sql`where ${slovene}`
+    : scope === 'seniors' ? sql`where p.senior_nt_seen_at is not null`
+    : sql`where ${notSlovene} and p.senior_nt_seen_at is null`;
 
   // Progress baseline: an explicit override (the "progress since" picker) wins; otherwise
   // the review mark. Epoch default keeps a single SQL shape: it matches no snapshots, so

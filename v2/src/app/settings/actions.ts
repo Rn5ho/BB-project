@@ -5,7 +5,7 @@ import { db, trackedCountries } from '@/db';
 import { eq } from 'drizzle-orm';
 import { runPlayersSync } from '@/server/sync/players';
 import { runSeasonsSync } from '@/server/sync/seasons';
-import { runMarketSweep } from '@/server/sync/market';
+import { runMarketSweep, SENIOR_NT_SWEEP_OPTS } from '@/server/sync/market';
 import { runMinutesSync } from '@/server/sync/minutes';
 import { runTrainingInference } from '@/server/sync/inference';
 import { requireOwner } from '@/lib/session';
@@ -46,12 +46,13 @@ export async function disableGuestAccess() {
   return { ok: true as const };
 }
 
-export async function syncNow(job: 'players' | 'seasons' | 'market' | 'minutes' | 'inference') {
+export async function syncNow(job: 'players' | 'seasons' | 'market' | 'market-senior' | 'minutes' | 'inference') {
   await requireOwner();
   try {
     const counts =
       job === 'players' ? await runPlayersSync()
       : job === 'market' ? await runMarketSweep()
+      : job === 'market-senior' ? await runMarketSweep(SENIOR_NT_SWEEP_OPTS, 'manual')
       : job === 'minutes' ? await runMinutesSync({}, 'manual')
       : job === 'inference' ? await runTrainingInference('manual')
       : await runSeasonsSync();

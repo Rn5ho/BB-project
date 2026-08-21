@@ -408,6 +408,20 @@ there because their `.sql` files were edited after being applied — harmless, s
 compares `created_at`, never hashes. **Use `drizzle-kit migrate`, not `push`, on this database**
 — mixing them is what caused the drift.
 
+**Senior NT market sweep shipped 2026-08-21** — second daily sweep scope: age 22+ AND on a
+senior national team (BB search checkbox posts as `ctl00$cphContent$cbIsOnNT`), NO potential
+floor — market cards expose the full skills (incl. internal values >20 in title attrs) that
+senior NT rosters hide. Shared const `SENIOR_NT_SWEEP_OPTS` + pure `applySweepScope()` in
+`src/server/sync/market.ts`; `runMarketSweep` opts gained `ntOnly`/`minPotential`/`maxAge: null`
+(= empty `tbMaxAge`; ntOnly also BLANKS `tbMaxSalary`/`tbMaxCurrentBid` — the form prefills them
+with market maxima). Swept players get `players.senior_nt_seen_at` stamped (migration
+`0013_senior_nt_sweep`); sync_log jobType `'market-senior'`; guest-visible `/seniors` page lists
+`senior_nt_seen_at is not null` (World now excludes them). Runs daily after the U-21 bands in
+`scripts/market-sweep.mts` (scope 58 listings, far under the 1000 cap) — same change added
+per-band try/catch error isolation, closing the 2026-08-06 "one BB 503 kills all remaining
+bands" gap. Also in `/api/cron/daily` (non-fatal) + a Settings "Market (seniors)" row.
+Spec: `docs/superpowers/specs/2026-08-21-senior-nt-market-sweep-design.md`.
+
 ### Stack & layout
 v2 lives in `v2/` — Next.js 16 App Router + Tailwind 4 + Drizzle ORM + Neon Postgres. v1 (`web/` + Supabase) stays live until cutover. As of 2026-07-10, Supabase is read-only legacy — all data has been migrated to Neon (540 players, 878 snapshots, 72 seasons; `nt_squad` table is season-scoped).
 

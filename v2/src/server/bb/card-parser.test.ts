@@ -5,6 +5,7 @@ import { parsePlayerCards, parsePageHeader, parseResultsTotal } from './card-par
 const p1 = readFileSync(new URL('./__fixtures__/transferlist-pot6-p1.html', import.meta.url), 'utf8');
 const p2 = readFileSync(new URL('./__fixtures__/transferlist-pot6-p2.html', import.meta.url), 'utf8');
 const roster = readFileSync(new URL('./__fixtures__/jnt-roster.html', import.meta.url), 'utf8');
+const seniorP1 = readFileSync(new URL('./__fixtures__/transferlist-seniornt-p1.html', import.meta.url), 'utf8');
 
 describe('parsePageHeader', () => {
   it('parses the as-of timestamp', () => {
@@ -78,6 +79,64 @@ describe('parsePlayerCards — first card of page 1', () => {
     expect(cards[5].isRookie).toBe(true);
     expect(cards[6].isRookie).toBe(true);
     expect(cards[9].isRookie).toBe(true);
+  });
+});
+
+describe('parsePlayerCards — senior NT search (age 22+, IsOnNT; captured live 2026-08-21)', () => {
+  const cards = parsePlayerCards(seniorP1);
+  const c = cards[0];
+  it('reads the total from the Showing line', () => expect(parseResultsTotal(seniorP1)).toBe(58));
+  it('parses the as-of header (forward-slash dates)', () => {
+    const asOf = parsePageHeader(seniorP1); // "8/21/2026 12:25:09 PM"
+    expect(asOf.getMonth()).toBe(7); // August (0-based)
+    expect(asOf.getDate()).toBe(21);
+    expect(asOf.getFullYear()).toBe(2026);
+    expect(asOf.getHours()).toBe(12);
+    expect(asOf.getMinutes()).toBe(25);
+  });
+  it('parses 10 cards per page', () => expect(cards.length).toBe(10));
+  it('identity', () => {
+    expect(c.bbPlayerId).toBe(50885354);
+    expect(c.name).toBe('Julio Naizaque'); // &nbsp; normalized
+    expect(c.position).toBe('PG'); // "Point Guard"
+    expect(c.nationality).toBe('Venezuela');
+  });
+  it('meta — senior ages parse', () => {
+    expect(c.age).toBe(34);
+    expect(c.heightCm).toBe(188);
+    expect(c.potential).toBe(10); // hall of famer
+    expect(c.gameShape).toBe(7);
+    expect(c.salary).toBe(230033);
+    expect(c.experience).toBe(16);
+    for (const card of cards) expect(card.age).toBeGreaterThanOrEqual(22);
+  });
+  it('market fields', () => {
+    expect(c.price).toBe(1000); // "Starting Price: $ 1 000" — no bid yet
+    expect(c.ownerTeamId).toBe(71493);
+    expect(c.ownerTeamName).toBe('Ataköy');
+    expect(c.auctionEnds).toBeInstanceOf(Date);
+  });
+  it('internal skills ABOVE 20 parse from title attrs (display clamps at legendary)', () => {
+    // e.g. Outside Def.: class="lev20" but title="22" — the title carries the true level
+    expect(c.skills.outside_def).toBe(22);
+    expect(c.skills.handling).toBe(24);
+    expect(c.skills.driving).toBe(24);
+    expect(c.skills.free_throw).toBe(31);
+  });
+  it('remaining skills + tsp', () => {
+    expect(c.skills.jump_shot).toBe(20);
+    expect(c.skills.jump_range).toBe(11);
+    expect(c.skills.passing).toBe(12);
+    expect(c.skills.inside_shot).toBe(13);
+    expect(c.skills.inside_def).toBe(9);
+    expect(c.skills.rebounding).toBe(5);
+    expect(c.skills.shot_blocking).toBe(8);
+    expect(c.skills.stamina).toBe(8);
+    expect(Object.keys(c.skills).length).toBe(12);
+    expect(c.tsp).toBe(148); // "TSP: <b>148</b> (113 + 35)"
+  });
+  it('no senior is a rookie', () => {
+    for (const card of cards) expect(card.isRookie).toBe(false);
   });
 });
 

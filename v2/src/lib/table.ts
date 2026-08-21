@@ -82,16 +82,18 @@ export function countActiveMoreFilters(f: FilterState): number {
   return MORE_PANEL_FIELDS.filter((k) => f[k].trim() !== '').length;
 }
 
-export type Variant = 'slovenia' | 'world';
+export type Variant = 'slovenia' | 'world' | 'seniors';
 
 // ─── Defaults ────────────────────────────────────────────────────────────────
 
 export const DEFAULT_SORT: Record<Variant, SortState> = {
   slovenia: { key: 'tsp', direction: 'desc' },
   world: { key: 'dmi', direction: 'desc' },
+  seniors: { key: 'tsp', direction: 'desc' },
 };
 
-export const DEFAULT_FILTER: FilterState = {
+// Shared base — variants only diverge on the default age window.
+const BASE_FILTER: FilterState = {
   name: '',
   ageMin: 18,
   ageMax: 21,
@@ -116,20 +118,29 @@ export const DEFAULT_FILTER: FilterState = {
   skillMins: {},
 };
 
+// Per-variant filter defaults (compile-enforced like DEFAULT_SORT): the U-21 pages
+// default to 18–21, the seniors page to its 22+ market-sweep universe.
+export const DEFAULT_FILTER: Record<Variant, FilterState> = {
+  slovenia: BASE_FILTER,
+  world: BASE_FILTER,
+  seniors: { ...BASE_FILTER, ageMin: 22, ageMax: 45 },
+};
+
 // ─── Reset detection ─────────────────────────────────────────────────────────
 
-export function isFilterDefault(f: FilterState): boolean {
+export function isFilterDefault(f: FilterState, variant: Variant): boolean {
+  const d = DEFAULT_FILTER[variant];
   return (
-    f.name === DEFAULT_FILTER.name &&
-    f.ageMin === DEFAULT_FILTER.ageMin &&
-    f.ageMax === DEFAULT_FILTER.ageMax &&
-    f.position === DEFAULT_FILTER.position &&
-    f.potMin === DEFAULT_FILTER.potMin &&
-    f.potMax === DEFAULT_FILTER.potMax &&
-    f.fullSkillsOnly === DEFAULT_FILTER.fullSkillsOnly &&
-    f.archetype === DEFAULT_FILTER.archetype &&
+    f.name === d.name &&
+    f.ageMin === d.ageMin &&
+    f.ageMax === d.ageMax &&
+    f.position === d.position &&
+    f.potMin === d.potMin &&
+    f.potMax === d.potMax &&
+    f.fullSkillsOnly === d.fullSkillsOnly &&
+    f.archetype === d.archetype &&
     countActiveMoreFilters(f) === 0 &&
-    f.discoveredWithinDays === DEFAULT_FILTER.discoveredWithinDays &&
+    f.discoveredWithinDays === d.discoveredWithinDays &&
     countActiveSkillMins(f.skillMins) === 0
   );
 }
@@ -317,7 +328,7 @@ export function sortRows(rows: PlayerListRow[], sort: SortState): PlayerListRow[
 /**
  * Sanitize a `showSkills` value from a stored blob.
  * Returns the stored value if it's a boolean, otherwise falls back to the
- * page-provided default (which differs per variant: true for Slovenia, false for World).
+ * page-provided default (which differs per variant: true for Slovenia and Seniors, false for World).
  */
 export function sanitizeShowSkills(stored: boolean | undefined, pageDefault: boolean): boolean {
   if (typeof stored === 'boolean') return stored;

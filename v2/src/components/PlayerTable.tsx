@@ -24,6 +24,7 @@ import ArchetypeBadge from './ArchetypeBadge';
 const STORAGE_KEY: Record<Variant, string> = {
   slovenia: 'bbscout:table:slovenia',
   world: 'bbscout:table:world',
+  seniors: 'bbscout:table:seniors',
 };
 
 const NEW_CHIP_MS = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
@@ -39,10 +40,8 @@ const OUT_TSP_TITLE = `Outside TSP: ${OUTSIDE_SKILL_KEYS.map(skillName).join(' +
 
 // ─── localStorage sanitizers ─────────────────────────────────────────────────
 
-function sanitizeFilter(raw: Partial<FilterState>): Partial<FilterState> {
+function sanitizeFilter(raw: Partial<FilterState>, def: FilterState): Partial<FilterState> {
   const out: Partial<FilterState> = {};
-  const def = {} as FilterState; // use DEFAULT_FILTER shape for type reference
-  void def;
   for (const _key of Object.keys(raw) as (keyof FilterState)[]) {
     const val = raw[_key];
     if (_key === 'skillMins') {
@@ -56,7 +55,7 @@ function sanitizeFilter(raw: Partial<FilterState>): Partial<FilterState> {
       }
       continue;
     }
-    const expected = typeof DEFAULT_FILTER[_key];
+    const expected = typeof def[_key];
     if (expected === 'number') {
       if (typeof val === 'number' && isFinite(val)) (out as Record<string, unknown>)[_key] = val;
     } else if (expected === 'boolean') {
@@ -96,7 +95,7 @@ export default function PlayerTable({
   archetypeMatches?: Record<number, string[]>;
   archetypeNames?: string[];
 }) {
-  const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER);
+  const [filter, setFilter] = useState<FilterState>(DEFAULT_FILTER[variant]);
   const [sort, setSort] = useState<SortState>(DEFAULT_SORT[variant]);
   const [showSkills, setShowSkills] = useState<boolean>(defaultShowSkills);
   const [showAll, setShowAll] = useState(false); // per-visit, deliberately not persisted
@@ -108,7 +107,7 @@ export default function PlayerTable({
       const raw = localStorage.getItem(STORAGE_KEY[variant]);
       if (raw) {
         const parsed: StoredState = JSON.parse(raw);
-        if (parsed.filter) setFilter({ ...DEFAULT_FILTER, ...sanitizeFilter(parsed.filter) });
+        if (parsed.filter) setFilter({ ...DEFAULT_FILTER[variant], ...sanitizeFilter(parsed.filter, DEFAULT_FILTER[variant]) });
         if (parsed.sort) setSort({ ...DEFAULT_SORT[variant], ...sanitizeSort(parsed.sort) });
         setShowSkills(sanitizeShowSkills(parsed.showSkills, defaultShowSkills));
       }
@@ -130,7 +129,7 @@ export default function PlayerTable({
   }, [filter, sort, showSkills, hydrated, variant]);
 
   function handleReset() {
-    setFilter(DEFAULT_FILTER);
+    setFilter(DEFAULT_FILTER[variant]);
     setSort(DEFAULT_SORT[variant]);
     setShowSkills(defaultShowSkills);
     try {
@@ -156,6 +155,7 @@ export default function PlayerTable({
   return (
     <div>
       <FilterBar
+        variant={variant}
         filter={filter}
         onChange={setFilter}
         onReset={handleReset}

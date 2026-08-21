@@ -53,13 +53,14 @@ export default async function SettingsPage() {
   // One clock read so the fetch window and summary windows cannot disagree
   const now = new Date();
 
-  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMinutes, lastInference, lastCensusRows, guestPassword, guestEventRows] = await Promise.all([
+  const [tracked, log, catalog, lastSeasons, lastPlayers, lastMarket, lastMarketSenior, lastMinutes, lastInference, lastCensusRows, guestPassword, guestEventRows] = await Promise.all([
     db.select().from(trackedCountries).orderBy(trackedCountries.name),
     db.select().from(syncLog).orderBy(desc(syncLog.startedAt)).limit(20),
     getCountriesCatalog().catch(() => []),
     lastRunOf('seasons'),
     lastRunOf('players'),
     lastRunOf('market'),
+    lastRunOf('market-senior'),
     lastRunOf('minutes'),
     lastRunOf('inference'),
     db.select().from(censusRuns).orderBy(desc(censusRuns.startedAt)).limit(1),
@@ -124,6 +125,7 @@ export default async function SettingsPage() {
             seasons: toJobLastRun(lastSeasons),
             players: toJobLastRun(lastPlayers),
             market: toJobLastRun(lastMarket),
+            'market-senior': toJobLastRun(lastMarketSenior),
             minutes: toJobLastRun(lastMinutes),
             inference: toJobLastRun(lastInference),
           }}
