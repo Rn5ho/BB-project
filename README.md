@@ -21,5 +21,9 @@ cookie (`credentials: 'include'`), e.g. `/nationalstaff/GetProspects`
 Slovenia U21's team id in the new game is `011bb347-3f19-783e-9e92-a785593911bd`.
 The old BBAPI XML (bbapi.buzzerbeater.com) still answers.
 
-Still running at retirement (stop them when convenient): Hetzner `bb-census` service and
-the BB crons (market sweep, self-trainer), the Vercel app, the Neon database.
+Shut down 2026-11-23: Hetzner `bb-census` + `bb-discord-bot` services stopped and disabled,
+the three BB crons removed from the `btcedge` crontab (backup:
+`/home/btcedge/bb-crontab-backup-2026-11-23.txt`; code + logs left in `/home/btcedge/bb-scout`).
+Kept as an archive: the Neon database (idles at zero compute now nothing wakes it), the
+Vercel deployments (bb-scout-v2, bb-project-navy — serverless, no crons, only run when visited),
+the old Supabase project, and this repo.
